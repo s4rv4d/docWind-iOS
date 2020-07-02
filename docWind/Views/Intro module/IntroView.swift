@@ -48,11 +48,18 @@ struct IntroView: View {
                     
                     DWButton(text: "Continue", background: .blue) {
                         AppSettings.shared.firstLoginDone = true
-                        if Device.IS_IPAD || Device.IS_IPHONE{
-                            if AppSettings.shared.update() {
-                                self.presentationMode.wrappedValue.dismiss()
+                        if DWFMAppSettings.shared.creatingDirectory(direcName: "DocWind") {
+                            if Device.IS_IPAD || Device.IS_IPHONE{
+                                if AppSettings.shared.update() {
+                                    self.presentationMode.wrappedValue.dismiss()
+                                } else {
+                                    print("❌ FAILED TO UPDATE APPSETTINGS")
+                                }
                             }
+                        } else {
+                            print("❌ FAILED TO CREATED DIRECTORY")
                         }
+                        
                     }.padding([.leading, .trailing, .bottom])
                 }
             }

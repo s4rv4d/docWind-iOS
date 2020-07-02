@@ -11,18 +11,18 @@ import Foundation
 // MARK: - Main protocol
 protocol DocWindFManager {
     func fileURL() -> URL
-    func savePdf(urlString: String, direcName: String?, fielName: String) -> Bool
+    func savePdf(urlString: String, direcName: String?, fileName: String) -> Bool
     func showSavedPdf(urlString: String, direcName: String?, fileName: String) -> Bool
     func pdfFileAlreadySaved(urlString:String, direcName: String?, fileName:String) -> Bool
     func creatingDirectory(direcName: String) -> Bool
-    mutating func load() -> Bool
-    func update() -> Bool
-    func delete() -> Bool
-    func toDictionary() -> [String: Any?]?
+//    mutating func load() -> Bool
+//    func update() -> Bool
+//    func delete() -> Bool
+//    func toDictionary() -> [String: Any?]?
 }
 
 //MARK: - Extension
-extension DocWindFManager where Self: Codable {
+extension DocWindFManager {
     /// START OF EXTENSION
     
     func fileURL() -> URL {
@@ -229,6 +229,7 @@ extension DocWindFManager where Self: Codable {
         let documentsPath = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         print("File Manager Path: ------> \(documentsPath)")
         let logsPath = documentsPath.appendingPathComponent("\(direcName)")
+        print("Updated Manager Path: ------> \(String(describing: logsPath))")
                 
         do {
             try FileManager.default.createDirectory(atPath: logsPath!.path, withIntermediateDirectories: true, attributes: nil)

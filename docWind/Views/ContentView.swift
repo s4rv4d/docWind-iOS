@@ -12,10 +12,21 @@ struct ContentView: View {
     
     //MARK: - @State variables
     @State private var isShown = false
+    @State var searchBarText = ""
     
     // MARK: - Properties
     var body: some View {
-        Text("Hello, World!")
+        VStack {
+            CustomNavBarView(action: {
+                print("add documents")
+            }, buttonImage: "plus")
+                .padding()
+            
+            //search bar
+            SearchBarView(text: $searchBarText)
+            .padding(.top, -30)
+            Spacer()
+        }
             .onAppear {
                 self.check()
         }

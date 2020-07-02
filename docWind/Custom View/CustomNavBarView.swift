@@ -9,13 +9,37 @@
 import SwiftUI
 
 struct CustomNavBarView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    
+    // MARK: - Private properties
+    private let action: () -> Void
+    private let buttonName: String
+    private let buttonImage: String
+    
+    // MARK: - Init
+    init(action: @escaping() -> Void, buttonName: String = "", buttonImage: String = "") {
+        self.action = action
+        self.buttonName = buttonName
+        self.buttonImage = buttonImage
     }
-}
-
-struct CustomNavBarView_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomNavBarView()
+    
+    // MARK: - Properties
+    var body: some View {
+        HStack {
+            Text("doc")
+               .font(.largeTitle)
+               .fontWeight(.bold)
+            + Text("Wind")
+               .font(.largeTitle)
+               .fontWeight(.bold)
+               .foregroundColor(.blue)
+            Spacer()
+            Button(action: action) {
+                HStack {
+                    Image(systemName: buttonImage)
+                        .font(.title)
+                    Text(buttonName)
+                }
+            }
+        }
     }
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */; };
+		40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140424AE14C000126ABA /* SearchBarView.swift */; };
 		40D170AC24ADA93000F51F77 /* DocViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170AB24ADA93000F51F77 /* DocViewModel.swift */; };
 		40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */; };
 		40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */; };
@@ -24,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWFMAppSettings.swift; sourceTree = "<group>"; };
+		40C5140424AE14C000126ABA /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		40D170AB24ADA93000F51F77 /* DocViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocViewModel.swift; sourceTree = "<group>"; };
 		40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBarView.swift; sourceTree = "<group>"; };
 		40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocWindFManager.swift; sourceTree = "<group>"; };
@@ -73,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */,
+				40C5140424AE14C000126ABA /* SearchBarView.swift */,
 			);
 			path = "Custom View";
 			sourceTree = "<group>";
@@ -143,6 +148,7 @@
 				40FDE49624AC4C6C006AAFD2 /* SettingsManagable.swift */,
 				40FDE49924AC4C95006AAFD2 /* AppSettings.swift */,
 				40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */,
+				40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -226,6 +232,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */,
 				40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */,
 				40FDE49724AC4C6C006AAFD2 /* SettingsManagable.swift in Sources */,
 				40FDE49A24AC4C95006AAFD2 /* AppSettings.swift in Sources */,
@@ -234,6 +241,7 @@
 				40FDE48324AB964B006AAFD2 /* ContentView.swift in Sources */,
 				40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */,
 				40FDE49C24AC4EC9006AAFD2 /* Helper+Struct.swift in Sources */,
+				40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */,
 				40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */,
 				40D170AC24ADA93000F51F77 /* DocViewModel.swift in Sources */,
 				40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */,
