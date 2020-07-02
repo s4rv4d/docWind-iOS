@@ -27,10 +27,13 @@ struct ColorStruct : Codable {
 
 struct TitleView: View {
     var body: some View {
-        AnyView(Text("Welcome To \n")
+        AnyView(Text("Welcome to \n")
+            .font(.title)
+//            .fontWeight(.bold)
+         + Text("doc")
             .font(.largeTitle)
             .fontWeight(.bold)
-         + Text("docWind")
+         + Text("Wind")
             .font(.largeTitle)
             .fontWeight(.bold)
             .foregroundColor(.blue))
@@ -45,19 +48,20 @@ struct InfoView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
+            HStack(spacing: 15) {
                 Image(systemName: imageName)
                 .font(.title)
                     .foregroundColor(.blue)
-                Spacer()
+                    .padding([.leading, .trailing])
                 VStack(alignment: .leading) {
                     Text(title)
-                        .fontWeight(.bold)
+                        .fontWeight(.medium)
                     Text(subTitle)
                         .font(.body)
                         .foregroundColor(.secondary)
+                        .multilineTextAlignment(.leading)
                 }
-            }.padding([.leading])
+            }
             
         }
     }

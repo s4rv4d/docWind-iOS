@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40D170AC24ADA93000F51F77 /* DocViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170AB24ADA93000F51F77 /* DocViewModel.swift */; };
+		40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */; };
+		40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */; };
 		40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FDE47B24AB964B006AAFD2 /* AppDelegate.swift */; };
 		40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FDE47D24AB964B006AAFD2 /* SceneDelegate.swift */; };
 		40FDE48124AB964B006AAFD2 /* docWind.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 40FDE47F24AB964B006AAFD2 /* docWind.xcdatamodeld */; };
@@ -21,6 +24,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		40D170AB24ADA93000F51F77 /* DocViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocViewModel.swift; sourceTree = "<group>"; };
+		40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBarView.swift; sourceTree = "<group>"; };
+		40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocWindFManager.swift; sourceTree = "<group>"; };
 		40FDE47824AB964B006AAFD2 /* docWind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = docWind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40FDE47B24AB964B006AAFD2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		40FDE47D24AB964B006AAFD2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +53,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		40D170AA24ADA90800F51F77 /* Intro module */ = {
+			isa = PBXGroup;
+			children = (
+				40FDE49424AC4C3D006AAFD2 /* IntroView.swift */,
+			);
+			path = "Intro module";
+			sourceTree = "<group>";
+		};
+		40D170AD24ADA93300F51F77 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				40D170AB24ADA93000F51F77 /* DocViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
+		40D170B024ADA95A00F51F77 /* Custom View */ = {
+			isa = PBXGroup;
+			children = (
+				40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */,
+			);
+			path = "Custom View";
+			sourceTree = "<group>";
+		};
 		40FDE46F24AB964B006AAFD2 = {
 			isa = PBXGroup;
 			children = (
@@ -67,7 +97,9 @@
 			isa = PBXGroup;
 			children = (
 				40FDE49224AC4C14006AAFD2 /* Services */,
+				40D170B024ADA95A00F51F77 /* Custom View */,
 				40FDE49324AC4C2F006AAFD2 /* Views */,
+				40D170AD24ADA93300F51F77 /* View Model */,
 				40FDE49824AC4C87006AAFD2 /* Settings */,
 				40FDE49D24AC4ECD006AAFD2 /* Helpers */,
 				40FDE48424AB964C006AAFD2 /* Assets.xcassets */,
@@ -100,7 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				40FDE48224AB964B006AAFD2 /* ContentView.swift */,
-				40FDE49424AC4C3D006AAFD2 /* IntroView.swift */,
+				40D170AA24ADA90800F51F77 /* Intro module */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -110,6 +142,7 @@
 			children = (
 				40FDE49624AC4C6C006AAFD2 /* SettingsManagable.swift */,
 				40FDE49924AC4C95006AAFD2 /* AppSettings.swift */,
+				40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -199,8 +232,11 @@
 				40FDE48124AB964B006AAFD2 /* docWind.xcdatamodeld in Sources */,
 				40FDE49524AC4C3D006AAFD2 /* IntroView.swift in Sources */,
 				40FDE48324AB964B006AAFD2 /* ContentView.swift in Sources */,
+				40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */,
 				40FDE49C24AC4EC9006AAFD2 /* Helper+Struct.swift in Sources */,
 				40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */,
+				40D170AC24ADA93000F51F77 /* DocViewModel.swift in Sources */,
+				40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
