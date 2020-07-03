@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="true" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="DirecModel" representedClassName="DirecModel" syncable="YES">
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="files" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ItemModel" inverseName="origin" inverseEntity="ItemModel"/>
+    </entity>
+    <entity name="ItemModel" representedClassName="ItemModel" syncable="YES">
+        <attribute name="itemName" optional="YES" attributeType="String"/>
+        <attribute name="itemType" optional="YES" attributeType="String"/>
+        <relationship name="origin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DirecModel" inverseName="files" inverseEntity="DirecModel"/>
+    </entity>
+    <entity name="PdfFilemodel" representedClassName="PdfFilemodel" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="DirecModel" positionX="93.6875" positionY="-329.6640625" width="128" height="88"/>
+        <element name="ItemModel" positionX="-50.30859375" positionY="-238.3828125" width="128" height="88"/>
+        <element name="PdfFilemodel" positionX="170.6171875" positionY="10.3203125" width="128" height="88"/>
+    </elements>
 </model>

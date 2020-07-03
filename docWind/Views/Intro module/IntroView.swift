@@ -16,7 +16,6 @@ struct IntroView: View {
     
     // MARK: - Variables
     var body: some View {
-//        ScrollView(.vertical) {
             VStack(alignment: .center) {
                 VStack {
                     TitleView()
@@ -28,7 +27,6 @@ struct IntroView: View {
                 .font(.caption)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
-//                .allowsTightening(true)
                     .padding([.leading, .trailing, .top])
                 
                 InfoView(imageName: "doc.fill", title: "Scan", subTitle: "Scan all documents, whether they are single page, multi page, or even ID cards.")
@@ -50,6 +48,19 @@ struct IntroView: View {
                         AppSettings.shared.firstLoginDone = true
                         if DWFMAppSettings.shared.creatingDirectory(direcName: "DocWind") {
                             if Device.IS_IPAD || Device.IS_IPHONE{
+                                
+                                //create a coredata for DocWind
+                                let docWindDirec = DirecModel(context: self.context)
+                                docWindDirec.name = "DocWind"
+                                docWindDirec.created = Date()
+                                
+                                do {
+                                    try self.context.save()
+                                    print("✅ created and saved DocWind to coredata")
+                                } catch {
+                                    print("❌ FAILED TO UPDATE COREDATA")
+                                }
+                                
                                 if AppSettings.shared.update() {
                                     self.presentationMode.wrappedValue.dismiss()
                                 } else {
@@ -63,12 +74,5 @@ struct IntroView: View {
                     }.padding([.leading, .trailing, .bottom])
                 }
             }
-//        }
-    }
-}
-
-struct IntroView_Previews: PreviewProvider {
-    static var previews: some View {
-        IntroView()
     }
 }
