@@ -19,14 +19,24 @@ extension ItemModel {
 
     @NSManaged public var itemName: String?
     @NSManaged public var itemType: String?
+    @NSManaged public var iconName: String?
+    @NSManaged public var locked: NSNumber?
     @NSManaged public var origin: DirecModel?
     
     // created wrapped properties to avoid optionals
     public var wrappedItemType: String {
-        itemType ?? "Unknown type"
+        itemType ?? DWDIRECTORY
     }
     
     public var wrappedItemName: String {
         itemName ?? "Unknown name"
+    }
+    
+    public var wrappedLocked: Bool {
+        locked as! Bool
+    }
+    
+    public var wrappedIconName: String {
+        iconName ?? "folderIcon"
     }
 }

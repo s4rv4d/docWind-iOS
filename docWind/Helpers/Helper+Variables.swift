@@ -23,3 +23,7 @@ let PDFDATA = "pdfData"
 
 // Key names for DirecModel
 let FILES = "files"
+
+// Key names for item types
+let DWDIRECTORY = "directory"
+let DWPDFFILE = "pdfFile"

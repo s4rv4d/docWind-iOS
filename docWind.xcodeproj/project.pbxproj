@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		402C0B6824B0A29500A5A6C9 /* ListCustomGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */; };
+		402C0B6A24B0A37A00A5A6C9 /* Helper+enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */; };
+		402C0B6C24B0ACD600A5A6C9 /* NormalListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */; };
+		402C0B6E24B0B0E800A5A6C9 /* DetailedDirecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6D24B0B0E800A5A6C9 /* DetailedDirecView.swift */; };
+		402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */; };
+		402C0B7224B0B0FF00A5A6C9 /* ScanPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */; };
+		402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */; };
 		40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */; };
 		40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140424AE14C000126ABA /* SearchBarView.swift */; };
 		40CDC49F24AF691900462277 /* Helper+Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC49E24AF691900462277 /* Helper+Variables.swift */; };
@@ -17,6 +24,7 @@
 		40CDC4CB24AF72CD00462277 /* DirecModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC4C524AF72CD00462277 /* DirecModel+CoreDataClass.swift */; };
 		40CDC4CC24AF72CD00462277 /* DirecModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC4C624AF72CD00462277 /* DirecModel+CoreDataProperties.swift */; };
 		40CDC4CE24AF80DF00462277 /* MainDocListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC4CD24AF80DF00462277 /* MainDocListViewModel.swift */; };
+		40CDC4D224AF91F800462277 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40CDC4D124AF91F800462277 /* CloudKit.framework */; };
 		40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170AB24ADA93000F51F77 /* MainDocViewModel.swift */; };
 		40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */; };
 		40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */; };
@@ -34,6 +42,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCustomGridView.swift; sourceTree = "<group>"; };
+		402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+enums.swift"; sourceTree = "<group>"; };
+		402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalListRowView.swift; sourceTree = "<group>"; };
+		402C0B6D24B0B0E800A5A6C9 /* DetailedDirecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedDirecView.swift; sourceTree = "<group>"; };
+		402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPdfView.swift; sourceTree = "<group>"; };
+		402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanPdfView.swift; sourceTree = "<group>"; };
+		402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDirecView.swift; sourceTree = "<group>"; };
 		40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWFMAppSettings.swift; sourceTree = "<group>"; };
 		40C5140424AE14C000126ABA /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		40CDC49E24AF691900462277 /* Helper+Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Variables.swift"; sourceTree = "<group>"; };
@@ -44,6 +59,8 @@
 		40CDC4C524AF72CD00462277 /* DirecModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DirecModel+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		40CDC4C624AF72CD00462277 /* DirecModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DirecModel+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		40CDC4CD24AF80DF00462277 /* MainDocListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDocListViewModel.swift; sourceTree = "<group>"; };
+		40CDC4CF24AF91EF00462277 /* docWind.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = docWind.entitlements; sourceTree = "<group>"; };
+		40CDC4D124AF91F800462277 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		40D170AB24ADA93000F51F77 /* MainDocViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDocViewModel.swift; sourceTree = "<group>"; };
 		40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBarView.swift; sourceTree = "<group>"; };
 		40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocWindFManager.swift; sourceTree = "<group>"; };
@@ -67,12 +84,40 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40CDC4D224AF91F800462277 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		402C0B7324B0B10600A5A6C9 /* Pdf module */ = {
+			isa = PBXGroup;
+			children = (
+				402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */,
+				402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */,
+			);
+			path = "Pdf module";
+			sourceTree = "<group>";
+		};
+		402C0B7424B0B11500A5A6C9 /* Main module */ = {
+			isa = PBXGroup;
+			children = (
+				402C0B9A24B0C0A800A5A6C9 /* Directory module */,
+				402C0B7324B0B10600A5A6C9 /* Pdf module */,
+			);
+			path = "Main module";
+			sourceTree = "<group>";
+		};
+		402C0B9A24B0C0A800A5A6C9 /* Directory module */ = {
+			isa = PBXGroup;
+			children = (
+				402C0B6D24B0B0E800A5A6C9 /* DetailedDirecView.swift */,
+				402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */,
+			);
+			path = "Directory module";
+			sourceTree = "<group>";
+		};
 		40CDC4C024AF728C00462277 /* CoreData Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +129,14 @@
 				40CDC4C624AF72CD00462277 /* DirecModel+CoreDataProperties.swift */,
 			);
 			path = "CoreData Models";
+			sourceTree = "<group>";
+		};
+		40CDC4D024AF91F800462277 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				40CDC4D124AF91F800462277 /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		40D170AA24ADA90800F51F77 /* Intro module */ = {
@@ -108,6 +161,8 @@
 			children = (
 				40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */,
 				40C5140424AE14C000126ABA /* SearchBarView.swift */,
+				402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */,
+				402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */,
 			);
 			path = "Custom View";
 			sourceTree = "<group>";
@@ -117,6 +172,7 @@
 			children = (
 				40FDE47A24AB964B006AAFD2 /* docWind */,
 				40FDE47924AB964B006AAFD2 /* Products */,
+				40CDC4D024AF91F800462277 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,6 +187,7 @@
 		40FDE47A24AB964B006AAFD2 /* docWind */ = {
 			isa = PBXGroup;
 			children = (
+				40CDC4CF24AF91EF00462277 /* docWind.entitlements */,
 				40FDE49224AC4C14006AAFD2 /* Services */,
 				40D170B024ADA95A00F51F77 /* Custom View */,
 				40FDE49324AC4C2F006AAFD2 /* Views */,
@@ -169,6 +226,7 @@
 			children = (
 				40FDE48224AB964B006AAFD2 /* ContentView.swift */,
 				40D170AA24ADA90800F51F77 /* Intro module */,
+				402C0B7424B0B11500A5A6C9 /* Main module */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -189,6 +247,7 @@
 			children = (
 				40FDE49B24AC4EC9006AAFD2 /* Helper+Struct.swift */,
 				40CDC49E24AF691900462277 /* Helper+Variables.swift */,
+				402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -264,7 +323,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				402C0B6E24B0B0E800A5A6C9 /* DetailedDirecView.swift in Sources */,
 				40CDC4C724AF72CD00462277 /* ItemModel+CoreDataClass.swift in Sources */,
+				402C0B6824B0A29500A5A6C9 /* ListCustomGridView.swift in Sources */,
+				402C0B6C24B0ACD600A5A6C9 /* NormalListRowView.swift in Sources */,
 				40CDC4C824AF72CD00462277 /* ItemModel+CoreDataProperties.swift in Sources */,
 				40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */,
 				40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */,
@@ -274,14 +336,18 @@
 				40CDC4CB24AF72CD00462277 /* DirecModel+CoreDataClass.swift in Sources */,
 				40CDC4C924AF72CD00462277 /* PdfFilemodel+CoreDataClass.swift in Sources */,
 				40FDE48124AB964B006AAFD2 /* docWind.xcdatamodeld in Sources */,
+				402C0B6A24B0A37A00A5A6C9 /* Helper+enums.swift in Sources */,
 				40FDE49524AC4C3D006AAFD2 /* IntroView.swift in Sources */,
 				40FDE48324AB964B006AAFD2 /* ContentView.swift in Sources */,
 				40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */,
 				40FDE49C24AC4EC9006AAFD2 /* Helper+Struct.swift in Sources */,
+				402C0B7224B0B0FF00A5A6C9 /* ScanPdfView.swift in Sources */,
 				40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */,
 				40CDC4CC24AF72CD00462277 /* DirecModel+CoreDataProperties.swift in Sources */,
+				402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */,
 				40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */,
 				40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */,
+				402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */,
 				40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */,
 				40CDC4CE24AF80DF00462277 /* MainDocListViewModel.swift in Sources */,
 				40CDC49F24AF691900462277 /* Helper+Variables.swift in Sources */,
@@ -420,6 +486,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
@@ -441,6 +508,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
