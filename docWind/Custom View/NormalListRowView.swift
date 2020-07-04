@@ -17,9 +17,9 @@ struct NormalListRowView: View {
     
     
     var body: some View {
-        return ForEach(0..<itemArray.count){ index in
+        return ForEach(0..<itemArray.count, id: \.self){ index in
             HStack {
-                Image((self.itemArray[index].wrappedItemType == DWDIRECTORY) ? self.itemArray[index].wrappedIconName : "pdfIcon")
+                Image((self.itemArray[index].wrappedItemType == DWDIRECTORY) ? self.itemArray[index].wrappedIconName : "bluePdfFile")
                     .frame(width: 30, height: 30)
                     .aspectRatio(contentMode: .fill)
                     .padding()
@@ -27,7 +27,10 @@ struct NormalListRowView: View {
                 Text(self.itemArray[index].wrappedItemName)
                     .font(.body)
                 .padding()
-            }.onTapGesture {
+            }.onAppear(perform: {
+                    print("HERERE ",self.itemArray[index])
+            })
+            .onTapGesture {
                 
                 print("tapped \(index)")
                 

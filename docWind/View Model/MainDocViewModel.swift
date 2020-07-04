@@ -8,10 +8,9 @@
 
 import Foundation
 
-class MainDocViewModel: Identifiable {
+class MainDocViewModel {
     
     // MARK: - Properties
-    let id = UUID()
     let directory: DirecModel
     
     // MARK: - Init

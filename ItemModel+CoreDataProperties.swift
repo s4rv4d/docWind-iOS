@@ -37,6 +37,6 @@ extension ItemModel {
     }
     
     public var wrappedIconName: String {
-        iconName ?? "folderIcon"
+        iconName ?? "blueFolder"
     }
 }

@@ -15,10 +15,7 @@ protocol DocWindFManager {
     func showSavedPdf(urlString: String, direcName: String?, fileName: String) -> Bool
     func pdfFileAlreadySaved(urlString:String, direcName: String?, fileName:String) -> Bool
     func creatingDirectory(direcName: String) -> Bool
-//    mutating func load() -> Bool
-//    func update() -> Bool
-//    func delete() -> Bool
-//    func toDictionary() -> [String: Any?]?
+    func createSubDirectory(direcName: String) -> Bool
 }
 
 //MARK: - Extension
@@ -27,7 +24,6 @@ extension DocWindFManager {
     
     func fileURL() -> URL {
         let direcURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-//        direcURL.appendingPathComponent("DocWind", isDirectory: true)
         return direcURL.appendingPathComponent("DocWind", isDirectory: true)
     }
     
@@ -235,6 +231,27 @@ extension DocWindFManager {
             try FileManager.default.createDirectory(atPath: logsPath!.path, withIntermediateDirectories: true, attributes: nil)
             status = true
             print("✅ SUCCESSFULLY CREATED DIRECTORY")
+        } catch {
+            print("❌ FAILED TO CREATED DIRECTORY")
+            print("////reason: \(error.localizedDescription)")
+            status = false
+        }
+        
+        return status
+    }
+    
+    func createSubDirectory(direcName: String) -> Bool {
+        var status = false
+        
+        let documentsPath = fileURL()
+        print("File Manager Path: ------> \(documentsPath)")
+        let logsPath = documentsPath.appendingPathComponent("\(direcName)")
+        print("Updated Manager Path: ------> \(String(describing: logsPath))")
+                
+        do {
+            try FileManager.default.createDirectory(atPath: logsPath.path, withIntermediateDirectories: true, attributes: nil)
+            status = true
+            print("✅ SUCCESSFULLY CREATED  \(direcName) DIRECTORY")
         } catch {
             print("❌ FAILED TO CREATED DIRECTORY")
             print("////reason: \(error.localizedDescription)")

@@ -16,12 +16,13 @@ struct ListCustomGridView: View {
     
     init(itemArray:[ItemModel]) {
         self.itemArray = itemArray
+        print(itemArray)
     }
     
     var body: some View {
         
         var itemPrev: [[Int]] = []
-        _ = (0..<11).publisher
+        _ = (0..<itemArray.count).publisher
         .collect(3)
         .collect()
         .sink(receiveValue: { itemPrev = $0 })
@@ -30,25 +31,28 @@ struct ListCustomGridView: View {
             HStack {
                 
                 if itemPrev[array].count <= 2 {
-                    ForEach(itemPrev[array], id: \.self) { _ in
+                    ForEach(itemPrev[array], id: \.self) { index in
                         VStack {
-                            Image("folderIcon")
+                            Image((self.itemArray[index].wrappedItemType == DWDIRECTORY) ? self.itemArray[index].wrappedIconName : "bluePdfFile")
                             .aspectRatio(contentMode: .fit)
-                            Text("17BCE2246")
+                            Text(self.itemArray[index].wrappedItemName)
                             .font(.caption)
-                        }
+                        }.padding()
                     }
                 } else {
-                     ForEach(itemPrev[array], id: \.self) { _ in
+                     ForEach(itemPrev[array], id: \.self) { index in
                         VStack {
-                            Image("folderIcon")
+                            Image((self.itemArray[index].wrappedItemType == DWDIRECTORY) ? self.itemArray[index].wrappedIconName : "bluePdfFile")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            Text("17BCE2246")
+                            Text(self.itemArray[index].wrappedItemName)
                                 .font(.caption)
-                        }
+                        }.padding()
                     }
                 }
+            }.onAppear {
+                print(itemPrev)
+                print(self.itemArray)
             }
         }
     }

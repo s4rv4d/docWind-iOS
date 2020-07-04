@@ -50,10 +50,10 @@ struct ContentView: View {
                     // display list or grid
                     List {
                         //-----------------------------------------------------------------//
-                        //ListCustomGridView(itemArray: self.model.contents!.direcContents)//
+                        ListCustomGridView(itemArray: self.model.contents!.direcContents)
                         //-----------------------------------------------------------------//
 //                        NormalListRowView(itemArray: self.model.contents!.direcContents)
-                        NormalListRowView(itemArray: self.model.contents!.direcContents, activeSheet: $activeSheet, isShown: $isShown)
+//                        NormalListRowView(itemArray: self.model.contents!.direcContents, activeSheet: $activeSheet, isShown: $isShown)
                         
                     }
                 }
@@ -85,7 +85,7 @@ struct ContentView: View {
             } else if self.activeSheet == .tappedPdf {
                 DetailPdfView()
             } else if self.activeSheet == .createdDirec {
-                AddDirecView()
+                AddDirecView(model: self.model).environment(\.managedObjectContext, self.context)
             }
         }
         
