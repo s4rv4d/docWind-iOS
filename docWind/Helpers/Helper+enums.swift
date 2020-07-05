@@ -19,3 +19,13 @@ enum DWItemType: String {
 enum ActiveContentViewSheet {
     case intro, tappedDirec, tappedPdf, createdDirec
 }
+
+// Enum for folder icon colors
+enum FolderIconColor: String {
+    case blue
+    case red
+    case green
+    case yellow
+    case pink
+}
+

@@ -42,6 +42,7 @@ struct DetailedDirecView: View {
                     // display list or gridSearchBarView(text: $searchBarText)
                     if toggleSearchIcon {
                         SearchBarView(text: $searchBarText)
+                            .padding(.top)
                     }
 //                        SearchBarView(text: $searchBarText)
                     List {

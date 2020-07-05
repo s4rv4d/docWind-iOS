@@ -12,7 +12,7 @@ struct AddDocGeneView: View {
     // MARK: - @State properties
     @State private var direcName = ""
     @State var headName: String
-    @State private var selectedIconName = "blueFolder"
+    @State private var selectedIconName = "blue"
     @State private var alertMessage = ""
     @State private var isLocked = false
     @State private var showAlert = false
@@ -26,6 +26,9 @@ struct AddDocGeneView: View {
     
     // MARK: - Properties
     var iconNames = ["blueFolder", "redFolder", "pinkFolder", "greenFolder", "yellowFolder"]
+    var iconColors: [Color] = [.blue, .red, .green, .yellow, .pink]
+    var iconNameString: [Color: String] = [.blue:"blue", .red:"red", .green:"green", .yellow:"yellow", .pink:"pink"]
+
     
     var body: some View {
         NavigationView {
@@ -37,22 +40,25 @@ struct AddDocGeneView: View {
                 Section(header: Text("Choose a folder icon")) {
                     ScrollView(.horizontal) {
                         HStack {
-                            ForEach(0..<iconNames.count) { index in
+                            ForEach(0..<iconColors.count) { index in
                                 VStack {
-                                    Image(self.iconNames[index])
-                                        .frame(width: 30, height: 30)
-                                        .aspectRatio(contentMode: .fit)
-                                        .padding([.horizontal, .vertical])
-                                        
-                                    .padding()
-                                    if self.selectedIconName == self.iconNames[index] {
-                                        Circle()
-                                            .foregroundColor(.primary)
-                                        .frame(width: 10, height: 10)
-                                            .padding(.bottom)
+
+                                    Image(systemName: "folder.fill")
+                                        .foregroundColor(self.iconColors[index])
+                                        .font(.body)
+                                        .padding(.bottom)
+                                    
+                                    if self.selectedIconName == self.iconNameString[self.iconColors[index]]! {
+                                        withAnimation{
+                                            Circle()
+                                                .foregroundColor(.primary)
+                                            .frame(width: 10, height: 10)
+                                                .padding(.bottom)
+                                        }
                                     }
-                                }.onTapGesture {
-                                    self.selectedIconName = self.iconNames[index]
+                                    }.padding()
+                                .onTapGesture {
+                                    self.selectedIconName = self.iconNameString[self.iconColors[index]]!
                                 }
                             }
                         }

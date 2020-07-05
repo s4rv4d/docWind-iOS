@@ -12,6 +12,7 @@ struct NormalListRowView: View {
     
     let itemArray: [ItemModel]
     let masterFolder: String
+    var iconNameString: [String: Color] = ["blue":.blue, "re":.red, "green":.green, "yellow":.yellow, "pink":.pink]
     
     @Binding var activeSheet: ActiveContentViewSheet
     @Binding var isShown: Bool
@@ -21,17 +22,18 @@ struct NormalListRowView: View {
         return ForEach(0..<itemArray.count, id: \.self){ index in
             NavigationLink(destination: DetailedDirecView(item: self.itemArray[index], masterFolder: self.masterFolder, model: GeneralDocListViewModel(name: self.itemArray[index].wrappedItemName))) {
                 HStack {
-                    Image((self.itemArray[index].wrappedItemType == DWDIRECTORY) ? self.itemArray[index].wrappedIconName : "bluePdfFile")
-                        .frame(width: 30, height: 30)
-                        .aspectRatio(contentMode: .fill)
-                        .padding()
+                    Image(systemName: "folder.fill")
+                        .foregroundColor(self.iconNameString[self.itemArray[index].iconName!])
+                        .font(.body)
+//                        .padding()
                     
                     Text(self.itemArray[index].wrappedItemName)
                         .font(.body)
                     .padding()
 //                    Spacer()
                 }
-            }.settingsBackground()
+            }
+//            .settingsBackground()
         }
     }
 }
