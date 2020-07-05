@@ -18,7 +18,7 @@ struct NormalListRowView: View {
     
     var body: some View {
         return ForEach(0..<itemArray.count, id: \.self){ index in
-            NavigationLink(destination: DetailedDirecView(item: self.itemArray[index])) {
+            NavigationLink(destination: DetailedDirecView(item: self.itemArray[index], model: GeneralDocListViewModel(name: self.itemArray[index].wrappedItemName))) {
                 HStack {
                     Image((self.itemArray[index].wrappedItemType == DWDIRECTORY) ? self.itemArray[index].wrappedIconName : "bluePdfFile")
                         .frame(width: 30, height: 30)

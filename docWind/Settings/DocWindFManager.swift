@@ -16,6 +16,7 @@ protocol DocWindFManager {
     func pdfFileAlreadySaved(urlString:String, direcName: String?, fileName:String) -> Bool
     func creatingDirectory(direcName: String) -> Bool
     func createSubDirectory(direcName: String) -> Bool
+    func createSubSubDirectory(headName: String, newDirecName: String) -> Bool
 }
 
 //MARK: - Extension
@@ -252,6 +253,27 @@ extension DocWindFManager {
             try FileManager.default.createDirectory(atPath: logsPath.path, withIntermediateDirectories: true, attributes: nil)
             status = true
             print("✅ SUCCESSFULLY CREATED  \(direcName) DIRECTORY")
+        } catch {
+            print("❌ FAILED TO CREATED DIRECTORY")
+            print("////reason: \(error.localizedDescription)")
+            status = false
+        }
+        
+        return status
+    }
+    
+    func createSubSubDirectory(headName: String, newDirecName: String) -> Bool {
+        var status = false
+        
+        let documentsPath = fileURL().appendingPathComponent("\(headName)")
+        print("File Manager Path: ------> \(documentsPath)")
+        let logsPath = documentsPath.appendingPathComponent("\(newDirecName)")
+        print("Updated Manager Path: ------> \(String(describing: logsPath))")
+                
+        do {
+            try FileManager.default.createDirectory(atPath: logsPath.path, withIntermediateDirectories: true, attributes: nil)
+            status = true
+            print("✅ SUCCESSFULLY CREATED  \(headName)/\(newDirecName) DIRECTORY")
         } catch {
             print("❌ FAILED TO CREATED DIRECTORY")
             print("////reason: \(error.localizedDescription)")

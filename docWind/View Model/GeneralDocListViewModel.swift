@@ -1,47 +1,49 @@
 //
-//  MainDocListViewModel.swift
+//  GeneralDocListViewModel.swift
 //  docWind
 //
-//  Created by Sarvad shetty on 7/3/20.
+//  Created by Sarvad shetty on 7/5/20.
 //  Copyright © 2020 Sarvad shetty. All rights reserved.
 //
 
 import SwiftUI
 import CoreData
 
-final class MainDocListViewModel: ObservableObject {
- 
+final class GeneralDocListViewModel: ObservableObject {
+    
     // MARK: - Properties
-    @Published var contents: MainDocViewModel? = nil
+    @Published var contents: GeneralDocViewModel? = nil
     @Published var direcObject: DirecModel? = nil
     
+    let direcName: String
+    
     // MARK: - Init
-    init() {
+    init(name: String) {
+        self.direcName = name
         self.fetchContent()
     }
     
     // MARK: - Methods
     func fetchContent() {
-        // declare the moc(managed object context)
+        // declare the moc
         let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
-        //make a single object observation request
+        // make a single observation request
         let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
-        fetchRequest.predicate = NSPredicate(format: "name == %@", "DocWind")
+        fetchRequest.predicate = NSPredicate(format: "name == %@", direcName)
         
         do {
             let content = try moc.fetch(fetchRequest)
-
-            if let docWindContent = content.first {
-                self.contents = MainDocViewModel(directory: docWindContent)
-                self.direcObject = docWindContent
+            
+            if let genDocContent = content.first {
+                self.contents = GeneralDocViewModel(directory: genDocContent)
+                self.direcObject = genDocContent
             } else {
-                print("❌ ERROR CONVERTING TO MainDocViewModel")
+                print("❌ ERROR CONVERTING TO GeneralDocViewModel")
             }
         } catch {
             print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
         }
-        
     }
     
     func addANewItem(itemName: String, iconName: String, itemType: String, locked:Bool) {
@@ -50,14 +52,14 @@ final class MainDocListViewModel: ObservableObject {
         
         //make a single object observation request
         let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
-        fetchRequest.predicate = NSPredicate(format: "name == %@", "DocWind")
+        fetchRequest.predicate = NSPredicate(format: "name == %@", direcName)
         
         do {
             let content = try moc.fetch(fetchRequest)
 
-            if let docWindContent = content.first {
-                self.contents = MainDocViewModel(directory: docWindContent)
-                self.direcObject = docWindContent
+            if let genDocContent = content.first {
+                self.contents = GeneralDocViewModel(directory: genDocContent)
+                self.direcObject = genDocContent
                                 
                 // add new item
                 let itemName = itemName
@@ -74,7 +76,7 @@ final class MainDocListViewModel: ObservableObject {
                 item.origin = direcObject
                 
                 direcObject?.addToFiles(item)
-                self.contents = MainDocViewModel(directory: direcObject!)
+                self.contents = GeneralDocViewModel(directory: genDocContent)
                         
                 let newDirec = DirecModel(context: moc)
                 newDirec.name = itemName
@@ -94,5 +96,4 @@ final class MainDocListViewModel: ObservableObject {
             print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
         }
     }
-    
 }

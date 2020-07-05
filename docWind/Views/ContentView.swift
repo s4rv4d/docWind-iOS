@@ -71,7 +71,7 @@ struct ContentView: View {
 //                .font(.system(size: 30))
                 Text("Search")
                 }
-                ,trailing: Button(action: createDiectory){
+                ,trailing: Button(action: showOptions){
 //                Image(systemName: "plus")
 //                    .font(.system(size: 30))
                     Text("Add")
@@ -114,6 +114,10 @@ struct ContentView: View {
                 self.isShown.toggle()
             }
         }
+    }
+    
+    func showOptions() {
+        self.showingActionSheet.toggle()
     }
     
     func createDiectory() {

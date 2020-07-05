@@ -14,6 +14,9 @@
 		402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */; };
 		402C0B7224B0B0FF00A5A6C9 /* ScanPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */; };
 		402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */; };
+		407567F424B1FC4A0071B575 /* GeneralDocViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407567F324B1FC4A0071B575 /* GeneralDocViewModel.swift */; };
+		407567F624B1FC620071B575 /* GeneralDocListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407567F524B1FC620071B575 /* GeneralDocListViewModel.swift */; };
+		407567F824B208B90071B575 /* AddDocGeneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407567F724B208B90071B575 /* AddDocGeneView.swift */; };
 		409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409244BD24B19D640013BF8F /* Helper+Extensions.swift */; };
 		40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */; };
 		40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140424AE14C000126ABA /* SearchBarView.swift */; };
@@ -50,6 +53,9 @@
 		402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPdfView.swift; sourceTree = "<group>"; };
 		402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanPdfView.swift; sourceTree = "<group>"; };
 		402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDirecView.swift; sourceTree = "<group>"; };
+		407567F324B1FC4A0071B575 /* GeneralDocViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDocViewModel.swift; sourceTree = "<group>"; };
+		407567F524B1FC620071B575 /* GeneralDocListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDocListViewModel.swift; sourceTree = "<group>"; };
+		407567F724B208B90071B575 /* AddDocGeneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDocGeneView.swift; sourceTree = "<group>"; };
 		409244BD24B19D640013BF8F /* Helper+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Extensions.swift"; sourceTree = "<group>"; };
 		40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWFMAppSettings.swift; sourceTree = "<group>"; };
 		40C5140424AE14C000126ABA /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
@@ -116,6 +122,7 @@
 			children = (
 				402C0B6D24B0B0E800A5A6C9 /* DetailedDirecView.swift */,
 				402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */,
+				407567F724B208B90071B575 /* AddDocGeneView.swift */,
 			);
 			path = "Directory module";
 			sourceTree = "<group>";
@@ -154,6 +161,8 @@
 			children = (
 				40D170AB24ADA93000F51F77 /* MainDocViewModel.swift */,
 				40CDC4CD24AF80DF00462277 /* MainDocListViewModel.swift */,
+				407567F324B1FC4A0071B575 /* GeneralDocViewModel.swift */,
+				407567F524B1FC620071B575 /* GeneralDocListViewModel.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -334,6 +343,7 @@
 				40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */,
 				40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */,
 				40FDE49724AC4C6C006AAFD2 /* SettingsManagable.swift in Sources */,
+				407567F824B208B90071B575 /* AddDocGeneView.swift in Sources */,
 				40FDE49A24AC4C95006AAFD2 /* AppSettings.swift in Sources */,
 				40CDC4CA24AF72CD00462277 /* PdfFilemodel+CoreDataProperties.swift in Sources */,
 				40CDC4CB24AF72CD00462277 /* DirecModel+CoreDataClass.swift in Sources */,
@@ -350,11 +360,13 @@
 				402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */,
 				40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */,
 				40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */,
+				407567F424B1FC4A0071B575 /* GeneralDocViewModel.swift in Sources */,
 				409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */,
 				402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */,
 				40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */,
 				40CDC4CE24AF80DF00462277 /* MainDocListViewModel.swift in Sources */,
 				40CDC49F24AF691900462277 /* Helper+Variables.swift in Sources */,
+				407567F624B1FC620071B575 /* GeneralDocListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
