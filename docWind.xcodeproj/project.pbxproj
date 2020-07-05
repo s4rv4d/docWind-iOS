@@ -14,6 +14,7 @@
 		402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */; };
 		402C0B7224B0B0FF00A5A6C9 /* ScanPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */; };
 		402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */; };
+		409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409244BD24B19D640013BF8F /* Helper+Extensions.swift */; };
 		40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */; };
 		40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140424AE14C000126ABA /* SearchBarView.swift */; };
 		40CDC49F24AF691900462277 /* Helper+Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC49E24AF691900462277 /* Helper+Variables.swift */; };
@@ -49,6 +50,7 @@
 		402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPdfView.swift; sourceTree = "<group>"; };
 		402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanPdfView.swift; sourceTree = "<group>"; };
 		402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDirecView.swift; sourceTree = "<group>"; };
+		409244BD24B19D640013BF8F /* Helper+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Extensions.swift"; sourceTree = "<group>"; };
 		40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWFMAppSettings.swift; sourceTree = "<group>"; };
 		40C5140424AE14C000126ABA /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		40CDC49E24AF691900462277 /* Helper+Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Variables.swift"; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				40FDE49B24AC4EC9006AAFD2 /* Helper+Struct.swift */,
 				40CDC49E24AF691900462277 /* Helper+Variables.swift */,
 				402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */,
+				409244BD24B19D640013BF8F /* Helper+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */,
 				40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */,
 				40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */,
+				409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */,
 				402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */,
 				40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */,
 				40CDC4CE24AF80DF00462277 /* MainDocListViewModel.swift in Sources */,

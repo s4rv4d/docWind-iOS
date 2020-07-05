@@ -18,25 +18,19 @@ struct NormalListRowView: View {
     
     var body: some View {
         return ForEach(0..<itemArray.count, id: \.self){ index in
-            HStack {
-                Image((self.itemArray[index].wrappedItemType == DWDIRECTORY) ? self.itemArray[index].wrappedIconName : "bluePdfFile")
-                    .frame(width: 30, height: 30)
-                    .aspectRatio(contentMode: .fill)
+            NavigationLink(destination: DetailedDirecView(item: self.itemArray[index])) {
+                HStack {
+                    Image((self.itemArray[index].wrappedItemType == DWDIRECTORY) ? self.itemArray[index].wrappedIconName : "bluePdfFile")
+                        .frame(width: 30, height: 30)
+                        .aspectRatio(contentMode: .fill)
+                        .padding()
+                    
+                    Text(self.itemArray[index].wrappedItemName)
+                        .font(.body)
                     .padding()
-                
-                Text(self.itemArray[index].wrappedItemName)
-                    .font(.body)
-                .padding()
-            }.onAppear(perform: {
-                    print("HERERE ",self.itemArray[index])
-            })
-            .onTapGesture {
-                
-                print("tapped \(index)")
-                
-                self.activeSheet = .tappedDirec
-                self.isShown.toggle()
-            }
+//                    Spacer()
+                }
+            }.settingsBackground()
         }
     }
 }

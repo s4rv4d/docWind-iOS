@@ -50,9 +50,6 @@ struct ListCustomGridView: View {
                         }.padding()
                     }
                 }
-            }.onAppear {
-                print(itemPrev)
-                print(self.itemArray)
             }
         }
     }

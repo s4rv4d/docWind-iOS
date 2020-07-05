@@ -16,7 +16,7 @@ struct ContentView: View {
     @State private var showingActionSheet = false
     @State var activeSheet: ActiveContentViewSheet = .intro
     @State private var presentAlert = false
-    
+    @State private var toggleSearchIcon = false
     
     // MARK: - Objects
     @ObservedObject var model = MainDocListViewModel()
@@ -26,50 +26,57 @@ struct ContentView: View {
     
     // MARK: - Properties
     var body: some View {
-        VStack {
-            CustomNavBarView(action: {
-                print("add documents")
-                self.showingActionSheet.toggle()
-            }, buttonImage: "plus")
-                .padding()
-            
-            //search bar
-            SearchBarView(text: $searchBarText)
-            .padding(.top, -30)
-            
-            //check if contents isnt empty
-            if model.contents != nil {
-                // display contents of file
-                if (model.contents!.direcContents.count == 0) {
-                    Text("Looks empty here, scan a new document or create a new dierctory using the '+' button above.")
+        NavigationView {
+            VStack(alignment: .leading) {
+                //check if contents isnt empty
+                if model.contents != nil {
+                    // display contents of file
+                    if (model.contents!.direcContents.count == 0) {
+                        Text("Looks empty here, scan a new document or create a new dierctory using the '+' button above.")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                            .padding([.leading, .trailing, .top])
+                    } else {
+                        // display list or gridSearchBarView(text: $searchBarText)
+                        if toggleSearchIcon {
+                            SearchBarView(text: $searchBarText)
+                        }
+//                        SearchBarView(text: $searchBarText)
+                        List {
+                            
+                            Section(header: Text("DocWind >").font(.caption)) {
+         //-----------------------------------------------------------------//
+//                                ListCustomGridView(itemArray: self.model.contents!.direcContents)
+                                //-----------------------------------------------------------------//
+                                NormalListRowView(itemArray: self.model.contents!.direcContents, activeSheet: $activeSheet, isShown: $isShown)
+                            }
+                            
+                        }
+                    }
+                } else {
+                    Text("Looks empty here, scan a new document using the 'add' button above.")
                     .font(.caption)
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
                         .padding([.leading, .trailing, .top])
-                } else {
-                    // display list or grid
-                    List {
-                        //-----------------------------------------------------------------//
-                        ListCustomGridView(itemArray: self.model.contents!.direcContents)
-                        //-----------------------------------------------------------------//
-//                        NormalListRowView(itemArray: self.model.contents!.direcContents)
-//                        NormalListRowView(itemArray: self.model.contents!.direcContents, activeSheet: $activeSheet, isShown: $isShown)
-                        
-                    }
                 }
-            } else {
-                Text("Looks empty here, scan a new document using the '+' button above.")
-                .font(.caption)
-                .foregroundColor(.gray)
-                .multilineTextAlignment(.center)
-                    .padding([.leading, .trailing, .top])
                 
-//                Text(model.contents!.direcName)
+                Spacer()
             }
-            
-            Spacer()
+            .navigationBarTitle(Text("docWind"))
+            .navigationViewStyle(StackNavigationViewStyle())
+            .navigationBarItems(leading: Button(action: toggleSearch) {
+//                Image(systemName: "magnifyingglass")
+//                .font(.system(size: 30))
+                Text("Search")
+                }
+                ,trailing: Button(action: createDiectory){
+//                Image(systemName: "plus")
+//                    .font(.system(size: 30))
+                    Text("Add")
+            })
         }
-            
         // On appear code
         .onAppear {
                 self.check()
@@ -81,7 +88,7 @@ struct ContentView: View {
                 IntroView()
                 .environment(\.managedObjectContext, self.context)
             } else if self.activeSheet == .tappedDirec {
-                DetailedDirecView()
+//                DetailedDirecView()
             } else if self.activeSheet == .tappedPdf {
                 DetailPdfView()
             } else if self.activeSheet == .createdDirec {
@@ -115,6 +122,13 @@ struct ContentView: View {
         self.isShown.toggle()
         //2. enter detials
         //3. reload list
+    }
+    
+    func toggleSearch() {
+        withAnimation {
+            self.toggleSearchIcon.toggle()
+        }
+        
     }
 }
 

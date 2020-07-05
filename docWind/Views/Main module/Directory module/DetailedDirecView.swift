@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct DetailedDirecView: View {
+    
+    @State var item: ItemModel
+    
     var body: some View {
-        Text("Detailed direc view")
-    }
-}
-
-struct DetailedDirecView_Previews: PreviewProvider {
-    static var previews: some View {
-        DetailedDirecView()
+        VStack {
+            Text("Hi")
+                .navigationBarTitle(Text(item.wrappedItemName), displayMode: .inline)
+        }
     }
 }
