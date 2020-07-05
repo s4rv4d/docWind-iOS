@@ -11,6 +11,7 @@ import SwiftUI
 struct NormalListRowView: View {
     
     let itemArray: [ItemModel]
+    let masterFolder: String
     
     @Binding var activeSheet: ActiveContentViewSheet
     @Binding var isShown: Bool
@@ -18,7 +19,7 @@ struct NormalListRowView: View {
     
     var body: some View {
         return ForEach(0..<itemArray.count, id: \.self){ index in
-            NavigationLink(destination: DetailedDirecView(item: self.itemArray[index], model: GeneralDocListViewModel(name: self.itemArray[index].wrappedItemName))) {
+            NavigationLink(destination: DetailedDirecView(item: self.itemArray[index], masterFolder: self.masterFolder, model: GeneralDocListViewModel(name: self.itemArray[index].wrappedItemName))) {
                 HStack {
                     Image((self.itemArray[index].wrappedItemType == DWDIRECTORY) ? self.itemArray[index].wrappedIconName : "bluePdfFile")
                         .frame(width: 30, height: 30)

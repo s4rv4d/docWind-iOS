@@ -49,7 +49,7 @@ struct ContentView: View {
          //-----------------------------------------------------------------//
 //                                ListCustomGridView(itemArray: self.model.contents!.direcContents)
                                 //-----------------------------------------------------------------//
-                                NormalListRowView(itemArray: self.model.contents!.direcContents, activeSheet: $activeSheet, isShown: $isShown)
+                                NormalListRowView(itemArray: self.model.contents!.direcContents, masterFolder: "DocWind", activeSheet: $activeSheet, isShown: $isShown)
                             }
                             
                         }

@@ -18,6 +18,7 @@ struct DetailedDirecView: View {
     @State var activeSheet: ActiveContentViewSheet = .intro
     @State private var presentAlert = false
     @State private var toggleSearchIcon = false
+    @State var masterFolder: String
     
     // MARK: - Objects
     @ObservedObject var model: GeneralDocListViewModel
@@ -45,11 +46,11 @@ struct DetailedDirecView: View {
 //                        SearchBarView(text: $searchBarText)
                     List {
                         
-                        Section(header: Text("DocWind >").font(.caption)) {
+                        Section(header: Text("\(masterFolder) > \(item.wrappedItemName)").font(.caption)) {
      //-----------------------------------------------------------------//
 //                                ListCustomGridView(itemArray: self.model.contents!.direcContents)
                             //-----------------------------------------------------------------//
-                            NormalListRowView(itemArray: self.model.contents!.direcContents, activeSheet: $activeSheet, isShown: $isShown)
+                            NormalListRowView(itemArray: self.model.contents!.direcContents, masterFolder: item.wrappedItemName, activeSheet: $activeSheet, isShown: $isShown)
                         }
                         
                     }
