@@ -44,7 +44,6 @@ struct DetailedDirecView: View {
                         SearchBarView(text: $searchBarText)
                             .padding(.top)
                     }
-//                        SearchBarView(text: $searchBarText)
                     List {
                         
                         Section(header: Text("\(masterFolder) > \(item.wrappedItemName)").font(.caption)) {
@@ -55,6 +54,7 @@ struct DetailedDirecView: View {
                         }
                         
                     }
+                    .listStyle(GroupedListStyle())
                 }
             } else {
                 Text("Looks empty here, scan a new document using the '+' button above.")

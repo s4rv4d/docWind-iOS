@@ -25,7 +25,6 @@ struct AddDirecView: View {
     @Environment(\.managedObjectContext) var context
     
     // MARK: - Properties
-//    var iconNames = ["blueFolder", "redFolder", "pinkFolder", "greenFolder", "yellowFolder"]
     var iconColors: [Color] = [.blue, .red, .green, .yellow, .pink]
     var iconNameString: [Color: String] = [.blue:"blue", .red:"red", .green:"green", .yellow:"yellow", .pink:"pink"]
     
@@ -66,11 +65,11 @@ struct AddDirecView: View {
                     }
                 }
                 
-                Section(header: Text("Lock folder?")) {
-                    Toggle(isOn: $isLocked) {
-                        Text("Private")
-                    }
-                }
+//                Section(header: Text("Lock folder?")) {
+//                    Toggle(isOn: $isLocked) {
+//                        Text("Private")
+//                    }
+//                }
             }
         .navigationBarTitle(Text("Add a new directory"))
             .navigationBarItems(leading: Button("Cancel") {

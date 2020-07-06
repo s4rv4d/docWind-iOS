@@ -41,8 +41,8 @@ struct ContentView: View {
                         // display list or gridSearchBarView(text: $searchBarText)
                         if toggleSearchIcon {
                             SearchBarView(text: $searchBarText)
+                            .disabled(!toggleSearchIcon)
                         }
-//                        SearchBarView(text: $searchBarText)
                         List {
                             
                             Section(header: Text("DocWind >").font(.caption)) {
@@ -53,6 +53,7 @@ struct ContentView: View {
                             }
                             
                         }
+                        .listStyle(GroupedListStyle())
                     }
                 } else {
                     Text("Looks empty here, scan a new document using the 'add' button above.")
@@ -67,13 +68,9 @@ struct ContentView: View {
             .navigationBarTitle(Text("docWind"))
             .navigationViewStyle(StackNavigationViewStyle())
             .navigationBarItems(leading: Button(action: toggleSearch) {
-//                Image(systemName: "magnifyingglass")
-//                .font(.system(size: 30))
                 Text("Search")
                 }
                 ,trailing: Button(action: showOptions){
-//                Image(systemName: "plus")
-//                    .font(.system(size: 30))
                     Text("Add")
             })
         }
@@ -87,19 +84,17 @@ struct ContentView: View {
             if self.activeSheet == .intro {
                 IntroView()
                 .environment(\.managedObjectContext, self.context)
-            } else if self.activeSheet == .tappedDirec {
-//                DetailedDirecView()
-            } else if self.activeSheet == .tappedPdf {
-                DetailPdfView()
             } else if self.activeSheet == .createdDirec {
                 AddDirecView(model: self.model).environment(\.managedObjectContext, self.context)
+            } else if self.activeSheet == .createPdf {
+                AddPdfMainView(model: self.model).environment(\.managedObjectContext, self.context)
             }
         }
         
         // action sheet code
         .actionSheet(isPresented: $showingActionSheet) {
             ActionSheet(title: Text("Options"), message: Text("Choose and option"), buttons: [
-                .default(Text("Scan a document")) { print("Scan a new document") },
+                .default(Text("Scan a document"), action: scanDocumentTapped),
                 .default(Text("Create a new directory"), action: createDiectory),
                 .cancel()
             ])
@@ -133,6 +128,14 @@ struct ContentView: View {
             self.toggleSearchIcon.toggle()
         }
         
+    }
+    
+    func scanDocumentTapped() {
+        print("❇️ SCAN DOC TAPPED")
+        //bring uo editing page
+        self.activeSheet = .createPdf
+        self.isShown.toggle()
+        //addd pages and saves
     }
 }
 

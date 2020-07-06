@@ -17,7 +17,7 @@ enum DWItemType: String {
 
 // Enum for activesheet
 enum ActiveContentViewSheet {
-    case intro, tappedDirec, tappedPdf, createdDirec
+    case intro, tappedDirec, tappedPdf, createdDirec, createPdf
 }
 
 // Enum for folder icon colors
