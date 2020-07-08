@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import SwiftUI
 
 // Enum for differentiating item type
 enum DWItemType: String {
@@ -20,6 +20,11 @@ enum ActiveContentViewSheet {
     case intro, tappedDirec, tappedPdf, createdDirec, createPdf
 }
 
+// enum for active sheet #2
+enum ActiveOdfMainViewSheet {
+    case scannerView, pdfView
+}
+
 // Enum for folder icon colors
 enum FolderIconColor: String {
     case blue
@@ -29,3 +34,10 @@ enum FolderIconColor: String {
     case pink
 }
 
+enum FeedbackManager {
+    static func mediumFeedback() {
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.prepare()
+        generator.impactOccurred()
+    }
+}

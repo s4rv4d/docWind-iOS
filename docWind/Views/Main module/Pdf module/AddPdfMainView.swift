@@ -18,6 +18,7 @@ struct AddPdfMainView: View {
     @State private var showScanner = false
     @State var pages: [UIImage] = [UIImage]()
     @State var pageImages: [Image] = [Image]()
+    @State private var activeSheet: ActiveOdfMainViewSheet = .scannerView
     
     // MARK: - Object
     @ObservedObject var model: MainDocListViewModel // will use for saving stuff
@@ -40,7 +41,7 @@ struct AddPdfMainView: View {
                     TextField("Enter a name", text: $pdfName)
                 }
                 
-                Section(header: Text("Choose a folder icon")) {
+                Section(header: Text("Choose a file icon")) {
                     ScrollView(.horizontal) {
                         HStack {
                             ForEach(0..<iconColors.count) { index in
@@ -76,9 +77,15 @@ struct AddPdfMainView: View {
                             HStack {
                                 ForEach(0..<self.pages.count){ index in
                                     Image(uiImage: self.pages[index])
-                                    .frame(width: 50, height: 100)
-                                        .aspectRatio(contentMode: .fit)
+                                    .resizable()
+                                    .frame(width: 150, height: 200)
+                                    .cornerRadius(8)
+                                        .aspectRatio(contentMode: .fill)
+                                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white))
                                     .padding()
+                                        .onTapGesture {
+                                            self.imageTapped()
+                                    }
                                 }
                             }
                         }
@@ -97,7 +104,13 @@ struct AddPdfMainView: View {
             Alert(title: Text("Notice"), message: Text(alertMessage), primaryButton: .cancel(), secondaryButton: .default(Text("Retry")))
         }
         .sheet(isPresented: $showScanner) {
-            ScannerView(recognizedText: self.$recognizedText.value, uiImages: self.$pages)
+            if self.activeSheet == .scannerView {
+                ScannerView(recognizedText: self.$recognizedText.value, uiImages: self.$pages)
+//                ConfPdfView(pages: self.$pages)
+            } else if self.activeSheet == .pdfView {
+//                ConfPdfView(pages: self.$pages)
+                SnapCarouselView(images: self.pages, title: self.pdfName)
+            }
         }
     }
     
@@ -107,6 +120,11 @@ struct AddPdfMainView: View {
     }
     
     private func addPagesTapped() {
+        self.showScanner.toggle()
+    }
+    
+    private func imageTapped() {
+        self.activeSheet = .pdfView
         self.showScanner.toggle()
     }
 }

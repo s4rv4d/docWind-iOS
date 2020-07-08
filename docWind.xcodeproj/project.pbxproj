@@ -17,6 +17,10 @@
 		405EE7A624B339B4005F525F /* RecognizedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EE7A524B339B4005F525F /* RecognizedText.swift */; };
 		405EE7A824B339DD005F525F /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EE7A724B339DD005F525F /* ScannerView.swift */; };
 		405EE7AA24B33AB1005F525F /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EE7A924B33AB1005F525F /* TextRecognizer.swift */; };
+		406E9AF424B5E773000FB8FD /* SnapCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406E9AF324B5E773000FB8FD /* SnapCarouselView.swift */; };
+		406E9AF624B5E798000FB8FD /* CarouselCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406E9AF524B5E798000FB8FD /* CarouselCardModel.swift */; };
+		406E9AF924B5E80F000FB8FD /* UIStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406E9AF824B5E80F000FB8FD /* UIStateModel.swift */; };
+		406E9AFB24B617EE000FB8FD /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406E9AFA24B617EE000FB8FD /* CustomHeaderView.swift */; };
 		407567F424B1FC4A0071B575 /* GeneralDocViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407567F324B1FC4A0071B575 /* GeneralDocViewModel.swift */; };
 		407567F624B1FC620071B575 /* GeneralDocListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407567F524B1FC620071B575 /* GeneralDocListViewModel.swift */; };
 		407567FA24B20CF00071B575 /* AddDocGeneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407567F924B20CF00071B575 /* AddDocGeneView.swift */; };
@@ -37,6 +41,7 @@
 		40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */; };
 		40DF994824B2E452001CEC67 /* DWDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DF994724B2E452001CEC67 /* DWDateFormatter.swift */; };
 		40DF994A24B2F5A2001CEC67 /* AddPdfMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */; };
+		40EF462C24B4ADF700D07A06 /* ConfPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EF462B24B4ADF700D07A06 /* ConfPdfView.swift */; };
 		40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FDE47B24AB964B006AAFD2 /* AppDelegate.swift */; };
 		40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FDE47D24AB964B006AAFD2 /* SceneDelegate.swift */; };
 		40FDE48124AB964B006AAFD2 /* docWind.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 40FDE47F24AB964B006AAFD2 /* docWind.xcdatamodeld */; };
@@ -61,6 +66,10 @@
 		405EE7A524B339B4005F525F /* RecognizedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedText.swift; sourceTree = "<group>"; };
 		405EE7A724B339DD005F525F /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		405EE7A924B33AB1005F525F /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
+		406E9AF324B5E773000FB8FD /* SnapCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapCarouselView.swift; sourceTree = "<group>"; };
+		406E9AF524B5E798000FB8FD /* CarouselCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCardModel.swift; sourceTree = "<group>"; };
+		406E9AF824B5E80F000FB8FD /* UIStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStateModel.swift; sourceTree = "<group>"; };
+		406E9AFA24B617EE000FB8FD /* CustomHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeaderView.swift; sourceTree = "<group>"; };
 		407567F324B1FC4A0071B575 /* GeneralDocViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDocViewModel.swift; sourceTree = "<group>"; };
 		407567F524B1FC620071B575 /* GeneralDocListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDocListViewModel.swift; sourceTree = "<group>"; };
 		407567F924B20CF00071B575 /* AddDocGeneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDocGeneView.swift; sourceTree = "<group>"; };
@@ -82,6 +91,7 @@
 		40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocWindFManager.swift; sourceTree = "<group>"; };
 		40DF994724B2E452001CEC67 /* DWDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWDateFormatter.swift; sourceTree = "<group>"; };
 		40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPdfMainView.swift; sourceTree = "<group>"; };
+		40EF462B24B4ADF700D07A06 /* ConfPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfPdfView.swift; sourceTree = "<group>"; };
 		40FDE47824AB964B006AAFD2 /* docWind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = docWind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40FDE47B24AB964B006AAFD2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		40FDE47D24AB964B006AAFD2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +125,7 @@
 				402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */,
 				402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */,
 				40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */,
+				40EF462B24B4ADF700D07A06 /* ConfPdfView.swift */,
 			);
 			path = "Pdf module";
 			sourceTree = "<group>";
@@ -144,8 +155,17 @@
 				40DF994724B2E452001CEC67 /* DWDateFormatter.swift */,
 				405EE7A524B339B4005F525F /* RecognizedText.swift */,
 				405EE7A924B33AB1005F525F /* TextRecognizer.swift */,
+				406E9AF824B5E80F000FB8FD /* UIStateModel.swift */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		406E9AF724B5E79D000FB8FD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				406E9AF524B5E798000FB8FD /* CarouselCardModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		40CDC4C024AF728C00462277 /* CoreData Models */ = {
@@ -196,6 +216,8 @@
 				402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */,
 				402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */,
 				405EE7A724B339DD005F525F /* ScannerView.swift */,
+				406E9AF324B5E773000FB8FD /* SnapCarouselView.swift */,
+				406E9AFA24B617EE000FB8FD /* CustomHeaderView.swift */,
 			);
 			path = "Custom View";
 			sourceTree = "<group>";
@@ -226,6 +248,7 @@
 				40D170B024ADA95A00F51F77 /* Custom View */,
 				40FDE49324AC4C2F006AAFD2 /* Views */,
 				40D170AD24ADA93300F51F77 /* View Model */,
+				406E9AF724B5E79D000FB8FD /* Model */,
 				40CDC4C024AF728C00462277 /* CoreData Models */,
 				40FDE49824AC4C87006AAFD2 /* Settings */,
 				40FDE49D24AC4ECD006AAFD2 /* Helpers */,
@@ -369,6 +392,7 @@
 				40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */,
 				405EE7A824B339DD005F525F /* ScannerView.swift in Sources */,
 				40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */,
+				406E9AF924B5E80F000FB8FD /* UIStateModel.swift in Sources */,
 				40FDE49724AC4C6C006AAFD2 /* SettingsManagable.swift in Sources */,
 				40FDE49A24AC4C95006AAFD2 /* AppSettings.swift in Sources */,
 				40CDC4CA24AF72CD00462277 /* PdfFilemodel+CoreDataProperties.swift in Sources */,
@@ -377,13 +401,17 @@
 				40CDC4C924AF72CD00462277 /* PdfFilemodel+CoreDataClass.swift in Sources */,
 				40FDE48124AB964B006AAFD2 /* docWind.xcdatamodeld in Sources */,
 				402C0B6A24B0A37A00A5A6C9 /* Helper+enums.swift in Sources */,
+				406E9AF624B5E798000FB8FD /* CarouselCardModel.swift in Sources */,
 				40FDE49524AC4C3D006AAFD2 /* IntroView.swift in Sources */,
+				406E9AFB24B617EE000FB8FD /* CustomHeaderView.swift in Sources */,
 				40FDE48324AB964B006AAFD2 /* ContentView.swift in Sources */,
+				40EF462C24B4ADF700D07A06 /* ConfPdfView.swift in Sources */,
 				40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */,
 				40FDE49C24AC4EC9006AAFD2 /* Helper+Struct.swift in Sources */,
 				402C0B7224B0B0FF00A5A6C9 /* ScanPdfView.swift in Sources */,
 				40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */,
 				40CDC4CC24AF72CD00462277 /* DirecModel+CoreDataProperties.swift in Sources */,
+				406E9AF424B5E773000FB8FD /* SnapCarouselView.swift in Sources */,
 				402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */,
 				40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */,
 				40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */,

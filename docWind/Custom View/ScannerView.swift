@@ -54,11 +54,14 @@ struct ScannerView: UIViewControllerRepresentable {
             var imgs = [UIImage]()
             for pageIndex in 0 ..< scan.pageCount {
                 #warning("rewrite this code into an efficient way use same array")
-                let image = scan.imageOfPage(at: pageIndex)
-                if let cgImage = image.cgImage {
-                    images.append(cgImage)
-                    imgs.append(image)
-                }
+//                let image = scan.imageOfPage(at: pageIndex)
+//                if let cgImage = image.cgImage {
+//                    images.append(cgImage)
+//                    imgs.append(image)
+//                }
+                imgs.append(scan.imageOfPage(at: pageIndex))
+//                images.append(scan.imageOfPage(at: pageIndex).cgImage!
+//                )
             }
             self.uiImages.wrappedValue = imgs
             //set binding vars for image and cgimage
