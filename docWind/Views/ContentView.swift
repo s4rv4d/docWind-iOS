@@ -27,56 +27,67 @@ struct ContentView: View {
     // MARK: - Properties
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading) {
-                //check if contents isnt empty
-                if model.contents != nil {
-                    // display contents of file
-                    if (model.contents!.direcContents.count == 0) {
-                        Text("Looks empty here, scan a new document or create a new dierctory using the '+' button above.")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.center)
-                            .padding([.leading, .trailing, .top])
-                    } else {
-                        // display list or gridSearchBarView(text: $searchBarText)
-                        if toggleSearchIcon {
-                            SearchBarView(text: $searchBarText)
-                            .disabled(!toggleSearchIcon)
-                        }
-                        List {
-                            
-                            Section(header: Text("DocWind >").font(.caption)) {
-         //-----------------------------------------------------------------//
-//                                ListCustomGridView(itemArray: self.model.contents!.direcContents)
-                                //-----------------------------------------------------------------//
-                                NormalListRowView(itemArray: self.model.contents!.direcContents, masterFolder: "DocWind", activeSheet: $activeSheet, isShown: $isShown)
+                    VStack(alignment: .leading) {
+                        //check if contents isnt empty
+                        if model.contents != nil {
+                            // display contents of file
+                            if (model.contents!.direcContents.count == 0) {
+                                Text("Looks empty here, scan a new document or create a new dierctory using the '+' button above.")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                                .multilineTextAlignment(.center)
+                                    .padding([.leading, .trailing, .top])
+                            } else {
+                                // display list or gridSearchBarView(text: $searchBarText)
+                                if toggleSearchIcon {
+                                    SearchBarView(text: $searchBarText)
+                                    .disabled(!toggleSearchIcon)
+                                }
+                                List {
+                                    
+                                    Section(header: Text("DocWind >").font(.caption)) {
+                    //-----------------------------------------------------------------//
+        //                                ListCustomGridView(itemArray: self.model.contents!.direcContents)
+                                        //-----------------------------------------------------------------//
+                                        NormalListRowView(itemArray: self.model.contents!.direcContents, masterFolder: "DocWind", activeSheet: $activeSheet, isShown: $isShown)
+                                    }
+                                    
+                                }
+                                .listStyle(GroupedListStyle())
                             }
-                            
+                        } else {
+                            Text("Looks empty here, scan a new document using the 'add' button above.")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                            .multilineTextAlignment(.center)
+                                .padding([.leading, .trailing, .top])
                         }
-                        .listStyle(GroupedListStyle())
+                        
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            Image(systemName: "gear")
+                                .font(.body)
+                                .foregroundColor(.blue)
+                            .padding()
+                                .onTapGesture {
+                                    self.settingsTapped()
+                            }
+                        }.background(Color(.secondarySystemBackground))
                     }
-                } else {
-                    Text("Looks empty here, scan a new document using the 'add' button above.")
-                    .font(.caption)
-                    .foregroundColor(.gray)
-                    .multilineTextAlignment(.center)
-                        .padding([.leading, .trailing, .top])
+                    .navigationBarTitle(Text("docWind"))
+                    .navigationViewStyle(StackNavigationViewStyle())
+                    .navigationBarItems(leading: Button(action: toggleSearch) {
+                        Text("Search")
+                        }
+                        ,trailing: Button(action: showOptions){
+                            Text("Add")
+                    })
                 }
-                
-                Spacer()
-            }
-            .navigationBarTitle(Text("docWind"))
-            .navigationViewStyle(StackNavigationViewStyle())
-            .navigationBarItems(leading: Button(action: toggleSearch) {
-                Text("Search")
-                }
-                ,trailing: Button(action: showOptions){
-                    Text("Add")
-            })
-        }
+            
         // On appear code
         .onAppear {
-                self.check()
+            self.check()
         }
             
         // sheet code
@@ -88,6 +99,8 @@ struct ContentView: View {
                 AddDirecView(model: self.model).environment(\.managedObjectContext, self.context)
             } else if self.activeSheet == .createPdf {
                 AddPdfMainView(model: self.model).environment(\.managedObjectContext, self.context)
+            } else if self.activeSheet == .settingsTapped {
+                SettingsView()
             }
         }
         
@@ -136,6 +149,11 @@ struct ContentView: View {
         self.activeSheet = .createPdf
         self.isShown.toggle()
         //addd pages and saves
+    }
+    
+    func settingsTapped() {
+        self.activeSheet = .settingsTapped
+        self.isShown.toggle()
     }
 }
 

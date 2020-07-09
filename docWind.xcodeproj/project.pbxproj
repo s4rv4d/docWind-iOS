@@ -14,6 +14,7 @@
 		402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */; };
 		402C0B7224B0B0FF00A5A6C9 /* ScanPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */; };
 		402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */; };
+		404D7F9A24B6ED3B002F53F0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404D7F9924B6ED3B002F53F0 /* SettingsView.swift */; };
 		405EE7A624B339B4005F525F /* RecognizedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EE7A524B339B4005F525F /* RecognizedText.swift */; };
 		405EE7A824B339DD005F525F /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EE7A724B339DD005F525F /* ScannerView.swift */; };
 		405EE7AA24B33AB1005F525F /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EE7A924B33AB1005F525F /* TextRecognizer.swift */; };
@@ -63,6 +64,7 @@
 		402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPdfView.swift; sourceTree = "<group>"; };
 		402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanPdfView.swift; sourceTree = "<group>"; };
 		402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDirecView.swift; sourceTree = "<group>"; };
+		404D7F9924B6ED3B002F53F0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		405EE7A524B339B4005F525F /* RecognizedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedText.swift; sourceTree = "<group>"; };
 		405EE7A724B339DD005F525F /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		405EE7A924B33AB1005F525F /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
@@ -147,6 +149,14 @@
 				407567F924B20CF00071B575 /* AddDocGeneView.swift */,
 			);
 			path = "Directory module";
+			sourceTree = "<group>";
+		};
+		404D7F9B24B6EF99002F53F0 /* Settings module */ = {
+			isa = PBXGroup;
+			children = (
+				404D7F9924B6ED3B002F53F0 /* SettingsView.swift */,
+			);
+			path = "Settings module";
 			sourceTree = "<group>";
 		};
 		405EE7A424B3398E005F525F /* Classes */ = {
@@ -284,6 +294,7 @@
 				40FDE48224AB964B006AAFD2 /* ContentView.swift */,
 				40D170AA24ADA90800F51F77 /* Intro module */,
 				402C0B7424B0B11500A5A6C9 /* Main module */,
+				404D7F9B24B6EF99002F53F0 /* Settings module */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -393,6 +404,7 @@
 				405EE7A824B339DD005F525F /* ScannerView.swift in Sources */,
 				40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */,
 				406E9AF924B5E80F000FB8FD /* UIStateModel.swift in Sources */,
+				404D7F9A24B6ED3B002F53F0 /* SettingsView.swift in Sources */,
 				40FDE49724AC4C6C006AAFD2 /* SettingsManagable.swift in Sources */,
 				40FDE49A24AC4C95006AAFD2 /* AppSettings.swift in Sources */,
 				40CDC4CA24AF72CD00462277 /* PdfFilemodel+CoreDataProperties.swift in Sources */,

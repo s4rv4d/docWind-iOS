@@ -32,13 +32,7 @@ extension UIImage {
         context!.fill(rect)
         
         image1.draw(in: CGRect(x: 0.0, y: 0.0, width: image1.size.width, height: image1.size.height))
-        image2.draw(in: CGRect(x: 50, y: 200, width: ((image1.size.width/100) * 30), height: ((image1.size.height/100) * 5)))
-        
-//        image1.layer.render(in: UIGraphicsGetCurrentContext()!)
-//        image2.layer.render(in: UIGraphicsGetCurrentContext()!)
-//        let img = UIGraphicsGetImageFromCurrentImageContext()
-//        UIGraphicsEndImageContext()
-//        return img!
+        image2.draw(in: CGRect(x: 50, y: 200, width: ((image1.size.width/100) * 402), height: ((image1.size.height/100) * 3)))
         
         let result = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

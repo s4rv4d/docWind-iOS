@@ -96,7 +96,12 @@ struct AddPdfMainView: View {
                 
                 Section(header: Text("Options")){
                     Toggle(isOn: $removeWatermark) {
-                        Text("Remove watermark")
+                        HStack {
+                            Text("Remove watermark")
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.yellow)
+                            Spacer()
+                        }
                     }
                 }
             }
@@ -113,11 +118,12 @@ struct AddPdfMainView: View {
         }
         .sheet(isPresented: $showScanner) {
             if self.activeSheet == .scannerView {
-                ScannerView(recognizedText: self.$recognizedText.value, uiImages: self.$pages)
+                ScannerView(recognizedText: self.$recognizedText.value, uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
 //                ConfPdfView(pages: self.$pages)
             } else if self.activeSheet == .pdfView {
 //                ConfPdfView(pages: self.$pages)
-                SnapCarouselView(images: self.pages, title: self.pdfName)
+//                var images = (self.removeWatermark == true) ? self.pages : self.pagesWithMark
+                SnapCarouselView(images: (self.removeWatermark == true) ? self.pages : self.pagesWithMark, title: self.pdfName)
             }
         }
     }
