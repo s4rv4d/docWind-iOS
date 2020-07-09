@@ -25,6 +25,11 @@ enum ActiveOdfMainViewSheet {
     case scannerView, pdfView
 }
 
+// enum for active sheet in carousel view
+enum ActiveCarouselViewSheet {
+    case shareView, fillView
+}
+
 // Enum for folder icon colors
 enum FolderIconColor: String {
     case blue
@@ -41,3 +46,34 @@ enum FeedbackManager {
         generator.impactOccurred()
     }
 }
+
+// Helper enums for SlideOverCardView
+enum CardPosition: CGFloat {
+    case top = 100
+    case middle = 500
+    case bottom = 600
+}
+
+enum DragState {
+    case inactive
+    case dragging(translation: CGSize)
+    
+    var translation: CGSize {
+        switch self {
+        case .inactive:
+            return .zero
+        case .dragging(let translation):
+            return translation
+        }
+    }
+    
+    var isDragging: Bool {
+        switch self {
+        case .inactive:
+            return false
+        case .dragging:
+            return true
+        }
+    }
+}
+

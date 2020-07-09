@@ -25,6 +25,8 @@
 		407567F424B1FC4A0071B575 /* GeneralDocViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407567F324B1FC4A0071B575 /* GeneralDocViewModel.swift */; };
 		407567F624B1FC620071B575 /* GeneralDocListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407567F524B1FC620071B575 /* GeneralDocListViewModel.swift */; };
 		407567FA24B20CF00071B575 /* AddDocGeneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407567F924B20CF00071B575 /* AddDocGeneView.swift */; };
+		40920EB024B744BE00E2293C /* DrawOnImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40920EAF24B744BE00E2293C /* DrawOnImageView.swift */; };
+		40920EB224B74E7800E2293C /* SlideOverCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40920EB124B74E7800E2293C /* SlideOverCardView.swift */; };
 		409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409244BD24B19D640013BF8F /* Helper+Extensions.swift */; };
 		40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */; };
 		40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140424AE14C000126ABA /* SearchBarView.swift */; };
@@ -75,6 +77,8 @@
 		407567F324B1FC4A0071B575 /* GeneralDocViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDocViewModel.swift; sourceTree = "<group>"; };
 		407567F524B1FC620071B575 /* GeneralDocListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDocListViewModel.swift; sourceTree = "<group>"; };
 		407567F924B20CF00071B575 /* AddDocGeneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDocGeneView.swift; sourceTree = "<group>"; };
+		40920EAF24B744BE00E2293C /* DrawOnImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawOnImageView.swift; sourceTree = "<group>"; };
+		40920EB124B74E7800E2293C /* SlideOverCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOverCardView.swift; sourceTree = "<group>"; };
 		409244BD24B19D640013BF8F /* Helper+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Extensions.swift"; sourceTree = "<group>"; };
 		40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWFMAppSettings.swift; sourceTree = "<group>"; };
 		40C5140424AE14C000126ABA /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
@@ -228,6 +232,8 @@
 				405EE7A724B339DD005F525F /* ScannerView.swift */,
 				406E9AF324B5E773000FB8FD /* SnapCarouselView.swift */,
 				406E9AFA24B617EE000FB8FD /* CustomHeaderView.swift */,
+				40920EAF24B744BE00E2293C /* DrawOnImageView.swift */,
+				40920EB124B74E7800E2293C /* SlideOverCardView.swift */,
 			);
 			path = "Custom View";
 			sourceTree = "<group>";
@@ -411,6 +417,7 @@
 				40DF994A24B2F5A2001CEC67 /* AddPdfMainView.swift in Sources */,
 				40CDC4CB24AF72CD00462277 /* DirecModel+CoreDataClass.swift in Sources */,
 				40CDC4C924AF72CD00462277 /* PdfFilemodel+CoreDataClass.swift in Sources */,
+				40920EB224B74E7800E2293C /* SlideOverCardView.swift in Sources */,
 				40FDE48124AB964B006AAFD2 /* docWind.xcdatamodeld in Sources */,
 				402C0B6A24B0A37A00A5A6C9 /* Helper+enums.swift in Sources */,
 				406E9AF624B5E798000FB8FD /* CarouselCardModel.swift in Sources */,
@@ -421,6 +428,7 @@
 				40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */,
 				40FDE49C24AC4EC9006AAFD2 /* Helper+Struct.swift in Sources */,
 				402C0B7224B0B0FF00A5A6C9 /* ScanPdfView.swift in Sources */,
+				40920EB024B744BE00E2293C /* DrawOnImageView.swift in Sources */,
 				40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */,
 				40CDC4CC24AF72CD00462277 /* DirecModel+CoreDataProperties.swift in Sources */,
 				406E9AF424B5E773000FB8FD /* SnapCarouselView.swift in Sources */,

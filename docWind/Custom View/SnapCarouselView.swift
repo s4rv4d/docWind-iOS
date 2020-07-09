@@ -10,13 +10,24 @@ import SwiftUI
 
 struct SnapCarouselView: View {
     
+    // MARK: - @State variables
+    @State private var activeSheet: ActiveCarouselViewSheet = .shareView
+    @State private var isShown = false
+    // use this to update/save to pdf format
+    @State var imagesState: [UIImage] = [UIImage]()
+    
+    // MARK: - Environment variables
+    @Environment(\.presentationMode) var presentationMode
+    
     // MARK: - Properties
     var UIState: UIStateModel = UIStateModel()
     var items: [Carditem]
+    var images: [UIImage]
     var title: String
     
     init(images: [UIImage], title: String) {
         self.items = images.map{ Carditem(id: images.firstIndex(of: $0)!, name: "none", image: $0) }
+        self.images = images
         self.title = title
     }
     
@@ -24,13 +35,11 @@ struct SnapCarouselView: View {
         let spacing: CGFloat = 16
         let widthOfHiddenCards: CGFloat = 32
         let cardHeight: CGFloat = ((UIScreen.main.bounds.height)/100 * 60)
-        
-//        let items = [Carditem]()
-        
+                
         return Canvas {
             VStack {
                 CustomHeaderView(title: title, action: saveTapped)
-//                Divider()
+                
                 Carousel(
                     numberOfItems: CGFloat(items.count),
                     spacing: spacing,
@@ -43,7 +52,6 @@ struct SnapCarouselView: View {
                                 widthOfHiddenCard: widthOfHiddenCards,
                                 cardHeight: cardHeight
                                 ) {
-//                                    Text("\(item.name)")
                                     Image(uiImage: item.image)
                                     .resizable()
                                         .aspectRatio(contentMode: .fill)
@@ -61,10 +69,9 @@ struct SnapCarouselView: View {
                     .padding()
                 
                 HStack {
-                    Button(action: {}){
+                    Button(action: shareTapped){
                         VStack {
                             Image(systemName: "square.and.arrow.up")
-//                            .padding()
                             Text("Share")
                         }
                     .frame(width: 60, height: 60)
@@ -74,13 +81,12 @@ struct SnapCarouselView: View {
                             .background(Color(.secondarySystemBackground))
                             .cornerRadius(10)
                     }.padding()
-//                    Spacer()
-                    Button(action: {}){
+                    
+                    Button(action: fillTapped){
                         VStack {
-                            Image(systemName: "paperplane")
-                            Text("Export")
+                            Image(systemName: "pencil.and.outline")
+                            Text("Fill")
                         }.frame(width: 60, height: 60)
-//                        .frame(width: 100, height: 100)
                         
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
                             .foregroundColor(.blue)
@@ -88,24 +94,24 @@ struct SnapCarouselView: View {
                         .cornerRadius(10)
                     }.padding()
 //                    Spacer()
-                    Button(action: {}){
+                    Button(action: ocrTapped){
                         VStack {
                             Image(systemName: "doc.text.viewfinder")
                             Text("OCR")
                         }.frame(width: 60, height: 60)
+                            
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
                             .foregroundColor(.blue)
                             .background(Color(.secondarySystemBackground))
                         .cornerRadius(10)
                     }.padding()
-//                    Spacer()
-                    Button(action: {}){
+                    
+                    Button(action: deleteTapped){
                         VStack {
                             Image(systemName: "trash")
                             Text("Delete")
                         }.frame(width: 60, height: 60)
                             
-//                        .frame(width: 100, height: 100)
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
                             .foregroundColor(.red)
                             .background(Color(.secondarySystemBackground))
@@ -115,10 +121,38 @@ struct SnapCarouselView: View {
                 Spacer()
             }
         }
+        .onAppear {
+            self.imagesState = self.images
+        }
+        .sheet(isPresented: $isShown) {
+            if self.activeSheet == .fillView {
+                DrawOnImageView(images: self.$imagesState, pageId: self.UIState.activeCard)
+            }
+        }
     }
     
     // MARK: - Functions
-    func saveTapped() {
+    private func saveTapped() {
         print("saving... ")
+    }
+    
+    private func fillTapped() {
+        print("fill tapped")
+        self.activeSheet = .fillView
+        self.isShown.toggle()
+    }
+    
+    private func deleteTapped() {
+        print("delete tapped")
+        
+        // bring up an alert
+    }
+    
+    private func shareTapped() {
+        print("share tapped")
+    }
+    
+    private func ocrTapped() {
+        print("ocr tapped")
     }
 }

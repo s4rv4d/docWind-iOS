@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SwiftUI
+import CoreGraphics
 
 // MARK: - Helper struct
 ///use throughout the whole app
@@ -349,4 +350,48 @@ struct Carousel<Items: View>: View {
     }
 }
 
+// MARK: - Helper stuff for drawing
+struct Drawing {
+    var points: [CGPoint] = [CGPoint]()
+}
 
+struct Handle : View {
+    private let handleThickness = CGFloat(5.0)
+    var body: some View {
+        RoundedRectangle(cornerRadius: handleThickness / 2.0)
+            .frame(width: 40, height: handleThickness)
+            .foregroundColor(Color.secondary)
+            .padding(5)
+    }
+}
+
+
+struct ColorRow: View {
+    
+    
+    var colorHex = ["#FF0000", "#FF00C3", "#6F00FF", "#0900FF", "#00FFEE", "#00FF33", "#1AFF00", "#EFFF00", "#FFDD00", "#FFA000", "#6C3A00", "#FFEF26", "#2C0C85", "#D333D3", "#006191", "#4CFF1F"]
+    
+    @Binding var selectedColor: Color
+    
+    var body: some View {
+        var cards: [[Int]] = []
+        _ = (0..<16).publisher
+        .collect(8)
+        .collect()
+        .sink(receiveValue: { cards = $0 })
+        
+        return  ForEach(0..<cards.count, id:\.self) { array in
+            HStack(alignment: .center) {
+                ForEach(cards[array], id:\.self) { number in
+                    Color(hex: self.colorHex[number])
+                        .frame(width: 30, height: 30)
+                        .clipShape(Circle())
+                        .clipShape(Circle()).overlay(Circle().stroke(Color.primary, lineWidth: (self.selectedColor == Color(hex: self.colorHex[number])) ? 4 : 0))
+                        .onTapGesture {
+                            self.selectedColor = Color(hex: self.colorHex[number])
+                    }
+                }
+            }
+        }
+    }
+}
