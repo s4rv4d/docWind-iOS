@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 extension View {
     func settingsBackground() -> some View {
@@ -17,5 +18,30 @@ extension View {
                 .fill(Color(.secondarySystemBackground)))
             .padding(.bottom, 6)
 //            .padding(.horizontal)
+    }
+}
+
+
+extension UIImage {
+
+    class func imageWithWatermark(image1: UIImage, image2: UIImage) -> UIImage {
+        let rect = CGRect(x: 0, y: 0, width: image1.size.width, height: image1.size.height)
+        UIGraphicsBeginImageContextWithOptions(image1.size, false, 0.0)
+        let context = UIGraphicsGetCurrentContext()
+        context!.setFillColor(UIColor.white.cgColor)
+        context!.fill(rect)
+        
+        image1.draw(in: CGRect(x: 0.0, y: 0.0, width: image1.size.width, height: image1.size.height))
+        image2.draw(in: CGRect(x: 50, y: 200, width: ((image1.size.width/100) * 30), height: ((image1.size.height/100) * 5)))
+        
+//        image1.layer.render(in: UIGraphicsGetCurrentContext()!)
+//        image2.layer.render(in: UIGraphicsGetCurrentContext()!)
+//        let img = UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext()
+//        return img!
+        
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result!
     }
 }

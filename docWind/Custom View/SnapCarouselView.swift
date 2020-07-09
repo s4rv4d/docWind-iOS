@@ -52,7 +52,7 @@ struct SnapCarouselView: View {
                             .foregroundColor(Color.red)
                             .background(Color.black)
                             .cornerRadius(8)
-//                            .shadow(color: .secondary, radius: 4, x: 0, y: 4)
+                            .shadow(color: .secondary, radius: 3, x: 0, y: 4)
                             .transition(AnyTransition.slide)
                             .animation(.spring())
                             .environmentObject(self.UIState)
@@ -77,8 +77,8 @@ struct SnapCarouselView: View {
 //                    Spacer()
                     Button(action: {}){
                         VStack {
-                            Image(systemName: "square.and.arrow.up")
-                            Text("Share")
+                            Image(systemName: "paperplane")
+                            Text("Export")
                         }.frame(width: 60, height: 60)
 //                        .frame(width: 100, height: 100)
                         
@@ -90,8 +90,8 @@ struct SnapCarouselView: View {
 //                    Spacer()
                     Button(action: {}){
                         VStack {
-                            Image(systemName: "square.and.arrow.up")
-                            Text("Share")
+                            Image(systemName: "doc.text.viewfinder")
+                            Text("OCR")
                         }.frame(width: 60, height: 60)
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
                             .foregroundColor(.blue)
@@ -101,13 +101,13 @@ struct SnapCarouselView: View {
 //                    Spacer()
                     Button(action: {}){
                         VStack {
-                            Image(systemName: "square.and.arrow.up")
-                            Text("Share")
+                            Image(systemName: "trash")
+                            Text("Delete")
                         }.frame(width: 60, height: 60)
                             
 //                        .frame(width: 100, height: 100)
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
-                            .foregroundColor(.blue)
+                            .foregroundColor(.red)
                             .background(Color(.secondarySystemBackground))
                         .cornerRadius(10)
                     }.padding()

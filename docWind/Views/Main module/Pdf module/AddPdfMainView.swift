@@ -17,8 +17,10 @@ struct AddPdfMainView: View {
     @State private var showAlert = false
     @State private var showScanner = false
     @State var pages: [UIImage] = [UIImage]()
+    @State var pagesWithMark: [UIImage] = [UIImage]()
     @State var pageImages: [Image] = [Image]()
     @State private var activeSheet: ActiveOdfMainViewSheet = .scannerView
+    @State private var removeWatermark = false
     
     // MARK: - Object
     @ObservedObject var model: MainDocListViewModel // will use for saving stuff
@@ -89,6 +91,12 @@ struct AddPdfMainView: View {
                                 }
                             }
                         }
+                    }
+                }
+                
+                Section(header: Text("Options")){
+                    Toggle(isOn: $removeWatermark) {
+                        Text("Remove watermark")
                     }
                 }
             }

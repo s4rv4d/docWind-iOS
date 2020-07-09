@@ -59,7 +59,8 @@ struct ScannerView: UIViewControllerRepresentable {
 //                    images.append(cgImage)
 //                    imgs.append(image)
 //                }
-                imgs.append(scan.imageOfPage(at: pageIndex))
+//                imgs.append(scan.imageOfPage(at: pageIndex))
+                imgs.append(UIImage.imageWithWatermark(image1: scan.imageOfPage(at: pageIndex), image2: UIImage(named: "docWindWatermark")!))
 //                images.append(scan.imageOfPage(at: pageIndex).cgImage!
 //                )
             }
