@@ -41,7 +41,7 @@ struct ContentView: View {
                                 // display list or gridSearchBarView(text: $searchBarText)
                                 if toggleSearchIcon {
                                     SearchBarView(text: $searchBarText)
-                                    .disabled(!toggleSearchIcon)
+                                    .isHidden(!toggleSearchIcon)
                                 }
                                 List {
                                     
@@ -77,8 +77,9 @@ struct ContentView: View {
                     }
                     .navigationBarTitle(Text("docWind"))
                     .navigationViewStyle(StackNavigationViewStyle())
-                    .navigationBarItems(leading: Button(action: toggleSearch) {
-                        Text("Search")
+                    .navigationBarItems(leading:
+                        Button(action: toggleSearch) {
+                        Text("")
                         }
                         ,trailing: Button(action: showOptions){
                             Text("Add")
@@ -137,10 +138,10 @@ struct ContentView: View {
     }
     
     func toggleSearch() {
-        withAnimation {
-            self.toggleSearchIcon.toggle()
-        }
-        
+//        withAnimation {
+//            self.toggleSearchIcon.toggle()
+//        }
+//
     }
     
     func scanDocumentTapped() {

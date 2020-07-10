@@ -54,6 +54,10 @@ extension View {
         controller.view.removeFromSuperview()
         return image
     }
+    
+    func isHidden(_ hidden: Bool, remove: Bool = false) -> some View {
+        modifier(HiddenModifier(isHidden: hidden, remove: remove))
+    }
 }
 
 
