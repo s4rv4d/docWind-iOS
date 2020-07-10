@@ -18,17 +18,20 @@ struct SnapCarouselView: View {
     
     // MARK: - Environment variables
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.managedObjectContext) var context
     
     // MARK: - Properties
     var UIState: UIStateModel = UIStateModel()
     var items: [Carditem]
     var images: [UIImage]
     var title: String
-    
-    init(images: [UIImage], title: String) {
+    var delete: Binding<Bool>
+
+    init(images: [UIImage], title: String, delete: Binding<Bool>) {
         self.items = images.map{ Carditem(id: images.firstIndex(of: $0)!, name: "none", image: $0) }
         self.images = images
         self.title = title
+        self.delete = delete
     }
     
     var body: some View {
@@ -68,62 +71,43 @@ struct SnapCarouselView: View {
                 }.environmentObject(self.UIState)
                     .padding()
                 
-                HStack {
-                    Button(action: shareTapped){
-                        VStack {
-                            Image(systemName: "square.and.arrow.up")
-                            Text("Share")
-                        }
-                    .frame(width: 60, height: 60)
-                        
-                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
-                            .foregroundColor(.blue)
-                            .background(Color(.secondarySystemBackground))
-                            .cornerRadius(10)
-                    }.padding()
-                    
+                HStack() {
                     Button(action: fillTapped){
-                        VStack {
+                        HStack {
                             Image(systemName: "pencil.and.outline")
                             Text("Fill")
-                        }.frame(width: 60, height: 60)
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.yellow)
+                        }.padding()
                         
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
                             .foregroundColor(.blue)
                             .background(Color(.secondarySystemBackground))
                         .cornerRadius(10)
-                    }.padding()
-//                    Spacer()
+                    }
+                    Spacer()
                     Button(action: ocrTapped){
-                        VStack {
+                        HStack {
                             Image(systemName: "doc.text.viewfinder")
                             Text("OCR")
-                        }.frame(width: 60, height: 60)
+                            Image(systemName: "star.fill")
+                            .foregroundColor(.yellow)
+                            }.padding()
                             
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
                             .foregroundColor(.blue)
                             .background(Color(.secondarySystemBackground))
                         .cornerRadius(10)
-                    }.padding()
-                    
-                    Button(action: deleteTapped){
-                        VStack {
-                            Image(systemName: "trash")
-                            Text("Delete")
-                        }.frame(width: 60, height: 60)
-                            
-                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
-                            .foregroundColor(.red)
-                            .background(Color(.secondarySystemBackground))
-                        .cornerRadius(10)
-                    }.padding()
-                }.padding([.leading, .top, .bottom, .trailing])
+                    }
+                }.padding([.top, .bottom, .leading, .trailing])
                 Spacer()
             }
         }
         .onAppear {
             self.imagesState = self.images
+            
         }
+
         .sheet(isPresented: $isShown) {
             if self.activeSheet == .fillView {
                 DrawOnImageView(images: self.$imagesState, pageId: self.UIState.activeCard, image: self.imagesState[self.UIState.activeCard])
@@ -134,6 +118,8 @@ struct SnapCarouselView: View {
     // MARK: - Functions
     private func saveTapped() {
         print("saving... ")
+        // check number of images
+        // get vm and store in filemanager and make ref to coredata
     }
     
     private func fillTapped() {
@@ -145,10 +131,8 @@ struct SnapCarouselView: View {
     private func deleteTapped() {
         print("delete tapped")
         // bring up an alert
-    }
-    
-    private func shareTapped() {
-        print("share tapped")
+        self.presentationMode.wrappedValue.dismiss()
+        
     }
     
     private func ocrTapped() {

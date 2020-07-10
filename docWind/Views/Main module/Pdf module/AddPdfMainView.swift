@@ -20,7 +20,9 @@ struct AddPdfMainView: View {
     @State var pagesWithMark: [UIImage] = [UIImage]()
     @State var pageImages: [Image] = [Image]()
     @State private var activeSheet: ActiveOdfMainViewSheet = .scannerView
+    @State private var activeAlertSheet: ActiveAlertSheet = .notice
     @State private var removeWatermark = false
+    @State var deleteDoc = false
     
     // MARK: - Object
     @ObservedObject var model: MainDocListViewModel // will use for saving stuff
@@ -107,23 +109,25 @@ struct AddPdfMainView: View {
             }
             
                 .navigationBarTitle(Text(self.pdfName))
-            .navigationBarItems(leading: Button("Cancel") {
-                self.presentationMode.wrappedValue.dismiss()
+            .navigationBarItems(leading: Button(action: deleteFile){
+                Text("Delete")
+                    .foregroundColor(.red)
                 }, trailing: Button(action:  saveTapped){
                     Text("Save")
             })
         }
         .alert(isPresented: $showAlert) {
-            Alert(title: Text("Notice"), message: Text(alertMessage), primaryButton: .cancel(), secondaryButton: .default(Text("Retry")))
+            if self.activeAlertSheet == .notice {
+               return Alert(title: Text("Notice"), message: Text(alertMessage), primaryButton: .cancel(), secondaryButton: .default(Text("Retry")))
+            } else {
+               return Alert(title: Text("Alert"), message: Text("Are you sure you want to delete this document?"), primaryButton: .destructive(Text("Delete"), action: { self.presentationMode.wrappedValue.dismiss() }), secondaryButton: .cancel())
+            }
         }
         .sheet(isPresented: $showScanner) {
             if self.activeSheet == .scannerView {
-                ScannerView(recognizedText: self.$recognizedText.value, uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
-//                ConfPdfView(pages: self.$pages)
+                ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
             } else if self.activeSheet == .pdfView {
-//                ConfPdfView(pages: self.$pages)
-//                var images = (self.removeWatermark == true) ? self.pages : self.pagesWithMark
-                SnapCarouselView(images: (self.removeWatermark == true) ? self.pages : self.pagesWithMark, title: self.pdfName)
+                SnapCarouselView(images: (self.removeWatermark == true) ? self.pages : self.pagesWithMark, title: self.pdfName, delete: self.$deleteDoc).environment(\.managedObjectContext, self.context)
             }
         }
     }
@@ -131,6 +135,16 @@ struct AddPdfMainView: View {
     // MARK: - Functions
     private func saveTapped() {
         
+        if (self.pages.count == 0 || self.pagesWithMark.count == 0) {
+            self.activeAlertSheet = .notice
+            self.alertMessage = "Make sure you have scan atleast one document"
+            self.showAlert.toggle()
+        } else {
+            
+            #warning("befire going file save using vm")
+            self.activeSheet = .pdfView
+            self.showScanner.toggle()
+        }
     }
     
     private func addPagesTapped() {
@@ -140,5 +154,10 @@ struct AddPdfMainView: View {
     private func imageTapped() {
         self.activeSheet = .pdfView
         self.showScanner.toggle()
+    }
+    
+    private func deleteFile() {
+        self.activeAlertSheet = .delete
+        self.showAlert.toggle()
     }
 }

@@ -40,6 +40,7 @@ struct ContentView: View {
                             } else {
                                 // display list or gridSearchBarView(text: $searchBarText)
                                 if toggleSearchIcon {
+                                    #warning("add later")
                                     SearchBarView(text: $searchBarText)
                                     .isHidden(!toggleSearchIcon)
                                 }

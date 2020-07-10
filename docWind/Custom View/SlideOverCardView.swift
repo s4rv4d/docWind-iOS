@@ -47,11 +47,11 @@ struct SlideOverCardView: View {
                             self.drawings.removeLast()
                         }
                     }.settingsBackground()
-                    
+                    Spacer()
                     Button("Clear") {
                         self.drawings = [Drawing]()
                     }.settingsBackground()
-                }
+                }.padding()
                 
                 Spacer()
             }

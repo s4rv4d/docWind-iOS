@@ -16,7 +16,7 @@ struct DrawOnImageView: View {
     var image: UIImage
     @State var currentDrawing: Drawing = Drawing()
     @State var drawings: [Drawing] = [Drawing]()
-    @State private var color: Color = Color.black
+    @State private var color: Color = Color(hex: "#000000")
     @State private var lineWidth: CGFloat = 3.0
     @Environment(\.presentationMode) var presentationMode
     
@@ -54,18 +54,17 @@ struct DrawOnImageView: View {
                 
                 VStack {
                     HStack{
+                        Button("Cancel") {
+                            print("dismising...")
+                            self.presentationMode.wrappedValue.dismiss()
+                        }.settingsBackground()
                         Spacer()
                         Button("Save") {
                             print("saving...")
-                            
-//                            DispatchQueue.main.async {
-
                                 let image = self.drawLineOnImage(origin: geometry.frame(in: .global).origin, size: geometry.size, image: self.image, points: self.drawings, color: self.color, lineWidth: self.lineWidth)
                                 self.images[self.pageId] = image
                                 self.presentationMode.wrappedValue.dismiss()
 //                            }
-                        
-                            
                         }.settingsBackground()
                     }
                     Spacer()

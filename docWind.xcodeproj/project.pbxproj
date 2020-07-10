@@ -45,6 +45,8 @@
 		40DF994824B2E452001CEC67 /* DWDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DF994724B2E452001CEC67 /* DWDateFormatter.swift */; };
 		40DF994A24B2F5A2001CEC67 /* AddPdfMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */; };
 		40EF462C24B4ADF700D07A06 /* ConfPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EF462B24B4ADF700D07A06 /* ConfPdfView.swift */; };
+		40FB481724B8AE900045CF13 /* OCRTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB481624B8AE900045CF13 /* OCRTextView.swift */; };
+		40FB481924B8B0600045CF13 /* NewStarterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB481824B8B0600045CF13 /* NewStarterView.swift */; };
 		40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FDE47B24AB964B006AAFD2 /* AppDelegate.swift */; };
 		40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FDE47D24AB964B006AAFD2 /* SceneDelegate.swift */; };
 		40FDE48124AB964B006AAFD2 /* docWind.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 40FDE47F24AB964B006AAFD2 /* docWind.xcdatamodeld */; };
@@ -98,6 +100,8 @@
 		40DF994724B2E452001CEC67 /* DWDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWDateFormatter.swift; sourceTree = "<group>"; };
 		40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPdfMainView.swift; sourceTree = "<group>"; };
 		40EF462B24B4ADF700D07A06 /* ConfPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfPdfView.swift; sourceTree = "<group>"; };
+		40FB481624B8AE900045CF13 /* OCRTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTextView.swift; sourceTree = "<group>"; };
+		40FB481824B8B0600045CF13 /* NewStarterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStarterView.swift; sourceTree = "<group>"; };
 		40FDE47824AB964B006AAFD2 /* docWind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = docWind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40FDE47B24AB964B006AAFD2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		40FDE47D24AB964B006AAFD2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 				402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */,
 				40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */,
 				40EF462B24B4ADF700D07A06 /* ConfPdfView.swift */,
+				40FB481624B8AE900045CF13 /* OCRTextView.swift */,
 			);
 			path = "Pdf module";
 			sourceTree = "<group>";
@@ -207,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				40FDE49424AC4C3D006AAFD2 /* IntroView.swift */,
+				40FB481824B8B0600045CF13 /* NewStarterView.swift */,
 			);
 			path = "Intro module";
 			sourceTree = "<group>";
@@ -430,12 +436,14 @@
 				402C0B7224B0B0FF00A5A6C9 /* ScanPdfView.swift in Sources */,
 				40920EB024B744BE00E2293C /* DrawOnImageView.swift in Sources */,
 				40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */,
+				40FB481724B8AE900045CF13 /* OCRTextView.swift in Sources */,
 				40CDC4CC24AF72CD00462277 /* DirecModel+CoreDataProperties.swift in Sources */,
 				406E9AF424B5E773000FB8FD /* SnapCarouselView.swift in Sources */,
 				402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */,
 				40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */,
 				40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */,
 				407567F424B1FC4A0071B575 /* GeneralDocViewModel.swift in Sources */,
+				40FB481924B8B0600045CF13 /* NewStarterView.swift in Sources */,
 				409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */,
 				405EE7AA24B33AB1005F525F /* TextRecognizer.swift in Sources */,
 				402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */,

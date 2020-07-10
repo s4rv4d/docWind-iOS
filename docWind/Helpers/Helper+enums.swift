@@ -25,9 +25,14 @@ enum ActiveOdfMainViewSheet {
     case scannerView, pdfView
 }
 
+// enum for alert sheet
+enum ActiveAlertSheet {
+    case notice, delete
+}
+
 // enum for active sheet in carousel view
 enum ActiveCarouselViewSheet {
-    case shareView, fillView
+    case shareView, fillView, ocrView
 }
 
 // Enum for folder icon colors

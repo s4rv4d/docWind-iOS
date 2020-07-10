@@ -32,17 +32,6 @@ extension View {
     
     func asImage() -> UIImage {
         let controller = UIHostingController(rootView: self)
-
-        // locate far out of screen
-//        controller.view.frame = CGRect(x: 0, y: CGFloat(Int.max), width: 1, height: 1)
-//        UIApplication.shared.windows.first!.rootViewController?.view.addSubview(controller.view)
-//
-//        let size = controller.sizeThatFits(in: UIScreen.main.bounds.size)
-//        controller.view.bounds = CGRect(origin: .zero, size: size)
-//        controller.view.sizeToFit()
-//
-//        let image = controller.view.asImage()
-//        controller.view.removeFromSuperview()
         controller.view.frame = CGRect(x: 0, y: CGFloat(Int.max), width: 1, height: 1)
         UIApplication.shared.windows.first!.rootViewController?.view.addSubview(controller.view)
 
@@ -71,7 +60,7 @@ extension UIImage {
         context!.fill(rect)
         
         image1.draw(in: CGRect(x: 0.0, y: 0.0, width: image1.size.width, height: image1.size.height))
-        image2.draw(in: CGRect(x: 50, y: 200, width: ((image1.size.width/100) * 402), height: ((image1.size.height/100) * 3)))
+        image2.draw(in: CGRect(x: 50, y: 250, width: ((image1.size.width/100) * 40), height: ((image1.size.height/100) * 3)))
         
         let result = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -131,16 +120,13 @@ extension Color {
 extension UIView {
     var renderedImage: UIImage {
         // rect of capure
-        let rect = self.layer.bounds
+        _ = self.layer.bounds
         // create the context of bitmap
-//        let rect = CGRect(x: 0, y: 0, width: image1.size.width, height: image1.size.height)
         UIGraphicsBeginImageContextWithOptions(layer.bounds.size, false, 0.0)
-//        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
-//        draw(layer, in: <#T##CGContext#>)
+
         let context: CGContext = UIGraphicsGetCurrentContext()!
         setNeedsDisplay()
         draw(layer, in: context)
-//        context.fill(rect)
         self.layer.render(in: context)
         // get a image from current context bitmap
         let capturedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
@@ -151,12 +137,10 @@ extension UIView {
     func asImage() -> UIImage {
             let renderer = UIGraphicsImageRenderer(bounds: bounds)
             return renderer.image { rendererContext in
-    // [!!] Uncomment to clip resulting image
                  rendererContext.cgContext.addPath(
                     UIBezierPath(roundedRect: bounds, cornerRadius: 20).cgPath)
                 rendererContext.cgContext.clip()
                 rendererContext.cgContext.fill(bounds)
-//                layer.render(in: rendererContext as! CGContext)
             }
         }
 }
