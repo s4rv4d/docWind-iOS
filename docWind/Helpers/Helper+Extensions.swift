@@ -8,6 +8,7 @@
 
 import SwiftUI
 import UIKit
+import CoreImage
 
 extension View {
     func settingsBackground() -> some View {
@@ -18,6 +19,40 @@ extension View {
                 .fill(Color(.secondarySystemBackground)))
             .padding(.bottom, 6)
             .padding(.horizontal)
+    }
+    
+    func takeScreenshot(origin: CGPoint, size: CGSize) -> UIImage {
+        let window = UIWindow(frame: CGRect(origin: origin, size: size))
+        let hosting = UIHostingController(rootView: self)
+        hosting.view.frame = window.frame
+        window.addSubview(hosting.view)
+        window.makeKeyAndVisible()
+        return hosting.view.renderedImage
+    }
+    
+    func asImage() -> UIImage {
+        let controller = UIHostingController(rootView: self)
+
+        // locate far out of screen
+//        controller.view.frame = CGRect(x: 0, y: CGFloat(Int.max), width: 1, height: 1)
+//        UIApplication.shared.windows.first!.rootViewController?.view.addSubview(controller.view)
+//
+//        let size = controller.sizeThatFits(in: UIScreen.main.bounds.size)
+//        controller.view.bounds = CGRect(origin: .zero, size: size)
+//        controller.view.sizeToFit()
+//
+//        let image = controller.view.asImage()
+//        controller.view.removeFromSuperview()
+        controller.view.frame = CGRect(x: 0, y: CGFloat(Int.max), width: 1, height: 1)
+        UIApplication.shared.windows.first!.rootViewController?.view.addSubview(controller.view)
+
+        let size = controller.sizeThatFits(in: UIScreen.main.bounds.size)
+        controller.view.bounds = CGRect(origin: .zero, size: size)
+        controller.view.sizeToFit()
+        controller.view.backgroundColor = .clear
+        let image = controller.view.asImage()
+        controller.view.removeFromSuperview()
+        return image
     }
 }
 
@@ -65,4 +100,59 @@ extension Color {
             opacity: Double(a) / 255
         )
     }
+    
+    func uiColor() -> UIColor {
+        let components = self.components()
+        return UIColor(red: components.r, green: components.g, blue: components.b, alpha: components.a)
+    }
+
+    private func components() -> (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
+
+        let scanner = Scanner(string: self.description.trimmingCharacters(in: CharacterSet.alphanumerics.inverted))
+        var hexNumber: UInt64 = 0
+        var r: CGFloat = 0.0, g: CGFloat = 0.0, b: CGFloat = 0.0, a: CGFloat = 0.0
+
+        let result = scanner.scanHexInt64(&hexNumber)
+        if result {
+            r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+            g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+            b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+            a = CGFloat(hexNumber & 0x000000ff) / 255
+        }
+        return (r, g, b, a)
+    }
+}
+
+
+extension UIView {
+    var renderedImage: UIImage {
+        // rect of capure
+        let rect = self.layer.bounds
+        // create the context of bitmap
+//        let rect = CGRect(x: 0, y: 0, width: image1.size.width, height: image1.size.height)
+        UIGraphicsBeginImageContextWithOptions(layer.bounds.size, false, 0.0)
+//        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
+//        draw(layer, in: <#T##CGContext#>)
+        let context: CGContext = UIGraphicsGetCurrentContext()!
+        setNeedsDisplay()
+        draw(layer, in: context)
+//        context.fill(rect)
+        self.layer.render(in: context)
+        // get a image from current context bitmap
+        let capturedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return capturedImage
+    }
+    
+    func asImage() -> UIImage {
+            let renderer = UIGraphicsImageRenderer(bounds: bounds)
+            return renderer.image { rendererContext in
+    // [!!] Uncomment to clip resulting image
+                 rendererContext.cgContext.addPath(
+                    UIBezierPath(roundedRect: bounds, cornerRadius: 20).cgPath)
+                rendererContext.cgContext.clip()
+                rendererContext.cgContext.fill(bounds)
+//                layer.render(in: rendererContext as! CGContext)
+            }
+        }
 }

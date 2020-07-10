@@ -13,6 +13,7 @@ struct SlideOverCardView: View {
     @State var position = CardPosition.middle
     @Binding var color: Color
     @Binding var lineWidth: CGFloat
+    @Binding var drawings: [Drawing]
     
     var body: some View {
         let drag = DragGesture()
@@ -31,13 +32,26 @@ struct SlideOverCardView: View {
                 }
                 VStack(alignment: .leading) {
                     Text("Pencil Width")
-                    Slider(value: self.$lineWidth, in: 1.0...15.0, step: 1.0)
+                    Stepper("\(self.lineWidth, specifier: "%.2f")", value: self.$lineWidth, in: 1.0...15.0)
                 }
                     .settingsBackground()
                 VStack(alignment: .leading) {
                     Text("Change color")
                     ColorRow(selectedColor: $color)
                 }.settingsBackground()
+                
+                HStack {
+                    
+                    Button("Undo") {
+                        if self.drawings.count > 0 {
+                            self.drawings.removeLast()
+                        }
+                    }.settingsBackground()
+                    
+                    Button("Clear") {
+                        self.drawings = [Drawing]()
+                    }.settingsBackground()
+                }
                 
                 Spacer()
             }

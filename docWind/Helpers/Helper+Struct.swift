@@ -369,7 +369,7 @@ struct Handle : View {
 struct ColorRow: View {
     
     
-    var colorHex = ["#FF0000", "#FF00C3", "#6F00FF", "#0900FF", "#00FFEE", "#00FF33", "#1AFF00", "#EFFF00", "#FFDD00", "#FFA000", "#6C3A00", "#FFEF26", "#2C0C85", "#D333D3", "#006191", "#4CFF1F"]
+    var colorHex = ["#FF0000", "#FF00C3", "#6F00FF", "#0900FF", "#00FFEE", "#00FF33", "#1AFF00", "#EFFF00", "#FFDD00", "#FFA000", "#6C3A00", "#FFEF26", "#2C0C85", "#D333D3", "#FFFFFF", "#000000"]
     
     @Binding var selectedColor: Color
     

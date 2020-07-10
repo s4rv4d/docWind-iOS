@@ -13,15 +13,17 @@ struct DrawOnImageView: View {
     // MARK: - Properties
     @Binding var images: [UIImage]
     var pageId: Int
+    var image: UIImage
     @State var currentDrawing: Drawing = Drawing()
     @State var drawings: [Drawing] = [Drawing]()
     @State private var color: Color = Color.black
     @State private var lineWidth: CGFloat = 3.0
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                Image(uiImage: self.images[self.pageId])
+                Image(uiImage: self.image)
                 .resizable()
                     .aspectRatio(contentMode: .fill)
                 .gesture(
@@ -45,11 +47,29 @@ struct DrawOnImageView: View {
                     }
                     self.add(drawing: self.currentDrawing, toPath: &path)
                 }.stroke(self.color, lineWidth: self.lineWidth)
-//                Slider(value: self.$lineWidth, in: 1.0...15.0, step: 1.0)
                 
                 VStack(alignment: .leading) {
-                    SlideOverCardView(color: self.$color, lineWidth: self.$lineWidth)
+                    SlideOverCardView(color: self.$color, lineWidth: self.$lineWidth, drawings: self.$drawings)
                 }
+                
+                VStack {
+                    HStack{
+                        Spacer()
+                        Button("Save") {
+                            print("saving...")
+                            
+//                            DispatchQueue.main.async {
+
+                                let image = self.drawLineOnImage(origin: geometry.frame(in: .global).origin, size: geometry.size, image: self.image, points: self.drawings, color: self.color, lineWidth: self.lineWidth)
+                                self.images[self.pageId] = image
+                                self.presentationMode.wrappedValue.dismiss()
+//                            }
+                        
+                            
+                        }.settingsBackground()
+                    }
+                    Spacer()
+                }.padding()
 
             }
         }
@@ -65,6 +85,39 @@ struct DrawOnImageView: View {
                 path.addLine(to: next)
             }
         }
+    }
+    
+    func drawLineOnImage(origin: CGPoint, size: CGSize, image: UIImage, points: [Drawing], color: Color, lineWidth: CGFloat) -> UIImage {
+    // begin a graphics context of sufficient size
+    UIGraphicsBeginImageContext(size)
+    // draw original image into the context
+    image.draw(in: CGRect(origin: origin, size: size))
+    // get the context for CoreGraphics
+    let context = UIGraphicsGetCurrentContext()
+
+    // set stroking width and color of the context
+        context!.setLineWidth(lineWidth)
+        context!.setStrokeColor(color.uiColor().cgColor)
+
+        for drawing in self.drawings {
+            let points = drawing.points
+            if points.count > 1 {
+                for i in 0..<points.count-1 {
+                    let current = points[i]
+                    let next = points[i+1]
+                    context!.move(to: current)
+                    context!.addLine(to: next)
+                }
+            }
+            
+        }
+    // apply the stroke to the context
+        context!.strokePath()
+    // get the image from the graphics context
+    let resultImage = UIGraphicsGetImageFromCurrentImageContext()
+    // end the graphics context
+    UIGraphicsEndImageContext()
+        return resultImage!
     }
 }
 

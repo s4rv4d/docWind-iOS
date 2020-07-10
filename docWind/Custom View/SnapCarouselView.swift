@@ -45,14 +45,14 @@ struct SnapCarouselView: View {
                     spacing: spacing,
                     widthOfHiddenCards: widthOfHiddenCards
                     ) {
-                        ForEach(items, id: \.self) { item in
+                        ForEach(imagesState, id: \.self) { item in
                             Item(
-                                _id: Int(item.id),
+                                _id: Int(self.imagesState.firstIndex(of: item)!),
                                 spacing: spacing,
                                 widthOfHiddenCard: widthOfHiddenCards,
                                 cardHeight: cardHeight
                                 ) {
-                                    Image(uiImage: item.image)
+                                    Image(uiImage: item)
                                     .resizable()
                                         .aspectRatio(contentMode: .fill)
 
@@ -126,7 +126,7 @@ struct SnapCarouselView: View {
         }
         .sheet(isPresented: $isShown) {
             if self.activeSheet == .fillView {
-                DrawOnImageView(images: self.$imagesState, pageId: self.UIState.activeCard)
+                DrawOnImageView(images: self.$imagesState, pageId: self.UIState.activeCard, image: self.imagesState[self.UIState.activeCard])
             }
         }
     }
@@ -144,7 +144,6 @@ struct SnapCarouselView: View {
     
     private func deleteTapped() {
         print("delete tapped")
-        
         // bring up an alert
     }
     
