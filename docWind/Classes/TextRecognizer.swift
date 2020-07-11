@@ -18,7 +18,7 @@ public struct TextRecognizer {
                                                          qos: .userInitiated, attributes: [], autoreleaseFrequency: .workItem)
     
     func recognizeText(from images: [CGImage]) {
-        self.recognizedText = ""
+//        self.recognizedText = ""
         var tmp = ""
         let textRecognitionRequest = VNRecognizeTextRequest { (request, error) in
             guard let observations = request.results as? [VNRecognizedTextObservation] else {

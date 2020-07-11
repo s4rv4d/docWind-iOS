@@ -23,10 +23,10 @@ struct AddPdfMainView: View {
     @State private var activeAlertSheet: ActiveAlertSheet = .notice
     @State private var removeWatermark = false
     @State var deleteDoc = false
+    @State var pdfData: Data = Data()
     
     // MARK: - Object
     @ObservedObject var model: MainDocListViewModel // will use for saving stuff
-    @ObservedObject var recognizedText: RecognizedText = RecognizedText()
     
     // MARK: - @Environment variables
     @Environment(\.presentationMode) var presentationMode
@@ -71,7 +71,7 @@ struct AddPdfMainView: View {
                     }
                 }
                 
-                Section(header: Text("Add pages?")) {
+                Section(header: Text("Add pages?"), footer: Text("Tap on image for more options").isHidden(pages.count == 0)) {
                     if pages.count == 0 {
                         Button(action: addPagesTapped) {
                             Text("Add Pages")
@@ -127,7 +127,7 @@ struct AddPdfMainView: View {
             if self.activeSheet == .scannerView {
                 ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
             } else if self.activeSheet == .pdfView {
-                SnapCarouselView(images: (self.removeWatermark == true) ? self.pages : self.pagesWithMark, title: self.pdfName, delete: self.$deleteDoc).environment(\.managedObjectContext, self.context)
+                SnapCarouselView(images: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName, data: self.$pdfData).environment(\.managedObjectContext, self.context)
             }
         }
     }

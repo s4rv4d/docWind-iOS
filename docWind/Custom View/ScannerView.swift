@@ -14,7 +14,6 @@ import Combine
 struct ScannerView: UIViewControllerRepresentable {
     
     // MARK: - @Binding vars
-//    @Binding var recognizedText: String
     @Binding var uiImages:[UIImage]
     @Binding var uiImagesWithWatermarks: [UIImage]
     
@@ -38,14 +37,10 @@ struct ScannerView: UIViewControllerRepresentable {
     // MARK: - Coordinator class
     class Coordinator: NSObject, VNDocumentCameraViewControllerDelegate {
         
-//        var recognizedText: Binding<String>
-//        private let textRecognizer: TextRecognizer
         var uiImages: Binding<[UIImage]>
         var uiImagesWithWatermarks: Binding<[UIImage]>
         
         init(uiImages: Binding<[UIImage]>, uiImagesWithWatermarks: Binding<[UIImage]>) {
-//            self.recognizedText = recognizedText
-//            textRecognizer = TextRecognizer(recognizedText: recognizedText)
             self.uiImages = uiImages
             self.uiImagesWithWatermarks = uiImagesWithWatermarks
         }
@@ -64,7 +59,6 @@ struct ScannerView: UIViewControllerRepresentable {
             }
             self.uiImages.wrappedValue = imgs
             self.uiImagesWithWatermarks.wrappedValue = imgsWithWatermarks
-//            textRecognizer.recognizeText(from: images)
             controller.dismiss(animated: true, completion: nil)
         }
         

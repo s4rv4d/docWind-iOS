@@ -23,15 +23,15 @@ struct SnapCarouselView: View {
     // MARK: - Properties
     var UIState: UIStateModel = UIStateModel()
     var items: [Carditem]
-    var images: [UIImage]
+    var images: Binding<[UIImage]>
     var title: String
-    var delete: Binding<Bool>
+    var pdfData: Binding<Data>
 
-    init(images: [UIImage], title: String, delete: Binding<Bool>) {
-        self.items = images.map{ Carditem(id: images.firstIndex(of: $0)!, name: "none", image: $0) }
+    init(images: Binding<[UIImage]>, title: String, data: Binding<Data>) {
         self.images = images
+        self.items = images.wrappedValue.map{ Carditem(id: images.wrappedValue.firstIndex(of: $0)!, name: "none", image: $0) }
         self.title = title
-        self.delete = delete
+        self.pdfData = data
     }
     
     var body: some View {
@@ -48,9 +48,9 @@ struct SnapCarouselView: View {
                     spacing: spacing,
                     widthOfHiddenCards: widthOfHiddenCards
                     ) {
-                        ForEach(imagesState, id: \.self) { item in
+                        ForEach(images.wrappedValue, id: \.self) { item in
                             Item(
-                                _id: Int(self.imagesState.firstIndex(of: item)!),
+                                _id: Int(self.images.wrappedValue.firstIndex(of: item)!),
                                 spacing: spacing,
                                 widthOfHiddenCard: widthOfHiddenCards,
                                 cardHeight: cardHeight
@@ -104,13 +104,15 @@ struct SnapCarouselView: View {
             }
         }
         .onAppear {
-            self.imagesState = self.images
+//            self.imagesState = self.images
             
         }
 
         .sheet(isPresented: $isShown) {
             if self.activeSheet == .fillView {
-                DrawOnImageView(images: self.$imagesState, pageId: self.UIState.activeCard, image: self.imagesState[self.UIState.activeCard])
+                DrawOnImageView(images: self.images, pageId: self.UIState.activeCard, image: self.images.wrappedValue[self.UIState.activeCard])
+            } else if self.activeSheet == .ocrView {
+                OCRTextView(recognizedText: "Scanning", imageToScan: self.imagesState[self.UIState.activeCard])
             }
         }
     }
@@ -137,5 +139,7 @@ struct SnapCarouselView: View {
     
     private func ocrTapped() {
         print("ocr tapped")
+        self.activeSheet = .ocrView
+        self.isShown.toggle()
     }
 }

@@ -14,6 +14,8 @@
 		402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */; };
 		402C0B7224B0B0FF00A5A6C9 /* ScanPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */; };
 		402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */; };
+		40485D8A24B98C9F008A137A /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40485D8924B98C9F008A137A /* TextView.swift */; };
+		40485D8C24B995E7008A137A /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40485D8B24B995E7008A137A /* BlurView.swift */; };
 		404D7F9A24B6ED3B002F53F0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404D7F9924B6ED3B002F53F0 /* SettingsView.swift */; };
 		405EE7A624B339B4005F525F /* RecognizedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EE7A524B339B4005F525F /* RecognizedText.swift */; };
 		405EE7A824B339DD005F525F /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EE7A724B339DD005F525F /* ScannerView.swift */; };
@@ -68,6 +70,8 @@
 		402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPdfView.swift; sourceTree = "<group>"; };
 		402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanPdfView.swift; sourceTree = "<group>"; };
 		402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDirecView.swift; sourceTree = "<group>"; };
+		40485D8924B98C9F008A137A /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		40485D8B24B995E7008A137A /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		404D7F9924B6ED3B002F53F0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		405EE7A524B339B4005F525F /* RecognizedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedText.swift; sourceTree = "<group>"; };
 		405EE7A724B339DD005F525F /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
@@ -240,6 +244,8 @@
 				406E9AFA24B617EE000FB8FD /* CustomHeaderView.swift */,
 				40920EAF24B744BE00E2293C /* DrawOnImageView.swift */,
 				40920EB124B74E7800E2293C /* SlideOverCardView.swift */,
+				40485D8924B98C9F008A137A /* TextView.swift */,
+				40485D8B24B995E7008A137A /* BlurView.swift */,
 			);
 			path = "Custom View";
 			sourceTree = "<group>";
@@ -413,6 +419,7 @@
 				402C0B6C24B0ACD600A5A6C9 /* NormalListRowView.swift in Sources */,
 				40CDC4C824AF72CD00462277 /* ItemModel+CoreDataProperties.swift in Sources */,
 				40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */,
+				40485D8A24B98C9F008A137A /* TextView.swift in Sources */,
 				405EE7A824B339DD005F525F /* ScannerView.swift in Sources */,
 				40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */,
 				406E9AF924B5E80F000FB8FD /* UIStateModel.swift in Sources */,
@@ -425,6 +432,7 @@
 				40CDC4C924AF72CD00462277 /* PdfFilemodel+CoreDataClass.swift in Sources */,
 				40920EB224B74E7800E2293C /* SlideOverCardView.swift in Sources */,
 				40FDE48124AB964B006AAFD2 /* docWind.xcdatamodeld in Sources */,
+				40485D8C24B995E7008A137A /* BlurView.swift in Sources */,
 				402C0B6A24B0A37A00A5A6C9 /* Helper+enums.swift in Sources */,
 				406E9AF624B5E798000FB8FD /* CarouselCardModel.swift in Sources */,
 				40FDE49524AC4C3D006AAFD2 /* IntroView.swift in Sources */,

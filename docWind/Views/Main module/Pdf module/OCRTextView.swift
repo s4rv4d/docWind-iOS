@@ -7,15 +7,64 @@
 //
 
 import SwiftUI
+import UIKit
+import VisionKit
+import Combine
 
 struct OCRTextView: View {
+    
+    // MARK: - @State variables
+    @State var recognizedText: String = ""
+    @State var imageToScan: UIImage
+    @State private var textStyle = UIFont.TextStyle.body
+    @State private var offsetVal: CGFloat = 0.0
+    
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack(alignment: .top) {
+            VStack {
+                
+                HStack {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                           }) {
+                               Image(systemName: "xmark")
+                                   .imageScale(.large)
+                                   .frame(width: 40, height: 40)
+                                   .foregroundColor(.white)
+                                   .background(Color.blue)
+                                   .clipShape(Circle())
+                    
+                           }
+                           .padding()
+                    Spacer()
+                    Text("Scanned Text")
+                        .fontWeight(.medium)
+                    Spacer()
+                    Button(action: {
+                               self.textStyle = (self.textStyle == .body) ? .title1 : .body
+                           }) {
+                               Image(systemName: "textformat")
+                                   .imageScale(.large)
+                                   .frame(width: 40, height: 40)
+                                   .foregroundColor(.white)
+                                   .background(Color.blue)
+                                   .clipShape(Circle())
+                    
+                           }
+                           .padding()
+                }
+                TextView(text: $recognizedText, textStyle: $textStyle)
+                .padding(.horizontal)
+            }.keyboardSensible(self.$offsetVal)
+            .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
+            
+        }.background(BlurView())
+        .onAppear {
+            let txtRecog = TextRecognizer(recognizedText: self.$recognizedText)
+            txtRecog.recognizeText(from: [self.imageToScan.cgImage!])
+        }
     }
 }
 
-struct OCRTextView_Previews: PreviewProvider {
-    static var previews: some View {
-        OCRTextView()
-    }
-}
