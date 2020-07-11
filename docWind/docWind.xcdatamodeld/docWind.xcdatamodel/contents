@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="DirecModel" representedClassName="DirecModel" syncable="YES">
         <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -10,6 +10,7 @@
         <attribute name="itemCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="itemName" optional="YES" attributeType="String"/>
         <attribute name="itemType" optional="YES" attributeType="String"/>
+        <attribute name="itemURL" optional="YES" attributeType="String"/>
         <attribute name="locked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="origin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DirecModel" inverseName="files" inverseEntity="DirecModel"/>
     </entity>
@@ -20,7 +21,7 @@
     </entity>
     <elements>
         <element name="DirecModel" positionX="93.6875" positionY="-329.6640625" width="128" height="88"/>
-        <element name="ItemModel" positionX="-50.30859375" positionY="-238.3828125" width="128" height="133"/>
+        <element name="ItemModel" positionX="-50.30859375" positionY="-238.3828125" width="128" height="148"/>
         <element name="PdfFilemodel" positionX="170.6171875" positionY="10.3203125" width="128" height="88"/>
     </elements>
 </model>

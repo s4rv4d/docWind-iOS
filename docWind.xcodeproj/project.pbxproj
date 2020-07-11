@@ -30,6 +30,7 @@
 		40920EB024B744BE00E2293C /* DrawOnImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40920EAF24B744BE00E2293C /* DrawOnImageView.swift */; };
 		40920EB224B74E7800E2293C /* SlideOverCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40920EB124B74E7800E2293C /* SlideOverCardView.swift */; };
 		409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409244BD24B19D640013BF8F /* Helper+Extensions.swift */; };
+		40C408E624B9F2EF00876FAF /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C408E524B9F2EF00876FAF /* PDFView.swift */; };
 		40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */; };
 		40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140424AE14C000126ABA /* SearchBarView.swift */; };
 		40CDC49F24AF691900462277 /* Helper+Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC49E24AF691900462277 /* Helper+Variables.swift */; };
@@ -86,6 +87,7 @@
 		40920EAF24B744BE00E2293C /* DrawOnImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawOnImageView.swift; sourceTree = "<group>"; };
 		40920EB124B74E7800E2293C /* SlideOverCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOverCardView.swift; sourceTree = "<group>"; };
 		409244BD24B19D640013BF8F /* Helper+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Extensions.swift"; sourceTree = "<group>"; };
+		40C408E524B9F2EF00876FAF /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
 		40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWFMAppSettings.swift; sourceTree = "<group>"; };
 		40C5140424AE14C000126ABA /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		40CDC49E24AF691900462277 /* Helper+Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Variables.swift"; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				40920EB124B74E7800E2293C /* SlideOverCardView.swift */,
 				40485D8924B98C9F008A137A /* TextView.swift */,
 				40485D8B24B995E7008A137A /* BlurView.swift */,
+				40C408E524B9F2EF00876FAF /* PDFView.swift */,
 			);
 			path = "Custom View";
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				405EE7A824B339DD005F525F /* ScannerView.swift in Sources */,
 				40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */,
 				406E9AF924B5E80F000FB8FD /* UIStateModel.swift in Sources */,
+				40C408E624B9F2EF00876FAF /* PDFView.swift in Sources */,
 				404D7F9A24B6ED3B002F53F0 /* SettingsView.swift in Sources */,
 				40FDE49724AC4C6C006AAFD2 /* SettingsManagable.swift in Sources */,
 				40FDE49A24AC4C95006AAFD2 /* AppSettings.swift in Sources */,

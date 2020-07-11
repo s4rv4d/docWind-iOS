@@ -74,7 +74,7 @@ struct DetailedDirecView: View {
             } else if self.activeSheet == .tappedDirec {
 //                DetailedDirecView()
             } else if self.activeSheet == .tappedPdf {
-                DetailPdfView()
+//                DetailPdfView()
             } else if self.activeSheet == .createdDirec {
 //                AddDirecView(model: self.model).environment(\.managedObjectContext, self.context)
                 AddDocGeneView(headName: self.item.wrappedItemName, model: self.model).environment(\.managedObjectContext, self.context)

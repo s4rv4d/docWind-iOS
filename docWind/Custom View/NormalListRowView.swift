@@ -27,10 +27,9 @@ struct NormalListRowView: View {
         return ForEach(0..<itemArray.count, id: \.self){ index in
             NavigationLink(destination: DetailedDirecView(item: self.itemArray[index], masterFolder: self.masterFolder, model: GeneralDocListViewModel(name: self.itemArray[index].wrappedItemName))) {
                 HStack {
-                    Image(systemName: "folder.fill")
+                    Image(systemName: (self.itemArray[index].wrappedItemType == DWPDFFILE) ? "doc.fill" : "folder.fill")
                         .foregroundColor(self.iconNameString[self.itemArray[index].iconName!])
                         .font(.body)
-//                        .padding()
                     
                     VStack(alignment: .leading) {
                         Text(self.itemArray[index].wrappedItemName)

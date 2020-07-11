@@ -17,6 +17,7 @@ struct ScannerView: UIViewControllerRepresentable {
     @Binding var uiImages:[UIImage]
     @Binding var uiImagesWithWatermarks: [UIImage]
     
+    
     // MARK: - Properties
     typealias UIViewControllerType = VNDocumentCameraViewController
     

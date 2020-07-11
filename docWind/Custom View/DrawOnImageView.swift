@@ -11,7 +11,9 @@ import SwiftUI
 struct DrawOnImageView: View {
     
     // MARK: - Properties
-    @Binding var images: [UIImage]
+    @Binding var mainImages: [UIImage]
+    @Binding var imagesWithoutWater: [UIImage]
+    @Binding var imageWithWater: [UIImage]
     var pageId: Int
     var image: UIImage
     @State var currentDrawing: Drawing = Drawing()
@@ -61,10 +63,16 @@ struct DrawOnImageView: View {
                         Spacer()
                         Button("Save") {
                             print("saving...")
-                                let image = self.drawLineOnImage(origin: geometry.frame(in: .global).origin, size: geometry.size, image: self.image, points: self.drawings, color: self.color, lineWidth: self.lineWidth)
-                                self.images[self.pageId] = image
-                                self.presentationMode.wrappedValue.dismiss()
-//                            }
+//                            let image1 = self.drawLineOnImage(origin: geometry.frame(in: .global).origin, size: geometry.size, image: self.image, points: self.drawings, color: self.color, lineWidth: self.lineWidth)
+//                            self.mainImages[self.pageId] = image1
+                            
+                            let image2 = self.drawLineOnImage(origin: geometry.frame(in: .global).origin, size: geometry.size, image: self.imagesWithoutWater[self.pageId], points: self.drawings, color: self.color, lineWidth: self.lineWidth)
+                            self.imagesWithoutWater[self.pageId] = image2
+                            
+                            let image3 = self.drawLineOnImage(origin: geometry.frame(in: .global).origin, size: geometry.size, image: self.imageWithWater[self.pageId], points: self.drawings, color: self.color, lineWidth: self.lineWidth)
+                            self.imageWithWater[self.pageId] = image3
+                            
+                            self.presentationMode.wrappedValue.dismiss()
                         }.settingsBackground()
                     }
                     Spacer()

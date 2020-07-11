@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PDFKit
 
 struct AddPdfMainView: View {
     
@@ -16,14 +17,19 @@ struct AddPdfMainView: View {
     @State private var alertMessage = ""
     @State private var showAlert = false
     @State private var showScanner = false
+    
+    
+    @State var mainPages: [UIImage] = [UIImage]()
     @State var pages: [UIImage] = [UIImage]()
     @State var pagesWithMark: [UIImage] = [UIImage]()
     @State var pageImages: [Image] = [Image]()
+    
+    
+    
     @State private var activeSheet: ActiveOdfMainViewSheet = .scannerView
     @State private var activeAlertSheet: ActiveAlertSheet = .notice
     @State private var removeWatermark = false
     @State var deleteDoc = false
-    @State var pdfData: Data = Data()
     
     // MARK: - Object
     @ObservedObject var model: MainDocListViewModel // will use for saving stuff
@@ -79,8 +85,8 @@ struct AddPdfMainView: View {
                     } else {
                         ScrollView(.horizontal) {
                             HStack {
-                                ForEach(0..<self.pages.count){ index in
-                                    Image(uiImage: self.pages[index])
+                                ForEach(0..<((self.removeWatermark == true) ? self.pages.count : self.pagesWithMark.count)){ index in
+                                    Image(uiImage: ((self.removeWatermark == true) ? self.pages[index] : self.pagesWithMark[index]))
                                     .resizable()
                                     .frame(width: 150, height: 200)
                                     .cornerRadius(8)
@@ -107,8 +113,7 @@ struct AddPdfMainView: View {
                     }
                 }
             }
-            
-                .navigationBarTitle(Text(self.pdfName))
+            .navigationBarTitle(Text(self.pdfName))
             .navigationBarItems(leading: Button(action: deleteFile){
                 Text("Delete")
                     .foregroundColor(.red)
@@ -127,7 +132,7 @@ struct AddPdfMainView: View {
             if self.activeSheet == .scannerView {
                 ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
             } else if self.activeSheet == .pdfView {
-                SnapCarouselView(images: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName, data: self.$pdfData).environment(\.managedObjectContext, self.context)
+                SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
             }
         }
     }
@@ -140,10 +145,37 @@ struct AddPdfMainView: View {
             self.alertMessage = "Make sure you have scan atleast one document"
             self.showAlert.toggle()
         } else {
+            let mainPages = (self.removeWatermark == true) ? self.pages : self.pagesWithMark
             
-            #warning("befire going file save using vm")
-            self.activeSheet = .pdfView
-            self.showScanner.toggle()
+            // convert to pdf
+            let pdfDocument = PDFDocument()
+            for page in mainPages {
+                let pdfPage = PDFPage(image: page)
+                let index = mainPages.firstIndex(of: page)!
+                
+                // store in pdfDocument
+                pdfDocument.insert(pdfPage!, at: index)
+            }
+            
+            // get raw data of pdf
+            let rawPDFData = pdfDocument.dataRepresentation()!
+            let pdfName = self.pdfName
+            let finalPdfName = "\(pdfName).pdf"
+            
+            // store to FM
+            if DWFMAppSettings.shared.savePdfWithDataContent(pdfData: rawPDFData, pdfName: finalPdfName, direcName: nil).0 {
+                
+                print("✅ SUCCESSFULLY SAVED FILE IN DocWind")
+                
+                // now need to make a coredata entry
+                self.model.addANewItem(itemName: self.pdfName, iconName: selectedIconName, itemType: DWPDFFILE, locked: false)
+                self.presentationMode.wrappedValue.dismiss()
+                
+            } else {
+                self.activeAlertSheet = .notice
+                self.alertMessage = "File name already exists chose a new"
+                self.showAlert.toggle()
+            }
         }
     }
     

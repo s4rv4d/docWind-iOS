@@ -14,7 +14,11 @@ struct SnapCarouselView: View {
     @State private var activeSheet: ActiveCarouselViewSheet = .shareView
     @State private var isShown = false
     // use this to update/save to pdf format
-    @State var imagesState: [UIImage] = [UIImage]()
+    
+    // MARK: - @Binding variables
+    @Binding var imagesState: [UIImage]
+    @Binding var imageWithWaterMark: [UIImage]
+    @Binding var mainImages: [UIImage]
     
     // MARK: - Environment variables
     @Environment(\.presentationMode) var presentationMode
@@ -22,17 +26,7 @@ struct SnapCarouselView: View {
     
     // MARK: - Properties
     var UIState: UIStateModel = UIStateModel()
-    var items: [Carditem]
-    var images: Binding<[UIImage]>
     var title: String
-    var pdfData: Binding<Data>
-
-    init(images: Binding<[UIImage]>, title: String, data: Binding<Data>) {
-        self.images = images
-        self.items = images.wrappedValue.map{ Carditem(id: images.wrappedValue.firstIndex(of: $0)!, name: "none", image: $0) }
-        self.title = title
-        self.pdfData = data
-    }
     
     var body: some View {
         let spacing: CGFloat = 16
@@ -44,13 +38,13 @@ struct SnapCarouselView: View {
                 CustomHeaderView(title: title, action: saveTapped)
                 
                 Carousel(
-                    numberOfItems: CGFloat(items.count),
+                    numberOfItems: CGFloat(mainImages.count),
                     spacing: spacing,
                     widthOfHiddenCards: widthOfHiddenCards
                     ) {
-                        ForEach(images.wrappedValue, id: \.self) { item in
+                        ForEach(mainImages, id: \.self) { item in
                             Item(
-                                _id: Int(self.images.wrappedValue.firstIndex(of: item)!),
+                                _id: Int(self.mainImages.firstIndex(of: item)!),
                                 spacing: spacing,
                                 widthOfHiddenCard: widthOfHiddenCards,
                                 cardHeight: cardHeight
@@ -103,16 +97,12 @@ struct SnapCarouselView: View {
                 Spacer()
             }
         }
-        .onAppear {
-//            self.imagesState = self.images
-            
-        }
 
         .sheet(isPresented: $isShown) {
             if self.activeSheet == .fillView {
-                DrawOnImageView(images: self.images, pageId: self.UIState.activeCard, image: self.images.wrappedValue[self.UIState.activeCard])
+                DrawOnImageView(mainImages: self.$mainImages, imagesWithoutWater: self.$imagesState, imageWithWater: self.$imageWithWaterMark, pageId: self.UIState.activeCard, image: self.mainImages[self.UIState.activeCard])
             } else if self.activeSheet == .ocrView {
-                OCRTextView(recognizedText: "Scanning", imageToScan: self.imagesState[self.UIState.activeCard])
+                OCRTextView(recognizedText: "Scanning", imageToScan: self.mainImages[self.UIState.activeCard])
             }
         }
     }

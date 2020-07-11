@@ -9,13 +9,18 @@
 import SwiftUI
 
 struct DetailPdfView: View {
+    
+    // AMRK: - @State variables
+    @State var item: ItemModel
+    
+    // MARK: - Objects
+    @ObservedObject var model: MainDocListViewModel
+    
+    // MARK: - Properties
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            PDFCustomView(URL(string: item.wrappedItemUrl)!)
+        }
     }
-}
 
-struct DetailPdfView_Previews: PreviewProvider {
-    static var previews: some View {
-        DetailPdfView()
-    }
 }

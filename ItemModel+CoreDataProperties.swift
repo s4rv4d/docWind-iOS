@@ -20,11 +20,16 @@ extension ItemModel {
     @NSManaged public var itemName: String?
     @NSManaged public var itemType: String?
     @NSManaged public var iconName: String?
+    @NSManaged public var itemURL: String?
     @NSManaged public var locked: NSNumber?
     @NSManaged public var itemCreated: Date?
     @NSManaged public var origin: DirecModel?
     
     // created wrapped properties to avoid optionals
+    public var wrappedItemUrl: String {
+        itemURL ?? ""
+    }
+    
     public var wrappedItemType: String {
         itemType ?? DWDIRECTORY
     }
