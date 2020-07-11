@@ -64,12 +64,7 @@ struct AddDirecView: View {
                         }
                     }
                 }
-                
-//                Section(header: Text("Lock folder?")) {
-//                    Toggle(isOn: $isLocked) {
-//                        Text("Private")
-//                    }
-//                }
+
             }
         .navigationBarTitle(Text("Add a new directory"))
             .navigationBarItems(leading: Button("Cancel") {
@@ -87,11 +82,18 @@ struct AddDirecView: View {
         // validation
         if direcName != "" {
             // make a file in file manager
-            if DWFMAppSettings.shared.createSubDirectory(direcName: direcName) {
+            let defa = DWFMAppSettings.shared.createSubDirectory(direcName: direcName)
+            if defa.0 {
                 // make a coredata entry
-                print("✅ SUCCESFULLY CREATED SUB DIRECTORY \(direcName)")
-                self.model.addANewItem(itemName: direcName, iconName: selectedIconName, itemType: DWDIRECTORY, locked: isLocked)
-                self.presentationMode.wrappedValue.dismiss()
+                let path = defa.1
+                if path != "" {
+                    print("✅ SUCCESFULLY CREATED SUB DIRECTORY \(direcName)")
+                    self.model.addANewItem(itemName: direcName, iconName: selectedIconName, itemType: DWDIRECTORY, locked: isLocked, filePath: path)
+                    self.presentationMode.wrappedValue.dismiss()
+                } else {
+                    self.alertMessage = "Error creating sub directory :("
+                    self.showAlert.toggle()
+                }
                 
             } else {
                 self.alertMessage = "Error creating sub directory :("

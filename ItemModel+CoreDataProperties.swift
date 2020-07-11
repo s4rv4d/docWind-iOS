@@ -27,7 +27,7 @@ extension ItemModel {
     
     // created wrapped properties to avoid optionals
     public var wrappedItemUrl: String {
-        itemURL ?? ""
+        itemURL ?? "\(DWFMAppSettings.shared.fileURL())"
     }
     
     public var wrappedItemType: String {

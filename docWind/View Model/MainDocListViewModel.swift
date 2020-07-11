@@ -44,7 +44,7 @@ final class MainDocListViewModel: ObservableObject {
         
     }
     
-    func addANewItem(itemName: String, iconName: String, itemType: String, locked:Bool) {
+    func addANewItem(itemName: String, iconName: String, itemType: String, locked:Bool, filePath: String) {
         // declare the moc(managed object context)
         let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
@@ -68,6 +68,7 @@ final class MainDocListViewModel: ObservableObject {
                 let item = ItemModel(context: moc)
                 item.itemName = itemName
                 item.itemType = itemType
+                item.itemURL = filePath
                 item.iconName = iconName
                 item.locked = NSNumber(booleanLiteral: isLocked)
                 item.itemCreated = Date()

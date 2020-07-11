@@ -63,13 +63,11 @@ struct DrawOnImageView: View {
                         Spacer()
                         Button("Save") {
                             print("saving...")
-//                            let image1 = self.drawLineOnImage(origin: geometry.frame(in: .global).origin, size: geometry.size, image: self.image, points: self.drawings, color: self.color, lineWidth: self.lineWidth)
-//                            self.mainImages[self.pageId] = image1
                             
-                            let image2 = self.drawLineOnImage(origin: geometry.frame(in: .global).origin, size: geometry.size, image: self.imagesWithoutWater[self.pageId], points: self.drawings, color: self.color, lineWidth: self.lineWidth)
+                            let image2 = self.drawLineOnImage(origin: geometry.frame(in: .global).origin, size: geometry.size, image: self.imagesWithoutWater[self.pageId], points: self.drawings, color: self.color, lineWidth: self.lineWidth).resize(toWidth: 250)!
                             self.imagesWithoutWater[self.pageId] = image2
                             
-                            let image3 = self.drawLineOnImage(origin: geometry.frame(in: .global).origin, size: geometry.size, image: self.imageWithWater[self.pageId], points: self.drawings, color: self.color, lineWidth: self.lineWidth)
+                            let image3 = self.drawLineOnImage(origin: geometry.frame(in: .global).origin, size: geometry.size, image: self.imageWithWater[self.pageId], points: self.drawings, color: self.color, lineWidth: self.lineWidth).resize(toWidth: 250)!
                             self.imageWithWater[self.pageId] = image3
                             
                             self.presentationMode.wrappedValue.dismiss()
@@ -119,7 +117,7 @@ struct DrawOnImageView: View {
             
         }
     // apply the stroke to the context
-        context!.strokePath()
+    context!.strokePath()
     // get the image from the graphics context
     let resultImage = UIGraphicsGetImageFromCurrentImageContext()
     // end the graphics context

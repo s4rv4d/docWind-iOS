@@ -52,7 +52,7 @@ struct ScannerView: UIViewControllerRepresentable {
             var imgsWithWatermarks = [UIImage]()
             for pageIndex in 0 ..< scan.pageCount {
                 autoreleasepool {
-                     let image = scan.imageOfPage(at: pageIndex)
+                     let image = scan.imageOfPage(at: pageIndex).resize(toWidth: 250)!
                     imgsWithWatermarks.append(UIImage.imageWithWatermark(image1: image, image2: UIImage(named: "watermark")!))
                     imgs.append(image)
                 }

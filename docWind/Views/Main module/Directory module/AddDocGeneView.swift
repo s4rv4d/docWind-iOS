@@ -87,11 +87,19 @@ struct AddDocGeneView: View {
         // validation
         if direcName != "" {
             // make a file in file manager
-            if DWFMAppSettings.shared.createSubSubDirectory(headName: headName, newDirecName: direcName) {
-                // make a coredata entry
-                print("✅ SUCCESFULLY CREATED SUB DIRECTORY \(direcName)")
-                self.model.addANewItem(itemName: direcName, iconName: selectedIconName, itemType: DWDIRECTORY, locked: isLocked)
-                self.presentationMode.wrappedValue.dismiss()
+            let dwas = DWFMAppSettings.shared.createSubSubDirectory(headName: URL(string: headName)!, newDirecName: direcName)
+            
+            if dwas.0 {
+                let path = dwas.1
+                if path != "" {
+                    // make a coredata entry
+                    print("✅ SUCCESFULLY CREATED SUB DIRECTORY \(direcName)")
+                    self.model.addANewItem(itemName: direcName, iconName: selectedIconName, itemType: DWDIRECTORY, locked: isLocked, filePath: path)
+                    self.presentationMode.wrappedValue.dismiss()
+                } else {
+                    self.alertMessage = "Error creating sub directory :("
+                    self.showAlert.toggle()
+                }
                 
             } else {
                 self.alertMessage = "Error creating sub directory :("

@@ -12,11 +12,11 @@ import Foundation
 protocol DocWindFManager {
     func fileURL() -> URL
     func savePdf(urlString: String, direcName: String?, fileName: String) -> Bool
-    func showSavedPdf(urlString: String, direcName: String?, fileName: String) -> Bool
+    func showSavedPdf(direcName: String?, fileName: String) -> (Bool, String)
     func pdfFileAlreadySaved(direcName: String?, fileName:String) -> Bool
     func creatingDirectory(direcName: String) -> Bool
-    func createSubDirectory(direcName: String) -> Bool
-    func createSubSubDirectory(headName: String, newDirecName: String) -> Bool
+    func createSubDirectory(direcName: String) -> (Bool, String)
+    func createSubSubDirectory(headName: URL, newDirecName: String) -> (Bool, String)
     func savePdfWithDataContent(pdfData: Data, pdfName: String, direcName: String?) -> (Bool, String)
 }
 
@@ -72,7 +72,7 @@ extension DocWindFManager {
             
             // saving part
             let actualSavingFilePath = resourcePath.appendingPathComponent(pdfName, isDirectory: false)
-            
+            print(actualSavingFilePath)
             // before saving check if filename already exists
             if self.pdfFileAlreadySaved(direcName: direcName, fileName: pdfName) {
                 // already saved
@@ -188,55 +188,76 @@ extension DocWindFManager {
         }
     }
     
-    func showSavedPdf(urlString: String, direcName: String?, fileName: String) -> Bool {
+    func showSavedPdf(direcName: String?, fileName: String) -> (Bool, String) {
         var status = false
+        var path = ""
         
-        // check for direcName
-        if direcName != nil {
-            
-            let direcPath = direcName!
-            let _ = URL(string: urlString)
-            let resourcePath = self.fileURL().appendingPathComponent(direcPath, isDirectory: true)
-            print("File Manager Path: ------> \(resourcePath)")
-            
-            do {
-                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
-                    for url in contents {
-                        if url.description.contains("\(fileName)") {
-                            status = true
-                            print("✅ FOUND PDF SUCCESSFULLY")
-                            // do something with file
-                        }
+        let resourcePath = self.fileURL()
+        print("File Manager Path: ------> \(resourcePath)")
+        
+        do {
+             let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+                for url in contents {
+                    if url.description.contains("\(fileName)") {
+                        status = true
+                        path = "\(url.description)"
+                        print("✅ FOUND PDF SUCCESSFULLY \(url.description)")
+                        // do something with file
                     }
-            } catch {
-                print("❌ PDF COULD'NT BE SAVED ")
-                print("////reason: \(error.localizedDescription)")
-                status = false
-            }
-            
-            return status
-        } else {
-            let _ = URL(string: urlString)
-            let resourcePath = self.fileURL()
-            print("File Manager Path: ------> \(resourcePath)")
-            
-            do {
-                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
-                    for url in contents {
-                        if url.description.contains("\(fileName)") {
-                            status = true
-                            print("✅ FOUND PDF SUCCESSFULLY")
-                            // do something with file
-                        }
-                    }
-            } catch {
-                print("❌ PDF COULD'NT BE SAVED ")
-                print("////reason: \(error.localizedDescription)")
-                status = false
-            }
-            
-            return status
+                }
+        } catch {
+            print("❌ PDF COULD'NT BE SAVED ")
+            print("////reason: \(error.localizedDescription)")
+            status = false
         }
+        
+        return (status, path)
+//        // check for direcName
+//        if direcName != nil {
+//
+//            let direcPath = direcName!
+//            let _ = URL(string: urlString)
+//            let resourcePath = self.fileURL()
+//            print("File Manager Path: ------> \(resourcePath)")
+////
+//            do {
+//                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+//                    for url in contents {
+//                        if url.description.contains("\(fileName)") {
+//                            status = true
+//                            print("✅ FOUND PDF SUCCESSFULLY \(url.description)")
+//                            // do something with file
+//                        }
+//                    }
+//            } catch {
+//                print("❌ PDF COULD'NT BE SAVED ")
+//                print("////reason: \(error.localizedDescription)")
+//                status = false
+//            }
+//
+//            return status
+//        } else {
+//            let _ = URL(string: urlString)
+//            let resourcePath = self.fileURL()
+//            print("File Manager Path: ------> \(resourcePath)")
+//
+//            do {
+//                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+//                    for url in contents {
+//                        if url.description.contains("\(fileName)") {
+//                            status = true
+//                            print("✅ FOUND PDF SUCCESSFULLY")
+//                            // do something with file
+//                        }
+//                    }
+//            } catch {
+//                print("❌ PDF COULD'NT BE SAVED ")
+//                print("////reason: \(error.localizedDescription)")
+//                status = false
+//            }
+//
+//            return status
+//        }
     }
     
     func pdfFileAlreadySaved(direcName: String?, fileName:String) -> Bool {
@@ -309,8 +330,9 @@ extension DocWindFManager {
         return status
     }
     
-    func createSubDirectory(direcName: String) -> Bool {
+    func createSubDirectory(direcName: String) -> (Bool, String) {
         var status = false
+        var path = ""
         
         let documentsPath = fileURL()
         print("File Manager Path: ------> \(documentsPath)")
@@ -320,6 +342,7 @@ extension DocWindFManager {
         do {
             try FileManager.default.createDirectory(atPath: logsPath.path, withIntermediateDirectories: true, attributes: nil)
             status = true
+            path = "\(logsPath)"
             print("✅ SUCCESSFULLY CREATED  \(direcName) DIRECTORY")
         } catch {
             print("❌ FAILED TO CREATED DIRECTORY")
@@ -327,13 +350,14 @@ extension DocWindFManager {
             status = false
         }
         
-        return status
+        return (status, path)
     }
     
-    func createSubSubDirectory(headName: String, newDirecName: String) -> Bool {
+    func createSubSubDirectory(headName: URL, newDirecName: String) -> (Bool, String) {
         var status = false
+        var path = ""
         
-        let documentsPath = fileURL().appendingPathComponent("\(headName)")
+        let documentsPath = headName
         print("File Manager Path: ------> \(documentsPath)")
         let logsPath = documentsPath.appendingPathComponent("\(newDirecName)")
         print("Updated Manager Path: ------> \(String(describing: logsPath))")
@@ -341,6 +365,7 @@ extension DocWindFManager {
         do {
             try FileManager.default.createDirectory(atPath: logsPath.path, withIntermediateDirectories: true, attributes: nil)
             status = true
+            path = "\(logsPath)"
             print("✅ SUCCESSFULLY CREATED  \(headName)/\(newDirecName) DIRECTORY")
         } catch {
             print("❌ FAILED TO CREATED DIRECTORY")
@@ -348,7 +373,7 @@ extension DocWindFManager {
             status = false
         }
         
-        return status
+        return (status, path)
     }
     
     /// END OF EXTENSION

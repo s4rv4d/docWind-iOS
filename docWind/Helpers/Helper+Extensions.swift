@@ -95,6 +95,13 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return result!
     }
+    
+    func resize(toWidth width: CGFloat) -> UIImage? {
+        let canvas = CGSize(width: width, height: CGFloat(ceil(width/size.width * size.height)))
+        return UIGraphicsImageRenderer(size: canvas, format: imageRendererFormat).image {
+            _ in draw(in: CGRect(origin: .zero, size: canvas))
+        }
+    }
 }
 
 extension Color {

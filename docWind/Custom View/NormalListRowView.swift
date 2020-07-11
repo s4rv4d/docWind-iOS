@@ -19,13 +19,23 @@ struct NormalListRowView: View {
     @Binding var activeSheet: ActiveContentViewSheet
     @Binding var isShown: Bool
     @State private var isDisabled = false
-    
     @State private var showAlert = false
     
     var body: some View {
         
         return ForEach(0..<itemArray.count, id: \.self){ index in
-            NavigationLink(destination: DetailedDirecView(item: self.itemArray[index], masterFolder: self.masterFolder, model: GeneralDocListViewModel(name: self.itemArray[index].wrappedItemName))) {
+            
+            NavigationLink(destination: {
+                VStack {
+                        if self.itemArray[index].wrappedItemType == DWPDFFILE {
+                            DetailPdfView(item: self.itemArray[index])
+                        } else {
+                            DetailedDirecView(item: self.itemArray[index], masterFolder: self.masterFolder,
+                            model: GeneralDocListViewModel(name: self.itemArray[index].wrappedItemName))
+                        }
+
+                    }
+            }()) {
                 HStack {
                     Image(systemName: (self.itemArray[index].wrappedItemType == DWPDFFILE) ? "doc.fill" : "folder.fill")
                         .foregroundColor(self.iconNameString[self.itemArray[index].iconName!])

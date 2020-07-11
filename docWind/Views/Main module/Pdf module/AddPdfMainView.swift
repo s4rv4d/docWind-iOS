@@ -163,13 +163,20 @@ struct AddPdfMainView: View {
             let finalPdfName = "\(pdfName).pdf"
             
             // store to FM
-            if DWFMAppSettings.shared.savePdfWithDataContent(pdfData: rawPDFData, pdfName: finalPdfName, direcName: nil).0 {
-                
-                print("✅ SUCCESSFULLY SAVED FILE IN DocWind")
-                
-                // now need to make a coredata entry
-                self.model.addANewItem(itemName: self.pdfName, iconName: selectedIconName, itemType: DWPDFFILE, locked: false)
-                self.presentationMode.wrappedValue.dismiss()
+            let dwfa = DWFMAppSettings.shared.savePdfWithDataContent(pdfData: rawPDFData, pdfName: finalPdfName, direcName: nil)
+            if dwfa.0 {
+                let path = dwfa.1
+                if path != "" {
+                    print("✅ SUCCESSFULLY SAVED FILE IN DocWind")
+                    
+                    // now need to make a coredata entry
+                    self.model.addANewItem(itemName: self.pdfName, iconName: selectedIconName, itemType: DWPDFFILE, locked: false, filePath: path)
+                    self.presentationMode.wrappedValue.dismiss()
+                } else {
+                    self.activeAlertSheet = .notice
+                    self.alertMessage = "File name already exists chose a new"
+                    self.showAlert.toggle()
+                }
                 
             } else {
                 self.activeAlertSheet = .notice
