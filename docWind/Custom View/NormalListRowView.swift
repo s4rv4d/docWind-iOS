@@ -29,6 +29,7 @@ struct NormalListRowView: View {
                 VStack {
                         if self.itemArray[index].wrappedItemType == DWPDFFILE {
                             DetailPdfView(item: self.itemArray[index], master: self.masterFolder)
+                                .debugPrint("MASTER \(self.masterFolder)")
                         } else {
                             DetailedDirecView(item: self.itemArray[index], masterFolder: self.masterFolder,
                             model: GeneralDocListViewModel(name: self.itemArray[index].wrappedItemName))

@@ -16,6 +16,8 @@ struct DetailPdfView: View {
     @State var master: String = ""
     @State var alertMessage = ""
     @State var showAlert = false
+    @State private var activeContext: PDFDetailActiveView = .shareSheet
+    @State private var isShown = false
     
     // MARK: - @Environment buttons
     @Environment(\.presentationMode) var presentationMode
@@ -26,13 +28,16 @@ struct DetailPdfView: View {
             if url != "" {
                 PDFCustomView(URL(string: url)!)
             }
-        }.onAppear {
-            print("HERERERE")
-            print("MASTER URL ",self.master)
-            print("ITEM URL ",self.item.wrappedItemUrl)
+        }.sheet(isPresented: $isShown) {
+            ShareSheetView(activityItems: [URL(string: self.url)!])
+        }
+        .onAppear {
             self.getUrl()
         }
         .navigationBarTitle(Text(item.wrappedItemName), displayMode: .inline)
+        .navigationBarItems(trailing: Button(action: sharePdf) {
+            Image(systemName: "square.and.arrow.up").font(.body)
+        })
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Error"), message: Text(self.alertMessage), dismissButton: .cancel({ self.presentationMode.wrappedValue.dismiss() }))
         }
@@ -40,7 +45,7 @@ struct DetailPdfView: View {
 
     // MARK: - Functions
     func getUrl() {
-        let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: nil, fileName: "\(item.wrappedItemName).pdf")
+        let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(master)", fileName: "\(item.wrappedItemName).pdf")
         if dwfe.0 {
             let path = dwfe.1
             if path != "" {
@@ -55,5 +60,10 @@ struct DetailPdfView: View {
             self.alertMessage = "Could'nt load file :("
             self.showAlert.toggle()
         }
+    }
+    
+    func sharePdf() {
+        self.activeContext = .shareSheet
+        self.isShown.toggle()
     }
 }

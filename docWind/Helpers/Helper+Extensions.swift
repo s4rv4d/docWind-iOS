@@ -44,6 +44,13 @@ extension View {
         return image
     }
     
+    func debugPrint(_ value: Any) -> some View {
+        #if DEBUG
+        print(value)
+        #endif
+        return self
+    }
+    
     func isHidden(_ hidden: Bool, remove: Bool = false) -> some View {
         modifier(HiddenModifier(isHidden: hidden, remove: remove))
     }

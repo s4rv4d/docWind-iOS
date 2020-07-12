@@ -20,7 +20,7 @@ struct IntroView: View {
                 VStack {
                     TitleView()
                     .multilineTextAlignment(.center)
-                    .padding()
+                    .padding([.top, .leading, .trailing])
                 }
 
                 Text("A mobile document scanner synced up with all your iCloud devices to help you manage and keep track of your documents")
@@ -30,15 +30,15 @@ struct IntroView: View {
                     .padding([.leading, .trailing, .top])
                 
                 InfoView(imageName: "doc.fill", title: "Scan", subTitle: "Scan all documents, whether they are single page, multi page, or even ID cards.")
-                .padding()
+                    .padding([.top, .leading, .trailing])
                 
                 InfoView(imageName: "lock.fill", title: "Protect documents", subTitle: "Protect your sensitive documents using TouchID or FaceID.")
-                    .padding()
+                    .padding([.top, .leading, .trailing])
                 
                 InfoView(imageName: "square.and.arrow.up.fill", title: "Share documents", subTitle: "Share your documents to iCloud or using email, directly from docWind.")
-                    .padding()
+                    .padding([.top, .leading, .trailing])
                 Spacer()
-                VStack(spacing: 15) {
+                VStack(spacing: 10) {
                     Text("Let's get you started!")
                     .font(.caption)
                     .foregroundColor(.gray)

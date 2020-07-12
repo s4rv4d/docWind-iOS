@@ -155,7 +155,7 @@ struct AddPdfFileGenView: View {
     
     private func saveTapped() {
         
-        if (self.pages.count != 0 || self.pagesWithMark.count != 0) {
+        if (self.pages.count == 0 || self.pagesWithMark.count == 0) {
             self.activeAlertSheet = .notice
             self.alertMessage = "Make sure you have scan atleast one document"
             self.showAlert.toggle()

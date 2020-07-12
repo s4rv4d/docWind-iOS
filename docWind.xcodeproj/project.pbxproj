@@ -34,6 +34,7 @@
 		40C408E624B9F2EF00876FAF /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C408E524B9F2EF00876FAF /* PDFView.swift */; };
 		40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */; };
 		40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140424AE14C000126ABA /* SearchBarView.swift */; };
+		40CAFAE124BB480600C1E28A /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CAFAE024BB480600C1E28A /* ShareSheetView.swift */; };
 		40CDC49F24AF691900462277 /* Helper+Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC49E24AF691900462277 /* Helper+Variables.swift */; };
 		40CDC4C724AF72CD00462277 /* ItemModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC4C124AF72CD00462277 /* ItemModel+CoreDataClass.swift */; };
 		40CDC4C824AF72CD00462277 /* ItemModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC4C224AF72CD00462277 /* ItemModel+CoreDataProperties.swift */; };
@@ -92,6 +93,7 @@
 		40C408E524B9F2EF00876FAF /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
 		40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWFMAppSettings.swift; sourceTree = "<group>"; };
 		40C5140424AE14C000126ABA /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		40CAFAE024BB480600C1E28A /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
 		40CDC49E24AF691900462277 /* Helper+Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Variables.swift"; sourceTree = "<group>"; };
 		40CDC4C124AF72CD00462277 /* ItemModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemModel+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		40CDC4C224AF72CD00462277 /* ItemModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemModel+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
@@ -252,6 +254,7 @@
 				40485D8924B98C9F008A137A /* TextView.swift */,
 				40485D8B24B995E7008A137A /* BlurView.swift */,
 				40C408E524B9F2EF00876FAF /* PDFView.swift */,
+				40CAFAE024BB480600C1E28A /* ShareSheetView.swift */,
 			);
 			path = "Custom View";
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				405EE7A624B339B4005F525F /* RecognizedText.swift in Sources */,
 				407567FA24B20CF00071B575 /* AddDocGeneView.swift in Sources */,
 				402C0B6824B0A29500A5A6C9 /* ListCustomGridView.swift in Sources */,
+				40CAFAE124BB480600C1E28A /* ShareSheetView.swift in Sources */,
 				402C0B6C24B0ACD600A5A6C9 /* NormalListRowView.swift in Sources */,
 				40CDC4C824AF72CD00462277 /* ItemModel+CoreDataProperties.swift in Sources */,
 				40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */,

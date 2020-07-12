@@ -20,6 +20,11 @@ enum ActiveContentViewSheet {
     case intro, tappedDirec, tappedPdf, createdDirec, createPdf, settingsTapped
 }
 
+// Enum for activeSheetvar in PDFDetailView
+enum PDFDetailActiveView {
+    case shareSheet
+}
+
 // enum for active sheet #2
 enum ActiveOdfMainViewSheet {
     case scannerView, pdfView

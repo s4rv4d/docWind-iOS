@@ -20,7 +20,9 @@ struct PDFCustomView: UIViewRepresentable {
     
     func makeUIView(context: UIViewRepresentableContext<PDFCustomView>) -> PDFCustomView.UIViewType {
         let pdfView = PDFView()
+//        let pdfView2 = p
         pdfView.document = PDFDocument(url: self.fileURL)
+        pdfView.displayBox = .artBox
         pdfView.autoScales = true
         return pdfView
     }
