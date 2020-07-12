@@ -112,6 +112,7 @@ struct SnapCarouselView: View {
         print("saving... ")
         // check number of images
         // get vm and store in filemanager and make ref to coredata
+        self.presentationMode.wrappedValue.dismiss()
     }
     
     private func fillTapped() {

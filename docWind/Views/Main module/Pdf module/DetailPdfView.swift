@@ -13,6 +13,13 @@ struct DetailPdfView: View {
     // AMRK: - @State variables
     @State var item: ItemModel
     @State var url = ""
+    @State var master: String = ""
+    @State var alertMessage = ""
+    @State var showAlert = false
+    
+    // MARK: - @Environment buttons
+    @Environment(\.presentationMode) var presentationMode
+    
     // MARK: - Properties
     var body: some View {
         VStack {
@@ -20,24 +27,33 @@ struct DetailPdfView: View {
                 PDFCustomView(URL(string: url)!)
             }
         }.onAppear {
-            print(self.item.wrappedItemUrl)
+            print("HERERERE")
+            print("MASTER URL ",self.master)
+            print("ITEM URL ",self.item.wrappedItemUrl)
             self.getUrl()
         }
         .navigationBarTitle(Text(item.wrappedItemName), displayMode: .inline)
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Error"), message: Text(self.alertMessage), dismissButton: .cancel({ self.presentationMode.wrappedValue.dismiss() }))
+        }
     }
 
     // MARK: - Functions
     func getUrl() {
-        let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "", fileName: "\(item.wrappedItemName).pdf")
+        let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: nil, fileName: "\(item.wrappedItemName).pdf")
         if dwfe.0 {
             let path = dwfe.1
             if path != "" {
                 url = path
             } else {
                 //error
+                self.alertMessage = "Could'nt load file :("
+                self.showAlert.toggle()
             }
         } else {
             //error
+            self.alertMessage = "Could'nt load file :("
+            self.showAlert.toggle()
         }
     }
 }

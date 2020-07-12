@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4010734D24BAD971002AFDD2 /* AddPdfFileGenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4010734C24BAD971002AFDD2 /* AddPdfFileGenView.swift */; };
 		402C0B6824B0A29500A5A6C9 /* ListCustomGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */; };
 		402C0B6A24B0A37A00A5A6C9 /* Helper+enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */; };
 		402C0B6C24B0ACD600A5A6C9 /* NormalListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */; };
@@ -64,6 +65,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4010734C24BAD971002AFDD2 /* AddPdfFileGenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPdfFileGenView.swift; sourceTree = "<group>"; };
 		402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCustomGridView.swift; sourceTree = "<group>"; };
 		402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+enums.swift"; sourceTree = "<group>"; };
 		402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalListRowView.swift; sourceTree = "<group>"; };
@@ -140,9 +142,10 @@
 			children = (
 				402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */,
 				402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */,
-				40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */,
 				40EF462B24B4ADF700D07A06 /* ConfPdfView.swift */,
 				40FB481624B8AE900045CF13 /* OCRTextView.swift */,
+				40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */,
+				4010734C24BAD971002AFDD2 /* AddPdfFileGenView.swift */,
 			);
 			path = "Pdf module";
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */,
 				40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */,
 				407567F424B1FC4A0071B575 /* GeneralDocViewModel.swift in Sources */,
+				4010734D24BAD971002AFDD2 /* AddPdfFileGenView.swift in Sources */,
 				40FB481924B8B0600045CF13 /* NewStarterView.swift in Sources */,
 				409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */,
 				405EE7AA24B33AB1005F525F /* TextRecognizer.swift in Sources */,

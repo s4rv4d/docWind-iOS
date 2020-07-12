@@ -43,11 +43,8 @@ struct AddDirecView: View {
                                     Image(systemName: "folder.fill")
                                         .foregroundColor(self.iconColors[index])
                                         .font(.body)
-//                                    Image(self.iconColors[index])
-//                                        .frame(width: 100, height: 100)
-//                                        .padding([.horizontal, .vertical])
-//                                        Spacer()
                                         .padding(.bottom)
+                                    
                                     if self.selectedIconName == self.iconNameString[self.iconColors[index]]! {
                                         withAnimation{
                                             Circle()

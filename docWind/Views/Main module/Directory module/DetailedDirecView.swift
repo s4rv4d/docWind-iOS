@@ -46,11 +46,11 @@ struct DetailedDirecView: View {
                     }
                     List {
                         
-                        Section(header: Text("\(masterFolder) > \(item.wrappedItemName)").font(.caption)) {
+                        Section(header: Text("\(String(masterFolder.split(separator: "/").last!)) > \(item.wrappedItemName)").font(.caption)) {
      //-----------------------------------------------------------------//
 //                                ListCustomGridView(itemArray: self.model.contents!.direcContents)
                             //-----------------------------------------------------------------//
-                            NormalListRowView(itemArray: self.model.contents!.direcContents, masterFolder: item.wrappedItemName, activeSheet: $activeSheet, isShown: $isShown)
+                            NormalListRowView(itemArray: self.model.contents!.direcContents, masterFolder: item.wrappedItemUrl, activeSheet: $activeSheet, isShown: $isShown)
                         }
                         
                     }
@@ -78,6 +78,8 @@ struct DetailedDirecView: View {
             } else if self.activeSheet == .createdDirec {
 //                AddDirecView(model: self.model).environment(\.managedObjectContext, self.context)
                 AddDocGeneView(headName: self.item.wrappedItemUrl, model: self.model).environment(\.managedObjectContext, self.context)
+            } else if self.activeSheet == .createPdf {
+                AddPdfFileGenView(headPath: self.item.wrappedItemUrl, model: self.model).environment(\.managedObjectContext, self.context)
             }
         }
             
@@ -101,7 +103,7 @@ struct DetailedDirecView: View {
         // action sheet code
        .actionSheet(isPresented: $showingActionSheet) {
            ActionSheet(title: Text("Options"), message: Text("Choose and option"), buttons: [
-               .default(Text("Scan a document")) { print("Scan a new document") },
+               .default(Text("Scan a document"), action: createFile),
                .default(Text("Create a new directory"), action: createDiectory),
                .cancel()
            ])
@@ -120,6 +122,11 @@ struct DetailedDirecView: View {
         self.isShown.toggle()
         //2. enter detials
         //3. reload list
+    }
+    
+    func createFile() {
+        self.activeSheet = .createPdf
+        self.isShown.toggle()
     }
     
     func toggleSearch() {

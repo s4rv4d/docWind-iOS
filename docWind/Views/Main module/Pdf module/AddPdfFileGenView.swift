@@ -1,15 +1,15 @@
 //
-//  AddPdfMainView.swift
+//  AddPdfFileGenView.swift
 //  docWind
 //
-//  Created by Sarvad shetty on 7/6/20.
+//  Created by Sarvad shetty on 7/12/20.
 //  Copyright © 2020 Sarvad shetty. All rights reserved.
 //
 
 import SwiftUI
 import PDFKit
 
-struct AddPdfMainView: View {
+struct AddPdfFileGenView: View {
     
     // MARK: - @State properties
     @State private var pdfName = "Document"
@@ -28,9 +28,10 @@ struct AddPdfMainView: View {
     @State private var removeWatermark = false
     @State var deleteDoc = false
     @State private var offsetVal: CGFloat = 0.0
+    @State var headPath: String
     
     // MARK: - Object
-    @ObservedObject var model: MainDocListViewModel // will use for saving stuff
+    @ObservedObject var model: GeneralDocListViewModel
     
     // MARK: - @Environment variables
     @Environment(\.presentationMode) var presentationMode
@@ -138,6 +139,20 @@ struct AddPdfMainView: View {
     }
     
     // MARK: - Functions
+    private func addPagesTapped() {
+        self.showScanner.toggle()
+    }
+    
+    private func imageTapped() {
+        self.activeSheet = .pdfView
+        self.showScanner.toggle()
+    }
+    
+    private func deleteFile() {
+        self.activeAlertSheet = .delete
+        self.showAlert.toggle()
+    }
+    
     private func saveTapped() {
         
         if (self.pages.count != 0 || self.pagesWithMark.count != 0) {
@@ -161,13 +176,14 @@ struct AddPdfMainView: View {
             let rawPDFData = pdfDocument.dataRepresentation()!
             let pdfName = self.pdfName
             let finalPdfName = "\(pdfName).pdf"
-            
+            print(headPath)
             // store to FM
-            let dwfa = DWFMAppSettings.shared.savePdfWithDataContent(pdfData: rawPDFData, pdfName: finalPdfName, direcName: nil)
-            if dwfa.0 {
-                let path = dwfa.1
+            let dwfe = DWFMAppSettings.shared.savePdfWithSubFolder(pdfData: rawPDFData, pdfName: finalPdfName, subDir: headPath)
+            
+            if dwfe.0 {
+                let path = dwfe.1
                 if path != "" {
-                    print("✅ SUCCESSFULLY SAVED FILE IN DocWind")
+                    print("✅ SUCCESSFULLY SAVED FILE IN \(headPath)")
                     
                     // now need to make a coredata entry
                     self.model.addANewItem(itemName: self.pdfName, iconName: selectedIconName, itemType: DWPDFFILE, locked: false, filePath: path)
@@ -177,26 +193,11 @@ struct AddPdfMainView: View {
                     self.alertMessage = "File name already exists chose a new"
                     self.showAlert.toggle()
                 }
-                
             } else {
                 self.activeAlertSheet = .notice
                 self.alertMessage = "File name already exists chose a new"
                 self.showAlert.toggle()
             }
         }
-    }
-    
-    private func addPagesTapped() {
-        self.showScanner.toggle()
-    }
-    
-    private func imageTapped() {
-        self.activeSheet = .pdfView
-        self.showScanner.toggle()
-    }
-    
-    private func deleteFile() {
-        self.activeAlertSheet = .delete
-        self.showAlert.toggle()
     }
 }

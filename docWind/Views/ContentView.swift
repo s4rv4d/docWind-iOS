@@ -50,7 +50,7 @@ struct ContentView: View {
                     //-----------------------------------------------------------------//
         //                                ListCustomGridView(itemArray: self.model.contents!.direcContents)
                                         //-----------------------------------------------------------------//
-                                        NormalListRowView(itemArray: self.model.contents!.direcContents, masterFolder: "DocWind", activeSheet: $activeSheet, isShown: $isShown)
+                                        NormalListRowView(itemArray: self.model.contents!.direcContents, masterFolder: "\(DWFMAppSettings.shared.fileURL())", activeSheet: $activeSheet, isShown: $isShown)
                                     }
                                     
                                 }

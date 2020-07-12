@@ -28,7 +28,7 @@ struct NormalListRowView: View {
             NavigationLink(destination: {
                 VStack {
                         if self.itemArray[index].wrappedItemType == DWPDFFILE {
-                            DetailPdfView(item: self.itemArray[index])
+                            DetailPdfView(item: self.itemArray[index], master: self.masterFolder)
                         } else {
                             DetailedDirecView(item: self.itemArray[index], masterFolder: self.masterFolder,
                             model: GeneralDocListViewModel(name: self.itemArray[index].wrappedItemName))

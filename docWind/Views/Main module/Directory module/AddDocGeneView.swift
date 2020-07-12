@@ -25,7 +25,6 @@ struct AddDocGeneView: View {
     @Environment(\.managedObjectContext) var context
     
     // MARK: - Properties
-    var iconNames = ["blueFolder", "redFolder", "pinkFolder", "greenFolder", "yellowFolder"]
     var iconColors: [Color] = [.blue, .red, .green, .yellow, .pink]
     var iconNameString: [Color: String] = [.blue:"blue", .red:"red", .green:"green", .yellow:"yellow", .pink:"pink"]
 
