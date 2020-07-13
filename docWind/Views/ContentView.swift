@@ -93,6 +93,7 @@ struct ContentView: View {
             
         // On appear code
         .onAppear {
+            IAPService.shared.getProducts()
             self.check()
         }
             

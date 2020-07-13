@@ -87,3 +87,13 @@ enum DragState {
     }
 }
 
+// Helper enums for IAP
+enum IAPProduct: String {
+    case nonConsumable = "com.sarvadShetty.docWind.docWindPlusConsumable"
+}
+
+// active sheet for settings
+
+enum SettingActiveSheet {
+    case appIcon, docSub, mailFeature, mailBug, shareSheet
+}

@@ -60,7 +60,7 @@ struct OCRTextView: View {
             }.keyboardSensible(self.$offsetVal)
             .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
             
-        }.background(BlurView())
+        }.background(BlurView().background(Color.white.opacity(0.6)))
         .onAppear {
             let txtRecog = TextRecognizer(recognizedText: self.$recognizedText)
             txtRecog.recognizeText(from: [self.imageToScan.cgImage!])
