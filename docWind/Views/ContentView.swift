@@ -17,6 +17,7 @@ struct ContentView: View {
     @State var activeSheet: ActiveContentViewSheet = .intro
     @State private var presentAlert = false
     @State private var toggleSearchIcon = false
+
     
     // MARK: - Objects
     @ObservedObject var model = MainDocListViewModel()
@@ -32,18 +33,21 @@ struct ContentView: View {
                         if model.contents != nil {
                             // display contents of file
                             if (model.contents!.direcContents.count == 0) {
-                                Text("Looks empty here, scan a new document or create a new dierctory using the '+' button above.")
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                                .multilineTextAlignment(.center)
-                                    .padding([.leading, .trailing, .top])
+//                                Text("Looks empty here, scan a new document or create a new dierctory using the '+' button above.")
+//                                .font(.caption)
+//                                .foregroundColor(.gray)
+//                                .multilineTextAlignment(.center)
+//                                    .padding([.leading, .trailing, .top])
+                                 NewStarterView()
+                                .padding()
                             } else {
                                 // display list or gridSearchBarView(text: $searchBarText)
-                                if toggleSearchIcon {
-                                    #warning("add later")
-                                    SearchBarView(text: $searchBarText)
-                                    .isHidden(!toggleSearchIcon)
-                                }
+//                                if toggleSearchIcon {
+//                                    #warning("add later")
+//                                    SearchBarView(text: $searchBarText)
+//                                    .isHidden(!toggleSearchIcon)
+//                                }
+                               
                                 List {
                                     
                                     Section(header: Text("DocWind >").font(.caption)) {
@@ -150,7 +154,7 @@ struct ContentView: View {
         //bring uo editing page
         self.activeSheet = .createPdf
         self.isShown.toggle()
-        //addd pages and saves
+        //add pages and saves
     }
     
     func settingsTapped() {

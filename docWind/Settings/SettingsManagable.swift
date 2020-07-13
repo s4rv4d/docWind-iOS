@@ -24,8 +24,8 @@ protocol SettingsManageable {
 extension SettingsManageable where Self: Codable {
     
     func settingsURL() -> URL {
-        let cacheDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        return cacheDirectory.appendingPathComponent("\(Self.self).plist")
+        let cacheDirectory = FileManager.default.url(forUbiquityContainerIdentifier: nil)
+        return cacheDirectory!.appendingPathComponent("DocWind").appendingPathComponent("\(Self.self).plist")
     }
     
     func update() -> Bool {
@@ -46,7 +46,7 @@ extension SettingsManageable where Self: Codable {
                 self = try PropertyListDecoder().decode(Self.self, from: fileContents)
                 return true
             } catch {
-                print(error.localizedDescription)
+                print("here", error.localizedDescription)
                 return false
             }
         } else {

@@ -71,12 +71,7 @@ struct DetailedDirecView: View {
         .sheet(isPresented: $isShown) {
             if self.activeSheet == .intro {
 
-            } else if self.activeSheet == .tappedDirec {
-//                DetailedDirecView()
-            } else if self.activeSheet == .tappedPdf {
-//                DetailPdfView()
             } else if self.activeSheet == .createdDirec {
-//                AddDirecView(model: self.model).environment(\.managedObjectContext, self.context)
                 AddDocGeneView(headName: self.item.wrappedItemUrl, model: self.model).environment(\.managedObjectContext, self.context)
             } else if self.activeSheet == .createPdf {
                 AddPdfFileGenView(headPath: self.item.wrappedItemUrl, model: self.model).environment(\.managedObjectContext, self.context)
@@ -88,11 +83,12 @@ struct DetailedDirecView: View {
         .navigationBarItems(trailing:
             
             HStack{
-                Button(action: toggleSearch) {
-                    Image(systemName: "magnifyingglass")
-                    .font(.system(size: 25))
-                }
-                Spacer()
+                #warning("add later")
+//                Button(action: toggleSearch) {
+//                    Image(systemName: "magnifyingglass")
+//                    .font(.system(size: 25))
+//                }
+//                Spacer()
                 Button(action: showOptions){
                     Image(systemName: "plus")
                         .font(.system(size: 25))

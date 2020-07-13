@@ -108,6 +108,14 @@ struct AddPdfMainView: View {
                                 .foregroundColor(.yellow)
                             Spacer()
                         }
+                    }.disabled(!AppSettings.shared.bougthNonConsumable)
+                        .onTapGesture {
+                            if !AppSettings.shared.bougthNonConsumable {
+                              print("You need to buy")
+                                self.activeAlertSheet = .notice
+                                self.alertMessage = "You need to be a docWind Plus user to access this feature"
+                                self.showAlert.toggle()
+                            }
                     }
                 }
             }.keyboardSensible(self.$offsetVal)
@@ -123,7 +131,7 @@ struct AddPdfMainView: View {
         }
         .alert(isPresented: $showAlert) {
             if self.activeAlertSheet == .notice {
-               return Alert(title: Text("Notice"), message: Text(alertMessage), primaryButton: .cancel(), secondaryButton: .default(Text("Retry")))
+               return Alert(title: Text("Notice"), message: Text(alertMessage), dismissButton: .cancel())
             } else {
                return Alert(title: Text("Alert"), message: Text("Are you sure you want to delete this document?"), primaryButton: .destructive(Text("Delete"), action: { self.presentationMode.wrappedValue.dismiss() }), secondaryButton: .cancel())
             }

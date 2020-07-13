@@ -11,6 +11,7 @@ import Foundation
 // MARK: - Main protocol
 protocol DocWindFManager {
     func fileURL() -> URL
+    func reset()
     func savePdf(urlString: String, direcName: String?, fileName: String) -> Bool
     func showSavedPdf(direcName: String?, fileName: String) -> (Bool, String)
     func pdfFileAlreadySaved(direcName: String?, fileName:String) -> Bool
@@ -27,6 +28,15 @@ extension DocWindFManager {
     
     var containerUrl: URL? {
         return FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("DocWind")
+    }
+    
+    func reset() {
+        do {
+            try FileManager.default.removeItem(atPath: containerUrl!.path)
+//            try FileManager.default.evictUbiquitousItem(at: containerUrl!)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     func fileURL() -> URL {

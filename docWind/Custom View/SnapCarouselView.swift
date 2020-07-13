@@ -14,6 +14,8 @@ struct SnapCarouselView: View {
     @State private var activeSheet: ActiveCarouselViewSheet = .shareView
     @State private var isShown = false
     // use this to update/save to pdf format
+    @State private var alertShown = false
+    @State private var alertMessage = ""
     
     // MARK: - @Binding variables
     @Binding var imagesState: [UIImage]
@@ -105,6 +107,9 @@ struct SnapCarouselView: View {
                 OCRTextView(recognizedText: "Scanning", imageToScan: self.mainImages[self.UIState.activeCard])
             }
         }
+        .alert(isPresented: $alertShown) {
+            Alert(title: Text("Notice"), message: Text(alertMessage), dismissButton: .cancel())
+        }
     }
     
     // MARK: - Functions
@@ -116,9 +121,15 @@ struct SnapCarouselView: View {
     }
     
     private func fillTapped() {
-        print("fill tapped")
-        self.activeSheet = .fillView
-        self.isShown.toggle()
+        
+        if !AppSettings.shared.bougthNonConsumable {
+            self.alertMessage = "You need to be docWind Plus user to access this feature"
+            self.alertShown.toggle()
+        } else {
+            print("fill tapped")
+            self.activeSheet = .fillView
+            self.isShown.toggle()
+        }
     }
     
     private func deleteTapped() {
@@ -129,8 +140,14 @@ struct SnapCarouselView: View {
     }
     
     private func ocrTapped() {
-        print("ocr tapped")
-        self.activeSheet = .ocrView
-        self.isShown.toggle()
+        
+        if !AppSettings.shared.bougthNonConsumable {
+            self.alertMessage = "You need to be docWind Plus user to access this feature"
+            self.alertShown.toggle()
+        } else {
+            print("ocr tapped")
+            self.activeSheet = .ocrView
+            self.isShown.toggle()
+        }
     }
 }
