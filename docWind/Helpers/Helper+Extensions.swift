@@ -61,6 +61,12 @@ extension View {
         modifier(HiddenModifier(isHidden: hidden, remove: remove))
     }
     
+    func toast(isShowing: Binding<Bool>, text: Text) -> some View {
+        Toast(isShowing: isShowing,
+              presenting: { self },
+              text: text)
+    }
+    
     func keyboardSensible(_ offsetValue: Binding<CGFloat>) -> some View {
 
       return self
@@ -194,7 +200,7 @@ extension UIView {
         }
 }
 
-// MARL: - PDF stuff
+// MARK: - PDF stuff
 extension PDFAnnotation {
     
     func contains(point: CGPoint) -> Bool {

@@ -23,37 +23,55 @@ struct DetailPdfView: View {
     @State private var canEdit = false
     @State private var color: Color = Color(hex: "#000000")
     @State private var lineWidth: CGFloat = 3.0
+    @State private var editIconName = "pencil"
     
     // MARK: - @Environment buttons
     @Environment(\.presentationMode) var presentationMode
     
     // MARK: - Properties
     var body: some View {
-        ZStack {
-//            VStack {
-                if url != "" {
-                    PDFCustomView(fileURL: URL(string: url)!, options: $options, canEdit: $canEdit, color: $color)
+        VStack {
+            if url != "" {
+                PDFCustomView(fileURL: URL(string: url)!, options: $options, canEdit: $canEdit, color: $color)
+            }
+            Spacer()
+            HStack {
+                Image(systemName: self.editIconName)
+                    .font(.system(size: 20))
+                    .foregroundColor(.blue)
+                    .padding()
+                    .onTapGesture {
+                        self.canEdit.toggle()
                 }
-//            }
-            
-//            if canEdit {
-//            SlideOverCardView(color: $color, lineWidth: $lineWidth).isHidden(!canEdit, remove: !canEdit)
                 
-//            }
+                Spacer()
+                Image(systemName: "wand.and.stars")
+                    .font(.system(size: 20))
+                    .foregroundColor(.blue)
+                    .padding()
+                    .onTapGesture {
+                        self.toolsTapped()
+                }
+            }.background(Color(.secondarySystemBackground))
         }
+
         .sheet(isPresented: $isShown) {
-//            ShareSheetView(activityItems: [URL(string: self.url)!])
-            SlideOverCardView(color: self.$color, lineWidth: self.$lineWidth)
+            
+            if self.activeContext == .shareSheet {
+                ShareSheetView(activityItems: [URL(string: self.url)!])
+            } else if self.activeContext == .toolBox {
+                PDFToolBarView(color: self.$color, lineWidth: self.$lineWidth, options: self.$options)
+            }
         }
         .onAppear {
             self.getUrl()
         }
         .navigationBarTitle(Text(item.wrappedItemName), displayMode: .inline)
-        .navigationBarItems(leading: Button("Edit") {
-            self.canEdit.toggle()
-            }, trailing: Button(action: sharePdf) {
-            Image(systemName: "square.and.arrow.up").font(.body)
+        .navigationBarItems(trailing: Button(action: sharePdf) {
+            Image(systemName: "square.and.arrow.up").font(.system(size: 20))
         })
+            .toast(isShowing: $canEdit, text: Text("Edit: " + ((self.canEdit == true) ? "Enabled" : "Disabled")))
+
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Error"), message: Text(self.alertMessage), dismissButton: .cancel({ self.presentationMode.wrappedValue.dismiss() }))
         }
@@ -80,6 +98,11 @@ struct DetailPdfView: View {
     
     func sharePdf() {
         self.activeContext = .shareSheet
+        self.isShown.toggle()
+    }
+    
+    func toolsTapped() {
+        self.activeContext = .toolBox
         self.isShown.toggle()
     }
 }

@@ -12,49 +12,38 @@ import PDFKit
 struct PDFCustomView: UIViewRepresentable {
     
     // MARK: - Properties
-    @State var fileURL: URL
-    @Binding var options: DrawingTool
-    @Binding var canEdit: Bool
-    @Binding var color: Color
+     var fileURL: URL
+     @Binding var options: DrawingTool
+     @Binding var canEdit: Bool
+     @Binding var color: Color
 
-    private let pdfDrawer = PDFDrawer()
-    private let pdfThumbnailView = PDFThumbnailView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 200, width: UIScreen.main.bounds.width, height: 150))
-    private let pdfDrawingGestureRecognizer = DrawingGestureRecognizer()
+     let pdfDrawer = PDFDrawer()
+     
+     let pdfThumbnailView = PDFThumbnailView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 250, width: UIScreen.main.bounds.width, height: 150))
+     
     
-    func makeUIView(context: UIViewRepresentableContext<PDFCustomView>) -> PDFCustomView.UIViewType {
+    func makeUIView(context: UIViewRepresentableContext<PDFCustomView>) -> PDFView {
         let pdfView = PDFView()
         pdfView.document = PDFDocument(url: self.fileURL)
+        pdfView.backgroundColor = UIColor.lightGray
         pdfView.displayMode = .singlePageContinuous
         pdfView.displayDirection = .vertical
         pdfView.displayBox = .mediaBox
         pdfView.displaysAsBook = true
         pdfView.autoScales = true
-        
-        
-       let thumbnailSize: Int = 50
-       pdfThumbnailView.translatesAutoresizingMaskIntoConstraints = false
-       pdfThumbnailView.pdfView = pdfView
-       pdfThumbnailView.backgroundColor = .clear
-       pdfThumbnailView.layoutMode = .horizontal
-       pdfThumbnailView.thumbnailSize = CGSize(width: thumbnailSize, height: thumbnailSize)
-       pdfView.addSubview(pdfThumbnailView)
+        print("----------?")
+
         
         return pdfView
     }
     
     func updateUIView(_ uiView: PDFView, context: UIViewRepresentableContext<PDFCustomView>) {
         print("STATUS \(canEdit)")
+        print(uiView.subviews)
+        
+        let pdfDrawingGestureRecognizer = DrawingGestureRecognizer()
         if canEdit == true {
             print("here")
-            for view in uiView.subviews {
-                print(view)
-                if view == pdfThumbnailView {
-                    print("removing pdf thumbnail view...")
-                    view.removeFromSuperview()
-                }
-            }
-            
-            print("adding gesture recognizer...")
             uiView.addGestureRecognizer(pdfDrawingGestureRecognizer)
             pdfDrawingGestureRecognizer.drawingDelegate = pdfDrawer
             pdfDrawer.pdfView = uiView
@@ -63,9 +52,9 @@ struct PDFCustomView: UIViewRepresentable {
             
         } else {
             print("adding thumbnail view...")
-            pdfThumbnailView.backgroundColor = .clear
-//            uiView.addSubview(pdfThumbnailView)
+            print(uiView.gestureRecognizers!.count)
             for recog in uiView.gestureRecognizers! {
+                uiView.removeGestureRecognizer(recog)
                 if recog == pdfDrawingGestureRecognizer {
                     print("Removing gesture recognizer...")
                     uiView.removeGestureRecognizer(recog)

@@ -64,7 +64,7 @@ struct ContentView: View {
                         HStack {
                             Spacer()
                             Image(systemName: "gear")
-                                .font(.body)
+                                .font(.system(size: 20))
                                 .foregroundColor(.blue)
                             .padding()
                                 .onTapGesture {

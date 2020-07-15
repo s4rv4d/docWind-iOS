@@ -64,6 +64,7 @@
 		40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */; };
 		40DF994824B2E452001CEC67 /* DWDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DF994724B2E452001CEC67 /* DWDateFormatter.swift */; };
 		40DF994A24B2F5A2001CEC67 /* AddPdfMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */; };
+		40EF391C24BF5E82007BBAC0 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EF391B24BF5E82007BBAC0 /* ToastView.swift */; };
 		40EF462C24B4ADF700D07A06 /* ConfPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EF462B24B4ADF700D07A06 /* ConfPdfView.swift */; };
 		40FB481724B8AE900045CF13 /* OCRTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB481624B8AE900045CF13 /* OCRTextView.swift */; };
 		40FB481924B8B0600045CF13 /* NewStarterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB481824B8B0600045CF13 /* NewStarterView.swift */; };
@@ -139,6 +140,7 @@
 		40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocWindFManager.swift; sourceTree = "<group>"; };
 		40DF994724B2E452001CEC67 /* DWDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWDateFormatter.swift; sourceTree = "<group>"; };
 		40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPdfMainView.swift; sourceTree = "<group>"; };
+		40EF391B24BF5E82007BBAC0 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		40EF462B24B4ADF700D07A06 /* ConfPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfPdfView.swift; sourceTree = "<group>"; };
 		40FB481624B8AE900045CF13 /* OCRTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTextView.swift; sourceTree = "<group>"; };
 		40FB481824B8B0600045CF13 /* NewStarterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStarterView.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */,
 				40EF462B24B4ADF700D07A06 /* ConfPdfView.swift */,
 				40FB481624B8AE900045CF13 /* OCRTextView.swift */,
+				406CAA4C24BECC2D00933F5D /* PDFToolBarView.swift */,
 				40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */,
 				4010734C24BAD971002AFDD2 /* AddPdfFileGenView.swift */,
 			);
@@ -299,7 +302,7 @@
 				405EFDCB24BCB3E30070BE5F /* MailView.swift */,
 				40C408E524B9F2EF00876FAF /* PDFView.swift */,
 				4012033324BDD9DF00167917 /* ODVThumbnailView.swift */,
-				406CAA4C24BECC2D00933F5D /* PDFToolBarView.swift */,
+				40EF391B24BF5E82007BBAC0 /* ToastView.swift */,
 			);
 			path = "Custom View";
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40EF391C24BF5E82007BBAC0 /* ToastView.swift in Sources */,
 				4012033224BDD1F900167917 /* PinchToZoom.swift in Sources */,
 				40DF994824B2E452001CEC67 /* DWDateFormatter.swift in Sources */,
 				402C0B6E24B0B0E800A5A6C9 /* DetailedDirecView.swift in Sources */,

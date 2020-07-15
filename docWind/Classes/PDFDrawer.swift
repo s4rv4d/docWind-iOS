@@ -45,6 +45,10 @@ class PDFDrawer {
     private var currentPage: PDFPage?
     var color = UIColor.red // default color is red
     var drawingTool = DrawingTool.pen
+    
+    init() {
+        print("being called!")
+    }
 }
 
 extension PDFDrawer: DrawingGestureRecognizerDelegate {
