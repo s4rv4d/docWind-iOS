@@ -13,7 +13,8 @@ struct SlideOverCardView: View {
     @State var position = CardPosition.middle
     @Binding var color: Color
     @Binding var lineWidth: CGFloat
-    @Binding var drawings: [Drawing]
+//    @Binding var drawings: [Drawing]
+//    @Binding var canEdit: Bool
     
     var body: some View {
         let drag = DragGesture()
@@ -40,18 +41,23 @@ struct SlideOverCardView: View {
                     ColorRow(selectedColor: $color)
                 }.settingsBackground()
                 
-                HStack {
+//                HStack {
                     
-                    Button("Undo") {
-                        if self.drawings.count > 0 {
-                            self.drawings.removeLast()
-                        }
-                    }.settingsBackground()
-                    Spacer()
-                    Button("Clear") {
-                        self.drawings = [Drawing]()
-                    }.settingsBackground()
-                }.padding()
+//                    Button("Undo") {
+//                        if self.drawings.count > 0 {
+//                            self.drawings.removeLast()
+//                        }
+//                    }.settingsBackground()
+////                    Spacer()
+////
+////                    Button("Edit") {
+////                        self.canEdit.toggle()
+////                    }.settingsBackground()
+////
+////                    Button("Clear") {
+////                        self.drawings = [Drawing]()
+////                    }.settingsBackground()
+//                }.padding()
                 
                 Spacer()
             }

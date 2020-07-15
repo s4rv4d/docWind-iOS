@@ -14,10 +14,12 @@ struct DrawOnImageView: View {
     @Binding var mainImages: [UIImage]
     @Binding var imagesWithoutWater: [UIImage]
     @Binding var imageWithWater: [UIImage]
+    @State var lastScaleValue: CGFloat = 1.0
     var pageId: Int
     var image: UIImage
     @State var currentDrawing: Drawing = Drawing()
     @State var drawings: [Drawing] = [Drawing]()
+    @State var canEdit = false
     @State private var color: Color = Color(hex: "#000000")
     @State private var lineWidth: CGFloat = 3.0
     @Environment(\.presentationMode) var presentationMode
@@ -28,6 +30,8 @@ struct DrawOnImageView: View {
                 Image(uiImage: self.image)
                 .resizable()
                     .aspectRatio(contentMode: .fill)
+                .pinchToZoom()
+
                 .gesture(
                         DragGesture(minimumDistance: 0.1)
                             .onChanged({ (value) in
@@ -51,7 +55,7 @@ struct DrawOnImageView: View {
                 }.stroke(self.color, lineWidth: self.lineWidth)
                 
                 VStack(alignment: .leading) {
-                    SlideOverCardView(color: self.$color, lineWidth: self.$lineWidth, drawings: self.$drawings)
+                    SlideOverCardView(color: self.$color, lineWidth: self.$lineWidth)
                 }
                 
                 VStack {
@@ -99,10 +103,12 @@ struct DrawOnImageView: View {
     image.draw(in: CGRect(origin: origin, size: size))
     // get the context for CoreGraphics
     let context = UIGraphicsGetCurrentContext()
+        
+        let color = color
 
     // set stroking width and color of the context
         context!.setLineWidth(lineWidth)
-        context!.setStrokeColor(color.uiColor().cgColor)
+        context!.setStrokeColor(color.opacity(0.5).uiColor().cgColor)
 
         for drawing in self.drawings {
             let points = drawing.points

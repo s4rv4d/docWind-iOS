@@ -56,6 +56,10 @@ extension IAPService: SKPaymentTransactionObserver {
             
             switch transaction.transactionState {
             case .purchasing: break
+            case .purchased :
+                AppSettings.shared.bougthNonConsumable = true
+                _ = AppSettings.shared.update()
+                break
             default: queue.finishTransaction(transaction)
             }
         }

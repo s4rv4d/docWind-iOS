@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Get the managed object context from the shared persistent container.
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         _ = AppSettings.shared.load()
-        
+//        
 //        AppSettings.shared.firstLoginDone = false
 //        _ = AppSettings.shared.update()
 //        

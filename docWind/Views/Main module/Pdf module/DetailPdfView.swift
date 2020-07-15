@@ -18,24 +18,40 @@ struct DetailPdfView: View {
     @State var showAlert = false
     @State private var activeContext: PDFDetailActiveView = .shareSheet
     @State private var isShown = false
+    @State private var showEditView = false
+    @State private var options: DrawingTool = .highlighter
+    @State private var canEdit = false
+    @State private var color: Color = Color(hex: "#000000")
+    @State private var lineWidth: CGFloat = 3.0
     
     // MARK: - @Environment buttons
     @Environment(\.presentationMode) var presentationMode
     
     // MARK: - Properties
     var body: some View {
-        VStack {
-            if url != "" {
-                PDFCustomView(URL(string: url)!)
-            }
-        }.sheet(isPresented: $isShown) {
-            ShareSheetView(activityItems: [URL(string: self.url)!])
+        ZStack {
+//            VStack {
+                if url != "" {
+                    PDFCustomView(fileURL: URL(string: url)!, options: $options, canEdit: $canEdit, color: $color)
+                }
+//            }
+            
+//            if canEdit {
+//            SlideOverCardView(color: $color, lineWidth: $lineWidth).isHidden(!canEdit, remove: !canEdit)
+                
+//            }
+        }
+        .sheet(isPresented: $isShown) {
+//            ShareSheetView(activityItems: [URL(string: self.url)!])
+            SlideOverCardView(color: self.$color, lineWidth: self.$lineWidth)
         }
         .onAppear {
             self.getUrl()
         }
         .navigationBarTitle(Text(item.wrappedItemName), displayMode: .inline)
-        .navigationBarItems(trailing: Button(action: sharePdf) {
+        .navigationBarItems(leading: Button("Edit") {
+            self.canEdit.toggle()
+            }, trailing: Button(action: sharePdf) {
             Image(systemName: "square.and.arrow.up").font(.body)
         })
         .alert(isPresented: $showAlert) {

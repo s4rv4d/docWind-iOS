@@ -33,11 +33,6 @@ struct ContentView: View {
                         if model.contents != nil {
                             // display contents of file
                             if (model.contents!.direcContents.count == 0) {
-//                                Text("Looks empty here, scan a new document or create a new dierctory using the '+' button above.")
-//                                .font(.caption)
-//                                .foregroundColor(.gray)
-//                                .multilineTextAlignment(.center)
-//                                    .padding([.leading, .trailing, .top])
                                  NewStarterView()
                                 .padding()
                             } else {
@@ -61,11 +56,8 @@ struct ContentView: View {
                                 .listStyle(GroupedListStyle())
                             }
                         } else {
-                            Text("Looks empty here, scan a new document using the 'add' button above.")
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                            .multilineTextAlignment(.center)
-                                .padding([.leading, .trailing, .top])
+                            NewStarterView()
+                            .padding()
                         }
                         
                         Spacer()

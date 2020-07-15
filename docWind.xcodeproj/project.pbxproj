@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		4010734D24BAD971002AFDD2 /* AddPdfFileGenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4010734C24BAD971002AFDD2 /* AddPdfFileGenView.swift */; };
+		4012033224BDD1F900167917 /* PinchToZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033124BDD1F900167917 /* PinchToZoom.swift */; };
+		4012033424BDD9DF00167917 /* ODVThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033324BDD9DF00167917 /* ODVThumbnailView.swift */; };
+		4012033624BDE04100167917 /* PDFDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033524BDE04100167917 /* PDFDrawer.swift */; };
+		4012033824BDE06B00167917 /* DrawingGestureRecogniser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033724BDE06B00167917 /* DrawingGestureRecogniser.swift */; };
+		4012033A24BDE09C00167917 /* DrawingAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033924BDE09C00167917 /* DrawingAnnotation.swift */; };
+		4012033C24BDE0D700167917 /* NonSelectableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033B24BDE0D700167917 /* NonSelectableView.swift */; };
 		402C0B6824B0A29500A5A6C9 /* ListCustomGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */; };
 		402C0B6A24B0A37A00A5A6C9 /* Helper+enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */; };
 		402C0B6C24B0ACD600A5A6C9 /* NormalListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */; };
@@ -29,6 +35,7 @@
 		405EFDC824BCA11A0070BE5F /* AppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EFDC724BCA11A0070BE5F /* AppIconView.swift */; };
 		405EFDCA24BCA12A0070BE5F /* SubcriptionPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EFDC924BCA12A0070BE5F /* SubcriptionPageView.swift */; };
 		405EFDCC24BCB3E30070BE5F /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EFDCB24BCB3E30070BE5F /* MailView.swift */; };
+		406CAA4D24BECC2E00933F5D /* PDFToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406CAA4C24BECC2D00933F5D /* PDFToolBarView.swift */; };
 		406E9AF424B5E773000FB8FD /* SnapCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406E9AF324B5E773000FB8FD /* SnapCarouselView.swift */; };
 		406E9AF624B5E798000FB8FD /* CarouselCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406E9AF524B5E798000FB8FD /* CarouselCardModel.swift */; };
 		406E9AF924B5E80F000FB8FD /* UIStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406E9AF824B5E80F000FB8FD /* UIStateModel.swift */; };
@@ -75,6 +82,12 @@
 
 /* Begin PBXFileReference section */
 		4010734C24BAD971002AFDD2 /* AddPdfFileGenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPdfFileGenView.swift; sourceTree = "<group>"; };
+		4012033124BDD1F900167917 /* PinchToZoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchToZoom.swift; sourceTree = "<group>"; };
+		4012033324BDD9DF00167917 /* ODVThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ODVThumbnailView.swift; sourceTree = "<group>"; };
+		4012033524BDE04100167917 /* PDFDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDrawer.swift; sourceTree = "<group>"; };
+		4012033724BDE06B00167917 /* DrawingGestureRecogniser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingGestureRecogniser.swift; sourceTree = "<group>"; };
+		4012033924BDE09C00167917 /* DrawingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingAnnotation.swift; sourceTree = "<group>"; };
+		4012033B24BDE0D700167917 /* NonSelectableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonSelectableView.swift; sourceTree = "<group>"; };
 		402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCustomGridView.swift; sourceTree = "<group>"; };
 		402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+enums.swift"; sourceTree = "<group>"; };
 		402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalListRowView.swift; sourceTree = "<group>"; };
@@ -96,6 +109,7 @@
 		405EFDC724BCA11A0070BE5F /* AppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconView.swift; sourceTree = "<group>"; };
 		405EFDC924BCA12A0070BE5F /* SubcriptionPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcriptionPageView.swift; sourceTree = "<group>"; };
 		405EFDCB24BCB3E30070BE5F /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
+		406CAA4C24BECC2D00933F5D /* PDFToolBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFToolBarView.swift; sourceTree = "<group>"; };
 		406E9AF324B5E773000FB8FD /* SnapCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapCarouselView.swift; sourceTree = "<group>"; };
 		406E9AF524B5E798000FB8FD /* CarouselCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCardModel.swift; sourceTree = "<group>"; };
 		406E9AF824B5E80F000FB8FD /* UIStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStateModel.swift; sourceTree = "<group>"; };
@@ -205,6 +219,11 @@
 				405EE7A924B33AB1005F525F /* TextRecognizer.swift */,
 				406E9AF824B5E80F000FB8FD /* UIStateModel.swift */,
 				405EFDBD24BC76EB0070BE5F /* IAPService.swift */,
+				4012033124BDD1F900167917 /* PinchToZoom.swift */,
+				4012033524BDE04100167917 /* PDFDrawer.swift */,
+				4012033724BDE06B00167917 /* DrawingGestureRecogniser.swift */,
+				4012033924BDE09C00167917 /* DrawingAnnotation.swift */,
+				4012033B24BDE0D700167917 /* NonSelectableView.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -272,13 +291,15 @@
 				40920EB124B74E7800E2293C /* SlideOverCardView.swift */,
 				40485D8924B98C9F008A137A /* TextView.swift */,
 				40485D8B24B995E7008A137A /* BlurView.swift */,
-				40C408E524B9F2EF00876FAF /* PDFView.swift */,
 				40CAFAE024BB480600C1E28A /* ShareSheetView.swift */,
 				405EFDBF24BC886A0070BE5F /* SettingsRow.swift */,
 				405EFDC124BC88B50070BE5F /* UIToggleView.swift */,
 				405EFDC324BC8C180070BE5F /* SubHeadlineView.swift */,
 				405EFDC524BC9ED90070BE5F /* AppVersionRow.swift */,
 				405EFDCB24BCB3E30070BE5F /* MailView.swift */,
+				40C408E524B9F2EF00876FAF /* PDFView.swift */,
+				4012033324BDD9DF00167917 /* ODVThumbnailView.swift */,
+				406CAA4C24BECC2D00933F5D /* PDFToolBarView.swift */,
 			);
 			path = "Custom View";
 			sourceTree = "<group>";
@@ -443,6 +464,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4012033224BDD1F900167917 /* PinchToZoom.swift in Sources */,
 				40DF994824B2E452001CEC67 /* DWDateFormatter.swift in Sources */,
 				402C0B6E24B0B0E800A5A6C9 /* DetailedDirecView.swift in Sources */,
 				40CDC4C724AF72CD00462277 /* ItemModel+CoreDataClass.swift in Sources */,
@@ -450,6 +472,7 @@
 				407567FA24B20CF00071B575 /* AddDocGeneView.swift in Sources */,
 				402C0B6824B0A29500A5A6C9 /* ListCustomGridView.swift in Sources */,
 				40CAFAE124BB480600C1E28A /* ShareSheetView.swift in Sources */,
+				4012033C24BDE0D700167917 /* NonSelectableView.swift in Sources */,
 				405EFDC824BCA11A0070BE5F /* AppIconView.swift in Sources */,
 				402C0B6C24B0ACD600A5A6C9 /* NormalListRowView.swift in Sources */,
 				40CDC4C824AF72CD00462277 /* ItemModel+CoreDataProperties.swift in Sources */,
@@ -457,14 +480,17 @@
 				40485D8A24B98C9F008A137A /* TextView.swift in Sources */,
 				405EE7A824B339DD005F525F /* ScannerView.swift in Sources */,
 				40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */,
+				4012033624BDE04100167917 /* PDFDrawer.swift in Sources */,
 				406E9AF924B5E80F000FB8FD /* UIStateModel.swift in Sources */,
 				40C408E624B9F2EF00876FAF /* PDFView.swift in Sources */,
 				404D7F9A24B6ED3B002F53F0 /* SettingsView.swift in Sources */,
 				405EFDC224BC88B50070BE5F /* UIToggleView.swift in Sources */,
 				40FDE49724AC4C6C006AAFD2 /* SettingsManagable.swift in Sources */,
+				4012033A24BDE09C00167917 /* DrawingAnnotation.swift in Sources */,
 				405EFDCC24BCB3E30070BE5F /* MailView.swift in Sources */,
 				405EFDC024BC886A0070BE5F /* SettingsRow.swift in Sources */,
 				405EFDBE24BC76EB0070BE5F /* IAPService.swift in Sources */,
+				4012033424BDD9DF00167917 /* ODVThumbnailView.swift in Sources */,
 				40FDE49A24AC4C95006AAFD2 /* AppSettings.swift in Sources */,
 				40CDC4CA24AF72CD00462277 /* PdfFilemodel+CoreDataProperties.swift in Sources */,
 				40DF994A24B2F5A2001CEC67 /* AddPdfMainView.swift in Sources */,
@@ -493,12 +519,14 @@
 				402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */,
 				40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */,
 				40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */,
+				4012033824BDE06B00167917 /* DrawingGestureRecogniser.swift in Sources */,
 				407567F424B1FC4A0071B575 /* GeneralDocViewModel.swift in Sources */,
 				4010734D24BAD971002AFDD2 /* AddPdfFileGenView.swift in Sources */,
 				40FB481924B8B0600045CF13 /* NewStarterView.swift in Sources */,
 				409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */,
 				405EE7AA24B33AB1005F525F /* TextRecognizer.swift in Sources */,
 				402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */,
+				406CAA4D24BECC2E00933F5D /* PDFToolBarView.swift in Sources */,
 				40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */,
 				40CDC4CE24AF80DF00462277 /* MainDocListViewModel.swift in Sources */,
 				40CDC49F24AF691900462277 /* Helper+Variables.swift in Sources */,
@@ -640,6 +668,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
@@ -662,6 +691,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
