@@ -14,6 +14,7 @@ enum DrawingTool: Int {
     case pencil = 1
     case pen = 2
     case highlighter = 3
+    case none = 69
     
     var width: CGFloat {
         switch self {
@@ -40,11 +41,13 @@ enum DrawingTool: Int {
 
 class PDFDrawer {
     weak var pdfView: PDFView!
-    private var path: UIBezierPath?
+    var path: UIBezierPath?
     private var currentAnnotation : DrawingAnnotation?
+    private var currentlySelectedAnnotation: ImageStampAnnotation?
     private var currentPage: PDFPage?
     var color = UIColor.red // default color is red
     var drawingTool = DrawingTool.pen
+    var calledOnce: Bool = false
     
     init() {
         print("being called!")
@@ -92,7 +95,7 @@ extension PDFDrawer: DrawingGestureRecognizerDelegate {
         
         // Final annotation
         page.removeAnnotation(currentAnnotation!)
-        let finalAnnoattion = createFinalAnnotation(path: path!, page: page)
+        _ = createFinalAnnotation(path: path!, page: page)
         currentAnnotation = nil
     }
     
@@ -125,9 +128,9 @@ extension PDFDrawer: DrawingGestureRecognizerDelegate {
                             y: path.bounds.origin.y - 5,
                             width: path.bounds.size.width + 10,
                             height: path.bounds.size.height + 10)
-        var signingPathCentered = UIBezierPath()
+        let signingPathCentered = UIBezierPath()
         signingPathCentered.cgPath = path.cgPath
-        signingPathCentered.moveCenter(to: bounds.center)
+        _ = signingPathCentered.moveCenter(to: bounds.center)
         
         let annotation = PDFAnnotation(bounds: bounds, forType: .ink, withProperties: nil)
         annotation.color = color.withAlphaComponent(drawingTool.alpha)
@@ -148,4 +151,61 @@ extension PDFDrawer: DrawingGestureRecognizerDelegate {
         onPage.removeAnnotation(annotation)
         onPage.addAnnotation(annotation)
     }
+}
+
+extension PDFDrawer: ImagePanGestureRecognizerDelegate {
+    
+    // MARK: - ImagePanGestureRecognizerDelegate
+    func gestureRecognizerBeganIPG(_ location: CGPoint) {
+        guard let page = pdfView.page(for: location, nearest: true) else { return }
+        currentPage = page
+        let convertedPoint = pdfView.convert(location, to: currentPage!)
+        
+        guard let annotation = page.annotation(at: convertedPoint) else {
+            return
+        }
+        
+        if annotation.isKind(of: ImageStampAnnotation.self) {
+            currentlySelectedAnnotation = (annotation as! ImageStampAnnotation)
+        }
+    }
+    
+    func gestureRecognizerMovedIPG(_ location: CGPoint) {
+        guard let page = currentPage else { return }
+        let convertedPoint = pdfView.convert(location, to: page)
+        
+        guard let annotation = currentlySelectedAnnotation else { return}
+        let initialBounds = annotation.bounds
+        // Set the center of the annotation to the spot of our finger
+        annotation.bounds = CGRect(x: convertedPoint.x - (initialBounds.width / 2), y: convertedPoint.y - (initialBounds.height / 2), width: initialBounds.width, height: initialBounds.height)
+    }
+    
+    func gestureRecognizerEndedIPG(_ location: CGPoint) {
+//        guard let page = currentPage else { return }
+//        let convertedPoint = pdfView.convert(location, to: page)
+//
+//        guard let annotation = currentlySelectedAnnotation else { return}
+//        let initialBounds = annotation.bounds
+//        // Set the center of the annotation to the spot of our finger
+//        annotation.bounds = CGRect(x: convertedPoint.x - (initialBounds.width / 2), y: convertedPoint.y - (initialBounds.height / 2), width: initialBounds.width, height: initialBounds.height)
+//
+//        _ = createFinalImageBounds(page: page, finalAnnoBound: annotation.bounds)
+//
+        currentlySelectedAnnotation = nil
+    }
+    
+    private func createFinalImageBounds(page: PDFPage, finalAnnoBound: CGRect) -> PDFAnnotation {
+        let imageBounds = CGRect(x: finalAnnoBound.midX, y: finalAnnoBound.midY, width: 200, height: 100)
+        let imageStamp = ImageStampAnnotation(with: currentlySelectedAnnotation!.image, forBounds: imageBounds, withProperties: nil)
+        
+        for anno in page.annotations {
+            if anno == imageStamp {
+                page.removeAnnotation(anno)
+            }
+        }
+        
+        page.addAnnotation(imageStamp)
+        return imageStamp
+    }
+    
 }

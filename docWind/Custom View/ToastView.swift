@@ -28,14 +28,17 @@ struct Toast<Presenting>: View where Presenting: View {
                 VStack {
                     Spacer()
                     self.text
+//                        .padding(.bottom)
                     .padding()
                     .background(Color.secondary.colorInvert())
                     .foregroundColor(Color.primary)
                     .cornerRadius(10)
+                        
+                    Spacer()
                 }
                 .frame(width: geometry.size.width / 2,
                        height: geometry.size.height / 5)
-                
+                .padding(.init(top: 0, leading: 0, bottom: 35, trailing: 0))
                 
                 
                 .transition(.slide)

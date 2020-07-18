@@ -14,44 +14,129 @@ struct PDFToolBarView: View {
     @Binding var color: Color
     @Binding var lineWidth: CGFloat
     @Binding var options: DrawingTool
+    @Binding var openSignature: Bool
+    @Binding var activeContext: PDFDetailActiveView
+    @Binding var canEdit: Bool
+    @Binding var canEditSignature: Bool
+    @Binding var imageThere: UIImage?
     
+    // MARK: - @Environment variables
+    @Environment(\.presentationMode) var presentationMode
+    
+    // MARK: - Properties
     var body: some View {
-        VStack {
-            Handle()
-            HStack {
-                Text("Options")
-                    .padding()
-                Spacer()
-            }
-//            VStack(alignment: .leading) {
-//                Text("Pencil Width")
-//                Stepper("\(self.lineWidth, specifier: "%.2f")", value: self.$lineWidth, in: 1.0...15.0)
-//            }
-//                .settingsBackground()
-            VStack(alignment: .leading) {
-                Text("Change color")
-                ColorRow(selectedColor: $color)
-            }.settingsBackground()
-            Spacer()
-            HStack {
-
-                Button("eraser") {
-                    self.options = .eraser
-                }.settingsBackground()
-
-                Button("highlighter") {
-                    self.options = .highlighter
-                }.settingsBackground()
-
-                Button("pen") {
-                    self.options = .pen
-                }.settingsBackground()
-
-                Button("pencil") {
-                    self.options = .pencil
-                }.settingsBackground()
-            }
-//                .padding()
+        ScrollView(.vertical) {
+            VStack {
+                    Handle()
+                        .padding(.top)
+                    HStack {
+                        Text("Options")
+                            .padding()
+                        Spacer()
+                    }
+                    VStack(alignment: .leading) {
+                        Text("Change color")
+                        ColorRow(selectedColor: $color)
+                    }.settingsBackground()
+                    
+                    // SAVING SIGNATURE
+                    HStack {
+                        Text("Signature")
+                            .padding([.top, .leading, .trailing])
+                        Spacer()
+                    }
+                    Button(action: {
+                        self.activeContext = .signature
+                        self.presentationMode.wrappedValue.dismiss()
+                        self.openSignature.toggle()
+                        self.canEditSignature.toggle()
+                    }) {
+                        HStack {
+                            Image(systemName: "signature")
+                            Text("Add signature")
+                            Spacer()
+                        }.padding()
+                    }.settingsBackground()
+                    
+                    if imageThere != nil {
+                       Button(action: {
+                            self.presentationMode.wrappedValue.dismiss()
+                            self.canEditSignature.toggle()
+                        }) {
+                            HStack {
+                                Image(systemName: "signature")
+                                Text("Edit signature")
+                                Spacer()
+                            }.foregroundColor(.yellow)
+                            .padding()
+                        }.settingsBackground()
+                        
+                    }
+                    // signature done
+                    
+                    HStack {
+                        Text("Custom Annotations")
+                            .padding([.top, .leading, .trailing])
+                        Spacer()
+                    }
+                    
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            self.options = .eraser
+                            self.canEdit.toggle()
+                            self.canEditSignature = false
+                        }) {
+                            VStack {
+                                Image("eraser")
+                                .resizable()
+                                .frame(width: 100, height: 150)
+                                    .opacity((options == .eraser) ? 1 : 0.5)
+                            }
+                        }
+                        
+                        Button(action: {
+                            self.options = .highlighter
+                            self.canEdit.toggle()
+                            self.canEditSignature = false
+                        }) {
+                            VStack {
+                                Image("highlighter")
+                                .resizable()
+                                .frame(height: 300)
+                                .opacity((options == .highlighter) ? 1 : 0.5)
+                            }
+                        }
+                        
+                        Button(action: {
+                            self.options = .pen
+                            self.canEdit.toggle()
+                            self.canEditSignature = false
+                        }) {
+                            VStack {
+                                Image("pen")
+                                .resizable()
+                                .opacity((options == .pen) ? 1 : 0.5)
+                            }
+                        }
+                        
+                        Button(action: {
+                            self.options = .pencil
+                            self.canEdit.toggle()
+                            self.canEditSignature = false
+                        }) {
+                            VStack {
+                                Image("pencil")
+                                .resizable()
+                                .frame(width: 100)
+                                .opacity((options == .pencil) ? 1 : 0.5)
+                            }
+                        }
+                        Spacer()
+                    }.frame(height: 200)
+                    .buttonStyle(PlainButtonStyle())
+                    Spacer()
+                }
         }
     }
 }

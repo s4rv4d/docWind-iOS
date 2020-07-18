@@ -285,3 +285,16 @@ extension PDFPage {
         return nil
     }
 }
+
+
+extension PDFAnnotation: Comparable {
+    // made for comparing annotations in pdf, with respect to their type
+    public static func < (lhs: PDFAnnotation, rhs: PDFAnnotation) -> Bool {
+        false
+    }
+    
+    
+    public static func == (lhs: PDFAnnotation, rhs: PDFAnnotation) -> Bool {
+        return (lhs.type == rhs.type && lhs.bounds == rhs.bounds)
+    }
+}

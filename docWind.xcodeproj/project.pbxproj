@@ -62,6 +62,9 @@
 		40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170AB24ADA93000F51F77 /* MainDocViewModel.swift */; };
 		40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */; };
 		40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */; };
+		40DD4F7324C02CDC00D37EFA /* SignaturePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DD4F7224C02CDC00D37EFA /* SignaturePageView.swift */; };
+		40DD4F7524C02F3700D37EFA /* ImageAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DD4F7424C02F3700D37EFA /* ImageAnnotation.swift */; };
+		40DD4F7724C087AE00D37EFA /* ImagePanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DD4F7624C087AE00D37EFA /* ImagePanGestureRecognizer.swift */; };
 		40DF994824B2E452001CEC67 /* DWDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DF994724B2E452001CEC67 /* DWDateFormatter.swift */; };
 		40DF994A24B2F5A2001CEC67 /* AddPdfMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */; };
 		40EF391C24BF5E82007BBAC0 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EF391B24BF5E82007BBAC0 /* ToastView.swift */; };
@@ -138,6 +141,9 @@
 		40D170AB24ADA93000F51F77 /* MainDocViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDocViewModel.swift; sourceTree = "<group>"; };
 		40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBarView.swift; sourceTree = "<group>"; };
 		40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocWindFManager.swift; sourceTree = "<group>"; };
+		40DD4F7224C02CDC00D37EFA /* SignaturePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignaturePageView.swift; sourceTree = "<group>"; };
+		40DD4F7424C02F3700D37EFA /* ImageAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAnnotation.swift; sourceTree = "<group>"; };
+		40DD4F7624C087AE00D37EFA /* ImagePanGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePanGestureRecognizer.swift; sourceTree = "<group>"; };
 		40DF994724B2E452001CEC67 /* DWDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWDateFormatter.swift; sourceTree = "<group>"; };
 		40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPdfMainView.swift; sourceTree = "<group>"; };
 		40EF391B24BF5E82007BBAC0 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
@@ -181,6 +187,7 @@
 				406CAA4C24BECC2D00933F5D /* PDFToolBarView.swift */,
 				40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */,
 				4010734C24BAD971002AFDD2 /* AddPdfFileGenView.swift */,
+				40DD4F7224C02CDC00D37EFA /* SignaturePageView.swift */,
 			);
 			path = "Pdf module";
 			sourceTree = "<group>";
@@ -227,6 +234,8 @@
 				4012033724BDE06B00167917 /* DrawingGestureRecogniser.swift */,
 				4012033924BDE09C00167917 /* DrawingAnnotation.swift */,
 				4012033B24BDE0D700167917 /* NonSelectableView.swift */,
+				40DD4F7424C02F3700D37EFA /* ImageAnnotation.swift */,
+				40DD4F7624C087AE00D37EFA /* ImagePanGestureRecognizer.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -479,9 +488,11 @@
 				4012033C24BDE0D700167917 /* NonSelectableView.swift in Sources */,
 				405EFDC824BCA11A0070BE5F /* AppIconView.swift in Sources */,
 				402C0B6C24B0ACD600A5A6C9 /* NormalListRowView.swift in Sources */,
+				40DD4F7724C087AE00D37EFA /* ImagePanGestureRecognizer.swift in Sources */,
 				40CDC4C824AF72CD00462277 /* ItemModel+CoreDataProperties.swift in Sources */,
 				40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */,
 				40485D8A24B98C9F008A137A /* TextView.swift in Sources */,
+				40DD4F7324C02CDC00D37EFA /* SignaturePageView.swift in Sources */,
 				405EE7A824B339DD005F525F /* ScannerView.swift in Sources */,
 				40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */,
 				4012033624BDE04100167917 /* PDFDrawer.swift in Sources */,
@@ -532,6 +543,7 @@
 				402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */,
 				406CAA4D24BECC2E00933F5D /* PDFToolBarView.swift in Sources */,
 				40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */,
+				40DD4F7524C02F3700D37EFA /* ImageAnnotation.swift in Sources */,
 				40CDC4CE24AF80DF00462277 /* MainDocListViewModel.swift in Sources */,
 				40CDC49F24AF691900462277 /* Helper+Variables.swift in Sources */,
 				407567F624B1FC620071B575 /* GeneralDocListViewModel.swift in Sources */,

@@ -22,7 +22,7 @@ enum ActiveContentViewSheet {
 
 // Enum for activeSheetvar in PDFDetailView
 enum PDFDetailActiveView {
-    case shareSheet, toolBox
+    case shareSheet, toolBox, signature
 }
 
 // enum for active sheet #2
@@ -32,7 +32,7 @@ enum ActiveOdfMainViewSheet {
 
 // enum for alert sheet
 enum ActiveAlertSheet {
-    case notice, delete
+    case notice, delete, error
 }
 
 // enum for active sheet in carousel view
