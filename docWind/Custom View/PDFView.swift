@@ -33,6 +33,7 @@ struct PDFCustomView: UIViewRepresentable {
         pdfView.displayDirection = .vertical
         pdfView.displayBox = .mediaBox
         pdfView.autoScales = true
+        pdfView.interpolationQuality = .high
         return pdfView
     }
     

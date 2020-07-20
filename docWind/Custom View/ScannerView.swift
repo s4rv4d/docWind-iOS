@@ -55,11 +55,24 @@ struct ScannerView: UIViewControllerRepresentable {
                      let image = scan.imageOfPage(at: pageIndex).resize(toWidth: 250)!
                     imgsWithWatermarks.append(UIImage.imageWithWatermark(image1: image, image2: UIImage(named: "watermark")!))
                     imgs.append(image)
+                    
+//                    if self.uiImages.wrappedValue.count != 0 {
+//                        self.uiImages.wrappedValue.append(image)
+//                        self.uiImagesWithWatermarks.wrappedValue.append(UIImage.imageWithWatermark(image1: image, image2: UIImage(named: "watermark")!))
+//                    }
                 }
 
             }
-            self.uiImages.wrappedValue = imgs
-            self.uiImagesWithWatermarks.wrappedValue = imgsWithWatermarks
+            
+            if self.uiImages.wrappedValue.count == 0 {
+                self.uiImages.wrappedValue = imgs
+                self.uiImagesWithWatermarks.wrappedValue = imgsWithWatermarks
+            } else {
+                let img2 = self.uiImages.wrappedValue
+                let water2 = self.uiImagesWithWatermarks.wrappedValue
+                self.uiImages.wrappedValue = img2 + imgs
+                self.uiImagesWithWatermarks.wrappedValue = water2 + imgsWithWatermarks
+            }
             controller.dismiss(animated: true, completion: nil)
         }
         

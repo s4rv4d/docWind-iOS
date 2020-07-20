@@ -83,17 +83,27 @@ struct AddPdfMainView: View {
                     } else {
                         ScrollView(.horizontal) {
                             HStack {
-                                ForEach(0..<((self.removeWatermark == true) ? self.pages.count : self.pagesWithMark.count)){ index in
+                                ForEach(0..<((self.removeWatermark == true) ? self.pages.count : self.pagesWithMark.count), id: \.self){ index in
                                     Image(uiImage: ((self.removeWatermark == true) ? self.pages[index] : self.pagesWithMark[index]))
                                     .resizable()
                                     .frame(width: 150, height: 200)
                                     .cornerRadius(8)
                                         .aspectRatio(contentMode: .fill)
-                                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white))
+                                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary))
                                     .padding()
                                         .onTapGesture {
                                             self.imageTapped()
                                     }
+                                }
+                                Button(action: {
+                                    self.addPagesTapped()
+                                }) {
+                                    Text("Add more +")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                    .frame(width: 150, height: 200)
+                                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary))
+                                    .padding()
                                 }
                             }
                         }
