@@ -19,9 +19,9 @@ enum DrawingTool: Int {
     var width: CGFloat {
         switch self {
         case .pencil:
-            return 1
+            return 0.5
         case .pen:
-            return 5
+            return 1
         case .highlighter:
             return 10
         default:
@@ -50,7 +50,7 @@ class PDFDrawer {
     var calledOnce: Bool = false
     
     init() {
-        print("being called!")
+        print("PDF Drawer being called! 🛠")
     }
 }
 

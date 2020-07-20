@@ -298,3 +298,5 @@ extension PDFAnnotation: Comparable {
         return (lhs.type == rhs.type && lhs.bounds == rhs.bounds)
     }
 }
+
+//&& lhs.bounds == rhs.bounds

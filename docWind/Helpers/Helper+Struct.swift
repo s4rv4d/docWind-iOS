@@ -58,9 +58,11 @@ struct InfoView: View {
                     Text(title)
                         .fontWeight(.medium)
                     Text(subTitle)
-                        .font(.body)
+//                        .padding(.leading)
+//                        .font(.body)
                         .foregroundColor(.secondary)
-                        .multilineTextAlignment(.leading)
+                    .lineLimit(3)
+//                        .multilineTextAlignment(.center)
                 }
             }
             

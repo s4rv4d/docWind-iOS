@@ -12,17 +12,17 @@ import PDFKit
 struct PDFCustomView: UIViewRepresentable {
     
     // MARK: - Properties
-     var fileURL: URL
-     @Binding var options: DrawingTool
-     @Binding var canEdit: Bool
-     @Binding var canEditSignature: Bool
-     @Binding var color: Color
-    @Binding var saveTapped: Bool
+    var fileURL: URL
+    var options: DrawingTool
+    var canEdit: Bool
+    var canEditSignature: Bool
+    var color: Color
+    var saveTapped: Bool
     var image: UIImage?
+    @Binding var alreadyAdded: Bool
 
-     let pdfDrawer = PDFDrawer()
-     
-     let pdfThumbnailView = PDFThumbnailView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 250, width: UIScreen.main.bounds.width, height: 150))
+    let pdfDrawer = PDFDrawer()
+    let pdfThumbnailView = PDFThumbnailView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 250, width: UIScreen.main.bounds.width, height: 150))
      
     
     func makeUIView(context: UIViewRepresentableContext<PDFCustomView>) -> PDFView {
@@ -32,32 +32,22 @@ struct PDFCustomView: UIViewRepresentable {
         pdfView.displayMode = .singlePageContinuous
         pdfView.displayDirection = .vertical
         pdfView.displayBox = .mediaBox
-//        pdfView.displaysAsBook = true
         pdfView.autoScales = true
-        print(pdfView.currentPage!.annotations)
-        pdfDrawer.calledOnce = true
-        
-        pdfDrawer.pdfView = pdfView
-        
         return pdfView
     }
     
     func updateUIView(_ uiView: PDFView, context: UIViewRepresentableContext<PDFCustomView>) {
         
-        for anno in uiView.currentPage!.annotations {
-            if anno.type! == "Stamp" {
-                print(anno)
-                uiView.currentPage!.addAnnotation(anno)
-            }
-        }
+        pdfDrawer.pdfView = uiView
         
+        print("STATUS IS ",canEditSignature)
         if saveTapped {
             print(uiView.currentPage!.annotations)
             print(uiView)
             uiView.document?.write(to: fileURL)
         }
         
-        print("resetting...")
+        print("resetting switching back to page gesture")
         for recog in uiView.gestureRecognizers! {
             uiView.removeGestureRecognizer(recog)
         }
@@ -72,7 +62,7 @@ struct PDFCustomView: UIViewRepresentable {
                 print("here")
                 uiView.addGestureRecognizer(pdfDrawingGestureRecognizer)
                 pdfDrawingGestureRecognizer.drawingDelegate = pdfDrawer
-                pdfDrawer.pdfView = uiView
+//                pdfDrawer.pdfView = uiView
                 pdfDrawer.drawingTool = options
                 pdfDrawer.color = color.uiColor()
             } else {
@@ -95,44 +85,64 @@ struct PDFCustomView: UIViewRepresentable {
         
         // signature part
         if image != nil {
-            pdfDrawer.pdfView = uiView
+            print("😁 received image")
+            
+//            pdfDrawer.pdfView = uiView
             pdfPanGestureRecognizer.panDelegate = pdfDrawer
             
             if !canEdit  {
-                print("here1")
                 if canEditSignature {
-                    uiView.addGestureRecognizer(pdfPanGestureRecognizer)
+                    print("adding image pan gesture")
+
                     
                     if !pdfDrawer.calledOnce {
                         let page = uiView.currentPage!
                         let pageBounds = page.bounds(for: .cropBox)
                         let imageBounds = CGRect(x: pageBounds.minX, y: pageBounds.minY, width: 200, height: 100)
                         let imageStamp = ImageStampAnnotation(with: image, forBounds: imageBounds, withProperties: nil)
-                        
-                        // so that signatures isnt duplicated later on
-                        for anno in page.annotations {
-                            if anno == imageStamp {
-                                page.removeAnnotation(anno)
-                            }
+
+//                         so that signatures isnt duplicated later on
+                        if page.annotations.last! == imageStamp {
+                            page.removeAnnotation(page.annotations.last!)
                         }
-                        
+
                         page.addAnnotation(imageStamp)
-                        pdfDrawer.calledOnce = true
-                        
-                        if !canEditSignature {
-                            for recog in uiView.gestureRecognizers! {
-                                uiView.removeGestureRecognizer(recog)
-                            }
+
+                        for recog in uiView.gestureRecognizers! {
+                            uiView.removeGestureRecognizer(recog)
                         }
+                        uiView.addGestureRecognizer(pdfPanGestureRecognizer)
+                        print(uiView.gestureRecognizers!)
+                        pdfDrawer.calledOnce = true
+                    } else {
+                        for recog in uiView.gestureRecognizers! {
+                            uiView.removeGestureRecognizer(recog)
+                        }
+                        uiView.addGestureRecognizer(pdfPanGestureRecognizer)
                     }
                     
                 } else {
+                    print("if both arent true remove all gesture and stick to main page ges")
                     for recog in uiView.gestureRecognizers! {
                         uiView.removeGestureRecognizer(recog)
                     }
                 }
+            } else {
+                print("CAN EDIT ON")
             }
             
+            if alreadyAdded {
+                let page = uiView.currentPage!
+                page.removeAnnotation(page.annotations.last!)
+                let pageBounds = page.bounds(for: .cropBox)
+                let imageBounds = CGRect(x: pageBounds.minX, y: pageBounds.minY, width: 200, height: 100)
+                let imageStamp = ImageStampAnnotation(with: image, forBounds: imageBounds, withProperties: nil)
+                page.addAnnotation(imageStamp)
+                uiView.addGestureRecognizer(pdfPanGestureRecognizer)
+            }
+            
+        } else {
+            print("no image")
         }
         
     }

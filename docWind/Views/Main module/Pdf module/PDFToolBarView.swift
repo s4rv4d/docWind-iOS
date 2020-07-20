@@ -39,40 +39,40 @@ struct PDFToolBarView: View {
                         ColorRow(selectedColor: $color)
                     }.settingsBackground()
                     
-                    // SAVING SIGNATURE
-                    HStack {
-                        Text("Signature")
-                            .padding([.top, .leading, .trailing])
-                        Spacer()
-                    }
-                    Button(action: {
-                        self.activeContext = .signature
-                        self.presentationMode.wrappedValue.dismiss()
-                        self.openSignature.toggle()
-                        self.canEditSignature.toggle()
-                    }) {
-                        HStack {
-                            Image(systemName: "signature")
-                            Text("Add signature")
-                            Spacer()
-                        }.padding()
-                    }.settingsBackground()
-                    
-                    if imageThere != nil {
-                       Button(action: {
-                            self.presentationMode.wrappedValue.dismiss()
-                            self.canEditSignature.toggle()
-                        }) {
-                            HStack {
-                                Image(systemName: "signature")
-                                Text("Edit signature")
-                                Spacer()
-                            }.foregroundColor(.yellow)
-                            .padding()
-                        }.settingsBackground()
-                        
-                    }
-                    // signature done
+//                    // SAVING SIGNATURE
+//                    HStack {
+//                        Text("Signature")
+//                            .padding([.top, .leading, .trailing])
+//                        Spacer()
+//                    }
+//                    Button(action: {
+//                        self.activeContext = .signature
+//                        self.presentationMode.wrappedValue.dismiss()
+//                        self.openSignature.toggle()
+//                        self.canEditSignature.toggle()
+//                    }) {
+//                        HStack {
+//                            Image(systemName: "signature")
+//                            Text("Add signature")
+//                            Spacer()
+//                        }.padding()
+//                    }.settingsBackground()
+//
+//                    if imageThere != nil {
+//                       Button(action: {
+//                            self.presentationMode.wrappedValue.dismiss()
+//                            self.canEditSignature.toggle()
+//                        }) {
+//                            HStack {
+//                                Image(systemName: "signature")
+//                                Text("Edit signature")
+//                                Spacer()
+//                            }.foregroundColor(.yellow)
+//                            .padding()
+//                        }.settingsBackground()
+//
+//                    }
+//                    // signature done
                     
                     HStack {
                         Text("Custom Annotations")
@@ -84,7 +84,7 @@ struct PDFToolBarView: View {
                         Spacer()
                         Button(action: {
                             self.options = .eraser
-                            self.canEdit.toggle()
+                            self.canEdit = true
                             self.canEditSignature = false
                         }) {
                             VStack {
@@ -97,7 +97,7 @@ struct PDFToolBarView: View {
                         
                         Button(action: {
                             self.options = .highlighter
-                            self.canEdit.toggle()
+                            self.canEdit = true
                             self.canEditSignature = false
                         }) {
                             VStack {
@@ -110,7 +110,7 @@ struct PDFToolBarView: View {
                         
                         Button(action: {
                             self.options = .pen
-                            self.canEdit.toggle()
+                            self.canEdit = true
                             self.canEditSignature = false
                         }) {
                             VStack {
@@ -122,7 +122,7 @@ struct PDFToolBarView: View {
                         
                         Button(action: {
                             self.options = .pencil
-                            self.canEdit.toggle()
+                            self.canEdit = true
                             self.canEditSignature = false
                         }) {
                             VStack {
@@ -135,6 +135,12 @@ struct PDFToolBarView: View {
                         Spacer()
                     }.frame(height: 200)
                     .buttonStyle(PlainButtonStyle())
+                
+                    Text("Use the pen 🖋 for signatures")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+                        .padding([.leading, .trailing, .top])
                     Spacer()
                 }
         }

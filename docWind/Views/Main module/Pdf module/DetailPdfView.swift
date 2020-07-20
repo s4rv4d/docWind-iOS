@@ -8,38 +8,37 @@
 
 import SwiftUI
 
-struct DetailPdfView: View {
-    
-    // AMRK: - @State variables
-    @State var item: ItemModel
-    @State var url = ""
-    @State var master: String = ""
-    @State var alertTitle = ""
-    @State var alertMessage = ""
-    @State var showAlert = false
-    @State var activeAlertContext: ActiveAlertSheet = .error
-    @State private var activeContext: PDFDetailActiveView = .signature
-    @State private var isShown = false
-    @State private var showEditView = false
-    @State private var options: DrawingTool = .none
-    @State private var canEdit = false
-    @State private var canEditSignature = false
-    @State private var delete = false
-    @State private var color: Color = Color(hex: "#000000")
-    @State private var lineWidth: CGFloat = 3.0
-    @State private var editIconName = "pencil"
-    @State var image: UIImage? = nil
-    @State private var saveButton = false
-    @State var saveTapped = false
+struct DetailPdfView: View, Equatable {
     
     // MARK: - @Environment buttons
     @Environment(\.presentationMode) var presentationMode
+    
+    // MARK: - @State variables
+     var item: ItemModel
+    @State var url: String = ""
+     var master: String = ""
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
+    @State private var showAlert = false
+    @State private var activeAlertContext: ActiveAlertSheet = .error
+    @State private var activeContext: PDFDetailActiveView = .toolBox
+    @State private var isShown = false
+    @State private var options: DrawingTool = .none
+    @State private var canEdit = false
+    @State private var canEditSignature = false
+    @State private var color: Color = Color(hex: "#000000")
+    @State private var lineWidth: CGFloat = 3.0
+    @State var image: UIImage? = nil
+    @State private var saveButton = false
+    @State var saveTapped = false
+    @State var alreadyAdded = false
     
     // MARK: - Properties
     var body: some View {
         VStack {
             if url != "" {
-                PDFCustomView(fileURL: URL(string: url)!, options: $options, canEdit: $canEdit, canEditSignature: $canEditSignature, color: $color, saveTapped: $saveTapped, image: image)
+                PDFCustomView(fileURL: URL(string: url)!, options: options, canEdit: canEdit, canEditSignature: canEditSignature, color: color, saveTapped: saveTapped, image: image, alreadyAdded: $alreadyAdded)
+                .debugPrint("PRESENTED PDFCUSTOMVIEW 📄")
             }
             Spacer()
             HStack {
@@ -48,37 +47,32 @@ struct DetailPdfView: View {
                         print("saving annotations")
                         self.canEdit = false
                     }.settingsBackground()
+                }
 
-                    Button("Save") {
-                        print("saving annotation")
-                        self.canEdit = false
-                    }.settingsBackground()
-                }
-                
-                if canEditSignature {
-                    Button("Edit Sign") {
-                        self.canEditSignature = true
-                    }.settingsBackground()
-                    
-                    Button("Save") {
-                        print("saving signature")
-                        self.canEditSignature = false
-                    }.settingsBackground()
-                    
-                }
-                
+//                if canEditSignature {
+//                    Button("Edit Sign") {
+//                        self.canEditSignature = true
+//                    }.settingsBackground()
+//
+//                    Button("Save") {
+//                        print("saving signature")
+//                        self.canEditSignature = false
+//                    }.settingsBackground()
+//
+//                }
+
                 if saveButton {
                     if !canEdit && !canEditSignature {
                         Button("Save PDF") {
                             print("saving..")
-                            
+
                             // save pdf
                             self.saveTapped.toggle()
                             self.saveButton.toggle()
 //                            self.presentationMode
-                            
+
                         }.settingsBackground()
-                        
+
                         Button("Cancel") {
                             print("cancelling changes..")
                             // give an alert
@@ -87,37 +81,40 @@ struct DetailPdfView: View {
                             self.alertMessage = "Are you sure you want to cancel the changes made"
                             // dimiss without saving
                             self.showAlert.toggle()
-                            
+
                         }.settingsBackground()
                             .foregroundColor(.red)
                     }
                 }
-                
-                
-                
+
+
+
                 Spacer()
                 Image(systemName: "wand.and.stars")
                     .font(.system(size: 20))
                     .foregroundColor(.blue)
                     .padding()
                     .onTapGesture {
+                        print("will be presenting tool bar ")
                         self.toolsTapped()
                         self.saveButton = true
                 }
-            }.background(Color(.black))
-        }
+                }.debugPrint("HStack 💻")
+            .background(Color(.black))
+            }.debugPrint("VStack 🧸")
 
         .sheet(isPresented: $isShown) {
-            
             if self.activeContext == .shareSheet {
                 ShareSheetView(activityItems: [URL(string: self.url)!])
             } else if self.activeContext == .toolBox {
                 PDFToolBarView(color: self.$color, lineWidth: self.$lineWidth, options: self.$options, openSignature: self.$isShown, activeContext: self.$activeContext, canEdit: self.$canEdit, canEditSignature: self.$canEditSignature, imageThere: self.$image)
+
             } else if self.activeContext == .signature {
                 SignaturePageView(image: self.$image)
             }
         }
         .onAppear {
+            print("im alive")
             self.getUrl()
         }
         .navigationBarTitle(Text(item.wrappedItemName), displayMode: .inline)
@@ -125,11 +122,13 @@ struct DetailPdfView: View {
             Image(systemName: "square.and.arrow.up").font(.system(size: 20))
         })
             .toast(isShowing: $canEdit, text: Text("Edit: " + ((self.canEdit == true) ? "Enabled" : "Disabled")))
-
+//
         .alert(isPresented: $showAlert) {
-            
+
             if activeAlertContext == .error {
-                return Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel({ self.presentationMode.wrappedValue.dismiss() }))
+                return Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel({
+                    self.presentationMode.wrappedValue.dismiss()                    
+                }))
             } else {
                 return Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), primaryButton: .default(Text("Cancel").foregroundColor(.blue)), secondaryButton: .destructive(Text("Delete").foregroundColor(.red), action: {
                     self.presentationMode.wrappedValue.dismiss()
@@ -167,5 +166,11 @@ struct DetailPdfView: View {
     func toolsTapped() {
         self.activeContext = .toolBox
         self.isShown.toggle()
+    }
+    
+    static func == (lhs: DetailPdfView, rhs: DetailPdfView) -> Bool {
+        // << return yes on view properties which identifies that the
+        // view is equal and should not be refreshed (ie. `body` is not rebuilt)
+        return false
     }
 }
