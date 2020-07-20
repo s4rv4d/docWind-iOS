@@ -32,7 +32,7 @@ enum ActiveOdfMainViewSheet {
 
 // enum for alert sheet
 enum ActiveAlertSheet {
-    case notice, delete, error
+    case notice, delete, error, noPurchase
 }
 
 // enum for active sheet in carousel view

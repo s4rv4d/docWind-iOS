@@ -46,6 +46,7 @@ struct DetailPdfView: View, Equatable {
                     Button("Save Edit") {
                         print("saving annotations")
                         self.canEdit = false
+                        self.saveButton = true
                     }.settingsBackground()
                 }
 
@@ -92,12 +93,19 @@ struct DetailPdfView: View, Equatable {
                 Spacer()
                 Image(systemName: "wand.and.stars")
                     .font(.system(size: 20))
-                    .foregroundColor(.blue)
+                    .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
                     .padding()
                     .onTapGesture {
-                        print("will be presenting tool bar ")
-                        self.toolsTapped()
-                        self.saveButton = true
+                        if !AppSettings.shared.bougthNonConsumable {
+                            self.alertTitle = "Notice"
+                            self.activeAlertContext = .noPurchase
+                            self.alertMessage = "You need to be docWind Plus user to access this feature"
+                            // dimiss without saving
+                            self.showAlert.toggle()
+                        } else {
+                            self.toolsTapped()
+                            
+                        }
                 }
                 }.debugPrint("HStack 💻")
             .background(Color(.black))
@@ -114,7 +122,6 @@ struct DetailPdfView: View, Equatable {
             }
         }
         .onAppear {
-            print("im alive")
             self.getUrl()
         }
         .navigationBarTitle(Text(item.wrappedItemName), displayMode: .inline)
@@ -122,13 +129,15 @@ struct DetailPdfView: View, Equatable {
             Image(systemName: "square.and.arrow.up").font(.system(size: 20))
         })
             .toast(isShowing: $canEdit, text: Text("Edit: " + ((self.canEdit == true) ? "Enabled" : "Disabled")))
-//
-        .alert(isPresented: $showAlert) {
+
+            .alert(isPresented: $showAlert) {
 
             if activeAlertContext == .error {
                 return Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel({
                     self.presentationMode.wrappedValue.dismiss()                    
                 }))
+            } else if activeAlertContext == .noPurchase {
+                return Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .default(Text("Cancel").foregroundColor(.blue)))
             } else {
                 return Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), primaryButton: .default(Text("Cancel").foregroundColor(.blue)), secondaryButton: .destructive(Text("Delete").foregroundColor(.red), action: {
                     self.presentationMode.wrappedValue.dismiss()

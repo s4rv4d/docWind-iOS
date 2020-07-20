@@ -136,7 +136,7 @@ struct PDFToolBarView: View {
                     }.frame(height: 200)
                     .buttonStyle(PlainButtonStyle())
                 
-                    Text("Use the pen 🖋 for signatures")
+                    Text("Use the \"Pen\" 🖋 for signatures")
                     .font(.caption)
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
