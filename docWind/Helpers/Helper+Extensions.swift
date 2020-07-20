@@ -205,12 +205,12 @@ extension PDFAnnotation {
     
     func contains(point: CGPoint) -> Bool {
         var hitPath: CGPath?
-        
-        if let path = paths?.first {
+        print("point to test \(point)")
+        if let path = self.paths?.first {
             hitPath = path.cgPath.copy(strokingWithWidth: 10.0, lineCap: .round, lineJoin: .round, miterLimit: 0)
         }
-        
         return hitPath?.contains(point) ?? false
+//        return true
     }
 }
 
@@ -234,13 +234,13 @@ extension UIBezierPath{
         let zeroedTo = CGPoint(x: to.x-bound.origin.x, y: to.y-bound.origin.y)
         let vector = center.vector(to: zeroedTo)
         
-        offset(to: CGSize(width: vector.dx, height: vector.dy))
+        _ = offset(to: CGSize(width: vector.dx, height: vector.dy))
         return self
     }
     
     func offset(to offset:CGSize) -> Self{
         let t = CGAffineTransform(translationX: offset.width, y: offset.height)
-        applyCentered(transform: t)
+        _ = applyCentered(transform: t)
         return self
     }
     
@@ -256,7 +256,7 @@ extension UIBezierPath{
     
     func scale(x:CGFloat, y:CGFloat) -> Self{
         let scale = CGAffineTransform(scaleX: x, y: y)
-        applyCentered(transform: scale)
+        _ = applyCentered(transform: scale)
         return self
     }
     
@@ -277,8 +277,11 @@ extension UIBezierPath{
 
 extension PDFPage {
     func annotationWithHitTest(at: CGPoint) -> PDFAnnotation? {
-        for annotation in annotations {
-                if annotation.contains(point: at) {
+        print("hit test \(at)")
+        print(self.annotations)
+        for annotation in self.annotations {
+            if annotation.contains(point: at) {
+                print("here")
                 return annotation
             }
         }
