@@ -259,8 +259,8 @@ extension DocWindFManager {
                 for url in contents {
                     print(url)
                     
-                    if url.description.contains("\(fileName)/") {
-//                        try FileManager.default.removeItem(at: url)
+                    if url.description.contains("/\(fileName)/") {
+                        try FileManager.default.removeItem(at: url)
                         print("SUCCESSFULLY DELETED folder ✅")
                         status = true
                     } else {
