@@ -17,6 +17,8 @@ struct ContentView: View {
     @State var activeSheet: ActiveContentViewSheet = .intro
     @State private var presentAlert = false
     @State private var toggleSearchIcon = false
+    @State private var item: ItemModel? = nil
+    @State var changed = false
 
     
     // MARK: - Objects
@@ -24,32 +26,28 @@ struct ContentView: View {
     
     // MARK: - @Environment variables
     @Environment(\.managedObjectContext) var context
+    @FetchRequest(entity: DirecModel.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \DirecModel.created, ascending: true)], predicate: NSPredicate(format: "name == %@", "DocWind")) var items: FetchedResults<DirecModel>
     
     // MARK: - Properties
     var body: some View {
         NavigationView {
                     VStack(alignment: .leading) {
                         //check if contents isnt empty
-                        if model.contents != nil {
+                        if items.first != nil {
                             // display contents of file
-                            if (model.contents!.direcContents.count == 0) {
+                            if (items.first!.fileArray.count == 0) {
                                  NewStarterView()
                                 .padding()
                             } else {
-                                // display list or gridSearchBarView(text: $searchBarText)
-//                                if toggleSearchIcon {
-//                                    #warning("add later")
-//                                    SearchBarView(text: $searchBarText)
-//                                    .isHidden(!toggleSearchIcon)
-//                                }
-                               
                                 List {
                                     
                                     Section(header: Text("DocWind >").font(.caption)) {
-                    //-----------------------------------------------------------------//
-        //                                ListCustomGridView(itemArray: self.model.contents!.direcContents)
-                                        //-----------------------------------------------------------------//
-                                        NormalListRowView(itemArray: self.model.contents!.direcContents, masterFolder: "\(DWFMAppSettings.shared.fileURL())", activeSheet: $activeSheet, isShown: $isShown)
+                                        
+                                        ForEach(0..<self.items.first!.fileArray.count, id: \.self){ index in
+                                            NormalListRowView(itemArray: self.items.first!.fileArray[index], masterFolder: "\(DWFMAppSettings.shared.fileURL())").environment(\.managedObjectContext, self.context)
+                                        }
+                                        
+                                        
                                     }
                                     
                                 }
@@ -72,6 +70,7 @@ struct ContentView: View {
                             }
                         }.background(Color(.secondarySystemBackground))
                     }
+                        
                     .navigationBarTitle(Text("docWind"))
                     .navigationViewStyle(StackNavigationViewStyle())
                     .navigationBarItems(leading:
@@ -95,9 +94,9 @@ struct ContentView: View {
                 IntroView()
                 .environment(\.managedObjectContext, self.context)
             } else if self.activeSheet == .createdDirec {
-                AddDirecView(model: self.model).environment(\.managedObjectContext, self.context)
+                AddDirecView().environment(\.managedObjectContext, self.context)
             } else if self.activeSheet == .createPdf {
-                AddPdfMainView(model: self.model).environment(\.managedObjectContext, self.context)
+                AddPdfMainView().environment(\.managedObjectContext, self.context)
             } else if self.activeSheet == .settingsTapped {
                 SettingsView()
             }

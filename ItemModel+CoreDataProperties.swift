@@ -49,4 +49,15 @@ extension ItemModel {
     public var wrappedIconName: String {
         iconName ?? "blueFolder"
     }
+    
+    static func deleteObject(in managedObjectContext: NSManagedObjectContext, sub: ItemModel) {
+        managedObjectContext.delete(sub)
+        ///SAVE TO CONTEXT
+        do {
+            try managedObjectContext.save()
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+    }
 }

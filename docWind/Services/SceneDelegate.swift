@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        
 //        AppSettings.shared.firstLoginDone = false
 //        _ = AppSettings.shared.update()
-//        
+//
 //        DWFMAppSettings.shared.reset()
 
         // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.

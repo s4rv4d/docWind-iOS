@@ -8,6 +8,7 @@
 
 import SwiftUI
 import PDFKit
+import CoreData
 
 struct AddPdfFileGenView: View {
     
@@ -29,9 +30,7 @@ struct AddPdfFileGenView: View {
     @State var deleteDoc = false
     @State private var offsetVal: CGFloat = 0.0
     @State var headPath: String
-    
-    // MARK: - Object
-    @ObservedObject var model: GeneralDocListViewModel
+    @State var headName: String
     
     // MARK: - @Environment variables
     @Environment(\.presentationMode) var presentationMode
@@ -186,7 +185,7 @@ struct AddPdfFileGenView: View {
                     print("✅ SUCCESSFULLY SAVED FILE IN \(headPath)")
                     
                     // now need to make a coredata entry
-                    self.model.addANewItem(itemName: self.pdfName, iconName: selectedIconName, itemType: DWPDFFILE, locked: false, filePath: path)
+                    self.addANewItem(itemName: self.pdfName, iconName: selectedIconName, itemType: DWPDFFILE, locked: false, filePath: path)
                     self.presentationMode.wrappedValue.dismiss()
                 } else {
                     self.activeAlertSheet = .notice
@@ -195,9 +194,59 @@ struct AddPdfFileGenView: View {
                 }
             } else {
                 self.activeAlertSheet = .notice
-                self.alertMessage = "File name already exists chose a new"
+                self.alertMessage = "Could not save file"
                 self.showAlert.toggle()
             }
         }
     }
+    
+    func addANewItem(itemName: String, iconName: String, itemType: String, locked:Bool, filePath: String) {
+            //make a single object observation request
+            let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
+            fetchRequest.predicate = NSPredicate(format: "name == %@", headName)
+            
+            do {
+                let content = try context.fetch(fetchRequest)
+
+                if let docWindContent = content.first {
+    //                self.contents = MainDocViewModel(directory: docWindContent)
+    //                self.direcObject = docWindContent
+                                    
+                    // add new item
+                    let itemName = itemName
+                    let iconName = iconName
+                    let itemType = itemType
+                    let isLocked = locked
+                    
+                    let item = ItemModel(context: context)
+                    item.itemName = itemName
+                    item.itemType = itemType
+                    item.itemURL = filePath
+                    item.iconName = iconName
+                    item.locked = NSNumber(booleanLiteral: isLocked)
+                    item.itemCreated = Date()
+                    item.origin = docWindContent
+                    
+    //                direcObject?.addToFiles(item)
+    //                self.contents = MainDocViewModel(directory: direcObject!)
+                            
+    //                let newDirec = DirecModel(context: context)
+    //                newDirec.name = itemName
+    //                newDirec.created = Date()
+                    
+                    do {
+                       try context.save()
+                       print("✅ created and saved \(itemName) to coredata")
+                   } catch {
+                       print("❌ FAILED TO UPDATE COREDATA")
+                   }
+                    
+                } else {
+                    print("❌ ERROR CONVERTING TO MainDocViewModel")
+                }
+            } catch {
+                print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
+            }
+        }
+
 }

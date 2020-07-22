@@ -43,6 +43,7 @@
 		407567F424B1FC4A0071B575 /* GeneralDocViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407567F324B1FC4A0071B575 /* GeneralDocViewModel.swift */; };
 		407567F624B1FC620071B575 /* GeneralDocListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407567F524B1FC620071B575 /* GeneralDocListViewModel.swift */; };
 		407567FA24B20CF00071B575 /* AddDocGeneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407567F924B20CF00071B575 /* AddDocGeneView.swift */; };
+		407C6A2F24C6D90D00FA0AAA /* GenListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407C6A2E24C6D90D00FA0AAA /* GenListRowView.swift */; };
 		40920EB024B744BE00E2293C /* DrawOnImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40920EAF24B744BE00E2293C /* DrawOnImageView.swift */; };
 		40920EB224B74E7800E2293C /* SlideOverCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40920EB124B74E7800E2293C /* SlideOverCardView.swift */; };
 		409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409244BD24B19D640013BF8F /* Helper+Extensions.swift */; };
@@ -121,6 +122,7 @@
 		407567F324B1FC4A0071B575 /* GeneralDocViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDocViewModel.swift; sourceTree = "<group>"; };
 		407567F524B1FC620071B575 /* GeneralDocListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDocListViewModel.swift; sourceTree = "<group>"; };
 		407567F924B20CF00071B575 /* AddDocGeneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDocGeneView.swift; sourceTree = "<group>"; };
+		407C6A2E24C6D90D00FA0AAA /* GenListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenListRowView.swift; sourceTree = "<group>"; };
 		40920EAF24B744BE00E2293C /* DrawOnImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawOnImageView.swift; sourceTree = "<group>"; };
 		40920EB124B74E7800E2293C /* SlideOverCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOverCardView.swift; sourceTree = "<group>"; };
 		409244BD24B19D640013BF8F /* Helper+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Extensions.swift"; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 				40C5140424AE14C000126ABA /* SearchBarView.swift */,
 				402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */,
 				402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */,
+				407C6A2E24C6D90D00FA0AAA /* GenListRowView.swift */,
 				405EE7A724B339DD005F525F /* ScannerView.swift */,
 				406E9AF324B5E773000FB8FD /* SnapCarouselView.swift */,
 				406E9AFA24B617EE000FB8FD /* CustomHeaderView.swift */,
@@ -484,6 +487,7 @@
 				405EE7A624B339B4005F525F /* RecognizedText.swift in Sources */,
 				407567FA24B20CF00071B575 /* AddDocGeneView.swift in Sources */,
 				402C0B6824B0A29500A5A6C9 /* ListCustomGridView.swift in Sources */,
+				407C6A2F24C6D90D00FA0AAA /* GenListRowView.swift in Sources */,
 				40CAFAE124BB480600C1E28A /* ShareSheetView.swift in Sources */,
 				4012033C24BDE0D700167917 /* NonSelectableView.swift in Sources */,
 				405EFDC824BCA11A0070BE5F /* AppIconView.swift in Sources */,
@@ -684,7 +688,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
@@ -707,7 +711,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;

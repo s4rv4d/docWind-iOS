@@ -20,6 +20,7 @@ protocol DocWindFManager {
     func createSubSubDirectory(headName: URL, newDirecName: String) -> (Bool, String)
     func savePdfWithDataContent(pdfData: Data, pdfName: String, direcName: String?) -> (Bool, String)
     func savePdfWithSubFolder(pdfData: Data, pdfName: String, subDir: String) -> (Bool, String)
+    func deleteSavedPdf(direcName: String?, fileName: String) -> Bool
 }
 
 //MARK: - Extension
@@ -242,6 +243,108 @@ extension DocWindFManager {
             }
             return status
         }
+    }
+    
+    func deleteSavedFolder(dirname: String?, fileName: String) -> Bool {
+        var status = false
+        
+        if dirname != nil {
+            let resourcePath = URL(string: dirname!)!
+            print("File Manager Path OVER HERE: ------> \(resourcePath)")
+            
+            do {
+                let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+                print(contents)
+                print(fileName)
+                for url in contents {
+                    print(url)
+                    
+                    if url.description.contains("\(fileName)/") {
+//                        try FileManager.default.removeItem(at: url)
+                        print("SUCCESSFULLY DELETED folder ✅")
+                        status = true
+                    } else {
+                        print("Couldnt find the folder 😞")
+                    }
+                }
+                
+            } catch {
+                status = false
+                print("error while deleting file \(error.localizedDescription)")
+            }
+        } else {
+            let resourcePath = self.containerUrl!
+            print("File Manager Path OVER HERE: ------> \(resourcePath)")
+            
+            do {
+                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+                    for url in contents {
+                        if url.description.contains("\(fileName)") {
+                            try FileManager.default.removeItem(atPath: resourcePath.path + fileName)
+                            print("SUCCESSFULLY DELETED FILE ✅")
+                            status = true
+                        } else {
+                            print("Couldnt find the file 😞")
+                            status = false
+                        }
+                    }
+            } catch {
+                status = false
+                print("error while deleting file \(error.localizedDescription)")
+            }
+
+        }
+        
+        return status
+    }
+    
+    func deleteSavedPdf(direcName: String?, fileName: String) -> Bool {
+        var status = false
+        
+        if direcName != nil {
+            let resourcePath = URL(string: direcName!)!
+            print("File Manager Path OVER HERE: ------> \(resourcePath)")
+            
+            // search and deletion part
+            do {
+                let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+                
+                for url in contents {
+                    if url.description.contains("\(fileName)") {
+                        try FileManager.default.removeItem(at: url)
+                        print("SUCCESSFULLY DELETED FILE ✅")
+                        status = true
+                    } else {
+                        print("Couldnt find the file 😞")
+                    }
+                }
+            } catch {
+                status = false
+                print("error while deleting file \(error.localizedDescription)")
+            }
+        } else {
+            let resourcePath = self.containerUrl!
+            print("File Manager Path OVER HERE: ------> \(resourcePath)")
+            
+            do {
+                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+                    for url in contents {
+                        if url.description.contains("\(fileName)") {
+                            try FileManager.default.removeItem(atPath: resourcePath.path + fileName)
+                            print("SUCCESSFULLY DELETED FILE ✅")
+                            status = true
+                        } else {
+                            print("Couldnt find the file 😞")
+                            status = false
+                        }
+                    }
+            } catch {
+                status = false
+                print("error while deleting file \(error.localizedDescription)")
+            }
+        }
+        
+        return status
     }
     
     func showSavedPdf(direcName: String?, fileName: String) -> (Bool, String) {

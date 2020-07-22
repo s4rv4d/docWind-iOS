@@ -91,7 +91,7 @@ final class GeneralDocListViewModel: ObservableObject {
                }
                 
             } else {
-                print("❌ ERROR CONVERTING TO MainDocViewModel")
+                print("❌ ERROR CONVERTING TO GeneralDocViewModel")
             }
         } catch {
             print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
@@ -143,12 +143,44 @@ final class GeneralDocListViewModel: ObservableObject {
                    }
                     
                 } else {
-                    print("❌ ERROR CONVERTING TO MainDocViewModel")
+                    print("❌ ERROR CONVERTING TO GeneralDocViewModel")
                 }
             } catch {
                 print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
             }
         }
+    
+    func deleteItem(item: ItemModel) {
+        let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
+        // reset
+        let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
+        fetchRequest.predicate = NSPredicate(format: "name == %@", "DocWind")
+
+        do {
+            let content = try moc.fetch(fetchRequest)
+
+            if let docWindContent = content.first {
+                self.contents = GeneralDocViewModel(directory: docWindContent)
+                self.direcObject = docWindContent
+                
+                direcObject?.removeFromFiles(item)
+                self.contents = GeneralDocViewModel(directory: direcObject!)
+                moc.delete(item)
+                
+                do {
+                    try moc.save()
+                    print("✅ successfully removed")
+                } catch {
+                    print("❌ FAILED TO UPDATE COREDATA")
+                }
+            }
+            
+        } catch  {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+    }
 }
 
 

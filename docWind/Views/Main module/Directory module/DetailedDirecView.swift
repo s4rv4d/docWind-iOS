@@ -7,50 +7,59 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct DetailedDirecView: View {
     
     // MARK: - @State variables
     @State var item: ItemModel
     @State private var isShown = false
-    @State var searchBarText = ""
     @State private var showingActionSheet = false
     @State var activeSheet: ActiveContentViewSheet = .intro
     @State private var presentAlert = false
     @State private var toggleSearchIcon = false
     @State var masterFolder: String
+    @State var masterDirecName: String = ""
     
     // MARK: - Objects
-    @ObservedObject var model: GeneralDocListViewModel
+    @FetchRequest var items: FetchedResults<DirecModel>
     
     // MARK: - @Environment variables
     @Environment(\.managedObjectContext) var context
+    
+    init(dirName: String, pathName: String, item: ItemModel) {
+        self._masterDirecName = State(initialValue: dirName)
+        self._masterFolder = State(initialValue: pathName)
+        self._item = State(initialValue: item)
+        
+        self._items = FetchRequest(
+            entity: DirecModel.entity(),
+            sortDescriptors: [],
+            predicate: NSPredicate(format: "name == %@", "\(dirName)"))
+        //    animation: .default)
+    }
     
     // MARK: - Properties
     var body: some View {
         VStack(alignment: .leading) {
             //check if contents isnt empty
-            if model.contents != nil {
+            if items.first != nil {
                 // display contents of file
-                if (model.contents!.direcContents.count == 0) {
+                if (items.first?.fileArray.count == 0) {
                     Text("Looks empty here, scan a new document or create a new dierctory using the '+' button above.")
                     .font(.caption)
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
                         .padding([.leading, .trailing, .top])
                 } else {
-                    // display list or gridSearchBarView(text: $searchBarText)
-                    if toggleSearchIcon {
-                        SearchBarView(text: $searchBarText)
-                            .padding(.top)
-                    }
                     List {
-                        
                         Section(header: Text("\(String(masterFolder.split(separator: "/").last!)) > \(item.wrappedItemName)").font(.caption)) {
-     //-----------------------------------------------------------------//
-//                                ListCustomGridView(itemArray: self.model.contents!.direcContents)
-                            //-----------------------------------------------------------------//
-                            NormalListRowView(itemArray: self.model.contents!.direcContents, masterFolder: item.wrappedItemUrl, activeSheet: $activeSheet, isShown: $isShown)
+                            
+                            ForEach(0..<(items.first!.fileArray.count), id: \.self){ index in
+                                GenListRowView(itemArray: (self.items.first!.fileArray[index]), masterFolder: self.item.wrappedItemUrl, activeSheet: self.$activeSheet, isShown: self.$isShown).environment(\.managedObjectContext, self.context)
+                            }
+                            
+                            
                         }
                         
                     }
@@ -72,9 +81,9 @@ struct DetailedDirecView: View {
             if self.activeSheet == .intro {
 
             } else if self.activeSheet == .createdDirec {
-                AddDocGeneView(headName: self.item.wrappedItemUrl, model: self.model).environment(\.managedObjectContext, self.context)
+                AddDocGeneView(path: self.masterDirecName, headName: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
             } else if self.activeSheet == .createPdf {
-                AddPdfFileGenView(headPath: self.item.wrappedItemUrl, model: self.model).environment(\.managedObjectContext, self.context)
+                AddPdfFileGenView(headPath: self.item.wrappedItemUrl, headName: self.masterDirecName).environment(\.managedObjectContext, self.context)
             }
         }
             
@@ -83,12 +92,6 @@ struct DetailedDirecView: View {
         .navigationBarItems(trailing:
             
             HStack{
-                #warning("add later")
-//                Button(action: toggleSearch) {
-//                    Image(systemName: "magnifyingglass")
-//                    .font(.system(size: 25))
-//                }
-//                Spacer()
                 Button(action: showOptions){
                     Image(systemName: "plus")
                         .font(.system(size: 25))

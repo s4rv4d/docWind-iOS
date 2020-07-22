@@ -50,10 +50,23 @@ extension View {
         return image
     }
     
+    func checkCondition(_ val:(Any) -> Void) -> some View {
+        return self
+    }
+    
     func debugPrint(_ value: Any) -> some View {
-        #if DEBUG
-        print(value)
-        #endif
+    //        #if DEBUG
+            print(value)
+    //        #endif
+            return self
+        }
+    
+    func debug(_ value: Any, ex:@escaping() -> Void) -> some View {
+//        #if DEBUG
+        if value as! Bool == true {
+            ex()
+        }
+//        #endif
         return self
     }
     

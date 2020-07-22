@@ -7,18 +7,17 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct AddDocGeneView: View {
     // MARK: - @State properties
     @State private var direcName = ""
+    @State var path: String
     @State var headName: String
     @State private var selectedIconName = "blue"
     @State private var alertMessage = ""
     @State private var isLocked = false
     @State private var showAlert = false
-    
-    // MARK: - Objects
-    @ObservedObject var model: GeneralDocListViewModel
     
     // MARK: - @Environment variables
     @Environment(\.presentationMode) var presentationMode
@@ -93,7 +92,7 @@ struct AddDocGeneView: View {
                 if path != "" {
                     // make a coredata entry
                     print("✅ SUCCESFULLY CREATED SUB DIRECTORY \(direcName)")
-                    self.model.addANewItem(itemName: direcName, iconName: selectedIconName, itemType: DWDIRECTORY, locked: isLocked, filePath: path)
+                    self.addANewItem(itemName: direcName, iconName: selectedIconName, itemType: DWDIRECTORY, locked: isLocked, filePath: path)
                     self.presentationMode.wrappedValue.dismiss()
                 } else {
                     self.alertMessage = "Error creating sub directory :("
@@ -111,5 +110,50 @@ struct AddDocGeneView: View {
             self.showAlert.toggle()
         }
     }
+    
+    func addANewItem(itemName: String, iconName: String, itemType: String, locked:Bool, filePath: String) {
+            //make a single object observation request
+            let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
+            fetchRequest.predicate = NSPredicate(format: "name == %@", path)
+            print(direcName)
+            do {
+                let content = try context.fetch(fetchRequest)
+
+                if let genDocContent = content.first {
+                                    
+                    // add new item
+                    let itemName = itemName
+                    let iconName = iconName
+                    let itemType = itemType
+                    let isLocked = locked
+                    
+                    let item = ItemModel(context: context)
+                    item.itemName = itemName
+                    item.itemURL = filePath
+                    item.itemType = itemType
+                    item.iconName = iconName
+                    item.locked = NSNumber(booleanLiteral: isLocked)
+                    item.itemCreated = Date()
+                    item.origin = genDocContent
+                            
+                    let newDirec = DirecModel(context: context)
+                    newDirec.name = itemName
+                    newDirec.created = Date()
+                    
+                    do {
+                       try context.save()
+                       print("✅ created and saved \(itemName) to coredata")
+                   } catch {
+                       print("❌ FAILED TO UPDATE COREDATA")
+                   }
+                    
+                } else {
+                    print("❌ ERROR CONVERTING TO GeneralDocViewModel")
+                }
+            } catch {
+                print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
+            }
+        }
+
 }
 

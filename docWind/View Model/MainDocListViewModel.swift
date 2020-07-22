@@ -148,4 +148,36 @@ final class MainDocListViewModel: ObservableObject {
         }
     }
     
+    func deleteItem(item: ItemModel) {
+        let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
+        // reset
+        let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
+        fetchRequest.predicate = NSPredicate(format: "name == %@", "DocWind")
+
+        do {
+            let content = try moc.fetch(fetchRequest)
+
+            if let docWindContent = content.first {
+                self.contents = MainDocViewModel(directory: docWindContent)
+                self.direcObject = docWindContent
+                
+                direcObject?.removeFromFiles(item)
+                self.contents = MainDocViewModel(directory: direcObject!)
+                moc.delete(item)
+                
+                do {
+                    try moc.save()
+                    print("✅ successfully removed")
+                } catch {
+                    print("❌ FAILED TO UPDATE COREDATA")
+                }
+            }
+            
+        } catch  {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+    }
+    
 }
