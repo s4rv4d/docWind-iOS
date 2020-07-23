@@ -77,7 +77,7 @@ struct AddDirecView: View {
         // validation
         if direcName != "" {
             // make a file in file manager
-            let defa = DWFMAppSettings.shared.createSubDirectory(direcName: direcName)
+            let defa = DWFMAppSettings.shared.createSubDirectory(direcName: direcName.replacingOccurrences(of: " ", with: "_"))
             if defa.0 {
                 // make a coredata entry
                 let path = defa.1
@@ -110,8 +110,6 @@ struct AddDirecView: View {
                 let content = try context.fetch(fetchRequest)
 
                 if let docWindContent = content.first {
-    //                self.contents = MainDocViewModel(directory: docWindContent)
-    //                self.direcObject = docWindContent
                                     
                     // add new item
                     let itemName = itemName
@@ -127,9 +125,6 @@ struct AddDirecView: View {
                     item.locked = NSNumber(booleanLiteral: isLocked)
                     item.itemCreated = Date()
                     item.origin = docWindContent
-                    
-//                    docWindContent.addToFiles(item)
-    //                self.contents = MainDocViewModel(directory: direcObject!)
                             
                     let newDirec = DirecModel(context: context)
                     newDirec.name = itemName

@@ -36,6 +36,17 @@ extension DirecModel {
             $0.wrappedItemName < $1.wrappedItemName
         }
     }
+    
+    static func deleteObject(in managedObjectContext: NSManagedObjectContext, sub: DirecModel) {
+        managedObjectContext.delete(sub)
+        ///SAVE TO CONTEXT
+        do {
+            try managedObjectContext.save()
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+    }
 
 }
 

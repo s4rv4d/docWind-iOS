@@ -148,7 +148,7 @@ struct DetailPdfView: View, Equatable {
 
     // MARK: - Functions
     func getUrl() {
-        let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(master)", fileName: "\(item.wrappedItemName).pdf")
+        let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(master)", fileName: "\(item.wrappedItemName.replacingOccurrences(of: " ", with: "_")).pdf")
         if dwfe.0 {
             let path = dwfe.1
             if path != "" {

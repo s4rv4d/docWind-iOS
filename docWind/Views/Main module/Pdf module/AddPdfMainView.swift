@@ -176,7 +176,12 @@ struct AddPdfMainView: View {
             // get raw data of pdf
             let rawPDFData = pdfDocument.dataRepresentation()!
             let pdfName = self.pdfName
-            let finalPdfName = "\(pdfName).pdf"
+            var finalPdfName = "\(pdfName).pdf"
+            if pdfName.contains(" ") {
+                finalPdfName = pdfName.replacingOccurrences(of: " ", with: "_")
+                finalPdfName += ".pdf"
+            }
+            
             
             // store to FM
             let dwfa = DWFMAppSettings.shared.savePdfWithDataContent(pdfData: rawPDFData, pdfName: finalPdfName, direcName: nil)

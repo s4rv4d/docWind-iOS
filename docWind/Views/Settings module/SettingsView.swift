@@ -89,7 +89,7 @@ struct SettingsView: View {
                 } else if self.activeSheet == .mailFeature {
                     MailView(isShowing: self.$showSheet, result: self.$result, subject: "Feature request", message: "Hi, I have an idea that i would like to suggest ")
                 } else if self.activeSheet == .shareSheet {
-                    ShareSheetView(activityItems: ["Not aware of how much you're spending on different subscriptions? try this \n\(SettingsHelper.appURL)"])
+                    ShareSheetView(activityItems: ["Miss ScamScanner? Try out docWind!! (We do not steal your data) \n\(SettingsHelper.appURL)"])
                 }
             }
         }

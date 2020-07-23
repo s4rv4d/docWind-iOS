@@ -182,7 +182,11 @@ struct AddPdfFileGenView: View {
             // get raw data of pdf
             let rawPDFData = pdfDocument.dataRepresentation()!
             let pdfName = self.pdfName
-            let finalPdfName = "\(pdfName).pdf"
+            var finalPdfName = "\(pdfName).pdf"
+            if pdfName.contains(" ") {
+                finalPdfName = pdfName.replacingOccurrences(of: " ", with: "_")
+                finalPdfName += ".pdf"
+            }
             print(headPath)
             // store to FM
             let dwfe = DWFMAppSettings.shared.savePdfWithSubFolder(pdfData: rawPDFData, pdfName: finalPdfName, subDir: headPath)

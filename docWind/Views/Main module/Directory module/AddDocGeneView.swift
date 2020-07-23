@@ -85,7 +85,7 @@ struct AddDocGeneView: View {
         // validation
         if direcName != "" {
             // make a file in file manager
-            let dwas = DWFMAppSettings.shared.createSubSubDirectory(headName: URL(string: headName)!, newDirecName: direcName)
+            let dwas = DWFMAppSettings.shared.createSubSubDirectory(headName: URL(string: headName)!, newDirecName: direcName.replacingOccurrences(of: " ", with: "_"))
             
             if dwas.0 {
                 let path = dwas.1

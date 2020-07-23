@@ -164,8 +164,7 @@ struct CustomTextView: View {
 }
 
 struct SettingsHelper {
-    #warning("need to change this")
-    static var appURL = URL(string: "https://apps.apple.com/app/")!
+    static var appURL = URL(string: "https://apps.apple.com/app/id1523280883")!
     static var personalTwitterApp = "twitter://user?screen_name=serverConnectd"
     static var personalTwitterWeb = "https://twitter.com/serverConnectd"
     static let email = "sarvadshetty@gmail.com"

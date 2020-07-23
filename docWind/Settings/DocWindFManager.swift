@@ -259,7 +259,7 @@ extension DocWindFManager {
                 for url in contents {
                     print(url)
                     
-                    if url.description.contains("/\(fileName)/") {
+                    if url.description.contains("/\(fileName.replacingOccurrences(of: " ", with: "_"))/") {
                         try FileManager.default.removeItem(at: url)
                         print("SUCCESSFULLY DELETED folder ✅")
                         status = true
@@ -279,8 +279,8 @@ extension DocWindFManager {
             do {
                  let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
                     for url in contents {
-                        if url.description.contains("\(fileName)") {
-                            try FileManager.default.removeItem(atPath: resourcePath.path + fileName)
+                        if url.description.contains("/\(fileName.replacingOccurrences(of: " ", with: "_"))/") {
+                            try FileManager.default.removeItem(at: url)
                             print("SUCCESSFULLY DELETED FILE ✅")
                             status = true
                         } else {
@@ -308,9 +308,8 @@ extension DocWindFManager {
             // search and deletion part
             do {
                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
-                
                 for url in contents {
-                    if url.description.contains("\(fileName)") {
+                    if url.description.contains("\(fileName.replacingOccurrences(of: " ", with: "_"))") {
                         try FileManager.default.removeItem(at: url)
                         print("SUCCESSFULLY DELETED FILE ✅")
                         status = true
@@ -329,8 +328,8 @@ extension DocWindFManager {
             do {
                  let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
                     for url in contents {
-                        if url.description.contains("\(fileName)") {
-                            try FileManager.default.removeItem(atPath: resourcePath.path + fileName)
+                        if url.description.contains("\(fileName.replacingOccurrences(of: " ", with: "_"))") {
+                            try FileManager.default.removeItem(at: url)
                             print("SUCCESSFULLY DELETED FILE ✅")
                             status = true
                         } else {
@@ -354,9 +353,11 @@ extension DocWindFManager {
         if direcName != nil {
             let resourcePath = URL(string: direcName!)!
             print("File Manager Path OVER HERE: ------> \(resourcePath)")
+            print(fileName)
             
             do {
                  let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+                print(contents)
                     for url in contents {
                         if url.description.contains("\(fileName)") {
                             status = true

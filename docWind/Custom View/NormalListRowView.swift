@@ -8,6 +8,7 @@
 
 import SwiftUI
 import LocalAuthentication
+import CoreData
 
 struct NormalListRowView: View {
     
@@ -33,9 +34,9 @@ struct NormalListRowView: View {
         NavigationLink(destination: {
             VStack {
                     if self.itemArray.wrappedItemType == DWPDFFILE {
-                        DetailPdfView(item: self.itemArray, master: self.masterFolder).debugPrint("ajdadahdsahaks")
+                        DetailPdfView(item: self.itemArray, master: self.masterFolder)
                     } else {
-                        DetailedDirecView(dirName: self.itemArray.wrappedItemName, pathName: self.masterFolder, item: self.itemArray).environment(\.managedObjectContext, self.context)
+                        DetailedDirecView(dirName: self.itemArray.wrappedItemName, pathName: self.masterFolder, item: self.itemArray).environment(\.managedObjectContext, self.context).debugPrint(self.itemArray.wrappedItemName)
                     }
 
             }.debugPrint(self.masterFolder)
@@ -151,6 +152,20 @@ struct NormalListRowView: View {
                 if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.masterFolder, fileName: selectedItem!.wrappedItemName) {
                     print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
                     ItemModel.deleteObject(in: context, sub: self.selectedItem!)
+                    
+                    // delete from direcmodel
+                    let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
+                    fetchRequest.predicate = NSPredicate(format: "name == %@", selectedItem!.wrappedItemName)
+                    
+                    do {
+                        let content = try context.fetch(fetchRequest)
+                        if let docWindDirec = content.first {
+                            DirecModel.deleteObject(in: context, sub: docWindDirec)
+                        }
+                    } catch {
+                      print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
+                    }
+                                        
                 } else {
                     self.alertTitle = "Error"
                     self.alertMessage = "Couldnt delete folder"
