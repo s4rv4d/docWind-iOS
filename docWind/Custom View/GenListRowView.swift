@@ -8,6 +8,7 @@
 
 import SwiftUI
 import LocalAuthentication
+import CoreData
 
 struct GenListRowView: View {
     
@@ -142,7 +143,21 @@ struct GenListRowView: View {
             // deleting directory
             if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.masterFolder, fileName: selectedItem!.wrappedItemName) {
                 print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
-                // now remove from coredata
+                print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
+                // delete from direcmodel
+                let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
+                fetchRequest.predicate = NSPredicate(format: "name == %@", selectedItem!.wrappedItemName)
+                
+                do {
+                    let content = try context.fetch(fetchRequest)
+                    print(content)
+                    if let docWindDirec = content.first {
+                        DirecModel.deleteObject(in: context, sub: docWindDirec)
+                    }
+                } catch {
+                  print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
+                }
+                
                 ItemModel.deleteObject(in: context, sub: self.selectedItem!)
             } else {
                 self.alertTitle = "Error"

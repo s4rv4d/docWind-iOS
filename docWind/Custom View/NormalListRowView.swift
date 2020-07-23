@@ -151,20 +151,21 @@ struct NormalListRowView: View {
             if selectedItem != nil {
                 if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.masterFolder, fileName: selectedItem!.wrappedItemName) {
                     print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
-                    ItemModel.deleteObject(in: context, sub: self.selectedItem!)
-                    
                     // delete from direcmodel
                     let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
                     fetchRequest.predicate = NSPredicate(format: "name == %@", selectedItem!.wrappedItemName)
                     
                     do {
                         let content = try context.fetch(fetchRequest)
+                        print(content)
                         if let docWindDirec = content.first {
                             DirecModel.deleteObject(in: context, sub: docWindDirec)
                         }
                     } catch {
                       print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
                     }
+                    
+                    ItemModel.deleteObject(in: context, sub: self.selectedItem!)
                                         
                 } else {
                     self.alertTitle = "Error"

@@ -84,23 +84,31 @@ struct AddDocGeneView: View {
     private func saveTapped() {
         // validation
         if direcName != "" {
-            // make a file in file manager
-            let dwas = DWFMAppSettings.shared.createSubSubDirectory(headName: URL(string: headName)!, newDirecName: direcName.replacingOccurrences(of: " ", with: "_"))
-            
-            if dwas.0 {
-                let path = dwas.1
-                if path != "" {
-                    // make a coredata entry
-                    print("✅ SUCCESFULLY CREATED SUB DIRECTORY \(direcName)")
-                    self.addANewItem(itemName: direcName, iconName: selectedIconName, itemType: DWDIRECTORY, locked: isLocked, filePath: path)
-                    self.presentationMode.wrappedValue.dismiss()
+            if path != direcName {
+                // make a file in file manager
+                print(headName)
+                print(path)
+                
+                let dwas = DWFMAppSettings.shared.createSubSubDirectory(headName: URL(string: headName)!, newDirecName: direcName.replacingOccurrences(of: " ", with: "_"))
+                
+                if dwas.0 {
+                    let path = dwas.1
+                    if path != "" {
+                        // make a coredata entry
+                        print("✅ SUCCESFULLY CREATED SUB DIRECTORY \(direcName)")
+                        self.addANewItem(itemName: direcName, iconName: selectedIconName, itemType: DWDIRECTORY, locked: isLocked, filePath: path)
+                        self.presentationMode.wrappedValue.dismiss()
+                    } else {
+                        self.alertMessage = "Error creating sub directory :("
+                        self.showAlert.toggle()
+                    }
+                    
                 } else {
                     self.alertMessage = "Error creating sub directory :("
                     self.showAlert.toggle()
                 }
-                
             } else {
-                self.alertMessage = "Error creating sub directory :("
+                self.alertMessage = "Main directory and sub directory cant have same names :("
                 self.showAlert.toggle()
             }
             
