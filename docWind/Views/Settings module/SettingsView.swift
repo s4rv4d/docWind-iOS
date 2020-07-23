@@ -39,7 +39,7 @@ struct SettingsView: View {
                 VStack {
                     SubHeadlineView(title: "Options")
                     VStack {
-                        SettingsRow(imageName: "app.badge", title: "Change app icon", imageColor: .yellow, action: changeAppIcon)
+                        SettingsRow(imageName: "app.badge", title: "Change app icon", imageColor: (AppSettings.shared.bougthNonConsumable) ? .green : .yellow, action: changeAppIcon)
                         Divider()
                         SettingsRowWithToggleAuth(imageName: "lock.shield", title: "Enable Lock", isOn: $isToggled, color: .red)
 //                        Divider()
@@ -92,11 +92,6 @@ struct SettingsView: View {
                     ShareSheetView(activityItems: ["Not aware of how much you're spending on different subscriptions? try this \n\(SettingsHelper.appURL)"])
                 }
             }
-            
-//
-//            .alert(isPresented: $showAlert) {
-////                Alert(title: Text("Notice"), message: Text(self.alertMessage), dismissButton: .default("Dismiss"))
-//            }
         }
     }
     
