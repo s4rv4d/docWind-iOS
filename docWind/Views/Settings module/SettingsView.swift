@@ -16,6 +16,8 @@ struct SettingsView: View {
     @State private var showSheet = false
     @State private var result: Result<MFMailComposeResult, Error>? = nil
     @State private var showAlert = false
+    @State private var alertMessage = ""
+    @State private var alertTitle = ""
     @State private var activeSheet: SettingActiveSheet = .docSub
     
     // MARK: - Properties
@@ -37,7 +39,7 @@ struct SettingsView: View {
                 VStack {
                     SubHeadlineView(title: "Options")
                     VStack {
-                        SettingsRow(imageName: "app.badge", title: "Change app icon", imageColor: .green, action: changeAppIcon)
+                        SettingsRow(imageName: "app.badge", title: "Change app icon", imageColor: .yellow, action: changeAppIcon)
                         Divider()
                         SettingsRowWithToggleAuth(imageName: "lock.shield", title: "Enable Lock", isOn: $isToggled, color: .red)
 //                        Divider()
@@ -73,6 +75,10 @@ struct SettingsView: View {
                 // ---- 4
             }
             .navigationBarTitle(Text("Settings"))
+                
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .default(Text("Dismiss")))
+            }
             .sheet(isPresented: $showSheet) {
                 if self.activeSheet == .docSub {
                     SubcriptionPageView()
@@ -86,6 +92,11 @@ struct SettingsView: View {
                     ShareSheetView(activityItems: ["Not aware of how much you're spending on different subscriptions? try this \n\(SettingsHelper.appURL)"])
                 }
             }
+            
+//
+//            .alert(isPresented: $showAlert) {
+////                Alert(title: Text("Notice"), message: Text(self.alertMessage), dismissButton: .default("Dismiss"))
+//            }
         }
     }
     
@@ -97,9 +108,16 @@ struct SettingsView: View {
     }
     
     func changeAppIcon() {
-        print("change app icon tapped")
-        self.activeSheet = .appIcon
-        self.showSheet.toggle()
+        
+        if AppSettings.shared.bougthNonConsumable {
+            print("change app icon tapped")
+            self.activeSheet = .appIcon
+            self.showSheet.toggle()
+        } else {
+            self.alertTitle = "Notice"
+            self.alertMessage = "You need to be a docWind Plus user to access this feature"
+            self.showAlert.toggle()
+        }
     }
     
     func goToNotifications() {
@@ -135,6 +153,8 @@ struct SettingsView: View {
         } else if let emailUrl = SettingsHelper.createEmailUrl(to: SettingsHelper.email, subject: "Feature request!", body: "Hi, I have an idea that i would like to suggest ") {
             UIApplication.shared.open(emailUrl)
         } else {
+            self.alertTitle = "No Mail Accounts"
+            self.alertMessage = "Please set up a Mail account in order to send email"
             self.showAlert.toggle()
         }
     }
@@ -147,6 +167,8 @@ struct SettingsView: View {
         } else if let emailUrl = SettingsHelper.createEmailUrl(to: SettingsHelper.email, subject: "Bug report!", body: "Hi, I found a bug that i would like to report ") {
             UIApplication.shared.open(emailUrl)
         } else {
+            self.alertTitle = "No Mail Accounts"
+            self.alertMessage = "Please set up a Mail account in order to send email"
             self.showAlert.toggle()
         }
     }

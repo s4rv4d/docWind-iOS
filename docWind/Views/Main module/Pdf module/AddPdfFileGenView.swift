@@ -108,6 +108,14 @@ struct AddPdfFileGenView: View {
                                 .foregroundColor(.yellow)
                             Spacer()
                         }
+                    }.disabled(!AppSettings.shared.bougthNonConsumable)
+                        .onTapGesture {
+                            if !AppSettings.shared.bougthNonConsumable {
+                              print("You need to buy")
+                                self.activeAlertSheet = .notice
+                                self.alertMessage = "You need to be a docWind Plus user to access this feature"
+                                self.showAlert.toggle()
+                            }
                     }
                 }
             }.keyboardSensible(self.$offsetVal)
