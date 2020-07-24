@@ -18,7 +18,9 @@ struct NormalListRowView: View {
     var iconNameString: [String: Color] = ["blue":.blue, "red":.red, "green":.green, "yellow":.yellow, "pink":.pink]
         
     @State private var isDisabled = false
+    @State private var url = ""
     @State private var showAlert = false
+    @State private var showSheet = false
     @State private var alertMessage = ""
     @State private var alertTitle = ""
     @State private var alertContext: ActiveAlertSheet = .error
@@ -57,15 +59,18 @@ struct NormalListRowView: View {
                 .padding()
                 
             }.contextMenu {
-                Button(action: {}) {
-                    HStack {
-                        Image(systemName: "pencil")
-                        Text("Rename")
-                    }
-                }
+//                Button(action: {}) {
+//                    HStack {
+//                        Image(systemName: "pencil")
+//                        Text("Rename")
+//                    }
+//                }
                 
                 if self.itemArray.wrappedItemType == DWPDFFILE {
-                    Button(action: {}) {
+                    Button(action: {
+                        self.selectedItem = self.itemArray
+                        self.getUrl()
+                    }) {
                         HStack {
                             Image(systemName: "square.and.arrow.up")
                             Text("Share")
@@ -73,12 +78,12 @@ struct NormalListRowView: View {
                     }
                 }
                 
-                Button(action: {}) {
-                    HStack {
-                        Image(systemName: "pencil.circle")
-                        Text("Edit")
-                    }
-                }
+//                Button(action: {}) {
+//                    HStack {
+//                        Image(systemName: "pencil.circle")
+//                        Text("Edit")
+//                    }
+//                }
                 
                 Button(action: {
                     self.isFile = self.itemArray.wrappedItemType == DWPDFFILE ? true : false
@@ -106,9 +111,38 @@ struct NormalListRowView: View {
                     }))
                 }
             }
+        
+        .sheet(isPresented: $showSheet) {
+            ShareSheetView(activityItems: [URL(string: self.url)!])
+        }
     }
     
     // MARK: - Functions
+    func getUrl() {
+        if selectedItem != nil {
+            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: "\(selectedItem!.wrappedItemName.replacingOccurrences(of: " ", with: "_")).pdf")
+            if dwfe.0 {
+                let path = dwfe.1
+                if path != "" {
+                    url = path
+                    self.showSheet.toggle()
+                } else {
+                    //error
+                    self.alertContext = .error
+                    self.alertTitle = "Error"
+                    self.alertMessage = "Could'nt find file :("
+                    self.showAlert.toggle()
+                }
+            } else {
+                //error
+                self.alertContext = .error
+                self.alertTitle = "Error"
+                self.alertMessage = "Could'nt find file :("
+                self.showAlert.toggle()
+            }
+        }
+    }
+
     func authenticateView(status: @escaping(Bool) -> Void) {
         let context = LAContext()
         var error: NSError?

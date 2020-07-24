@@ -19,6 +19,9 @@ struct GenListRowView: View {
     
     @Binding var activeSheet: ActiveContentViewSheet
     @Binding var isShown: Bool
+    @State private var url = ""
+    @State private var showSheet = false
+    @State private var alertContext: ActiveAlertSheet = .error
     @State private var isDisabled = false
     @State private var showAlert = false
     @State private var alertMessage = ""
@@ -55,28 +58,31 @@ struct GenListRowView: View {
                 .padding()
                 
             }.contextMenu {
-                Button(action: {}) {
-                    HStack {
-                        Image(systemName: "pencil")
-                        Text("Rename")
-                    }
-                }
+//                Button(action: {}) {
+//                    HStack {
+//                        Image(systemName: "pencil")
+//                        Text("Rename")
+//                    }
+//                }
                 
                 if self.itemArray.wrappedItemType == DWPDFFILE {
-                    Button(action: {}) {
+                    Button(action: {
+                        self.selectedItem = self.itemArray
+                        self.getUrl()
+                    }) {
                         HStack {
                             Image(systemName: "square.and.arrow.up")
                             Text("Share")
                         }.foregroundColor(.yellow)
                     }
                 }
-                
-                Button(action: {}) {
-                    HStack {
-                        Image(systemName: "pencil.circle")
-                        Text("Edit")
-                    }
-                }
+//
+//                Button(action: {}) {
+//                    HStack {
+//                        Image(systemName: "pencil.circle")
+//                        Text("Edit")
+//                    }
+//                }
                 
                 Button(action: {
                     self.isFile = self.itemArray.wrappedItemType == DWPDFFILE ? true : false
@@ -90,17 +96,52 @@ struct GenListRowView: View {
                 }
             }
         }
-                
-        
-        
+            
         .alert(isPresented: $showAlert) {
-            Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel(Text("Dismiss"), action: {
-                        print("retry")
-                    }))
-                }
+        
+        if alertContext == .notice {
+            return Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), primaryButton: .default(Text("Dismiss")), secondaryButton: .destructive(Text("Delete"), action: {
+                self.deleteObject()
+                
+            }))
+        } else {
+            return Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel(Text("Dismiss"), action: {
+                    print("retry")
+                }))
+            }
+        }
+        
+        .sheet(isPresented: $showSheet) {
+            ShareSheetView(activityItems: [URL(string: self.url)!])
+        }
     }
     
     // MARK: - Functions
+    func getUrl() {
+        if selectedItem != nil {
+            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: "\(selectedItem!.wrappedItemName.replacingOccurrences(of: " ", with: "_")).pdf")
+            if dwfe.0 {
+                let path = dwfe.1
+                if path != "" {
+                    url = path
+                    self.showSheet.toggle()
+                } else {
+                    //error
+                    self.alertContext = .error
+                    self.alertTitle = "Error"
+                    self.alertMessage = "Could'nt find file :("
+                    self.showAlert.toggle()
+                }
+            } else {
+                //error
+                self.alertContext = .error
+                self.alertTitle = "Error"
+                self.alertMessage = "Could'nt find file :("
+                self.showAlert.toggle()
+            }
+        }
+    }
+    
     func authenticateView(status: @escaping(Bool) -> Void) {
         let context = LAContext()
         var error: NSError?
@@ -142,7 +183,6 @@ struct GenListRowView: View {
         } else {
             // deleting directory
             if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.masterFolder, fileName: selectedItem!.wrappedItemName) {
-                print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
                 print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
                 // delete from direcmodel
                 let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")

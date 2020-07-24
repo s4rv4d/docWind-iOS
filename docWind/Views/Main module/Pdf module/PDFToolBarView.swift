@@ -126,7 +126,7 @@ struct PDFToolBarView: View {
                             self.canEditSignature = false
                         }) {
                             VStack {
-                                Image("pencil")
+                                Image("pencilPic")
                                 .resizable()
                                 .frame(width: 100)
                                 .opacity((options == .pencil) ? 1 : 0.5)
