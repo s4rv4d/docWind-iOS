@@ -50,18 +50,6 @@ struct DetailPdfView: View, Equatable {
                     }.settingsBackground()
                 }
 
-//                if canEditSignature {
-//                    Button("Edit Sign") {
-//                        self.canEditSignature = true
-//                    }.settingsBackground()
-//
-//                    Button("Save") {
-//                        print("saving signature")
-//                        self.canEditSignature = false
-//                    }.settingsBackground()
-//
-//                }
-
                 if saveButton {
                     if !canEdit && !canEditSignature {
                         Button("Save PDF") {

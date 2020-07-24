@@ -68,20 +68,20 @@ struct SnapCarouselView: View {
                     .padding()
                 
                 HStack() {
-                    Button(action: fillTapped){
-                        HStack {
-                            Image(systemName: "pencil.and.outline")
-                            Text("Fill")
-                            Image(systemName: "star.fill")
-                                .foregroundColor(.yellow)
-                        }.padding()
-                        
-                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
-                            .foregroundColor(.blue)
-                            .background(Color(.secondarySystemBackground))
-                        .cornerRadius(10)
-                    }
-                    Spacer()
+//                    Button(action: fillTapped){
+//                        HStack {
+//                            Image(systemName: "pencil.and.outline")
+//                            Text("Fill")
+//                            Image(systemName: "star.fill")
+//                                .foregroundColor(.yellow)
+//                        }.padding()
+//                        
+//                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
+//                            .foregroundColor(.blue)
+//                            .background(Color(.secondarySystemBackground))
+//                        .cornerRadius(10)
+//                    }
+//                    Spacer()
                     Button(action: ocrTapped){
                         HStack {
                             Image(systemName: "doc.text.viewfinder")
