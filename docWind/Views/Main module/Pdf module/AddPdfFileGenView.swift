@@ -75,7 +75,7 @@ struct AddPdfFileGenView: View {
                     }
                 }
                 
-                Section(header: Text("Add pages?")) {
+                Section(header: Text("Add pages?"), footer: Text("Tap on image for more options").isHidden(pages.count == 0)) {
                     if pages.count == 0 {
                         Button(action: addPagesTapped) {
                             Text("Add Pages")
@@ -94,6 +94,16 @@ struct AddPdfFileGenView: View {
                                         .onTapGesture {
                                             self.imageTapped()
                                     }
+                                }
+                                Button(action: {
+                                    self.addPagesTapped()
+                                }) {
+                                    Text("Add more +")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                    .frame(width: 150, height: 200)
+                                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary))
+                                    .padding()
                                 }
                             }
                         }
@@ -147,12 +157,13 @@ struct AddPdfFileGenView: View {
     
     // MARK: - Functions
     private func addPagesTapped() {
+        self.activeSheet = .scannerView
         self.showScanner.toggle()
     }
     
     private func imageTapped() {
-//        self.activeSheet = .pdfView
-//        self.showScanner.toggle()
+        self.activeSheet = .pdfView
+        self.showScanner.toggle()
     }
     
     private func deleteFile() {

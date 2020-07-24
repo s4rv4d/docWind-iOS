@@ -73,7 +73,7 @@ struct AddPdfMainView: View {
                     }
                 }
                 
-                Section(header: Text("Add pages?")) {
+                Section(header: Text("Add pages?"), footer: Text("Tap on image for more options").isHidden(pages.count == 0)) {
                     if pages.count == 0 {
                         Button(action: addPagesTapped) {
                             Text("Add Pages")
@@ -208,12 +208,13 @@ struct AddPdfMainView: View {
     }
     
     private func addPagesTapped() {
+        self.activeSheet = .scannerView
         self.showScanner.toggle()
     }
     
     private func imageTapped() {
-//        self.activeSheet = .pdfView
-//        self.showScanner.toggle()
+        self.activeSheet = .pdfView
+        self.showScanner.toggle()
     }
     
     private func deleteFile() {

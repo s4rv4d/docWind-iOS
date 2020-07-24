@@ -104,7 +104,7 @@ struct ContentView: View {
         
         // action sheet code
         .actionSheet(isPresented: $showingActionSheet) {
-            ActionSheet(title: Text("Options"), message: Text("Choose and option"), buttons: [
+            ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
                 .default(Text("Scan a document"), action: scanDocumentTapped),
                 .default(Text("Create a new directory"), action: createDiectory),
                 .cancel()

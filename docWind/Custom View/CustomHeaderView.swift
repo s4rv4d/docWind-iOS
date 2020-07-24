@@ -27,7 +27,7 @@ struct CustomHeaderView: View {
             Button(action: {
                 self.presentationMode.wrappedValue.dismiss()
             }) {
-                Text("Cancel")
+                Text("Dismiss")
                     .foregroundColor(.blue)
             }
             Spacer()

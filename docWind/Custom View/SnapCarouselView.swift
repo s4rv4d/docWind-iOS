@@ -67,48 +67,24 @@ struct SnapCarouselView: View {
                 }.environmentObject(self.UIState)
                     .padding()
                 
-                HStack() {
-//                    Button(action: fillTapped){
-//                        HStack {
-//                            Image(systemName: "pencil.and.outline")
-//                            Text("Fill")
-//                            Image(systemName: "star.fill")
-//                                .foregroundColor(.yellow)
-//                        }.padding()
-//
-//                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
-//                            .foregroundColor(.blue)
-//                            .background(Color(.secondarySystemBackground))
-//                        .cornerRadius(10)
-//                    }
-//                    Spacer()
-                    Button(action: ocrTapped){
+                HStack {
+                    Button(action: deleteTapped){
                         HStack {
-                            Image(systemName: "doc.text.viewfinder")
-                            Text("OCR")
-                            Image(systemName: "star.fill")
-                            .foregroundColor(.yellow)
+                            Spacer()
+                            Image(systemName: "trash")
+                            Text("Delete")
+                                Spacer()
                             }.padding()
+                            .foregroundColor(.red)
                             
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
                             .foregroundColor(.blue)
                             .background(Color(.secondarySystemBackground))
                         .cornerRadius(10)
-                    }
+                    }.buttonStyle(PlainButtonStyle())
                 }.padding([.top, .bottom, .leading, .trailing])
                 Spacer()
             }
-        }
-
-        .sheet(isPresented: $isShown) {
-            if self.activeSheet == .fillView {
-                DrawOnImageView(mainImages: self.$mainImages, imagesWithoutWater: self.$imagesState, imageWithWater: self.$imageWithWaterMark, pageId: self.UIState.activeCard, image: self.mainImages[self.UIState.activeCard])
-            } else if self.activeSheet == .ocrView {
-//                OCRTextView(recognizedText: "Scanning", imageToScan: self.mainImages[self.UIState.activeCard])
-            }
-        }
-        .alert(isPresented: $alertShown) {
-            Alert(title: Text("Notice"), message: Text(alertMessage), dismissButton: .cancel())
         }
     }
     
@@ -120,34 +96,11 @@ struct SnapCarouselView: View {
         self.presentationMode.wrappedValue.dismiss()
     }
     
-    private func fillTapped() {
-        
-        if !AppSettings.shared.bougthNonConsumable {
-            self.alertMessage = "You need to be docWind Plus user to access this feature"
-            self.alertShown.toggle()
-        } else {
-            print("fill tapped")
-            self.activeSheet = .fillView
-            self.isShown.toggle()
-        }
-    }
-    
     private func deleteTapped() {
         print("delete tapped")
-        // bring up an alert
-        self.presentationMode.wrappedValue.dismiss()
-        
-    }
-    
-    private func ocrTapped() {
-        
-        if !AppSettings.shared.bougthNonConsumable {
-            self.alertMessage = "You need to be docWind Plus user to access this feature"
-            self.alertShown.toggle()
-        } else {
-            print("ocr tapped")
-            self.activeSheet = .ocrView
-            self.isShown.toggle()
-        }
+        // get current photo using UIState and remove from all arrays
+        let currentPhotoIndex = UIState.activeCard
+        self.mainImages.remove(at: currentPhotoIndex)
+        self.imagesState.remove(at: currentPhotoIndex)
     }
 }
