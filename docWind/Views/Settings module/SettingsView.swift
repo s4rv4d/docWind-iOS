@@ -39,8 +39,10 @@ struct SettingsView: View {
                 VStack {
                     SubHeadlineView(title: "Options")
                     VStack {
-                        SettingsRow(imageName: "app.badge", title: "Change app icon", imageColor: (AppSettings.shared.bougthNonConsumable) ? .green : .yellow, action: changeAppIcon)
-                        Divider()
+                        if UIApplication.shared.supportsAlternateIcons {
+                            SettingsRow(imageName: "app.badge", title: "Change app icon", imageColor: (AppSettings.shared.bougthNonConsumable) ? .green : .yellow, action: changeAppIcon)
+                            Divider()
+                        }
                         SettingsRowWithToggleAuth(imageName: "lock.shield", title: "Enable Lock", isOn: $isToggled, color: .red)
 //                        Divider()
 //                        SettingsRow(imageName: "exclamationmark.bubble", title: "Notification settings", imageColor: .blue, action: goToNotifications)

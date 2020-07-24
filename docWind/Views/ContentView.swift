@@ -69,6 +69,7 @@ struct ContentView: View {
                                     self.settingsTapped()
                             }
                         }.background(Color(.secondarySystemBackground))
+                            .edgesIgnoringSafeArea(.bottom)
                     }
                         
                     .navigationBarTitle(Text("docWind"))

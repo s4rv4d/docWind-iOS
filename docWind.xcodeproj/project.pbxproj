@@ -83,6 +83,19 @@
 		40FDE49724AC4C6C006AAFD2 /* SettingsManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FDE49624AC4C6C006AAFD2 /* SettingsManagable.swift */; };
 		40FDE49A24AC4C95006AAFD2 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FDE49924AC4C95006AAFD2 /* AppSettings.swift */; };
 		40FDE49C24AC4EC9006AAFD2 /* Helper+Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FDE49B24AC4EC9006AAFD2 /* Helper+Struct.swift */; };
+		40FE66A724CB126D00B6A064 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FE66A624CB126D00B6A064 /* HeaderView.swift */; };
+		40FE66E424CB21A800B6A064 /* blackBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = 40FE66D824CB21A500B6A064 /* blackBlue.png */; };
+		40FE66E524CB21A800B6A064 /* blackYellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40FE66D924CB21A500B6A064 /* blackYellow@3x.png */; };
+		40FE66E624CB21A800B6A064 /* blackGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 40FE66DA24CB21A600B6A064 /* blackGreen.png */; };
+		40FE66E724CB21A800B6A064 /* blackBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40FE66DB24CB21A600B6A064 /* blackBlue@2x.png */; };
+		40FE66E824CB21A800B6A064 /* blackRed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40FE66DC24CB21A600B6A064 /* blackRed@2x.png */; };
+		40FE66E924CB21A800B6A064 /* blackGreen@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40FE66DD24CB21A600B6A064 /* blackGreen@3x.png */; };
+		40FE66EA24CB21A800B6A064 /* blackBlue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40FE66DE24CB21A600B6A064 /* blackBlue@3x.png */; };
+		40FE66EB24CB21A800B6A064 /* blackRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 40FE66DF24CB21A700B6A064 /* blackRed.png */; };
+		40FE66EC24CB21A800B6A064 /* blackYellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 40FE66E024CB21A700B6A064 /* blackYellow.png */; };
+		40FE66ED24CB21A800B6A064 /* blackGreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40FE66E124CB21A700B6A064 /* blackGreen@2x.png */; };
+		40FE66EE24CB21A800B6A064 /* blackYellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40FE66E224CB21A700B6A064 /* blackYellow@2x.png */; };
+		40FE66EF24CB21A800B6A064 /* blackRed@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40FE66E324CB21A800B6A064 /* blackRed@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -165,6 +178,19 @@
 		40FDE49624AC4C6C006AAFD2 /* SettingsManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManagable.swift; sourceTree = "<group>"; };
 		40FDE49924AC4C95006AAFD2 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		40FDE49B24AC4EC9006AAFD2 /* Helper+Struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Struct.swift"; sourceTree = "<group>"; };
+		40FE66A624CB126D00B6A064 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		40FE66D824CB21A500B6A064 /* blackBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackBlue.png; sourceTree = "<group>"; };
+		40FE66D924CB21A500B6A064 /* blackYellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackYellow@3x.png"; sourceTree = "<group>"; };
+		40FE66DA24CB21A600B6A064 /* blackGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackGreen.png; sourceTree = "<group>"; };
+		40FE66DB24CB21A600B6A064 /* blackBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackBlue@2x.png"; sourceTree = "<group>"; };
+		40FE66DC24CB21A600B6A064 /* blackRed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackRed@2x.png"; sourceTree = "<group>"; };
+		40FE66DD24CB21A600B6A064 /* blackGreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackGreen@3x.png"; sourceTree = "<group>"; };
+		40FE66DE24CB21A600B6A064 /* blackBlue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackBlue@3x.png"; sourceTree = "<group>"; };
+		40FE66DF24CB21A700B6A064 /* blackRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackRed.png; sourceTree = "<group>"; };
+		40FE66E024CB21A700B6A064 /* blackYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackYellow.png; sourceTree = "<group>"; };
+		40FE66E124CB21A700B6A064 /* blackGreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackGreen@2x.png"; sourceTree = "<group>"; };
+		40FE66E224CB21A700B6A064 /* blackYellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackYellow@2x.png"; sourceTree = "<group>"; };
+		40FE66E324CB21A800B6A064 /* blackRed@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackRed@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -315,6 +341,7 @@
 				40C408E524B9F2EF00876FAF /* PDFView.swift */,
 				4012033324BDD9DF00167917 /* ODVThumbnailView.swift */,
 				40EF391B24BF5E82007BBAC0 /* ToastView.swift */,
+				40FE66A624CB126D00B6A064 /* HeaderView.swift */,
 			);
 			path = "Custom View";
 			sourceTree = "<group>";
@@ -339,6 +366,7 @@
 		40FDE47A24AB964B006AAFD2 /* docWind */ = {
 			isa = PBXGroup;
 			children = (
+				40FE669D24CB0B9000B6A064 /* App icons */,
 				40CDC4CF24AF91EF00462277 /* docWind.entitlements */,
 				40FDE49224AC4C14006AAFD2 /* Services */,
 				405EE7A424B3398E005F525F /* Classes */,
@@ -408,6 +436,25 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		40FE669D24CB0B9000B6A064 /* App icons */ = {
+			isa = PBXGroup;
+			children = (
+				40FE66D824CB21A500B6A064 /* blackBlue.png */,
+				40FE66DB24CB21A600B6A064 /* blackBlue@2x.png */,
+				40FE66DE24CB21A600B6A064 /* blackBlue@3x.png */,
+				40FE66DA24CB21A600B6A064 /* blackGreen.png */,
+				40FE66E124CB21A700B6A064 /* blackGreen@2x.png */,
+				40FE66DD24CB21A600B6A064 /* blackGreen@3x.png */,
+				40FE66DF24CB21A700B6A064 /* blackRed.png */,
+				40FE66DC24CB21A600B6A064 /* blackRed@2x.png */,
+				40FE66E324CB21A800B6A064 /* blackRed@3x.png */,
+				40FE66E024CB21A700B6A064 /* blackYellow.png */,
+				40FE66E224CB21A700B6A064 /* blackYellow@2x.png */,
+				40FE66D924CB21A500B6A064 /* blackYellow@3x.png */,
+			);
+			path = "App icons";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -467,8 +514,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				40FDE48B24AB964C006AAFD2 /* LaunchScreen.storyboard in Resources */,
+				40FE66E424CB21A800B6A064 /* blackBlue.png in Resources */,
+				40FE66E724CB21A800B6A064 /* blackBlue@2x.png in Resources */,
+				40FE66EA24CB21A800B6A064 /* blackBlue@3x.png in Resources */,
+				40FE66E524CB21A800B6A064 /* blackYellow@3x.png in Resources */,
+				40FE66E924CB21A800B6A064 /* blackGreen@3x.png in Resources */,
+				40FE66ED24CB21A800B6A064 /* blackGreen@2x.png in Resources */,
+				40FE66E824CB21A800B6A064 /* blackRed@2x.png in Resources */,
+				40FE66EC24CB21A800B6A064 /* blackYellow.png in Resources */,
+				40FE66E624CB21A800B6A064 /* blackGreen.png in Resources */,
+				40FE66EE24CB21A800B6A064 /* blackYellow@2x.png in Resources */,
+				40FE66EB24CB21A800B6A064 /* blackRed.png in Resources */,
 				40FDE48824AB964C006AAFD2 /* Preview Assets.xcassets in Resources */,
 				40FDE48524AB964C006AAFD2 /* Assets.xcassets in Resources */,
+				40FE66EF24CB21A800B6A064 /* blackRed@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,6 +566,7 @@
 				40FDE49724AC4C6C006AAFD2 /* SettingsManagable.swift in Sources */,
 				4012033A24BDE09C00167917 /* DrawingAnnotation.swift in Sources */,
 				405EFDCC24BCB3E30070BE5F /* MailView.swift in Sources */,
+				40FE66A724CB126D00B6A064 /* HeaderView.swift in Sources */,
 				405EFDC024BC886A0070BE5F /* SettingsRow.swift in Sources */,
 				405EFDBE24BC76EB0070BE5F /* IAPService.swift in Sources */,
 				4012033424BDD9DF00167917 /* ODVThumbnailView.swift in Sources */,
@@ -688,7 +748,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
@@ -711,7 +771,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
