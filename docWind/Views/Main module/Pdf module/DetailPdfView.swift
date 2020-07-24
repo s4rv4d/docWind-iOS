@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PDFKit
 
 struct DetailPdfView: View, Equatable {
     
@@ -32,6 +33,7 @@ struct DetailPdfView: View, Equatable {
     @State private var saveButton = false
     @State var saveTapped = false
     @State var alreadyAdded = false
+    @State var images = [UIImage]()
     
     // MARK: - Properties
     var body: some View {
@@ -74,6 +76,26 @@ struct DetailPdfView: View, Equatable {
                         }.settingsBackground()
                             .foregroundColor(.red)
                     }
+                } else {
+                    if !canEdit && !canEditSignature {
+                        Image(systemName: "text.quote")
+                            .font(.system(size: 20))
+                            .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
+                            .padding()
+                            .onTapGesture {
+                                if !AppSettings.shared.bougthNonConsumable {
+                                    self.alertTitle = "Notice"
+                                    self.activeAlertContext = .noPurchase
+                                    self.alertMessage = "You need to be docWind Plus user to access this feature"
+                                    // dimiss without saving
+                                    self.showAlert.toggle()
+                                } else {
+//                                    self.toolsTapped()
+                                    self.extractText()
+
+                                }
+                        }
+                    }
                 }
 
 
@@ -92,21 +114,22 @@ struct DetailPdfView: View, Equatable {
                             self.showAlert.toggle()
                         } else {
                             self.toolsTapped()
-                            
+
                         }
                 }
-                }.debugPrint("HStack 💻")
+            }.debugPrint("HStack 💻")
             .background(Color(.black))
-            }.debugPrint("VStack 🧸")
+        }.debugPrint("VStack 🧸")
 
         .sheet(isPresented: $isShown) {
             if self.activeContext == .shareSheet {
                 ShareSheetView(activityItems: [URL(string: self.url)!])
             } else if self.activeContext == .toolBox {
                 PDFToolBarView(color: self.$color, lineWidth: self.$lineWidth, options: self.$options, openSignature: self.$isShown, activeContext: self.$activeContext, canEdit: self.$canEdit, canEditSignature: self.$canEditSignature, imageThere: self.$image)
-
             } else if self.activeContext == .signature {
                 SignaturePageView(image: self.$image)
+            } else if self.activeContext == .ocrPage {
+                OCRTextView(recognizedText: "Scanning", imageToScan: self.images)
             }
         }
         .onAppear {
@@ -169,5 +192,31 @@ struct DetailPdfView: View, Equatable {
         // << return yes on view properties which identifies that the
         // view is equal and should not be refreshed (ie. `body` is not rebuilt)
         return false
+    }
+    
+    func extractText() {
+        if let pdf = CGPDFDocument(URL(string: self.url)! as CFURL) {
+            let pageCount = pdf.numberOfPages
+            var imgs = [UIImage]()
+            for i in 0 ... pageCount {
+                guard let page = pdf.page(at: i) else { continue }
+                let pageRect = page.getBoxRect(.mediaBox)
+                let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+                let img = renderer.image { ctx in
+                    UIColor.white.set()
+                    ctx.fill(pageRect)
+
+                    ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
+                    ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
+
+                    ctx.cgContext.drawPDFPage(page)
+                }
+                imgs.append(img)
+                print(imgs)
+            }
+            self.images = imgs
+            self.activeContext = .ocrPage
+            self.isShown.toggle()
+        }
     }
 }

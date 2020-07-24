@@ -75,7 +75,7 @@ struct AddPdfFileGenView: View {
                     }
                 }
                 
-                Section(header: Text("Add pages?"), footer: Text("Tap on image for more options").isHidden(pages.count == 0)) {
+                Section(header: Text("Add pages?")) {
                     if pages.count == 0 {
                         Button(action: addPagesTapped) {
                             Text("Add Pages")
@@ -151,8 +151,8 @@ struct AddPdfFileGenView: View {
     }
     
     private func imageTapped() {
-        self.activeSheet = .pdfView
-        self.showScanner.toggle()
+//        self.activeSheet = .pdfView
+//        self.showScanner.toggle()
     }
     
     private func deleteFile() {

@@ -41,7 +41,6 @@ struct PDFCustomView: UIViewRepresentable {
         
         pdfDrawer.pdfView = uiView
         
-        print("STATUS IS ",canEditSignature)
         if saveTapped {
             print(uiView.currentPage!.annotations)
             print(uiView)
@@ -60,10 +59,8 @@ struct PDFCustomView: UIViewRepresentable {
         // logic for enabling and disabling
         if canEdit == true {
             if !canEditSignature {
-                print("here")
                 uiView.addGestureRecognizer(pdfDrawingGestureRecognizer)
                 pdfDrawingGestureRecognizer.drawingDelegate = pdfDrawer
-//                pdfDrawer.pdfView = uiView
                 pdfDrawer.drawingTool = options
                 pdfDrawer.color = color.uiColor()
             } else {
@@ -86,9 +83,7 @@ struct PDFCustomView: UIViewRepresentable {
         
         // signature part
         if image != nil {
-            print("😁 received image")
-            
-//            pdfDrawer.pdfView = uiView
+            print("😁 received image")            
             pdfPanGestureRecognizer.panDelegate = pdfDrawer
             
             if !canEdit  {

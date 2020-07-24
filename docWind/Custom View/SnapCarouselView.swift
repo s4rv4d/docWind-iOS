@@ -75,7 +75,7 @@ struct SnapCarouselView: View {
 //                            Image(systemName: "star.fill")
 //                                .foregroundColor(.yellow)
 //                        }.padding()
-//                        
+//
 //                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
 //                            .foregroundColor(.blue)
 //                            .background(Color(.secondarySystemBackground))
@@ -104,7 +104,7 @@ struct SnapCarouselView: View {
             if self.activeSheet == .fillView {
                 DrawOnImageView(mainImages: self.$mainImages, imagesWithoutWater: self.$imagesState, imageWithWater: self.$imageWithWaterMark, pageId: self.UIState.activeCard, image: self.mainImages[self.UIState.activeCard])
             } else if self.activeSheet == .ocrView {
-                OCRTextView(recognizedText: "Scanning", imageToScan: self.mainImages[self.UIState.activeCard])
+//                OCRTextView(recognizedText: "Scanning", imageToScan: self.mainImages[self.UIState.activeCard])
             }
         }
         .alert(isPresented: $alertShown) {

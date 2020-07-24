@@ -15,7 +15,7 @@ struct OCRTextView: View {
     
     // MARK: - @State variables
     @State var recognizedText: String = ""
-    @State var imageToScan: UIImage
+    @State var imageToScan: [UIImage]
     @State private var textStyle = UIFont.TextStyle.body
     @State private var offsetVal: CGFloat = 0.0
     
@@ -63,7 +63,8 @@ struct OCRTextView: View {
         }.background(BlurView().background(Color.white.opacity(0.6)))
         .onAppear {
             let txtRecog = TextRecognizer(recognizedText: self.$recognizedText)
-            txtRecog.recognizeText(from: [self.imageToScan.cgImage!])
+            let images = self.imageToScan.map { $0.cgImage! }
+            txtRecog.recognizeText(from: images)
         }
     }
 }
