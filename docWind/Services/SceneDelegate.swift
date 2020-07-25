@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftUI
+import LocalAuthentication
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -62,6 +63,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        if AppSettings.shared.phoneSec {
+            authenticateViewGlobal()
+        }
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -73,6 +77,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
 
-
 }
 
+func authenticateViewGlobal() {
+    let context = LAContext()
+    var error: NSError?
+
+    if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+        let reason = "Unlock app"
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { (success, authError) in
+            DispatchQueue.main.async {
+                if success {
+//                    self.check()
+                } else {
+                    authenticateViewGlobal()
+                }
+            }
+        }
+    } else {
+        //show error
+    }
+}

@@ -73,14 +73,16 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to your camera to scan documents  </string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>To unlock app to access it features</string>
 	<key>NSUbiquitousContainers</key>
 	<dict>
-		<key>com.sarvadShetty.docWindTest2</key>
+		<key>com.sarvadShetty.docWindProduction</key>
 		<dict>
 			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
 			<true/>
 			<key>NSUbiquitousContainerName</key>
-			<string>docWindTest2</string>
+			<string>docWindProduction</string>
 			<key>NSUbiquitousContainerSupportedFolderLevels</key>
 			<string>Any</string>
 		</dict>

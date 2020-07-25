@@ -25,8 +25,9 @@ struct AppIconView: View {
                             Image(self.appIcons[i])
                             .resizable()
                                 .aspectRatio(contentMode: .fit)
-                            .frame(width: 90, height: 90)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .frame(width: 50, height: 50)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .shadow(color: .secondary, radius: 2, x: 0, y: 0)
                             
                             Text(self.appIconName[i])
                                 .foregroundColor(.primary)
@@ -34,6 +35,15 @@ struct AppIconView: View {
                         }.onTapGesture {
                             FeedbackManager.mediumFeedback()
                             self.changeIcon(to: self.appIcons[i])
+                        }
+                    }
+                    Button("Reset to default") {
+                        UIApplication.shared.setAlternateIconName(nil) { (error) in
+                            if let error = error {
+                                print("App icon failed to change due to \(error.localizedDescription)")
+                              } else {
+                                print("App icon changed successfully")
+                            }
                         }
                     }
                 }

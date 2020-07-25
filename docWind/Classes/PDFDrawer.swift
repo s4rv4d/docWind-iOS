@@ -23,7 +23,7 @@ enum DrawingTool: Int {
         case .pen:
             return 1
         case .highlighter:
-            return 10
+            return 15
         default:
             return 0
         }
