@@ -75,6 +75,11 @@ struct SettingsView: View {
                     }.settingsBackground()
                 }
                 // ---- 4
+                VStack {
+                    Spacer()
+                    Text("Made with ❤️ in 🇮🇳")
+                    .padding()
+                }
             }
             .navigationBarTitle(Text("Settings"))
                 

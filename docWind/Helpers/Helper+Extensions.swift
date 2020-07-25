@@ -55,9 +55,9 @@ extension View {
     }
     
     func debugPrint(_ value: Any) -> some View {
-    //        #if DEBUG
+            #if DEBUG
             print(value)
-    //        #endif
+            #endif
             return self
         }
     
@@ -117,7 +117,6 @@ extension UIImage {
         let rect = CGRect(x: 0, y: 0, width: image1.size.width, height: image1.size.height)
         UIGraphicsBeginImageContextWithOptions(image1.size, false, UIScreen.main.scale)
         let context = UIGraphicsGetCurrentContext()
-//        context!.setFillColor(UIColor.white.cgColor)
         context!.fill(rect)
         
         image1.draw(in: CGRect(x: 0.0, y: 0.0, width: image1.size.width, height: image1.size.height))
@@ -241,7 +240,6 @@ extension PDFAnnotation {
             hitPath = path.cgPath.copy(strokingWithWidth: 10.0, lineCap: .round, lineJoin: .round, miterLimit: 0)
         }
         return hitPath?.contains(point) ?? false
-//        return true
     }
 }
 
@@ -308,11 +306,8 @@ extension UIBezierPath{
 
 extension PDFPage {
     func annotationWithHitTest(at: CGPoint) -> PDFAnnotation? {
-        print("hit test \(at)")
-        print(self.annotations)
         for annotation in self.annotations {
             if annotation.contains(point: at) {
-                print("here")
                 return annotation
             }
         }
@@ -332,5 +327,3 @@ extension PDFAnnotation: Comparable {
         return (lhs.type == rhs.type && lhs.bounds == rhs.bounds)
     }
 }
-
-//&& lhs.bounds == rhs.bounds

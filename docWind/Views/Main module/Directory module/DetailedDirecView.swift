@@ -46,7 +46,7 @@ struct DetailedDirecView: View {
             if items.first != nil {
                 // display contents of file
                 if (items.first?.fileArray.count == 0) {
-                    Text("Looks empty here, scan a new document or create a new dierctory using the '+' button above.")
+                    Text("Looks empty here, scan a new document or create a new directory using the '+' button above.")
                     .font(.caption)
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
@@ -54,14 +54,10 @@ struct DetailedDirecView: View {
                 } else {
                     List {
                         Section(header: Text("\(String(masterFolder.split(separator: "/").last!)) > \(item.wrappedItemName)").font(.caption)) {
-                            
                             ForEach(0..<(items.first!.fileArray.count), id: \.self){ index in
                                 GenListRowView(itemArray: (self.items.first!.fileArray[index]), masterFolder: self.item.wrappedItemUrl, activeSheet: self.$activeSheet, isShown: self.$isShown).environment(\.managedObjectContext, self.context)
                             }
-                            
-                            
                         }
-                        
                     }
                     .listStyle(GroupedListStyle())
                 }

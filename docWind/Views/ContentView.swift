@@ -19,10 +19,6 @@ struct ContentView: View {
     @State private var toggleSearchIcon = false
     @State private var item: ItemModel? = nil
     @State var changed = false
-
-    
-    // MARK: - Objects
-    @ObservedObject var model = MainDocListViewModel()
     
     // MARK: - @Environment variables
     @Environment(\.managedObjectContext) var context

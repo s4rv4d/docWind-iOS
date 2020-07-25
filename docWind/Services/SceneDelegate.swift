@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 import LocalAuthentication
+import CoreData
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -23,6 +24,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Get the managed object context from the shared persistent container.
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         _ = AppSettings.shared.load()
+        
+        // to check if app is deleted or fresh start
+        let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
+        fetchRequest.predicate = NSPredicate(format: "name == %@", "DocWind")
+        
+        do {
+            let content = try context.fetch(fetchRequest)
+            guard let _ = content.first else {
+                // reset
+                print("NO DOCWIND dorec so reset")
+                DWFMAppSettings.shared.reset()
+
+                AppSettings.shared.firstLoginDone = false
+                _ = AppSettings.shared.update()
+                return
+            }
+            
+        } catch {
+            print("NO DOCWIND dorec so reset")
+            print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
+            // do reset
+            DWFMAppSettings.shared.reset()
+
+            AppSettings.shared.firstLoginDone = false
+            _ = AppSettings.shared.update()
+        }
+        
 //
 //        AppSettings.shared.firstLoginDone = false
 //        _ = AppSettings.shared.update()

@@ -50,6 +50,13 @@ struct ScannerView: UIViewControllerRepresentable {
             print("Save TAPPED")
             var imgs = [UIImage]()
             var imgsWithWatermarks = [UIImage]()
+            
+            // activity indicator
+            let acIndicator = UIActivityIndicatorView()
+            acIndicator.hidesWhenStopped = true
+            controller.view.addSubview(acIndicator)
+            acIndicator.startAnimating()
+            
             for pageIndex in 0 ..< scan.pageCount {
                 autoreleasepool {
                     let image = UIImage.resizeImageWithAspect(image: scan.imageOfPage(at: pageIndex), scaledToMaxWidth: 595, maxHeight: 842)!
@@ -58,6 +65,7 @@ struct ScannerView: UIViewControllerRepresentable {
                 }
             }
             
+            // appending images based on image counts
             if self.uiImages.wrappedValue.count == 0 {
                 self.uiImages.wrappedValue = imgs
                 self.uiImagesWithWatermarks.wrappedValue = imgsWithWatermarks
@@ -65,6 +73,8 @@ struct ScannerView: UIViewControllerRepresentable {
                 self.uiImages.wrappedValue +=  imgs
                 self.uiImagesWithWatermarks.wrappedValue += imgsWithWatermarks
             }
+            
+            acIndicator.stopAnimating()
             controller.dismiss(animated: true, completion: nil)
         }
         

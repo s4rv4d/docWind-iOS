@@ -40,25 +40,7 @@ struct SlideOverCardView: View {
                     Text("Change color")
                     ColorRow(selectedColor: $color)
                 }.settingsBackground()
-                
-//                HStack {
-                    
-//                    Button("Undo") {
-//                        if self.drawings.count > 0 {
-//                            self.drawings.removeLast()
-//                        }
-//                    }.settingsBackground()
-////                    Spacer()
-////
-////                    Button("Edit") {
-////                        self.canEdit.toggle()
-////                    }.settingsBackground()
-////
-////                    Button("Clear") {
-////                        self.drawings = [Drawing]()
-////                    }.settingsBackground()
-//                }.padding()
-                
+
                 Spacer()
             }
 //            .frame( height: UIScreen.main.bounds.height)
