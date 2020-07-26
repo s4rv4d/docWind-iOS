@@ -126,7 +126,6 @@ struct AddPdfMainView: View {
                             Spacer()
                         }
                     }
-//                    .disabled(!AppSettings.shared.bougthNonConsumable)
                         .onTapGesture {
                             if !AppSettings.shared.bougthNonConsumable {
                               print("You need to buy")
@@ -165,6 +164,7 @@ struct AddPdfMainView: View {
     
     // MARK: - Functions
     private func saveTapped() {
+        FeedbackManager.mediumFeedback()
         
         if (self.pages.count == 0 || self.pagesWithMark.count == 0) {
             self.activeAlertSheet = .notice
@@ -228,6 +228,7 @@ struct AddPdfMainView: View {
     }
     
     private func deleteFile() {
+        FeedbackManager.mediumFeedback()
         self.activeAlertSheet = .delete
         self.showAlert.toggle()
     }

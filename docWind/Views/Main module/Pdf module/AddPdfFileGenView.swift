@@ -111,7 +111,16 @@ struct AddPdfFileGenView: View {
                 }
                 
                 Section(header: Text("Options")){
-                    Toggle(isOn: $removeWatermark) {
+                    Toggle(isOn: $removeWatermark.didSet(execute: { (status) in
+                        if status {
+                            if !AppSettings.shared.bougthNonConsumable {
+                                self.removeWatermark.toggle()
+                                self.activeAlertSheet = .notice
+                                self.alertMessage = "You need to be a docWind Plus user to access this feature"
+                                self.showAlert.toggle()
+                            }
+                        }
+                    })) {
                         HStack {
                             Text("Remove watermark")
                             Image(systemName: "star.fill")
@@ -167,12 +176,13 @@ struct AddPdfFileGenView: View {
     }
     
     private func deleteFile() {
+        FeedbackManager.mediumFeedback()
         self.activeAlertSheet = .delete
         self.showAlert.toggle()
     }
     
     private func saveTapped() {
-        
+        FeedbackManager.mediumFeedback()
         if (self.pages.count == 0 || self.pagesWithMark.count == 0) {
             self.activeAlertSheet = .notice
             self.alertMessage = "Make sure you have scan atleast one document"

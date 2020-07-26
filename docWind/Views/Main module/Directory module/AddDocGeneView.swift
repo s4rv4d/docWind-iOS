@@ -71,6 +71,7 @@ struct AddDocGeneView: View {
             }
         .navigationBarTitle(Text("Add a new directory"))
             .navigationBarItems(leading: Button("Cancel") {
+                FeedbackManager.mediumFeedback()
                 self.presentationMode.wrappedValue.dismiss()
                 }, trailing: Button(action:  saveTapped){
                     Text("Save")
@@ -82,6 +83,7 @@ struct AddDocGeneView: View {
     
     // MARK: - Functions
     private func saveTapped() {
+        FeedbackManager.mediumFeedback()
         // validation
         if direcName != "" {
             if path != direcName {

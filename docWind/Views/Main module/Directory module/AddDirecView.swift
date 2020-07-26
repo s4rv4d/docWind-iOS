@@ -63,6 +63,7 @@ struct AddDirecView: View {
             }
         .navigationBarTitle(Text("Add a new directory"))
             .navigationBarItems(leading: Button("Cancel") {
+                FeedbackManager.mediumFeedback()
                 self.presentationMode.wrappedValue.dismiss()
                 }, trailing: Button(action:  saveTapped){
                     Text("Save")
@@ -74,6 +75,7 @@ struct AddDirecView: View {
     
     // MARK: - Functions
     private func saveTapped() {
+        FeedbackManager.mediumFeedback()
         // validation
         if direcName != "" {
             // make a file in file manager

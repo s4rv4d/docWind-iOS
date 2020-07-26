@@ -52,10 +52,11 @@ struct ScannerView: UIViewControllerRepresentable {
             var imgsWithWatermarks = [UIImage]()
             
             // activity indicator
-            let acIndicator = UIActivityIndicatorView()
-            acIndicator.hidesWhenStopped = true
-            controller.view.addSubview(acIndicator)
-            acIndicator.startAnimating()
+//            let acIndicator = UIActivityIndicatorView(style: .large)
+//            acIndicator.hidesWhenStopped = true
+//            controller.view.addSubview(acIndicator)
+//            controller.view.bringSubviewToFront(acIndicator)
+//            acIndicator.startAnimating()
             
             for pageIndex in 0 ..< scan.pageCount {
                 autoreleasepool {
@@ -74,7 +75,7 @@ struct ScannerView: UIViewControllerRepresentable {
                 self.uiImagesWithWatermarks.wrappedValue += imgsWithWatermarks
             }
             
-            acIndicator.stopAnimating()
+//            acIndicator.stopAnimating()
             controller.dismiss(animated: true, completion: nil)
         }
         

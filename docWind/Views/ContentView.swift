@@ -62,6 +62,7 @@ struct ContentView: View {
                                 .foregroundColor(.blue)
                             .padding()
                                 .onTapGesture {
+                                    FeedbackManager.mediumFeedback()
                                     self.settingsTapped()
                             }
                         }.background(Color(.secondarySystemBackground))
@@ -120,6 +121,7 @@ struct ContentView: View {
     }
     
     func showOptions() {
+        FeedbackManager.mediumFeedback()
         self.showingActionSheet.toggle()
     }
     

@@ -60,6 +60,7 @@
 		40CDC4CC24AF72CD00462277 /* DirecModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC4C624AF72CD00462277 /* DirecModel+CoreDataProperties.swift */; };
 		40CDC4CE24AF80DF00462277 /* MainDocListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC4CD24AF80DF00462277 /* MainDocListViewModel.swift */; };
 		40CDC4D224AF91F800462277 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40CDC4D124AF91F800462277 /* CloudKit.framework */; };
+		40CF63E224CD565F0089D3D3 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CF63E124CD565F0089D3D3 /* Reachability.swift */; };
 		40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170AB24ADA93000F51F77 /* MainDocViewModel.swift */; };
 		40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */; };
 		40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */; };
@@ -153,6 +154,7 @@
 		40CDC4CD24AF80DF00462277 /* MainDocListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDocListViewModel.swift; sourceTree = "<group>"; };
 		40CDC4CF24AF91EF00462277 /* docWind.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = docWind.entitlements; sourceTree = "<group>"; };
 		40CDC4D124AF91F800462277 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		40CF63E124CD565F0089D3D3 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		40D170AB24ADA93000F51F77 /* MainDocViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDocViewModel.swift; sourceTree = "<group>"; };
 		40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBarView.swift; sourceTree = "<group>"; };
 		40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocWindFManager.swift; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 			children = (
 				40FDE47B24AB964B006AAFD2 /* AppDelegate.swift */,
 				40FDE47D24AB964B006AAFD2 /* SceneDelegate.swift */,
+				40CF63E124CD565F0089D3D3 /* Reachability.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				402C0B7224B0B0FF00A5A6C9 /* ScanPdfView.swift in Sources */,
 				40920EB024B744BE00E2293C /* DrawOnImageView.swift in Sources */,
 				40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */,
+				40CF63E224CD565F0089D3D3 /* Reachability.swift in Sources */,
 				405EFDC424BC8C180070BE5F /* SubHeadlineView.swift in Sources */,
 				40FB481724B8AE900045CF13 /* OCRTextView.swift in Sources */,
 				405EFDCA24BCA12A0070BE5F /* SubcriptionPageView.swift in Sources */,

@@ -9,6 +9,10 @@
 import SwiftUI
 
 struct SubcriptionPageView: View {
+    
+    // MARK: - View Modifiers
+    @State private var showAlert = false
+    
     var body: some View {
         ScrollView(.vertical) {
             VStack {
@@ -112,10 +116,22 @@ struct SubcriptionPageView: View {
                 
                 if !AppSettings.shared.bougthNonConsumable {
                     DWButton(text: "Buy docWind +", background: .green, action: {
-                        IAPService.shared.purchaseProduct(product: .nonConsumable)
+                        FeedbackManager.mediumFeedback()
+                        
+                        checkConnection { (status, statusCode) in
+                            if statusCode == 404 {
+                                self.showAlert.toggle()
+                            } else {
+                                IAPService.shared.purchaseProduct(product: .nonConsumable)
+                            }
+                        }
                     }).padding()
                 }
                         
+            }
+            
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Notice"), message: Text("No internet connection detected :("), dismissButton: .default(Text("Retry later")))
             }
         }
     }

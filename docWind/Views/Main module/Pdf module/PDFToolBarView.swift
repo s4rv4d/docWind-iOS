@@ -83,6 +83,7 @@ struct PDFToolBarView: View {
                     HStack {
                         Spacer()
                         Button(action: {
+                            FeedbackManager.mediumFeedback()
                             self.options = .eraser
                             self.canEdit = true
                             self.canEditSignature = false
@@ -96,6 +97,7 @@ struct PDFToolBarView: View {
                         }
                         
                         Button(action: {
+                            FeedbackManager.mediumFeedback()
                             self.options = .highlighter
                             self.canEdit = true
                             self.canEditSignature = false
@@ -109,6 +111,7 @@ struct PDFToolBarView: View {
                         }
                         
                         Button(action: {
+                            FeedbackManager.mediumFeedback()
                             self.options = .pen
                             self.canEdit = true
                             self.canEditSignature = false
@@ -121,6 +124,7 @@ struct PDFToolBarView: View {
                         }
                         
                         Button(action: {
+                            FeedbackManager.mediumFeedback()
                             self.options = .pencil
                             self.canEdit = true
                             self.canEditSignature = false

@@ -61,6 +61,7 @@ struct DetailPdfView: View, Equatable {
                             self.saveTapped.toggle()
                             self.saveButton.toggle()
 //                            self.presentationMode
+                            FeedbackManager.mediumFeedback()
 
                         }.settingsBackground()
 
@@ -83,6 +84,7 @@ struct DetailPdfView: View, Equatable {
                             .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
                             .padding()
                             .onTapGesture {
+                                FeedbackManager.mediumFeedback()
                                 if !AppSettings.shared.bougthNonConsumable {
                                     self.alertTitle = "Notice"
                                     self.activeAlertContext = .noPurchase
@@ -106,6 +108,7 @@ struct DetailPdfView: View, Equatable {
                     .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
                     .padding()
                     .onTapGesture {
+                        FeedbackManager.mediumFeedback()
                         if !AppSettings.shared.bougthNonConsumable {
                             self.alertTitle = "Notice"
                             self.activeAlertContext = .noPurchase
@@ -179,6 +182,7 @@ struct DetailPdfView: View, Equatable {
     }
     
     func sharePdf() {
+        FeedbackManager.mediumFeedback()
         self.activeContext = .shareSheet
         self.isShown.toggle()
     }
