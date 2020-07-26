@@ -31,14 +31,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         do {
             let content = try context.fetch(fetchRequest)
-            guard let _ = content.first else {
+            if let _ = content.first{
+                print("data is present no need of resetting")
+            } else {
                 // reset
                 print("NO DOCWIND dorec so reset")
                 DWFMAppSettings.shared.reset()
 
                 AppSettings.shared.firstLoginDone = false
                 _ = AppSettings.shared.update()
-                return
             }
             
         } catch {

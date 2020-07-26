@@ -109,14 +109,24 @@ struct AddPdfMainView: View {
                 }
                 
                 Section(header: Text("Options")){
-                    Toggle(isOn: $removeWatermark) {
+                    Toggle(isOn: $removeWatermark.didSet(execute: { (status) in
+                        if status {
+                            if !AppSettings.shared.bougthNonConsumable {
+                                self.removeWatermark.toggle()
+                                self.activeAlertSheet = .notice
+                                self.alertMessage = "You need to be a docWind Plus user to access this feature"
+                                self.showAlert.toggle()
+                            }
+                        }
+                    })) {
                         HStack {
                             Text("Remove watermark")
                             Image(systemName: "star.fill")
                                 .foregroundColor(.yellow)
                             Spacer()
                         }
-                    }.disabled(!AppSettings.shared.bougthNonConsumable)
+                    }
+//                    .disabled(!AppSettings.shared.bougthNonConsumable)
                         .onTapGesture {
                             if !AppSettings.shared.bougthNonConsumable {
                               print("You need to buy")
@@ -230,8 +240,6 @@ struct AddPdfMainView: View {
             let content = try context.fetch(fetchRequest)
 
             if let docWindContent = content.first {
-//                self.contents = MainDocViewModel(directory: docWindContent)
-//                self.direcObject = docWindContent
                                 
                 // add new item
                 let itemName = itemName
@@ -247,13 +255,6 @@ struct AddPdfMainView: View {
                 item.locked = NSNumber(booleanLiteral: isLocked)
                 item.itemCreated = Date()
                 item.origin = docWindContent
-                
-//                direcObject?.addToFiles(item)
-//                self.contents = MainDocViewModel(directory: direcObject!)
-                        
-//                let newDirec = DirecModel(context: context)
-//                newDirec.name = itemName
-//                newDirec.created = Date()
                 
                 do {
                    try context.save()

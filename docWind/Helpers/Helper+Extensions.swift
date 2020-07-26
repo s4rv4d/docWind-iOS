@@ -327,3 +327,17 @@ extension PDFAnnotation: Comparable {
         return (lhs.type == rhs.type && lhs.bounds == rhs.bounds)
     }
 }
+
+extension Binding {
+    func didSet(execute: @escaping (Value) -> Void) -> Binding {
+        return Binding(
+            get: {
+                return self.wrappedValue
+            },
+            set: {
+                self.wrappedValue = $0
+                execute($0)
+            }
+        )
+    }
+}
