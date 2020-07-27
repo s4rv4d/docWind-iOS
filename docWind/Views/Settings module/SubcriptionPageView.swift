@@ -12,6 +12,9 @@ struct SubcriptionPageView: View {
     
     // MARK: - View Modifiers
     @State private var showAlert = false
+    @State private var alertMessage = ""
+    
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         ScrollView(.vertical) {
@@ -120,9 +123,29 @@ struct SubcriptionPageView: View {
                         
                         checkConnection { (status, statusCode) in
                             if statusCode == 404 {
+                                self.alertMessage = "No internet connection detected :("
                                 self.showAlert.toggle()
                             } else {
                                 IAPService.shared.purchaseProduct(product: .nonConsumable)
+                            }
+                        }
+                    }).padding()
+                    Text("---Or---")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    DWButton(text: "Restore purchase", background: .blue, action: {
+                        FeedbackManager.mediumFeedback()
+                        
+                        checkConnection { (status, statusCode) in
+                            if statusCode == 404 {
+                                self.alertMessage = "No internet connection detected :("
+                                self.showAlert.toggle()
+                            } else {
+                                IAPService.shared.restorePurchase()
+                                self.alertMessage = "Restored purchase"
+                                self.showAlert.toggle()
+//                                self.presentationMode.wrappedValue.dismiss()
                             }
                         }
                     }).padding()
@@ -131,14 +154,8 @@ struct SubcriptionPageView: View {
             }
             
             .alert(isPresented: $showAlert) {
-                Alert(title: Text("Notice"), message: Text("No internet connection detected :("), dismissButton: .default(Text("Retry later")))
+                Alert(title: Text("Notice"), message: Text(self.alertMessage), dismissButton: .default(Text("Dismiss")))
             }
         }
-    }
-}
-
-struct SubcriptionPageView_Previews: PreviewProvider {
-    static var previews: some View {
-        SubcriptionPageView()
     }
 }

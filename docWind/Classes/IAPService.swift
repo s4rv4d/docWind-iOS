@@ -35,6 +35,7 @@ class IAPService: NSObject {
     }
     
     func restorePurchase() {
+        print("restoring purchase")
         paymentQueue.restoreCompletedTransactions()
     }
 }
