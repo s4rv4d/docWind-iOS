@@ -57,6 +57,57 @@
 			<false/>
 		</dict>
 	</dict>
+    <key>CFBundleIcons~ipad</key>
+    <dict>
+        <key>CFBundleAlternateIcons</key>
+        <dict>
+            <key>blackBlue</key>
+            <dict>
+                <key>CFBundleIconFiles</key>
+                <array>
+                    <string>blackBlue</string>
+                </array>
+                <key>UIPrerenderedIcon</key>
+                <false/>
+            </dict>
+            <key>blackGreen</key>
+            <dict>
+                <key>CFBundleIconFiles</key>
+                <array>
+                    <string>blackGreen</string>
+                </array>
+                <key>UIPrerenderedIcon</key>
+                <false/>
+            </dict>
+            <key>blackRed</key>
+            <dict>
+                <key>CFBundleIconFiles</key>
+                <array>
+                    <string>blackRed</string>
+                </array>
+                <key>UIPrerenderedIcon</key>
+                <false/>
+            </dict>
+            <key>blackYellow</key>
+            <dict>
+                <key>CFBundleIconFiles</key>
+                <array>
+                    <string>blackYellow</string>
+                </array>
+                <key>UIPrerenderedIcon</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>CFBundlePrimaryIcon</key>
+        <dict>
+            <key>CFBundleIconFiles</key>
+            <array>
+                <string></string>
+            </array>
+            <key>UIPrerenderedIcon</key>
+            <false/>
+        </dict>
+    </dict>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>

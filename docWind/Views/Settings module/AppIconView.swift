@@ -74,7 +74,7 @@ struct AppIconView: View {
       guard UIApplication.shared.supportsAlternateIcons else {
         return
       }
-        
+        print(iconName, UIApplication.shared.supportsAlternateIcons)
       UIApplication.shared.setAlternateIconName(iconName, completionHandler: { (error) in
         if let error = error {
           print("App icon failed to change due to \(error.localizedDescription)")
