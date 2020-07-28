@@ -111,7 +111,7 @@ struct SettingsView: View {
     
     func changeAppIcon() {
         
-        if !AppSettings.shared.bougthNonConsumable {
+        if AppSettings.shared.bougthNonConsumable {
             print("change app icon tapped")
             self.activeSheet = .appIcon
             self.showSheet.toggle()
