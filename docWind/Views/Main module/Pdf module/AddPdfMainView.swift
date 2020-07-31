@@ -155,6 +155,7 @@ struct AddPdfMainView: View {
         }
         .sheet(isPresented: $showScanner) {
             if self.activeSheet == .scannerView {
+//                print(self.$pagesWithMark)
                 ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
             } else if self.activeSheet == .pdfView {
                 SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)

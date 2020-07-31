@@ -83,7 +83,7 @@ struct AddPdfFileGenView: View {
                     } else {
                         ScrollView(.horizontal) {
                             HStack {
-                                ForEach(0..<((self.removeWatermark == true) ? self.pages.count : self.pagesWithMark.count)){ index in
+                                ForEach(0..<((self.removeWatermark == true) ? self.pages.count : self.pagesWithMark.count), id: \.self){ index in
                                     Image(uiImage: ((self.removeWatermark == true) ? self.pages[index] : self.pagesWithMark[index]))
                                     .resizable()
                                     .frame(width: 150, height: 200)
@@ -157,6 +157,7 @@ struct AddPdfFileGenView: View {
         }
         .sheet(isPresented: $showScanner) {
             if self.activeSheet == .scannerView {
+//                print(self.$pagesWithMark)
                 ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
             } else if self.activeSheet == .pdfView {
                 SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
