@@ -79,10 +79,16 @@ struct DetailPdfView: View, Equatable {
                     }
                 } else {
                     if !canEdit && !canEditSignature {
-                        Image(systemName: "text.quote")
+                        VStack{
+                            Image(systemName: "text.quote")
                             .font(.system(size: 20))
                             .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
-                            .padding()
+                            .padding(.top, 5)
+                            .padding([.leading, .trailing])
+                            Text("OCR").font(.caption)
+                            .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
+                            .padding(.bottom, 2)
+                        }
                             .onTapGesture {
                                 FeedbackManager.mediumFeedback()
                                 if !AppSettings.shared.bougthNonConsumable {
@@ -103,10 +109,16 @@ struct DetailPdfView: View, Equatable {
 
 
                 Spacer()
-                Image(systemName: "wand.and.stars")
+                VStack {
+                    Image(systemName: "wand.and.stars")
                     .font(.system(size: 20))
                     .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
-                    .padding()
+                        .padding(.top, 5)
+                        .padding([.leading, .trailing])
+                    Text("Edit").font(.caption)
+                        .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
+                        .padding(.bottom, 2)
+                }
                     .onTapGesture {
                         FeedbackManager.mediumFeedback()
                         if !AppSettings.shared.bougthNonConsumable {
@@ -121,7 +133,7 @@ struct DetailPdfView: View, Equatable {
                         }
                 }
             }.debugPrint("HStack 💻")
-            .background(Color(.black))
+            .background(Color(.secondarySystemBackground))
         }.debugPrint("VStack 🧸")
 
         .sheet(isPresented: $isShown) {

@@ -120,7 +120,7 @@ extension UIImage {
         context!.fill(rect)
         
         image1.draw(in: CGRect(x: 0.0, y: 0.0, width: image1.size.width, height: image1.size.height))
-        image2.draw(in: CGRect(x: 10, y: (image1.size.height/100) * 3, width: ((image1.size.width/100) * 40), height: ((image1.size.height/100) * 3)))
+        image2.draw(in: CGRect(x: 10, y: (image1.size.height/100) * 95, width: ((image1.size.width/100) * 40), height: ((image1.size.height/100) * 3)))
         
         let result = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
