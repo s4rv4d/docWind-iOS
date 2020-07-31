@@ -11,8 +11,8 @@ import SwiftUI
 struct AppIconView: View {
     
     // MARK: - Properties
-    @State var appIcons = ["blackBlue", "blackGreen", "blackRed", "blackYellow"]
-    @State var appIconName = ["Black and Blue", "Black and Green", "Black and Red", "Black and Yellow"]
+    @State var appIcons = ["blackBlue", "blackGreen", "blackRed"]
+    @State var appIconName = ["Black and Blue", "Black and Green", "Black and Red"]
     @State var selected = UIApplication.shared.alternateIconName
     
     var body: some View {

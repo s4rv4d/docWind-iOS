@@ -308,6 +308,7 @@ extension DocWindFManager {
             // search and deletion part
             do {
                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+                print(contents)
                 for url in contents {
                     if url.description.contains("\(fileName.replacingOccurrences(of: " ", with: "_"))") {
                         try FileManager.default.removeItem(at: url)

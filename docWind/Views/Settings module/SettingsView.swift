@@ -39,10 +39,10 @@ struct SettingsView: View {
                 VStack {
                     SubHeadlineView(title: "Options")
                     VStack {
-                        if UIApplication.shared.supportsAlternateIcons {
-                            SettingsRow(imageName: "app.badge", title: "Change app icon", imageColor: (AppSettings.shared.bougthNonConsumable) ? .green : .yellow, action: changeAppIcon)
-                            Divider()
-                        }
+//                        if UIApplication.shared.supportsAlternateIcons {
+//                            SettingsRow(imageName: "app.badge", title: "Change app icon", imageColor: (AppSettings.shared.bougthNonConsumable) ? .green : .yellow, action: changeAppIcon)
+//                            Divider()
+//                        }
                         SettingsRowWithToggleAuth(imageName: "lock.shield", title: "Enable Lock", isOn: $isToggled, color: .red)
 //                        Divider()
 //                        SettingsRow(imageName: "exclamationmark.bubble", title: "Notification settings", imageColor: .blue, action: goToNotifications)
@@ -73,13 +73,13 @@ struct SettingsView: View {
                         Divider()
                         SettingsRow(imageName: "exclamationmark.circle", title: "About developer", imageColor: .purple, action: aboutDevTapped)
                     }.settingsBackground()
-                }
+                }.padding(.bottom)
                 // ---- 4
-                VStack {
-                    Spacer()
-                    Text("Made with ❤️ in 🇮🇳")
-                    .padding()
-                }
+//                VStack {
+//                    Spacer()
+//                    Text("Made with ❤️ in 🇮🇳")
+//                    .padding()
+//                }
             }
             .navigationBarTitle(Text("Settings"))
                 
@@ -108,19 +108,19 @@ struct SettingsView: View {
         self.activeSheet = .docSub
         self.showSheet.toggle()
     }
-    
-    func changeAppIcon() {
-        
-        if AppSettings.shared.bougthNonConsumable {
-            print("change app icon tapped")
-            self.activeSheet = .appIcon
-            self.showSheet.toggle()
-        } else {
-            self.alertTitle = "Notice"
-            self.alertMessage = "You need to be a docWind Plus user to access this feature"
-            self.showAlert.toggle()
-        }
-    }
+//    
+//    func changeAppIcon() {
+//        
+//        if AppSettings.shared.bougthNonConsumable {
+//            print("change app icon tapped")
+//            self.activeSheet = .appIcon
+//            self.showSheet.toggle()
+//        } else {
+//            self.alertTitle = "Notice"
+//            self.alertMessage = "You need to be a docWind Plus user to access this feature"
+//            self.showAlert.toggle()
+//        }
+//    }
     
     func goToNotifications() {
         print("go to notifications page")

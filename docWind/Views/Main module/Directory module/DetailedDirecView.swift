@@ -20,6 +20,11 @@ struct DetailedDirecView: View {
     @State private var toggleSearchIcon = false
     @State var masterFolder: String
     @State var masterDirecName: String = ""
+    // alert
+    @State private var alertMessage = ""
+    @State private var alertTitle = ""
+    @State private var alertContext: ActiveAlertSheet = .error
+    @State private var showAlert = false
     
     // MARK: - Objects
     @FetchRequest var items: FetchedResults<DirecModel>
@@ -56,7 +61,7 @@ struct DetailedDirecView: View {
                         Section(header: Text("\(String(masterFolder.split(separator: "/").last!)) > \(item.wrappedItemName)").font(.caption)) {
                             ForEach(0..<(items.first!.fileArray.count), id: \.self){ index in
                                 GenListRowView(itemArray: (self.items.first!.fileArray[index]), masterFolder: self.item.wrappedItemUrl, activeSheet: self.$activeSheet, isShown: self.$isShown).environment(\.managedObjectContext, self.context)
-                            }
+                            }.onDelete(perform: self.deleteRow(at:))
                         }
                     }
                     .listStyle(GroupedListStyle())
@@ -104,14 +109,20 @@ struct DetailedDirecView: View {
            ])
        }
         
+        .alert(isPresented: $showAlert) {
+             Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel(Text("Dismiss"), action: {
+                    print("retry")
+                }))
+        }
+        
     }
     
     // MARK: - Functions
-    func showOptions() {
+    private func showOptions() {
         self.showingActionSheet.toggle()
     }
 
-    func createDiectory() {
+    private func createDiectory() {
         //1. bring up sheet
         self.activeSheet = .createdDirec
         self.isShown.toggle()
@@ -119,15 +130,57 @@ struct DetailedDirecView: View {
         //3. reload list
     }
     
-    func createFile() {
+    private func createFile() {
         self.activeSheet = .createPdf
         self.isShown.toggle()
     }
     
-    func toggleSearch() {
+    private func toggleSearch() {
         withAnimation {
             self.toggleSearchIcon.toggle()
         }
-        
+    }
+    
+    private func deleteRow(at indexSet: IndexSet) {
+        guard let indexToDelete = indexSet.first else { return }
+        let item = self.items.first!.fileArray[indexToDelete]
+        print(item.wrappedItemUrl)
+        if item.itemType == DWDIRECTORY {
+            if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.item.wrappedItemUrl, fileName: item.wrappedItemName) {
+                print("SUCCESSFULLY DELETED FROM iCloud container ✅")
+                
+                // delete from direcmodel
+                let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
+                fetchRequest.predicate = NSPredicate(format: "name == %@", item.wrappedItemName)
+                
+                do {
+                    let content = try context.fetch(fetchRequest)
+                    print(content)
+                    if let docWindDirec = content.first {
+                        DirecModel.deleteObject(in: context, sub: docWindDirec)
+                    }
+                } catch {
+                  print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
+                }
+                
+                ItemModel.deleteObject(in: context, sub: item)
+            } else {
+                self.alertTitle = "Error"
+                self.alertMessage = "Couldnt delete folder"
+                self.showAlert.toggle()
+            }
+        } else {
+            
+            if DWFMAppSettings.shared.deleteSavedPdf(direcName: self.item.wrappedItemUrl, fileName: "\(item.wrappedItemName).pdf") {
+                print("SUCCESSFULLY DELETED FROM iCloud container ✅")
+                
+                ItemModel.deleteObject(in: context, sub: item)
+            } else {
+                self.alertTitle = "Error"
+                self.alertMessage = "Couldnt delete file"
+                self.showAlert.toggle()
+            }
+
+        }
     }
 }

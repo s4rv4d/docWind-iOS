@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ContentView: View {
     
@@ -19,6 +20,10 @@ struct ContentView: View {
     @State private var toggleSearchIcon = false
     @State private var item: ItemModel? = nil
     @State var changed = false
+    @State private var alertMessage = ""
+    @State private var alertTitle = ""
+    @State private var alertContext: ActiveAlertSheet = .error
+    @State private var showAlert = false
     
     // MARK: - @Environment variables
     @Environment(\.managedObjectContext) var context
@@ -41,7 +46,7 @@ struct ContentView: View {
                                         
                                         ForEach(0..<self.items.first!.fileArray.count, id: \.self){ index in
                                             NormalListRowView(itemArray: self.items.first!.fileArray[index], masterFolder: "\(DWFMAppSettings.shared.fileURL())").environment(\.managedObjectContext, self.context)
-                                        }
+                                        }.onDelete(perform: self.deleteRow(at:))
                                         
                                         
                                     }
@@ -108,10 +113,16 @@ struct ContentView: View {
                 .cancel()
             ])
         }
+        
+        .alert(isPresented: $showAlert) {
+             Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel(Text("Dismiss"), action: {
+                    print("retry")
+                }))
+        }
     }
     
     // MARK: - Functions
-    func check() {
+    private func check() {
         print(AppSettings.shared.firstLoginDone)
         if !AppSettings.shared.firstLoginDone {
             if Device.IS_IPAD || Device.IS_IPHONE{
@@ -120,12 +131,12 @@ struct ContentView: View {
         }
     }
     
-    func showOptions() {
+    private func showOptions() {
         FeedbackManager.mediumFeedback()
         self.showingActionSheet.toggle()
     }
     
-    func createDiectory() {
+    private func createDiectory() {
         //1. bring up sheet
         self.activeSheet = .createdDirec
         self.isShown.toggle()
@@ -133,14 +144,14 @@ struct ContentView: View {
         //3. reload list
     }
     
-    func toggleSearch() {
+    private func toggleSearch() {
 //        withAnimation {
 //            self.toggleSearchIcon.toggle()
 //        }
 //
     }
     
-    func scanDocumentTapped() {
+    private func scanDocumentTapped() {
         print("❇️ SCAN DOC TAPPED")
         //bring uo editing page
         self.activeSheet = .createPdf
@@ -148,14 +159,50 @@ struct ContentView: View {
         //add pages and saves
     }
     
-    func settingsTapped() {
+    private func settingsTapped() {
         self.activeSheet = .settingsTapped
         self.isShown.toggle()
     }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    
+    private func deleteRow(at indexSet: IndexSet) {
+        guard let indexToDelete = indexSet.first else { return }
+        let item = self.items.first!.fileArray[indexToDelete]
+        
+        
+        if item.itemType == DWDIRECTORY {
+            if DWFMAppSettings.shared.deleteSavedFolder(dirname: "\(DWFMAppSettings.shared.fileURL())", fileName: item.wrappedItemName) {
+                print("SUCCESSFULLY DELETED FROM iCloud container ✅")
+                
+                // delete from direcmodel
+                let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
+                fetchRequest.predicate = NSPredicate(format: "name == %@", item.wrappedItemName)
+                
+                do {
+                    let content = try context.fetch(fetchRequest)
+                    print(content)
+                    if let docWindDirec = content.first {
+                        DirecModel.deleteObject(in: context, sub: docWindDirec)
+                    }
+                } catch {
+                  print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
+                }
+                
+                ItemModel.deleteObject(in: context, sub: item)
+            } else {
+                self.alertTitle = "Error"
+                self.alertMessage = "Couldnt delete folder"
+                self.showAlert.toggle()
+            }
+        } else {
+            if DWFMAppSettings.shared.deleteSavedPdf(direcName: "\(DWFMAppSettings.shared.fileURL())", fileName: "\(item.wrappedItemName).pdf") {
+                print("SUCCESSFULLY DELETED FROM iCloud container ✅")
+                
+                ItemModel.deleteObject(in: context, sub: item)
+            } else {
+                self.alertTitle = "Error"
+                self.alertMessage = "Couldnt delete file"
+                self.showAlert.toggle()
+            }
+        }
     }
 }
