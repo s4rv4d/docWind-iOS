@@ -116,7 +116,7 @@ struct AddPdfFileGenView: View {
                             if !AppSettings.shared.bougthNonConsumable {
                                 self.removeWatermark.toggle()
                                 self.activeAlertSheet = .notice
-                                self.alertMessage = "You need to be a docWind Plus user to access this feature"
+                                self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
                                 self.showAlert.toggle()
                             }
                         }
@@ -132,7 +132,7 @@ struct AddPdfFileGenView: View {
                             if !AppSettings.shared.bougthNonConsumable {
                               print("You need to buy")
                                 self.activeAlertSheet = .notice
-                                self.alertMessage = "You need to be a docWind Plus user to access this feature"
+                                self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
                                 self.showAlert.toggle()
                             }
                     }

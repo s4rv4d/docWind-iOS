@@ -117,7 +117,7 @@ struct SettingsView: View {
 //            self.showSheet.toggle()
 //        } else {
 //            self.alertTitle = "Notice"
-//            self.alertMessage = "You need to be a docWind Plus user to access this feature"
+//            self.alertMessage = "You need to be docWind Plus user to access this feature"
 //            self.showAlert.toggle()
 //        }
 //    }

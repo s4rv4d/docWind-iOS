@@ -65,7 +65,7 @@ struct ContentView: View {
                             Image(systemName: "gear")
                                 .font(.system(size: 20))
                                 .foregroundColor(.blue)
-                            .padding()
+                                .padding()
                                 .onTapGesture {
                                     FeedbackManager.mediumFeedback()
                                     self.settingsTapped()
