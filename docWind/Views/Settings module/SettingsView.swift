@@ -20,6 +20,9 @@ struct SettingsView: View {
     @State private var alertTitle = ""
     @State private var activeSheet: SettingActiveSheet = .docSub
     
+    // MARK: - Environment object
+    @Environment(\.presentationMode) var presentationMode
+    
     // MARK: - Properties
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     
@@ -75,13 +78,21 @@ struct SettingsView: View {
                     }.settingsBackground()
                 }.padding(.bottom)
                 // ---- 4
-//                VStack {
-//                    Spacer()
-//                    Text("Made with ❤️ in 🇮🇳")
-//                    .padding()
-//                }
+                VStack {
+                    Spacer()
+                    Text("Made with ❤️ by Sarvad👨🏾‍💻")
+                    .padding()
+                }
             }
             .navigationBarTitle(Text("Settings"))
+            .navigationBarItems(leading: Button(action:{
+                FeedbackManager.mediumFeedback()
+                self.presentationMode.wrappedValue.dismiss()
+            }){
+                Image(systemName: "multiply.circle.fill")
+                    .foregroundColor(.blue)
+                    .font(.system(size: 25))
+            })
                 
             .alert(isPresented: $showAlert) {
                 Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .default(Text("Dismiss")))
