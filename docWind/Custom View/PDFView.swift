@@ -34,6 +34,7 @@ struct PDFCustomView: UIViewRepresentable {
         pdfView.displayBox = .mediaBox
         pdfView.autoScales = true
         pdfView.interpolationQuality = .high
+        
         return pdfView
     }
     
@@ -41,16 +42,27 @@ struct PDFCustomView: UIViewRepresentable {
         
         pdfDrawer.pdfView = uiView
         
+        pdfThumbnailView.pdfView = uiView
+        pdfThumbnailView.layoutMode = .horizontal
+        pdfThumbnailView.thumbnailSize = CGSize(width: 60, height: 60)
+        pdfThumbnailView.backgroundColor = .clear
+        
         if saveTapped {
             print(uiView.currentPage!.annotations)
             print(uiView)
             uiView.document?.write(to: fileURL)
         }
-        
         print("resetting switching back to page gesture")
         for recog in uiView.gestureRecognizers! {
             uiView.removeGestureRecognizer(recog)
         }
+        
+        for view in uiView.subviews {
+            if view.isKind(of: PDFThumbnailView.self) {
+                view.removeFromSuperview()
+            }
+        }
+        uiView.addSubview(pdfThumbnailView)
         
         // gesture recogs
         let pdfDrawingGestureRecognizer = DrawingGestureRecognizer()
@@ -59,6 +71,13 @@ struct PDFCustomView: UIViewRepresentable {
         // logic for enabling and disabling
         if canEdit == true {
             if !canEditSignature {
+                print(uiView.subviews)
+                for view in uiView.subviews {
+                    if view.isKind(of: PDFThumbnailView.self) {
+                        view.removeFromSuperview()
+                    }
+                }
+                
                 uiView.addGestureRecognizer(pdfDrawingGestureRecognizer)
                 pdfDrawingGestureRecognizer.drawingDelegate = pdfDrawer
                 pdfDrawer.drawingTool = options
@@ -68,6 +87,7 @@ struct PDFCustomView: UIViewRepresentable {
                 for recog in uiView.gestureRecognizers! {
                     uiView.removeGestureRecognizer(recog)
                 }
+                uiView.addSubview(pdfThumbnailView)
             }
             
         } else {

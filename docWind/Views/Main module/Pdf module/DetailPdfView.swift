@@ -60,7 +60,6 @@ struct DetailPdfView: View, Equatable {
                             // save pdf
                             self.saveTapped.toggle()
                             self.saveButton.toggle()
-//                            self.presentationMode
                             FeedbackManager.mediumFeedback()
 
                         }.settingsBackground()
