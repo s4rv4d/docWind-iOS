@@ -103,4 +103,8 @@ struct SnapCarouselView: View {
         self.mainImages.remove(at: currentPhotoIndex)
         self.imagesState.remove(at: currentPhotoIndex)
     }
+    
+    private func addFilters() {
+        
+    }
 }

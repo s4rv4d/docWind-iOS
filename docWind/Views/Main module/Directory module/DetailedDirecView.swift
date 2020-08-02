@@ -32,6 +32,9 @@ struct DetailedDirecView: View {
     // MARK: - @Environment variables
     @Environment(\.managedObjectContext) var context
     
+    // MARK: - ObservedObjects
+    @ObservedObject var searchBar: SearchBar = SearchBar()
+    
     init(dirName: String, pathName: String, item: ItemModel) {
         self._masterDirecName = State(initialValue: dirName)
         self._masterFolder = State(initialValue: pathName)
@@ -59,8 +62,11 @@ struct DetailedDirecView: View {
                 } else {
                     List {
                         Section(header: Text("\(String(masterFolder.split(separator: "/").last!)) > \(item.wrappedItemName)").font(.caption)) {
-                            ForEach(0..<(items.first!.fileArray.count), id: \.self){ index in
-                                GenListRowView(itemArray: (self.items.first!.fileArray[index]), masterFolder: self.item.wrappedItemUrl, activeSheet: self.$activeSheet, isShown: self.$isShown).environment(\.managedObjectContext, self.context)
+                            ForEach(items.first!.fileArray.filter {
+                                searchBar.text.isEmpty ||
+                                    $0.wrappedItemName.localizedStandardContains(searchBar.text)
+                            }, id: \.self){ item in
+                                GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl, activeSheet: self.$activeSheet, isShown: self.$isShown).environment(\.managedObjectContext, self.context)
                             }.onDelete(perform: self.deleteRow(at:))
                         }
                     }
@@ -91,7 +97,6 @@ struct DetailedDirecView: View {
         .navigationBarTitle(Text(item.wrappedItemName), displayMode: .inline)
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarItems(trailing:
-            
             HStack{
                 Button(action: showOptions){
                     Image(systemName: "plus")
@@ -99,6 +104,7 @@ struct DetailedDirecView: View {
                         }
             }
         )
+            .add(self.searchBar)
         
         // action sheet code
        .actionSheet(isPresented: $showingActionSheet) {

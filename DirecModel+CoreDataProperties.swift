@@ -33,7 +33,7 @@ extension DirecModel {
     public var fileArray: [ItemModel] {
         let set = files as? Set<ItemModel> ?? []
         return set.sorted {
-            $0.wrappedItemName < $1.wrappedItemName
+            $0.wrappedItemCreated > $1.wrappedItemCreated
         }
     }
     

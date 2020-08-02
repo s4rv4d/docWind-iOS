@@ -35,6 +35,8 @@
 		405EFDC824BCA11A0070BE5F /* AppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EFDC724BCA11A0070BE5F /* AppIconView.swift */; };
 		405EFDCA24BCA12A0070BE5F /* SubcriptionPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EFDC924BCA12A0070BE5F /* SubcriptionPageView.swift */; };
 		405EFDCC24BCB3E30070BE5F /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EFDCB24BCB3E30070BE5F /* MailView.swift */; };
+		4069EF9F24D69AAF003083C6 /* ViewControllerResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4069EF9E24D69AAF003083C6 /* ViewControllerResolver.swift */; };
+		4069EFA124D69D4C003083C6 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4069EFA024D69D4C003083C6 /* CustomSearchBar.swift */; };
 		406CAA4D24BECC2E00933F5D /* PDFToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406CAA4C24BECC2D00933F5D /* PDFToolBarView.swift */; };
 		406E9AF424B5E773000FB8FD /* SnapCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406E9AF324B5E773000FB8FD /* SnapCarouselView.swift */; };
 		406E9AF624B5E798000FB8FD /* CarouselCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406E9AF524B5E798000FB8FD /* CarouselCardModel.swift */; };
@@ -128,6 +130,8 @@
 		405EFDC724BCA11A0070BE5F /* AppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconView.swift; sourceTree = "<group>"; };
 		405EFDC924BCA12A0070BE5F /* SubcriptionPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcriptionPageView.swift; sourceTree = "<group>"; };
 		405EFDCB24BCB3E30070BE5F /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
+		4069EF9E24D69AAF003083C6 /* ViewControllerResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerResolver.swift; sourceTree = "<group>"; };
+		4069EFA024D69D4C003083C6 /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		406CAA4C24BECC2D00933F5D /* PDFToolBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFToolBarView.swift; sourceTree = "<group>"; };
 		406E9AF324B5E773000FB8FD /* SnapCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapCarouselView.swift; sourceTree = "<group>"; };
 		406E9AF524B5E798000FB8FD /* CarouselCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCardModel.swift; sourceTree = "<group>"; };
@@ -344,6 +348,8 @@
 				4012033324BDD9DF00167917 /* ODVThumbnailView.swift */,
 				40EF391B24BF5E82007BBAC0 /* ToastView.swift */,
 				40FE66A624CB126D00B6A064 /* HeaderView.swift */,
+				4069EF9E24D69AAF003083C6 /* ViewControllerResolver.swift */,
+				4069EFA024D69D4C003083C6 /* CustomSearchBar.swift */,
 			);
 			path = "Custom View";
 			sourceTree = "<group>";
@@ -557,6 +563,7 @@
 				40DD4F7724C087AE00D37EFA /* ImagePanGestureRecognizer.swift in Sources */,
 				40CDC4C824AF72CD00462277 /* ItemModel+CoreDataProperties.swift in Sources */,
 				40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */,
+				4069EF9F24D69AAF003083C6 /* ViewControllerResolver.swift in Sources */,
 				40485D8A24B98C9F008A137A /* TextView.swift in Sources */,
 				40DD4F7324C02CDC00D37EFA /* SignaturePageView.swift in Sources */,
 				405EE7A824B339DD005F525F /* ScannerView.swift in Sources */,
@@ -570,6 +577,7 @@
 				4012033A24BDE09C00167917 /* DrawingAnnotation.swift in Sources */,
 				405EFDCC24BCB3E30070BE5F /* MailView.swift in Sources */,
 				40FE66A724CB126D00B6A064 /* HeaderView.swift in Sources */,
+				4069EFA124D69D4C003083C6 /* CustomSearchBar.swift in Sources */,
 				405EFDC024BC886A0070BE5F /* SettingsRow.swift in Sources */,
 				405EFDBE24BC76EB0070BE5F /* IAPService.swift in Sources */,
 				4012033424BDD9DF00167917 /* ODVThumbnailView.swift in Sources */,
@@ -762,7 +770,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sarvadShetty.docWind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -786,7 +794,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sarvadShetty.docWind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

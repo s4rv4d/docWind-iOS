@@ -81,25 +81,25 @@ struct DetailPdfView: View, Equatable {
                     if !canEdit && !canEditSignature {
                         VStack{
                             Image(systemName: "text.quote")
-                            .font(.system(size: 20))
-                            .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
-                            .padding(.top, 5)
-                            .padding([.leading, .trailing])
+                                .font(.system(size: 20))
+                                .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
+                                .padding(.top, 5)
+                                .padding([.leading, .trailing])
                             Text("OCR").font(.caption)
-                            .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
-                            .padding(.bottom, 2)
+                                .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
+                                .padding(.bottom, 2)
                         }
-                            .onTapGesture {
-                                FeedbackManager.mediumFeedback()
-                                if !AppSettings.shared.bougthNonConsumable {
-                                    self.alertTitle = "Notice"
-                                    self.activeAlertContext = .noPurchase
-                                    self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
-                                    self.showAlert.toggle()
-                                } else {
-                                    self.extractText()
+                        .onTapGesture {
+                            FeedbackManager.mediumFeedback()
+                            if !AppSettings.shared.bougthNonConsumable {
+                                self.alertTitle = "Notice"
+                                self.activeAlertContext = .noPurchase
+                                self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
+                                self.showAlert.toggle()
+                            } else {
+                                self.extractText()
 
-                                }
+                            }
                         }
                     }
                 }

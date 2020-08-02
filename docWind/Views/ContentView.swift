@@ -13,7 +13,6 @@ struct ContentView: View {
     
     //MARK: - @State variables
     @State private var isShown = false
-    @State var searchBarText = ""
     @State private var showingActionSheet = false
     @State var activeSheet: ActiveContentViewSheet = .intro
     @State private var presentAlert = false
@@ -29,6 +28,9 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) var context
     @FetchRequest(entity: DirecModel.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \DirecModel.created, ascending: true)], predicate: NSPredicate(format: "name == %@", "DocWind")) var items: FetchedResults<DirecModel>
     
+    // MARK: - ObservedObjects
+    @ObservedObject var searchBar: SearchBar = SearchBar()
+    
     // MARK: - Properties
     var body: some View {
         NavigationView {
@@ -41,11 +43,15 @@ struct ContentView: View {
                                 .padding()
                             } else {
                                 List {
-                                    
                                     Section(header: Text("DocWind >").font(.caption)) {
                                         
-                                        ForEach(0..<self.items.first!.fileArray.count, id: \.self){ index in
-                                            NormalListRowView(itemArray: self.items.first!.fileArray[index], masterFolder: "\(DWFMAppSettings.shared.fileURL())").environment(\.managedObjectContext, self.context)
+                                        ForEach(self.items.first!.fileArray.filter {
+                                            searchBar.text.isEmpty ||
+                                                $0.wrappedItemName.localizedStandardContains(searchBar.text)
+                                        }
+                                        , id: \.self)
+                                        { item in
+                                            NormalListRowView(itemArray: item, masterFolder: "\(DWFMAppSettings.shared.fileURL())").environment(\.managedObjectContext, self.context)
                                         }.onDelete(perform: self.deleteRow(at:))
                                         
                                         
@@ -58,32 +64,25 @@ struct ContentView: View {
                             NewStarterView()
                             .padding()
                         }
-                        
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            Image(systemName: "gear")
-                                .font(.system(size: 20))
-                                .foregroundColor(.blue)
-                                .padding()
-                                .onTapGesture {
-                                    FeedbackManager.mediumFeedback()
-                                    self.settingsTapped()
-                            }
-                        }.background(Color(.secondarySystemBackground))
-                            .edgesIgnoringSafeArea(.bottom)
                     }
                         
                     .navigationBarTitle(Text("docWind"))
                     .navigationViewStyle(StackNavigationViewStyle())
                     .navigationBarItems(leading:
-                        Button(action: toggleSearch) {
-                        Text("")
+                        Button(action: settingsTapped) {
+                            Image(systemName: "gear")
+                            .font(.system(size: 20))
+                            .foregroundColor(.blue)
                         }
-                        ,trailing: Button(action: showOptions){
+                        ,trailing:
+                        Button(action: showOptions){
                             Text("Add")
-                    })
+                        }
+                    )
+                    .add(self.searchBar)
+            
                 }
+            .navigationViewStyle(StackNavigationViewStyle())
             
         // On appear code
         .onAppear {
@@ -137,18 +136,8 @@ struct ContentView: View {
     }
     
     private func createDiectory() {
-        //1. bring up sheet
         self.activeSheet = .createdDirec
         self.isShown.toggle()
-        //2. enter detials
-        //3. reload list
-    }
-    
-    private func toggleSearch() {
-//        withAnimation {
-//            self.toggleSearchIcon.toggle()
-//        }
-//
     }
     
     private func scanDocumentTapped() {
@@ -160,6 +149,7 @@ struct ContentView: View {
     }
     
     private func settingsTapped() {
+        FeedbackManager.mediumFeedback()
         self.activeSheet = .settingsTapped
         self.isShown.toggle()
     }
