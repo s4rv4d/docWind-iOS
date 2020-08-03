@@ -15,7 +15,6 @@
 		4012033A24BDE09C00167917 /* DrawingAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033924BDE09C00167917 /* DrawingAnnotation.swift */; };
 		4012033C24BDE0D700167917 /* NonSelectableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033B24BDE0D700167917 /* NonSelectableView.swift */; };
 		40284BFD24D83745004EE44E /* EditPdfMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40284BFC24D83745004EE44E /* EditPdfMainView.swift */; };
-		40284BFF24D83758004EE44E /* EditPdfGenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40284BFE24D83758004EE44E /* EditPdfGenView.swift */; };
 		402C0B6824B0A29500A5A6C9 /* ListCustomGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */; };
 		402C0B6A24B0A37A00A5A6C9 /* Helper+enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */; };
 		402C0B6C24B0ACD600A5A6C9 /* NormalListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */; };
@@ -112,7 +111,6 @@
 		4012033924BDE09C00167917 /* DrawingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingAnnotation.swift; sourceTree = "<group>"; };
 		4012033B24BDE0D700167917 /* NonSelectableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonSelectableView.swift; sourceTree = "<group>"; };
 		40284BFC24D83745004EE44E /* EditPdfMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPdfMainView.swift; sourceTree = "<group>"; };
-		40284BFE24D83758004EE44E /* EditPdfGenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPdfGenView.swift; sourceTree = "<group>"; };
 		402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCustomGridView.swift; sourceTree = "<group>"; };
 		402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+enums.swift"; sourceTree = "<group>"; };
 		402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalListRowView.swift; sourceTree = "<group>"; };
@@ -227,7 +225,6 @@
 				4010734C24BAD971002AFDD2 /* AddPdfFileGenView.swift */,
 				40DD4F7224C02CDC00D37EFA /* SignaturePageView.swift */,
 				40284BFC24D83745004EE44E /* EditPdfMainView.swift */,
-				40284BFE24D83758004EE44E /* EditPdfGenView.swift */,
 			);
 			path = "Pdf module";
 			sourceTree = "<group>";
@@ -617,7 +614,6 @@
 				402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */,
 				40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */,
 				40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */,
-				40284BFF24D83758004EE44E /* EditPdfGenView.swift in Sources */,
 				4012033824BDE06B00167917 /* DrawingGestureRecogniser.swift in Sources */,
 				407567F424B1FC4A0071B575 /* GeneralDocViewModel.swift in Sources */,
 				4010734D24BAD971002AFDD2 /* AddPdfFileGenView.swift in Sources */,
