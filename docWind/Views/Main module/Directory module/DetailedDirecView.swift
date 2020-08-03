@@ -66,7 +66,7 @@ struct DetailedDirecView: View {
                                 searchBar.text.isEmpty ||
                                     $0.wrappedItemName.localizedStandardContains(searchBar.text)
                             }, id: \.self){ item in
-                                GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl, activeSheet: self.$activeSheet, isShown: self.$isShown).environment(\.managedObjectContext, self.context)
+                                GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
                             }.onDelete(perform: self.deleteRow(at:))
                         }
                     }

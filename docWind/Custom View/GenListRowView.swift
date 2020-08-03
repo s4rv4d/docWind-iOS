@@ -17,10 +17,10 @@ struct GenListRowView: View {
     let masterFolder: String
     var iconNameString: [String: Color] = ["blue":.blue, "red":.red, "green":.green, "yellow":.yellow, "pink":.pink]
     
-    @Binding var activeSheet: ActiveContentViewSheet
-    @Binding var isShown: Bool
     @State private var url = ""
+    @State private var uiImages = [UIImage]()
     @State private var showSheet = false
+    @State private var activeSheet: ActiveSheetForDetails = .shareSheet
     @State private var alertContext: ActiveAlertSheet = .error
     @State private var isDisabled = false
     @State private var showAlert = false
@@ -76,13 +76,18 @@ struct GenListRowView: View {
                         }.foregroundColor(.yellow)
                     }
                 }
-//
-//                Button(action: {}) {
-//                    HStack {
-//                        Image(systemName: "pencil.circle")
-//                        Text("Edit")
-//                    }
-//                }
+                
+                Button(action: {
+                    self.selectedItem = self.itemArray
+                    self.uiImages = self.getImages()
+                    self.activeSheet = .editSheet
+                    self.showSheet.toggle()
+                }) {
+                    HStack {
+                        Image(systemName: "pencil.circle")
+                        Text("Edit")
+                    }
+                }
                 
                 Button(action: {
                     self.isFile = self.itemArray.wrappedItemType == DWPDFFILE ? true : false
@@ -112,7 +117,14 @@ struct GenListRowView: View {
         }
         
         .sheet(isPresented: $showSheet) {
-            ShareSheetView(activityItems: [URL(string: self.url)!])
+            if self.activeSheet == .shareSheet {
+                ShareSheetView(activityItems: [URL(string: self.url)!])
+            } else if self.activeSheet == .editSheet{
+                // open editView
+                if self.uiImages.count != 0 && self.url != "" {
+                    EditPdfMainView(pdfName: self.itemArray.wrappedItemName, selectedIconName: self.itemArray.wrappedIconName, mainPages: self.uiImages, url: self.url)
+                }
+            }
         }
     }
     
@@ -124,6 +136,7 @@ struct GenListRowView: View {
                 let path = dwfe.1
                 if path != "" {
                     url = path
+                    self.activeSheet = .shareSheet
                     self.showSheet.toggle()
                 } else {
                     //error
@@ -207,8 +220,69 @@ struct GenListRowView: View {
         }
     }
     
-    func shareObject() {
+    func getImages() -> [UIImage] {
+        var imgs = [UIImage]()
         
+        if selectedItem != nil {
+            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: "\(selectedItem!.wrappedItemName.replacingOccurrences(of: " ", with: "_")).pdf")
+            if dwfe.0 {
+                let path = dwfe.1
+                if path != "" {
+                    // go url of pdf
+                    url = path
+                    
+                    // now to extract imgs from pdf
+                    if let pdf = CGPDFDocument(URL(string: url)! as CFURL) {
+                        let pageCount = pdf.numberOfPages
+                        
+                        for i in 0 ... pageCount {
+                            autoreleasepool {
+                                guard let page = pdf.page(at: i) else { return }
+                                let pageRect = page.getBoxRect(.mediaBox)
+                                let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+                                let img = renderer.image { ctx in
+                                    UIColor.white.set()
+                                    ctx.fill(pageRect)
+
+                                    ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
+                                    ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
+
+                                    ctx.cgContext.drawPDFPage(page)
+                                }
+                                imgs.append(img)
+                            }
+                        }
+                        
+                        // now check if pageCount == imgs.count
+                        if pageCount == imgs.count {
+                            return imgs
+                        }
+                        
+                    } else {
+                        self.alertContext = .error
+                        self.alertTitle = "Error"
+                        self.alertMessage = "Could'nt get images from pdf :("
+                        self.showAlert.toggle()
+                    }
+                    
+                } else {
+                    //error
+                    self.alertContext = .error
+                    self.alertTitle = "Error"
+                    self.alertMessage = "Could'nt find file :("
+                    self.showAlert.toggle()
+                }
+            } else {
+                //error
+                self.alertContext = .error
+                self.alertTitle = "Error"
+                self.alertMessage = "Could'nt find file :("
+                self.showAlert.toggle()
+            }
+        }
+        
+        
+        return imgs
     }
 }
 

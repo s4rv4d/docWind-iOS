@@ -40,13 +40,16 @@ struct PDFCustomView: UIViewRepresentable {
     
     func updateUIView(_ uiView: PDFView, context: UIViewRepresentableContext<PDFCustomView>) {
         
+        // assignig pdfDrawer
         pdfDrawer.pdfView = uiView
         
+        // setting pdfThumbnailView
         pdfThumbnailView.pdfView = uiView
         pdfThumbnailView.layoutMode = .horizontal
         pdfThumbnailView.thumbnailSize = CGSize(width: 60, height: 60)
         pdfThumbnailView.backgroundColor = .clear
         
+        // saving happens here
         if saveTapped {
             print(uiView.currentPage!.annotations)
             print(uiView)
@@ -57,6 +60,7 @@ struct PDFCustomView: UIViewRepresentable {
             uiView.removeGestureRecognizer(recog)
         }
         
+        // removing and reapplying thumbnails to prevents duplicates
         for view in uiView.subviews {
             if view.isKind(of: PDFThumbnailView.self) {
                 view.removeFromSuperview()

@@ -100,6 +100,7 @@ struct SnapCarouselView: View {
         print("delete tapped")
         // get current photo using UIState and remove from all arrays
         let currentPhotoIndex = UIState.activeCard
+        UIState.activeCard = (UIState.activeCard != 0) ? UIState.activeCard - 1 : 0
         self.mainImages.remove(at: currentPhotoIndex)
         self.imagesState.remove(at: currentPhotoIndex)
     }

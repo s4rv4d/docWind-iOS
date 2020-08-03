@@ -34,56 +34,47 @@ struct ContentView: View {
     // MARK: - Properties
     var body: some View {
         NavigationView {
-                    VStack(alignment: .leading) {
-                        //check if contents isnt empty
-                        if items.first != nil {
-                            // display contents of file
-                            if (items.first!.fileArray.count == 0) {
-                                 NewStarterView()
-                                .padding()
-                            } else {
-                                List {
-                                    Section(header: Text("DocWind >").font(.caption)) {
-                                        
-                                        ForEach(self.items.first!.fileArray.filter {
-                                            searchBar.text.isEmpty ||
-                                                $0.wrappedItemName.localizedStandardContains(searchBar.text)
-                                        }
-                                        , id: \.self)
-                                        { item in
-                                            NormalListRowView(itemArray: item, masterFolder: "\(DWFMAppSettings.shared.fileURL())").environment(\.managedObjectContext, self.context)
-                                        }.onDelete(perform: self.deleteRow(at:))
-                                        
-                                        
-                                    }
-                                    
-                                }
-                                .listStyle(GroupedListStyle())
+            VStack(alignment: .leading) {
+                //check if contents isnt empty
+                if items.first != nil {
+                    // display contents of file
+                    if (items.first!.fileArray.count == 0) {
+                         NewStarterView()
+                        .padding()
+                    } else {
+                        List {
+                            Section(header: Text("DocWind >").font(.caption)) {
+                                ForEach(self.items.first!.fileArray.filter { searchBar.text.isEmpty || $0.wrappedItemName.localizedStandardContains(searchBar.text)}, id: \.self) { item in
+                                    NormalListRowView(itemArray: item, masterFolder: "\(DWFMAppSettings.shared.fileURL())").environment(\.managedObjectContext, self.context)
+                                }.onDelete(perform: self.deleteRow(at:))
                             }
-                        } else {
-                            NewStarterView()
-                            .padding()
                         }
+                        .listStyle(GroupedListStyle())
                     }
-                        
-                    .navigationBarTitle(Text("docWind"))
-                    .navigationViewStyle(StackNavigationViewStyle())
-                    .navigationBarItems(leading:
-                        Button(action: settingsTapped) {
-                            Image(systemName: "gear")
-                            .font(.system(size: 20))
-                            .foregroundColor(.blue)
-                        }
-                        ,trailing:
-                        Button(action: showOptions){
-                            Text("Add")
-                        }
-                    )
-                    .add(self.searchBar)
-            
+                } else {
+                    NewStarterView()
+                    .padding()
                 }
+            }
+                
+            .navigationBarTitle(Text("docWind"))
             .navigationViewStyle(StackNavigationViewStyle())
-            
+            .navigationBarItems(leading:
+                Button(action: settingsTapped) {
+                    Image(systemName: "gear")
+                    .font(.system(size: 20))
+                    .foregroundColor(.blue)
+                }
+                ,trailing:
+                Button(action: showOptions){
+                    Text("Add")
+                }
+            )
+            .add(self.searchBar)
+    
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+                
         // On appear code
         .onAppear {
             IAPService.shared.getProducts()
