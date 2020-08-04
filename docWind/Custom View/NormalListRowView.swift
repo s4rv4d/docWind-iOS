@@ -186,7 +186,7 @@ struct NormalListRowView: View {
         if isFile {
             // deleting file
             if selectedItem != nil {
-                if DWFMAppSettings.shared.deleteSavedPdf(direcName: self.masterFolder, fileName: "\(selectedItem!.wrappedItemName).pdf") {
+                if DWFMAppSettings.shared.deleteSavedPdf(direcName: self.masterFolder, fileName: selectedItem!.wrappedItemUrl) {
                     print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
                     ItemModel.deleteObject(in: context, sub: self.selectedItem!)
                 } else {

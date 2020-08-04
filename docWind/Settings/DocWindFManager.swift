@@ -34,17 +34,12 @@ extension DocWindFManager {
     func reset() {
         do {
             try FileManager.default.removeItem(atPath: containerUrl!.path)
-//            try FileManager.default.evictUbiquitousItem(at: containerUrl!)
         } catch {
             print(error.localizedDescription)
         }
     }
     
     func fileURL() -> URL {
-//        let direcURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-//        print("MAIN ---->",FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-//        return direcURL.appendingPathComponent("DocWind", isDirectory: true)
-        
         return (FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("DocWind"))!
     }
     
@@ -255,11 +250,11 @@ extension DocWindFManager {
             do {
                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
                 print(contents)
-                print(fileName)
+//                print(fileName)
                 for url in contents {
                     print(url)
                     
-                    if url.description.contains("/\(fileName.replacingOccurrences(of: " ", with: "_"))/") {
+                    if url.description.contains(fileName) {
                         try FileManager.default.removeItem(at: url)
                         print("SUCCESSFULLY DELETED folder ✅")
                         status = true
@@ -310,7 +305,7 @@ extension DocWindFManager {
                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
                 print(contents)
                 for url in contents {
-                    if url.description.contains("\(fileName.replacingOccurrences(of: " ", with: "_"))") {
+                    if url.description.contains(fileName) {
                         try FileManager.default.removeItem(at: url)
                         print("SUCCESSFULLY DELETED FILE ✅")
                         status = true

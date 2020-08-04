@@ -92,6 +92,8 @@ struct ContentView: View {
                 AddPdfMainView().environment(\.managedObjectContext, self.context)
             } else if self.activeSheet == .settingsTapped {
                 SettingsView()
+            } else if self.activeSheet == .importDoc {
+                DocumentPickerView(headPath: "\(DWFMAppSettings.shared.fileURL())", headName: "DocWind").environment(\.managedObjectContext, self.context)
             }
         }
         
@@ -100,6 +102,7 @@ struct ContentView: View {
             ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
                 .default(Text("Scan a document"), action: scanDocumentTapped),
                 .default(Text("Create a new directory"), action: createDiectory),
+                .default(Text("Import a document"), action: importTapped),
                 .cancel()
             ])
         }
@@ -131,6 +134,12 @@ struct ContentView: View {
         self.isShown.toggle()
     }
     
+    private func importTapped() {
+        print("import tapped")
+        self.activeSheet = .importDoc
+        self.isShown.toggle()
+    }
+    
     private func scanDocumentTapped() {
         print("❇️ SCAN DOC TAPPED")
         //bring uo editing page
@@ -151,7 +160,7 @@ struct ContentView: View {
         
         
         if item.itemType == DWDIRECTORY {
-            if DWFMAppSettings.shared.deleteSavedFolder(dirname: "\(DWFMAppSettings.shared.fileURL())", fileName: item.wrappedItemName) {
+            if DWFMAppSettings.shared.deleteSavedFolder(dirname: "\(DWFMAppSettings.shared.fileURL())", fileName: item.wrappedItemUrl) {
                 print("SUCCESSFULLY DELETED FROM iCloud container ✅")
                 
                 // delete from direcmodel
@@ -175,7 +184,7 @@ struct ContentView: View {
                 self.showAlert.toggle()
             }
         } else {
-            if DWFMAppSettings.shared.deleteSavedPdf(direcName: "\(DWFMAppSettings.shared.fileURL())", fileName: "\(item.wrappedItemName).pdf") {
+            if DWFMAppSettings.shared.deleteSavedPdf(direcName: "\(DWFMAppSettings.shared.fileURL())", fileName: item.wrappedItemUrl) {
                 print("SUCCESSFULLY DELETED FROM iCloud container ✅")
                 
                 ItemModel.deleteObject(in: context, sub: item)

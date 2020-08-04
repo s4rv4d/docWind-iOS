@@ -10,7 +10,7 @@ import Foundation
 
 //MARK: - Main protocol
 protocol SettingsManageable {
-    func settingsURL() -> URL
+    func settingsURL() -> URL?
     func update() -> Bool
     mutating func load() -> Bool
     mutating func loadUsingSettingsFile() -> Bool
@@ -23,9 +23,9 @@ protocol SettingsManageable {
 //MARK: - Extension
 extension SettingsManageable where Self: Codable {
     
-    func settingsURL() -> URL {
-        let cacheDirectory = FileManager.default.url(forUbiquityContainerIdentifier: nil)
-        return cacheDirectory!.appendingPathComponent("DocWind").appendingPathComponent("\(Self.self).plist")
+    func settingsURL() -> URL? {
+        guard let cacheDirectory = FileManager.default.url(forUbiquityContainerIdentifier: nil) else { return nil }
+        return cacheDirectory.appendingPathComponent("DocWind").appendingPathComponent("\(Self.self).plist")
 //        let cacheDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
 //        return cacheDirectory.appendingPathComponent("\(Self.self).plist")
     }
@@ -33,7 +33,7 @@ extension SettingsManageable where Self: Codable {
     func update() -> Bool {
         do {
             let encoded = try PropertyListEncoder().encode(self)
-            try encoded.write(to: settingsURL())
+            try encoded.write(to: settingsURL()!)
             return true
         } catch {
             print(error.localizedDescription)
@@ -42,9 +42,9 @@ extension SettingsManageable where Self: Codable {
     }
     
     mutating func load() -> Bool {
-        if FileManager.default.fileExists(atPath: settingsURL().path) {
+        if FileManager.default.fileExists(atPath: settingsURL()!.path) {
             do {
-                let fileContents = try Data(contentsOf: settingsURL())
+                let fileContents = try Data(contentsOf: settingsURL()!)
                 self = try PropertyListDecoder().decode(Self.self, from: fileContents)
                 return true
             } catch {
@@ -65,11 +65,11 @@ extension SettingsManageable where Self: Codable {
         guard let originalSettingsURL = Bundle.main.url(forResource: "\(Self.self)", withExtension: "plist") else { return false }
         
         do {
-            if !FileManager.default.fileExists(atPath: settingsURL().path) {
-                try FileManager.default.copyItem(at: originalSettingsURL, to: settingsURL())
+            if !FileManager.default.fileExists(atPath: settingsURL()!.path) {
+                try FileManager.default.copyItem(at: originalSettingsURL, to: settingsURL()!)
             }
             
-            let fileContents = try Data(contentsOf: settingsURL())
+            let fileContents = try Data(contentsOf: settingsURL()!)
             self = try PropertyListDecoder().decode(Self.self, from: fileContents)
             return true
         } catch {
@@ -80,7 +80,7 @@ extension SettingsManageable where Self: Codable {
     
     func delete() -> Bool {
         do {
-            try FileManager.default.removeItem(at: settingsURL())
+            try FileManager.default.removeItem(at: settingsURL()!)
             return true
         } catch {
             print(error.localizedDescription)
@@ -91,7 +91,7 @@ extension SettingsManageable where Self: Codable {
     //private file dont need to be declared in the protocol
     private func backupSettingsFile() {
         do {
-            try FileManager.default.copyItem(at: settingsURL(), to: settingsURL().appendingPathComponent("init"))
+            try FileManager.default.copyItem(at: settingsURL()!, to: settingsURL()!.appendingPathComponent("init"))
         } catch {
             
         }
@@ -99,7 +99,7 @@ extension SettingsManageable where Self: Codable {
     
     private func restoreSettingsFile() -> Bool{
         do {
-            try FileManager.default.copyItem(at: settingsURL().appendingPathComponent("init"), to: settingsURL())
+            try FileManager.default.copyItem(at: settingsURL()!.appendingPathComponent("init"), to: settingsURL()!)
             return true
         } catch {
             print(error.localizedDescription)
@@ -122,8 +122,8 @@ extension SettingsManageable where Self: Codable {
     
     func toDictionary() -> [String: Any?]? {
         do {
-            if FileManager.default.fileExists(atPath: settingsURL().path) {
-                let fileContents = try Data(contentsOf: settingsURL())
+            if FileManager.default.fileExists(atPath: settingsURL()!.path) {
+                let fileContents = try Data(contentsOf: settingsURL()!)
                 let dictionary = try PropertyListSerialization.propertyList(from: fileContents, options: .mutableContainersAndLeaves, format: nil) as? [String: Any?]
                 return dictionary
             }

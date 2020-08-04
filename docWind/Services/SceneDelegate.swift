@@ -23,33 +23,58 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Get the managed object context from the shared persistent container.
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        _ = AppSettings.shared.load()
-        
-        // to check if app is deleted or fresh start
-        let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
-        fetchRequest.predicate = NSPredicate(format: "name == %@", "DocWind")
-        
-        do {
-            let content = try context.fetch(fetchRequest)
-            if let _ = content.first{
-                print("data is present no need of resetting")
-            } else {
-                // reset
+        if AppSettings.shared.settingsURL() != nil {
+            _ = AppSettings.shared.load()
+            
+            // to check if app is deleted or fresh start
+            let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
+            fetchRequest.predicate = NSPredicate(format: "name == %@", "DocWind")
+            
+            do {
+                let content = try context.fetch(fetchRequest)
+                if let _ = content.first{
+                    print("data is present no need of resetting")
+                } else {
+                    // reset
+                    print("NO DOCWIND dorec so reset")
+                    DWFMAppSettings.shared.reset()
+
+                    AppSettings.shared.firstLoginDone = false
+                    _ = AppSettings.shared.update()
+                }
+                
+            } catch {
                 print("NO DOCWIND dorec so reset")
+                print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
+                // do reset
                 DWFMAppSettings.shared.reset()
 
                 AppSettings.shared.firstLoginDone = false
                 _ = AppSettings.shared.update()
             }
             
-        } catch {
-            print("NO DOCWIND dorec so reset")
-            print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
-            // do reset
-            DWFMAppSettings.shared.reset()
+            
+            let contentView = ContentView().environment(\.managedObjectContext, context)
+                
 
-            AppSettings.shared.firstLoginDone = false
-            _ = AppSettings.shared.update()
+            // Use a UIHostingController as window root view controller.
+            if let windowScene = scene as? UIWindowScene {
+                let window = UIWindow(windowScene: windowScene)
+                window.rootViewController = UIHostingController(rootView: contentView)
+                self.window = window
+                window.makeKeyAndVisible()
+            }
+            
+        } else {
+            print("NIL")
+            let errorView = ErrorView()
+            // Use a UIHostingController as window root view controller.
+            if let windowScene = scene as? UIWindowScene {
+                let window = UIWindow(windowScene: windowScene)
+                window.rootViewController = UIHostingController(rootView: errorView)
+                self.window = window
+                window.makeKeyAndVisible()
+            }
         }
         
 //
@@ -60,16 +85,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-        let contentView = ContentView().environment(\.managedObjectContext, context)
-            
-
-        // Use a UIHostingController as window root view controller.
-        if let windowScene = scene as? UIWindowScene {
-            let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: contentView)
-            self.window = window
-            window.makeKeyAndVisible()
-        }
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

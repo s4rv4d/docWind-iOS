@@ -17,7 +17,7 @@ enum DWItemType: String {
 
 // Enum for activesheet
 enum ActiveContentViewSheet {
-    case intro, tappedDirec, tappedPdf, createdDirec, createPdf, settingsTapped, editPdf
+    case intro, tappedDirec, tappedPdf, createdDirec, createPdf, settingsTapped, editPdf, importDoc
 }
 
 enum ActiveSheetForDetails {
