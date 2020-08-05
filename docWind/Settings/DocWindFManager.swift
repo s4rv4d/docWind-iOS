@@ -53,7 +53,8 @@ extension DocWindFManager {
         print("Pdf name to save: -------> \(pdfName)")
         let pdfData = pdfData
         
-        let actualSavingFilePath = direcPath.appendingPathComponent(pdfName, isDirectory: false)
+        
+        let actualSavingFilePath = direcPath.appendingPathComponent((pdfName.removingPercentEncoding != nil) ? pdfName.removingPercentEncoding! : pdfName, isDirectory: false)
         print("Actiual saved path --------> \(actualSavingFilePath)")
         // before saving check if filename already exists
         if self.pdfFileAlreadySaved(direcName: "\(direcPath)", fileName: pdfName) {
@@ -66,7 +67,10 @@ extension DocWindFManager {
             do {
                 try pdfData.write(to: actualSavingFilePath, options: .atomic)
                 print("✅ SAVED PDF SUCCESSFULLY")
+                print(actualSavingFilePath)
                 path = "\(actualSavingFilePath)"
+                print(path)
+                
                 status = true
             } catch {
                 print("❌ PDF COULD'NT BE SAVED ")
@@ -355,7 +359,7 @@ extension DocWindFManager {
                  let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
                 print(contents)
                     for url in contents {
-                        if url.description.contains("\(fileName)") {
+                        if url.description.contains(fileName) {
                             status = true
                             path = "\(url.description)"
                             print("✅ FOUND PDF SUCCESSFULLY \(url.description)")
@@ -400,11 +404,12 @@ extension DocWindFManager {
             let direcPath = URL(string: direcName!)!
 //            let resourcePath = self.containerUrl!
             print("File Manager Path: ------> \(direcPath)")
-            
+            print(fileName)
             do {
                 let contents = try FileManager.default.contentsOfDirectory(at: direcPath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+                print(contents)
                 for url in contents {
-                    if url.description.contains("\(fileName)") {
+                    if url.description.contains(fileName) {
                         status = true
                         print("✅ FOUND PDF SUCCESSFULLY, ALREADY SAVED")
                     }
@@ -424,7 +429,7 @@ extension DocWindFManager {
             do {
                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
                 for url in contents {
-                    if url.description.contains("\(fileName)") {
+                    if url.description.contains(fileName) {
                         status = true
                         print("✅ FOUND PDF SUCCESSFULLY, ALREADY SAVED")
                     }

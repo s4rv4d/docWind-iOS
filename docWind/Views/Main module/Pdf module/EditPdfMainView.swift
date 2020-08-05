@@ -207,8 +207,6 @@ struct EditPdfMainView: View {
     
     private func deleteFile() {
         FeedbackManager.mediumFeedback()
-//        self.activeAlertSheet = .delete
-//        self.showAlert.toggle()
         self.presentationMode.wrappedValue.dismiss()
     }
 }

@@ -31,7 +31,7 @@ enum PDFDetailActiveView {
 
 // enum for active sheet #2
 enum ActiveOdfMainViewSheet {
-    case scannerView, pdfView
+    case scannerView, pdfView, photoLibrary
 }
 
 // enum for alert sheet

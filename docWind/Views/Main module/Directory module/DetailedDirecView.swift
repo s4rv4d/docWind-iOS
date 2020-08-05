@@ -91,6 +91,8 @@ struct DetailedDirecView: View {
                 AddDocGeneView(path: self.masterDirecName, headName: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
             } else if self.activeSheet == .createPdf {
                 AddPdfFileGenView(headPath: self.item.wrappedItemUrl, headName: self.masterDirecName).environment(\.managedObjectContext, self.context)
+            } else if self.activeSheet == .importDoc {
+                DocumentPickerView(headPath: self.item.wrappedItemUrl, headName: self.masterDirecName, alertState: self.$showAlert, alertMessage: self.$alertMessage).environment(\.managedObjectContext, self.context)
             }
         }
             
@@ -109,8 +111,9 @@ struct DetailedDirecView: View {
         // action sheet code
        .actionSheet(isPresented: $showingActionSheet) {
            ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
-               .default(Text("Scan a document"), action: createFile),
+               .default(Text("Create a new document"), action: createFile),
                .default(Text("Create a new directory"), action: createDiectory),
+               .default(Text("Import a document"), action: importTapped),
                .cancel()
            ])
        }
@@ -147,12 +150,17 @@ struct DetailedDirecView: View {
         }
     }
     
+    private func importTapped() {
+        self.activeSheet = .importDoc
+        self.isShown.toggle()
+    }
+    
     private func deleteRow(at indexSet: IndexSet) {
         guard let indexToDelete = indexSet.first else { return }
         let item = self.items.first!.fileArray[indexToDelete]
         print(item.wrappedItemUrl)
         if item.itemType == DWDIRECTORY {
-            if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.item.wrappedItemUrl, fileName: item.wrappedItemName) {
+            if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.item.wrappedItemUrl, fileName: item.wrappedItemUrl) {
                 print("SUCCESSFULLY DELETED FROM iCloud container ✅")
                 
                 // delete from direcmodel
@@ -177,7 +185,7 @@ struct DetailedDirecView: View {
             }
         } else {
             
-            if DWFMAppSettings.shared.deleteSavedPdf(direcName: self.item.wrappedItemUrl, fileName: "\(item.wrappedItemName).pdf") {
+            if DWFMAppSettings.shared.deleteSavedPdf(direcName: self.item.wrappedItemUrl, fileName: item.wrappedItemUrl) {
                 print("SUCCESSFULLY DELETED FROM iCloud container ✅")
                 
                 ItemModel.deleteObject(in: context, sub: item)

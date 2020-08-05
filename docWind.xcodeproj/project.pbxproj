@@ -14,6 +14,7 @@
 		4012033824BDE06B00167917 /* DrawingGestureRecogniser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033724BDE06B00167917 /* DrawingGestureRecogniser.swift */; };
 		4012033A24BDE09C00167917 /* DrawingAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033924BDE09C00167917 /* DrawingAnnotation.swift */; };
 		4012033C24BDE0D700167917 /* NonSelectableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033B24BDE0D700167917 /* NonSelectableView.swift */; };
+		402333EE24DA9248007FE8C6 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402333ED24DA9247007FE8C6 /* ImagePickerView.swift */; };
 		40284BFD24D83745004EE44E /* EditPdfMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40284BFC24D83745004EE44E /* EditPdfMainView.swift */; };
 		402C0B6824B0A29500A5A6C9 /* ListCustomGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */; };
 		402C0B6A24B0A37A00A5A6C9 /* Helper+enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */; };
@@ -112,6 +113,7 @@
 		4012033724BDE06B00167917 /* DrawingGestureRecogniser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingGestureRecogniser.swift; sourceTree = "<group>"; };
 		4012033924BDE09C00167917 /* DrawingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingAnnotation.swift; sourceTree = "<group>"; };
 		4012033B24BDE0D700167917 /* NonSelectableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonSelectableView.swift; sourceTree = "<group>"; };
+		402333ED24DA9247007FE8C6 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		40284BFC24D83745004EE44E /* EditPdfMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPdfMainView.swift; sourceTree = "<group>"; };
 		402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCustomGridView.swift; sourceTree = "<group>"; };
 		402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+enums.swift"; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 				4069EF9E24D69AAF003083C6 /* ViewControllerResolver.swift */,
 				4069EFA024D69D4C003083C6 /* CustomSearchBar.swift */,
 				40CFB04C24D9794100955957 /* DocumentPickerView.swift */,
+				402333ED24DA9247007FE8C6 /* ImagePickerView.swift */,
 			);
 			path = "Custom View";
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 				40920EB224B74E7800E2293C /* SlideOverCardView.swift in Sources */,
 				40FDE48124AB964B006AAFD2 /* docWind.xcdatamodeld in Sources */,
 				40485D8C24B995E7008A137A /* BlurView.swift in Sources */,
+				402333EE24DA9248007FE8C6 /* ImagePickerView.swift in Sources */,
 				402C0B6A24B0A37A00A5A6C9 /* Helper+enums.swift in Sources */,
 				406E9AF624B5E798000FB8FD /* CarouselCardModel.swift in Sources */,
 				40FDE49524AC4C3D006AAFD2 /* IntroView.swift in Sources */,

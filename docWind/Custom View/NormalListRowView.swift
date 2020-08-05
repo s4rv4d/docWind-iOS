@@ -40,7 +40,7 @@ struct NormalListRowView: View {
                     if self.itemArray.wrappedItemType == DWPDFFILE {
                         DetailPdfView(item: self.itemArray, master: self.masterFolder)
                     } else {
-                        DetailedDirecView(dirName: self.itemArray.wrappedItemName, pathName: self.masterFolder, item: self.itemArray).environment(\.managedObjectContext, self.context).debugPrint(self.itemArray.wrappedItemName)
+                        DetailedDirecView(dirName: self.itemArray.wrappedItemName, pathName: self.masterFolder, item: self.itemArray).environment(\.managedObjectContext, self.context)
                     }
 
             }.debugPrint(self.masterFolder)
@@ -124,7 +124,6 @@ struct NormalListRowView: View {
             if self.activeSheet == .shareSheet {
                 ShareSheetView(activityItems: [URL(string: self.url)!])
             } else if self.activeSheet == .editSheet{
-                // open editView
                 if self.uiImages.count != 0 && self.url != "" {
                     EditPdfMainView(pdfName: self.itemArray.wrappedItemName, selectedIconName: self.itemArray.wrappedIconName, mainPages: self.uiImages, url: self.url)
                 }
@@ -135,7 +134,7 @@ struct NormalListRowView: View {
     // MARK: - Functions
     func getUrl() {
         if selectedItem != nil {
-            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: "\(selectedItem!.wrappedItemName.replacingOccurrences(of: " ", with: "_")).pdf")
+            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: selectedItem!.wrappedItemUrl)
             if dwfe.0 {
                 let path = dwfe.1
                 if path != "" {
@@ -158,29 +157,6 @@ struct NormalListRowView: View {
             }
         }
     }
-
-    func authenticateView(status: @escaping(Bool) -> Void) {
-        let context = LAContext()
-        var error: NSError?
-        
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "Unlock app"
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { (success, authError) in
-                DispatchQueue.main.async {
-                    if success {
-                        // allow access
-                        status(true)
-                    } else {
-//                        self.authenticateView()
-                        status(false)
-                    }
-                }
-            }
-        } else {
-            //show error
-            self.showAlert.toggle()
-        }
-    }
     
     func deleteObject() {
         if isFile {
@@ -199,7 +175,7 @@ struct NormalListRowView: View {
             // deleting directory
             print("deleting direc")
             if selectedItem != nil {
-                if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.masterFolder, fileName: selectedItem!.wrappedItemName) {
+                if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.masterFolder, fileName: selectedItem!.wrappedItemUrl) {
                     print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
                     // delete from direcmodel
                     let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
@@ -230,7 +206,7 @@ struct NormalListRowView: View {
         var imgs = [UIImage]()
         
         if selectedItem != nil {
-            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: "\(selectedItem!.wrappedItemName.replacingOccurrences(of: " ", with: "_")).pdf")
+            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: selectedItem!.wrappedItemUrl)
             if dwfe.0 {
                 let path = dwfe.1
                 if path != "" {
@@ -286,8 +262,6 @@ struct NormalListRowView: View {
                 self.showAlert.toggle()
             }
         }
-        
-        
         return imgs
     }
 }

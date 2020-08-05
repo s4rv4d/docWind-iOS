@@ -18,7 +18,7 @@ struct DetailPdfView: View, Equatable {
      var item: ItemModel
     @State var url: String = ""
      var master: String = ""
-    @State private var alertTitle = ""
+    @State private var alertTitle = "Error"
     @State private var alertMessage = ""
     @State private var showAlert = false
     @State private var activeAlertContext: ActiveAlertSheet = .error

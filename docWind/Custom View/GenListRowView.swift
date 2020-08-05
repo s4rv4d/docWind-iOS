@@ -131,7 +131,7 @@ struct GenListRowView: View {
     // MARK: - Functions
     func getUrl() {
         if selectedItem != nil {
-            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: "\(selectedItem!.wrappedItemName.replacingOccurrences(of: " ", with: "_")).pdf")
+            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: selectedItem!.wrappedItemUrl)
             if dwfe.0 {
                 let path = dwfe.1
                 if path != "" {
@@ -182,7 +182,7 @@ struct GenListRowView: View {
         if isFile {
             // deleting file
             if selectedItem != nil {
-                if DWFMAppSettings.shared.deleteSavedPdf(direcName: self.masterFolder, fileName: "\(selectedItem!.wrappedItemName).pdf") {
+                if DWFMAppSettings.shared.deleteSavedPdf(direcName: self.masterFolder, fileName: selectedItem!.wrappedItemUrl) {
                     print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
                     // now remove from coredata
                     ItemModel.deleteObject(in: context, sub: self.selectedItem!)
@@ -195,7 +195,7 @@ struct GenListRowView: View {
             }
         } else {
             // deleting directory
-            if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.masterFolder, fileName: selectedItem!.wrappedItemName) {
+            if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.masterFolder, fileName: selectedItem!.wrappedItemUrl) {
                 print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
                 // delete from direcmodel
                 let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
@@ -224,7 +224,7 @@ struct GenListRowView: View {
         var imgs = [UIImage]()
         
         if selectedItem != nil {
-            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: "\(selectedItem!.wrappedItemName.replacingOccurrences(of: " ", with: "_")).pdf")
+            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: selectedItem!.wrappedItemUrl)
             if dwfe.0 {
                 let path = dwfe.1
                 if path != "" {

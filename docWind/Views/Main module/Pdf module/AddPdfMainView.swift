@@ -18,6 +18,7 @@ struct AddPdfMainView: View {
     @State private var alertMessage = ""
     @State private var showAlert = false
     @State private var showScanner = false
+    @State private var showingActionSheet = false
     
     @State var mainPages: [UIImage] = [UIImage]()
     @State var pages: [UIImage] = [UIImage]()
@@ -154,12 +155,22 @@ struct AddPdfMainView: View {
         }
         .sheet(isPresented: $showScanner) {
             if self.activeSheet == .scannerView {
-//                print(self.$pagesWithMark)
                 ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
             } else if self.activeSheet == .pdfView {
                 SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
+            } else if self.activeSheet == .photoLibrary {
+                
             }
         }
+        
+        .actionSheet(isPresented: $showingActionSheet) {
+            ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
+                .default(Text("Scan a document"), action: scanTapped),
+                .default(Text("Choose an image"), action: addImagesTapped),
+                .cancel()
+            ])
+        }
+        
     }
     
     // MARK: - Functions
@@ -218,7 +229,16 @@ struct AddPdfMainView: View {
     }
     
     private func addPagesTapped() {
+        self.showingActionSheet.toggle()
+    }
+    
+    private func scanTapped() {
         self.activeSheet = .scannerView
+        self.showScanner.toggle()
+    }
+    
+    private func addImagesTapped() {
+        self.activeSheet = .photoLibrary
         self.showScanner.toggle()
     }
     

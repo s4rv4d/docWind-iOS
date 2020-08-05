@@ -16,11 +16,13 @@ struct DocumentPickerView: UIViewControllerRepresentable {
     // MARK: - View modifiers
     @State var headPath: String
     @State var headName: String
+    @Binding var alertState: Bool
+    @Binding var alertMessage: String
     @Environment(\.managedObjectContext) var context
     
     // MARK: - UIViewControllerRepresentable functions
     func makeCoordinator() -> Coordinator {
-        return Coordinator(parent: self, headPath: headPath, headName: headName, context: context)
+        return Coordinator(parent: self, headPath: headPath, headName: headName, context: context, alertState: $alertState, alertMessage: $alertMessage)
     }
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<DocumentPickerView>) -> UIDocumentPickerViewController {
@@ -40,12 +42,16 @@ struct DocumentPickerView: UIViewControllerRepresentable {
         var headPath: String
         var headName: String
         var context: NSManagedObjectContext
+        var alertState: Binding<Bool>
+        var alertMessage: Binding<String>
         
-        init(parent: DocumentPickerView, headPath: String, headName: String, context: NSManagedObjectContext) {
+        init(parent: DocumentPickerView, headPath: String, headName: String, context: NSManagedObjectContext, alertState: Binding<Bool>, alertMessage: Binding<String>) {
             self.parent = parent
             self.headPath = headPath
             self.headName = headName
             self.context = context
+            self.alertState = alertState
+            self.alertMessage = alertMessage
         }
         
         // MARK: - Delegate functions
@@ -69,7 +75,6 @@ struct DocumentPickerView: UIViewControllerRepresentable {
             guard let pdfDocument = PDFDocument(url: fileUrl) else { fatalError("could not open") }
             // get raw data from pdf to store
             guard let rawData = pdfDocument.dataRepresentation() else { return }
-            
             // save to ubiquitous container first
             let finalName = fileName
             let finalCheck = DWFMAppSettings.shared.savePdfWithSubFolder(pdfData: rawData, pdfName: finalName, subDir: self.headPath)
@@ -80,13 +85,18 @@ struct DocumentPickerView: UIViewControllerRepresentable {
 
                 if path != "" {
                     print("✅ SUCCESSFULLY SAVED FILE IN \(headPath)")
-                    self.addItem(itemName: finalName, itemType: DWPDFFILE, filePath: path)
+                    
+                    self.addItem(itemName: finalName.replacingOccurrences(of: ".pdf", with: ""), itemType: DWPDFFILE, filePath: path)
                     
                 } else {
                     // alert
+                    self.alertMessage.wrappedValue = "File name already exists chose a new"
+                    self.alertState.wrappedValue.toggle()
                 }
             } else {
                 // alert
+                self.alertMessage.wrappedValue = "File name already exists chose a new"
+                self.alertState.wrappedValue.toggle()
             }
             
         }
@@ -121,6 +131,8 @@ struct DocumentPickerView: UIViewControllerRepresentable {
                        print("✅ created and saved \(itemName) to coredata")
                    } catch {
                        print("❌ FAILED TO UPDATE COREDATA")
+                    self.alertMessage.wrappedValue = "Error saving file :("
+                    self.alertState.wrappedValue.toggle()
                    }
                     
                 } else {

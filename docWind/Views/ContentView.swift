@@ -20,7 +20,7 @@ struct ContentView: View {
     @State private var item: ItemModel? = nil
     @State var changed = false
     @State private var alertMessage = ""
-    @State private var alertTitle = ""
+    @State private var alertTitle = "Error"
     @State private var alertContext: ActiveAlertSheet = .error
     @State private var showAlert = false
     
@@ -93,14 +93,14 @@ struct ContentView: View {
             } else if self.activeSheet == .settingsTapped {
                 SettingsView()
             } else if self.activeSheet == .importDoc {
-                DocumentPickerView(headPath: "\(DWFMAppSettings.shared.fileURL())", headName: "DocWind").environment(\.managedObjectContext, self.context)
+                DocumentPickerView(headPath: "\(DWFMAppSettings.shared.fileURL())", headName: "DocWind", alertState: self.$showAlert, alertMessage: self.$alertMessage).environment(\.managedObjectContext, self.context)
             }
         }
         
         // action sheet code
         .actionSheet(isPresented: $showingActionSheet) {
             ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
-                .default(Text("Scan a document"), action: scanDocumentTapped),
+                .default(Text("Create a new document"), action: scanDocumentTapped),
                 .default(Text("Create a new directory"), action: createDiectory),
                 .default(Text("Import a document"), action: importTapped),
                 .cancel()
@@ -135,7 +135,6 @@ struct ContentView: View {
     }
     
     private func importTapped() {
-        print("import tapped")
         self.activeSheet = .importDoc
         self.isShown.toggle()
     }
