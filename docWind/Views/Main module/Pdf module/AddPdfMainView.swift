@@ -159,7 +159,7 @@ struct AddPdfMainView: View {
             } else if self.activeSheet == .pdfView {
                 SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
             } else if self.activeSheet == .photoLibrary {
-                
+                ImagePickerView(pages: self.$pages, pagesWithMark: self.$pagesWithMark)
             }
         }
         
