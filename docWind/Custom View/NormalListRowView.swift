@@ -78,17 +78,17 @@ struct NormalListRowView: View {
                             Text("Share")
                         }.foregroundColor(.yellow)
                     }
-                }
-                
-                Button(action: {
-                    self.selectedItem = self.itemArray
-                    self.uiImages = self.getImages()
-                    self.activeSheet = .editSheet
-                    self.showSheet.toggle()
-                }) {
-                    HStack {
-                        Image(systemName: "pencil.circle")
-                        Text("Edit")
+                    
+                    Button(action: {
+                        self.selectedItem = self.itemArray
+                        self.uiImages = self.getImages()
+                        self.activeSheet = .editSheet
+                        self.showSheet.toggle()
+                    }) {
+                        HStack {
+                            Image(systemName: "pencil.circle")
+                            Text("Edit")
+                        }
                     }
                 }
                 

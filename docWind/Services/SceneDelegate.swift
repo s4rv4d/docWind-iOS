@@ -110,6 +110,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to undo the changes made on entering the background.
         if AppSettings.shared.phoneSec {
             authenticateViewGlobal()
+        } else{
+            print("false")
         }
     }
 

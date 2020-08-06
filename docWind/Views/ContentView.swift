@@ -34,26 +34,39 @@ struct ContentView: View {
     // MARK: - Properties
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading) {
-                //check if contents isnt empty
-                if items.first != nil {
-                    // display contents of file
-                    if (items.first!.fileArray.count == 0) {
-                         NewStarterView()
-                        .padding()
-                    } else {
-                        List {
-                            Section(header: Text("DocWind >").font(.caption)) {
-                                ForEach(self.items.first!.fileArray.filter { searchBar.text.isEmpty || $0.wrappedItemName.localizedStandardContains(searchBar.text)}, id: \.self) { item in
-                                    NormalListRowView(itemArray: item, masterFolder: "\(DWFMAppSettings.shared.fileURL())").environment(\.managedObjectContext, self.context)
-                                }.onDelete(perform: self.deleteRow(at:))
+            ZStack {
+                VStack(alignment: .leading) {
+                    //check if contents isnt empty
+                    if items.first != nil {
+                        // display contents of file
+                        if (items.first!.fileArray.count == 0) {
+                             NewStarterView()
+                            .padding()
+                        } else {
+                            List {
+                                Section(header: Text("DocWind >").font(.caption), footer: Text("Tap on hold on a cell for more options").font(.caption)) {
+                                    ForEach(self.items.first!.fileArray.filter { searchBar.text.isEmpty || $0.wrappedItemName.localizedStandardContains(searchBar.text)}, id: \.self) { item in
+                                        NormalListRowView(itemArray: item, masterFolder: "\(DWFMAppSettings.shared.fileURL())").environment(\.managedObjectContext, self.context)
+                                    }.onDelete(perform: self.deleteRow(at:))
+                                }
                             }
+                            .listStyle(GroupedListStyle())
                         }
-                        .listStyle(GroupedListStyle())
+                    } else {
+                        NewStarterView()
+                        .padding()
                     }
-                } else {
-                    NewStarterView()
-                    .padding()
+                }
+                
+                VStack {
+                    Spacer()
+                    Button(action: {}) {
+                        Image(systemName: "plus")
+                            .foregroundColor(.blue)
+                            .padding()
+                    }
+                    .background(Circle()
+                        .opacity(0.2))
                 }
             }
                 
