@@ -14,7 +14,7 @@ struct ContentView: View {
     //MARK: - @State variables
     @State private var tapped = false
     @State private var isShown = false
-//    @State private var showingActionSheet = false
+    @State private var animationAmount: CGFloat = 1
     @State var activeSheet: ActiveContentViewSheet = .intro
     @State private var presentAlert = false
     @State private var toggleSearchIcon = false
@@ -27,7 +27,7 @@ struct ContentView: View {
     
     // MARK: - @Environment variables
     @Environment(\.managedObjectContext) var context
-    @FetchRequest(entity: DirecModel.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \DirecModel.created, ascending: true)], predicate: NSPredicate(format: "name == %@", "DocWind")) var items: FetchedResults<DirecModel>
+    @FetchRequest(entity: DirecModel.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \DirecModel.created, ascending: true)], predicate: NSPredicate(format: "name == %@", "DocWind"), animation: .default) var items: FetchedResults<DirecModel>
     
     // MARK: - ObservedObjects
     @ObservedObject var searchBar: SearchBar = SearchBar()
@@ -41,32 +41,28 @@ struct ContentView: View {
                     if items.first != nil {
                         // display contents of file
                         if (items.first!.fileArray.count == 0) {
-//                             NewStarterView()
-//                            .padding()
+                            NewStarterView()
                         } else {
                             List {
-                                Section(header: Text("DocWind >").font(.caption), footer: Text("Tap on hold on a cell for more options").font(.caption)) {
+                                Section(header: Text("DocWind >").font(.caption), footer: Text("Tap and hold on a cell for more options").font(.caption)) {
                                     ForEach(self.items.first!.fileArray.filter { searchBar.text.isEmpty || $0.wrappedItemName.localizedStandardContains(searchBar.text)}, id: \.self) { item in
-                                        NormalListRowView(itemArray: item, masterFolder: "\(DWFMAppSettings.shared.fileURL())").environment(\.managedObjectContext, self.context)
+                                        NormalListRowView(itemArray: item, masterFolder: "\(DWFMAppSettings.shared.fileURL())")
+                                            .environment(\.managedObjectContext, self.context)
                                     }.onDelete(perform: self.deleteRow(at:))
                                 }
                             }
                             .listStyle(GroupedListStyle())
                         }
                     } else {
-//                        NewStarterView()
-//                        .padding()
+                        NewStarterView()
                     }
                 }
-                
-//                VStack {
-                    
+                                    
                 ZStack(alignment: .bottom) {
-                    Rectangle().onTapGesture {
-                        print("saravad")
-                    }
+                    Rectangle()
                     .foregroundColor(.clear)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    
                     Button(action: showOptions) {
                         Image(systemName: "plus")
                             .rotationEffect(.degrees(tapped ? 45 : 0))
@@ -79,13 +75,24 @@ struct ContentView: View {
                         .mask(Circle())
                         .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
                         .zIndex(10)
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.blue, lineWidth: 1)
+                                    .scaleEffect(animationAmount)
+                                    .opacity(Double(2 - animationAmount))
+                                    .animation(
+                                        Animation.easeOut(duration: 1)
+                                        .repeatCount(10, autoreverses: false)
+                                    )
+                            )
+                        .onAppear {
+                            self.animationAmount = 2
+                        }
                         .padding()
                     // secondary buttons
-                    SecondaryButtonView(tapped: $tapped, icon: "folder.fill", color: .blue, offsetX: 90, action: createDiectory).padding()
-                    SecondaryButtonView(tapped: $tapped, icon: "camera.fill", color: .blue, offsetY: -90, delay: 0.2, action: scanDocumentTapped).padding()
-                    SecondaryButtonView(tapped: $tapped, icon: "arrow.up.doc.fill", color: .blue, offsetX: -90, delay: 0.4, action: {
-                        print("yooo")
-                        }).padding()
+                    SecondaryButtonView(tapped: $tapped, icon: "folder.fill", color: .green, offsetX: 90, action: createDiectory).padding()
+                    SecondaryButtonView(tapped: $tapped, icon: "camera.fill", color: .pink, offsetY: -90, delay: 0.2, action: scanDocumentTapped).padding()
+                    SecondaryButtonView(tapped: $tapped, icon: "arrow.up.doc.fill", color: .orange, offsetX: -90, delay: 0.4, action: importTapped).padding()
                 }
             }
                 
@@ -142,6 +149,7 @@ struct ContentView: View {
     }
     
     private func showOptions() {
+        self.animationAmount = 2
         DispatchQueue.main.async {
             withAnimation {
                self.tapped.toggle()
@@ -156,10 +164,9 @@ struct ContentView: View {
     }
     
     private func importTapped() {
-        print("ere")
-//        self.activeSheet = .importDoc
-//        self.tapped.toggle()
-//        self.isShown.toggle()
+        self.activeSheet = .importDoc
+        self.tapped.toggle()
+        self.isShown.toggle()
     }
     
     private func scanDocumentTapped() {

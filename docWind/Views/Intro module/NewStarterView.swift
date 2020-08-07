@@ -19,10 +19,10 @@ struct NewStarterView: View {
                     .padding([.top, .leading, .trailing])
                 VStack {
                     Text("👆 on the ") +
-                    Text("ADD").fontWeight(.bold).foregroundColor(.blue)
-                    + Text(" button on the top right to get started 😄")
+                    Text("PLUS").fontWeight(.bold).foregroundColor(.blue)
+                    + Text(" button below to get started 😄")
                 }.padding()
-            }
+            }.settingsBackground()
 //            .background(Color.blue)
 //            .clipShape(RoundedRectangle(cornerRadius: 8))
 //            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.blue))

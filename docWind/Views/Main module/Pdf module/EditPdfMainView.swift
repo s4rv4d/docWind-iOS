@@ -18,6 +18,7 @@ struct EditPdfMainView: View {
     @State private var showAlert = false
     @State private var showScanner = false
     @State private var url = ""
+    @State private var showingActionSheet = false
     
     // for images
     @State var mainPages: [UIImage] = [UIImage]()
@@ -134,6 +135,7 @@ struct EditPdfMainView: View {
                             Spacer()
                         }
                     }
+//                    .disabled(!AppSettings.shared.bougthNonConsumable)
                         .onTapGesture {
                             if !AppSettings.shared.bougthNonConsumable {
                               print("You need to buy")
@@ -154,20 +156,29 @@ struct EditPdfMainView: View {
                     Text("Save")
             })
         }
-        .alert(isPresented: $showAlert) {
+            .alert(isPresented: $showAlert) {
                     if self.activeAlertSheet == .notice {
                        return Alert(title: Text("Notice"), message: Text(alertMessage), dismissButton: .cancel())
                     } else {
                        return Alert(title: Text("Alert"), message: Text("Are you sure you want to delete this document?"), primaryButton: .destructive(Text("Delete"), action: { self.presentationMode.wrappedValue.dismiss() }), secondaryButton: .cancel())
                     }
                 }
-                .sheet(isPresented: $showScanner) {
-                    if self.activeSheet == .scannerView {
-                        ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
-                    } else if self.activeSheet == .pdfView {
-                        SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
-                    }
+            .sheet(isPresented: $showScanner) {
+                if self.activeSheet == .scannerView {
+                    ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
+                } else if self.activeSheet == .pdfView {
+                    SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
+                } else if self.activeSheet == .photoLibrary {
+                    ImagePickerView(pages: self.$pages, pagesWithMark: self.$pagesWithMark)
                 }
+            }
+        .actionSheet(isPresented: $showingActionSheet) {
+            ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
+                .default(Text("Scan a document"), action: scanTapped),
+                .default(Text("Choose an image"), action: addImagesTapped),
+                .cancel()
+            ])
+        }
     }
     
     private func saveTapped() {
@@ -196,7 +207,16 @@ struct EditPdfMainView: View {
     }
     
     private func addPagesTapped() {
+        self.showingActionSheet.toggle()
+    }
+    
+    private func scanTapped() {
         self.activeSheet = .scannerView
+        self.showScanner.toggle()
+    }
+    
+    private func addImagesTapped() {
+        self.activeSheet = .photoLibrary
         self.showScanner.toggle()
     }
     

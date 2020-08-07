@@ -127,7 +127,8 @@ struct AddPdfFileGenView: View {
                                 .foregroundColor(.yellow)
                             Spacer()
                         }
-                    }.disabled(!AppSettings.shared.bougthNonConsumable)
+                    }
+//                    .disabled(!AppSettings.shared.bougthNonConsumable)
                         .onTapGesture {
                             if !AppSettings.shared.bougthNonConsumable {
                               print("You need to buy")

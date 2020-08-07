@@ -13,8 +13,8 @@ struct DetailedDirecView: View {
     
     // MARK: - @State variables
     @State var item: ItemModel
+    @State private var tapped = false
     @State private var isShown = false
-    @State private var showingActionSheet = false
     @State var activeSheet: ActiveContentViewSheet = .intro
     @State private var presentAlert = false
     @State private var toggleSearchIcon = false
@@ -43,45 +43,70 @@ struct DetailedDirecView: View {
         self._items = FetchRequest(
             entity: DirecModel.entity(),
             sortDescriptors: [],
-            predicate: NSPredicate(format: "name == %@", "\(dirName)"))
-        //    animation: .default)
+            predicate: NSPredicate(format: "name == %@", "\(dirName)"), animation: .default)
     }
     
     // MARK: - Properties
     var body: some View {
-        VStack(alignment: .leading) {
-            //check if contents isnt empty
-            if items.first != nil {
-                // display contents of file
-                if (items.first?.fileArray.count == 0) {
-                    Text("Looks empty here, scan a new document or create a new directory using the '+' button above.")
+        VStack {
+            VStack(alignment: .leading) {
+                //check if contents isnt empty
+                if items.first != nil {
+                    // display contents of file
+                    if (items.first?.fileArray.count == 0) {
+                        Text("Looks empty here, scan a new document or create a new directory using the '+' button above.")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                            .padding([.leading, .trailing, .top])
+                    } else {
+                        List {
+                            Section(header: Text("\(String(masterFolder.split(separator: "/").last!)) > \(item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
+                                ForEach(items.first!.fileArray.filter {
+                                    searchBar.text.isEmpty ||
+                                        $0.wrappedItemName.localizedStandardContains(searchBar.text)
+                                }, id: \.self){ item in
+                                    GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
+                                }.onDelete(perform: self.deleteRow(at:))
+                            }
+                        }
+                        .listStyle(GroupedListStyle())
+                    }
+                } else {
+                    Text("Looks empty here, scan a new document using the '+' button above.")
                     .font(.caption)
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
                         .padding([.leading, .trailing, .top])
-                } else {
-                    List {
-                        Section(header: Text("\(String(masterFolder.split(separator: "/").last!)) > \(item.wrappedItemName)").font(.caption)) {
-                            ForEach(items.first!.fileArray.filter {
-                                searchBar.text.isEmpty ||
-                                    $0.wrappedItemName.localizedStandardContains(searchBar.text)
-                            }, id: \.self){ item in
-                                GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
-                            }.onDelete(perform: self.deleteRow(at:))
-                        }
-                    }
-                    .listStyle(GroupedListStyle())
                 }
-            } else {
-                Text("Looks empty here, scan a new document using the '+' button above.")
-                .font(.caption)
-                .foregroundColor(.gray)
-                .multilineTextAlignment(.center)
-                    .padding([.leading, .trailing, .top])
+                
+                Spacer()
+                    
             }
             
-            Spacer()
+            // button
+            ZStack(alignment: .bottom) {
+                Rectangle()
+                .foregroundColor(.clear)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
+                Button(action: showOptions) {
+                    Image(systemName: "plus")
+                        .rotationEffect(.degrees(tapped ? 45 : 0))
+                        .foregroundColor(.white)
+                        .font(.title)
+                        .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
+                    }
+                    .padding(24)
+                    .background(Color.blue)
+                    .mask(Circle())
+                    .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
+                    .zIndex(10)                    .padding()
+                // secondary buttons
+                SecondaryButtonView(tapped: $tapped, icon: "folder.fill", color: .green, offsetX: 90, action: createDiectory).padding()
+                SecondaryButtonView(tapped: $tapped, icon: "camera.fill", color: .pink, offsetY: -90, delay: 0.2, action: createFile).padding()
+                SecondaryButtonView(tapped: $tapped, icon: "arrow.up.doc.fill", color: .orange, offsetX: -90, delay: 0.4, action: importTapped).padding()
+            }
         }
         // sheet code
         .sheet(isPresented: $isShown) {
@@ -98,25 +123,7 @@ struct DetailedDirecView: View {
             
         .navigationBarTitle(Text(item.wrappedItemName), displayMode: .inline)
         .navigationViewStyle(StackNavigationViewStyle())
-        .navigationBarItems(trailing:
-            HStack{
-                Button(action: showOptions){
-                    Image(systemName: "plus")
-                        .font(.system(size: 25))
-                        }
-            }
-        )
             .add(self.searchBar)
-        
-        // action sheet code
-       .actionSheet(isPresented: $showingActionSheet) {
-           ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
-               .default(Text("Create a new document"), action: createFile),
-               .default(Text("Create a new directory"), action: createDiectory),
-               .default(Text("Import a document"), action: importTapped),
-               .cancel()
-           ])
-       }
         
         .alert(isPresented: $showAlert) {
              Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel(Text("Dismiss"), action: {
@@ -128,19 +135,23 @@ struct DetailedDirecView: View {
     
     // MARK: - Functions
     private func showOptions() {
-        self.showingActionSheet.toggle()
+//        self.showingActionSheet.toggle()
+        DispatchQueue.main.async {
+            withAnimation {
+               self.tapped.toggle()
+            }
+        }
     }
 
     private func createDiectory() {
-        //1. bring up sheet
         self.activeSheet = .createdDirec
+        self.tapped.toggle()
         self.isShown.toggle()
-        //2. enter detials
-        //3. reload list
     }
     
     private func createFile() {
         self.activeSheet = .createPdf
+        self.tapped.toggle()
         self.isShown.toggle()
     }
     
@@ -152,6 +163,7 @@ struct DetailedDirecView: View {
     
     private func importTapped() {
         self.activeSheet = .importDoc
+        self.tapped.toggle()
         self.isShown.toggle()
     }
     
