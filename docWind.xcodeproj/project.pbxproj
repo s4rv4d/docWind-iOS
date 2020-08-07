@@ -70,6 +70,7 @@
 		40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170AB24ADA93000F51F77 /* MainDocViewModel.swift */; };
 		40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */; };
 		40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */; };
+		40D1B12124DC4E7D00859F1A /* SecondaryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D1B12024DC4E7D00859F1A /* SecondaryButtonView.swift */; };
 		40DD4F7324C02CDC00D37EFA /* SignaturePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DD4F7224C02CDC00D37EFA /* SignaturePageView.swift */; };
 		40DD4F7524C02F3700D37EFA /* ImageAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DD4F7424C02F3700D37EFA /* ImageAnnotation.swift */; };
 		40DD4F7724C087AE00D37EFA /* ImagePanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DD4F7624C087AE00D37EFA /* ImagePanGestureRecognizer.swift */; };
@@ -170,6 +171,7 @@
 		40D170AB24ADA93000F51F77 /* MainDocViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDocViewModel.swift; sourceTree = "<group>"; };
 		40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBarView.swift; sourceTree = "<group>"; };
 		40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocWindFManager.swift; sourceTree = "<group>"; };
+		40D1B12024DC4E7D00859F1A /* SecondaryButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButtonView.swift; sourceTree = "<group>"; };
 		40DD4F7224C02CDC00D37EFA /* SignaturePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignaturePageView.swift; sourceTree = "<group>"; };
 		40DD4F7424C02F3700D37EFA /* ImageAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAnnotation.swift; sourceTree = "<group>"; };
 		40DD4F7624C087AE00D37EFA /* ImagePanGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePanGestureRecognizer.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				4069EFA024D69D4C003083C6 /* CustomSearchBar.swift */,
 				40CFB04C24D9794100955957 /* DocumentPickerView.swift */,
 				402333ED24DA9247007FE8C6 /* ImagePickerView.swift */,
+				40D1B12024DC4E7D00859F1A /* SecondaryButtonView.swift */,
 			);
 			path = "Custom View";
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				40FDE49524AC4C3D006AAFD2 /* IntroView.swift in Sources */,
 				406E9AFB24B617EE000FB8FD /* CustomHeaderView.swift in Sources */,
 				40FDE48324AB964B006AAFD2 /* ContentView.swift in Sources */,
+				40D1B12124DC4E7D00859F1A /* SecondaryButtonView.swift in Sources */,
 				40EF462C24B4ADF700D07A06 /* ConfPdfView.swift in Sources */,
 				40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */,
 				40FDE49C24AC4EC9006AAFD2 /* Helper+Struct.swift in Sources */,
@@ -786,7 +790,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sarvadShetty.docWind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -810,7 +814,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sarvadShetty.docWind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

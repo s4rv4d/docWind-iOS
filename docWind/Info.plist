@@ -128,6 +128,8 @@
 	<string>We need access to your camera to scan documents  </string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>To unlock app to access it features</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Need access to library to add images to scanned documents</string>
 	<key>NSUbiquitousContainers</key>
 	<dict>
 		<key>com.sarvadShetty.docWindProduction</key>
@@ -177,7 +179,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Need access to library to add images to scanned documents</string>
 </dict>
 </plist>

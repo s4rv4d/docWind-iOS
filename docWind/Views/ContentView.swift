@@ -12,8 +12,9 @@ import CoreData
 struct ContentView: View {
     
     //MARK: - @State variables
+    @State private var tapped = false
     @State private var isShown = false
-    @State private var showingActionSheet = false
+//    @State private var showingActionSheet = false
     @State var activeSheet: ActiveContentViewSheet = .intro
     @State private var presentAlert = false
     @State private var toggleSearchIcon = false
@@ -34,14 +35,14 @@ struct ContentView: View {
     // MARK: - Properties
     var body: some View {
         NavigationView {
-            ZStack {
+            VStack {
                 VStack(alignment: .leading) {
                     //check if contents isnt empty
                     if items.first != nil {
                         // display contents of file
                         if (items.first!.fileArray.count == 0) {
-                             NewStarterView()
-                            .padding()
+//                             NewStarterView()
+//                            .padding()
                         } else {
                             List {
                                 Section(header: Text("DocWind >").font(.caption), footer: Text("Tap on hold on a cell for more options").font(.caption)) {
@@ -53,20 +54,38 @@ struct ContentView: View {
                             .listStyle(GroupedListStyle())
                         }
                     } else {
-                        NewStarterView()
-                        .padding()
+//                        NewStarterView()
+//                        .padding()
                     }
                 }
                 
-                VStack {
-                    Spacer()
-                    Button(action: {}) {
-                        Image(systemName: "plus")
-                            .foregroundColor(.blue)
-                            .padding()
+//                VStack {
+                    
+                ZStack(alignment: .bottom) {
+                    Rectangle().onTapGesture {
+                        print("saravad")
                     }
-                    .background(Circle()
-                        .opacity(0.2))
+                    .foregroundColor(.clear)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    Button(action: showOptions) {
+                        Image(systemName: "plus")
+                            .rotationEffect(.degrees(tapped ? 45 : 0))
+                            .foregroundColor(.white)
+                            .font(.title)
+                            .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
+                        }
+                        .padding(24)
+                        .background(Color.blue)
+                        .mask(Circle())
+                        .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
+                        .zIndex(10)
+                        .padding()
+                    // secondary buttons
+                    SecondaryButtonView(tapped: $tapped, icon: "folder.fill", color: .blue, offsetX: 90, action: createDiectory).padding()
+                    SecondaryButtonView(tapped: $tapped, icon: "camera.fill", color: .blue, offsetY: -90, delay: 0.2, action: scanDocumentTapped).padding()
+                    SecondaryButtonView(tapped: $tapped, icon: "arrow.up.doc.fill", color: .blue, offsetX: -90, delay: 0.4, action: {
+                        print("yooo")
+                        }).padding()
                 }
             }
                 
@@ -77,12 +96,7 @@ struct ContentView: View {
                     Image(systemName: "gear")
                     .font(.system(size: 20))
                     .foregroundColor(.blue)
-                }
-                ,trailing:
-                Button(action: showOptions){
-                    Text("Add")
-                }
-            )
+                })
             .add(self.searchBar)
     
         }
@@ -110,16 +124,6 @@ struct ContentView: View {
             }
         }
         
-        // action sheet code
-        .actionSheet(isPresented: $showingActionSheet) {
-            ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
-                .default(Text("Create a new document"), action: scanDocumentTapped),
-                .default(Text("Create a new directory"), action: createDiectory),
-                .default(Text("Import a document"), action: importTapped),
-                .cancel()
-            ])
-        }
-        
         .alert(isPresented: $showAlert) {
              Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel(Text("Dismiss"), action: {
                     print("retry")
@@ -138,24 +142,31 @@ struct ContentView: View {
     }
     
     private func showOptions() {
-        FeedbackManager.mediumFeedback()
-        self.showingActionSheet.toggle()
+        DispatchQueue.main.async {
+            withAnimation {
+               self.tapped.toggle()
+            }
+        }
     }
     
     private func createDiectory() {
         self.activeSheet = .createdDirec
+        self.tapped.toggle()
         self.isShown.toggle()
     }
     
     private func importTapped() {
-        self.activeSheet = .importDoc
-        self.isShown.toggle()
+        print("ere")
+//        self.activeSheet = .importDoc
+//        self.tapped.toggle()
+//        self.isShown.toggle()
     }
     
     private func scanDocumentTapped() {
         print("❇️ SCAN DOC TAPPED")
         //bring uo editing page
         self.activeSheet = .createPdf
+        self.tapped.toggle()
         self.isShown.toggle()
         //add pages and saves
     }
@@ -208,3 +219,4 @@ struct ContentView: View {
         }
     }
 }
+
