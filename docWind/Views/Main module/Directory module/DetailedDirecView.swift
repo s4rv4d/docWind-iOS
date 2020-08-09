@@ -48,7 +48,7 @@ struct DetailedDirecView: View {
     
     // MARK: - Properties
     var body: some View {
-        ZStack {
+        ZStack(alignment: .top) {
             VStack(alignment: .leading) {
                 //check if contents isnt empty
                 if items.first != nil {
@@ -59,6 +59,8 @@ struct DetailedDirecView: View {
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.center)
                             .padding([.leading, .trailing, .top])
+                        Color.clear
+//                        .add(self.searchBar)
                     } else {
                         List {
                             Section(header: Text("\(String(masterFolder.split(separator: "/").last!)) > \(item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
@@ -71,6 +73,7 @@ struct DetailedDirecView: View {
                             }
                         }
                         .listStyle(GroupedListStyle())
+                        .add(self.searchBar)
                     }
                 } else {
                     Text("Looks empty here, scan a new document using the '+' button above.")
@@ -78,11 +81,13 @@ struct DetailedDirecView: View {
                     .foregroundColor(.gray)
                     .multilineTextAlignment(.center)
                         .padding([.leading, .trailing, .top])
+                    Color.clear
+//                    .add(self.searchBar)
                 }
                 
-                Spacer()
+//                Spacer()
                     
-            }
+            }.add(self.searchBar)
             
             // button
             ZStack(alignment: .bottom) {
@@ -123,8 +128,6 @@ struct DetailedDirecView: View {
             
         .navigationBarTitle(Text(item.wrappedItemName), displayMode: .inline)
         .navigationViewStyle(StackNavigationViewStyle())
-            .add(self.searchBar)
-        
         .alert(isPresented: $showAlert) {
              Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel(Text("Dismiss"), action: {
                     print("retry")

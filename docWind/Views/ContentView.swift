@@ -42,6 +42,8 @@ struct ContentView: View {
                         // display contents of file
                         if (items.first!.fileArray.count == 0) {
                             NewStarterView()
+                            EmptyView()
+                            Color.clear
                         } else {
                             List {
                                 Section(header: Text("DocWind >").font(.caption), footer: Text("Tap and hold on a cell for more options").font(.caption)) {
@@ -55,6 +57,7 @@ struct ContentView: View {
                         }
                     } else {
                         NewStarterView()
+                        Color.clear
                     }
                 }
                                     
