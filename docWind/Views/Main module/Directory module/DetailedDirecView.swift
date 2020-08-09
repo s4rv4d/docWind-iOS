@@ -48,7 +48,7 @@ struct DetailedDirecView: View {
     
     // MARK: - Properties
     var body: some View {
-        VStack {
+        ZStack {
             VStack(alignment: .leading) {
                 //check if contents isnt empty
                 if items.first != nil {
@@ -135,7 +135,7 @@ struct DetailedDirecView: View {
     
     // MARK: - Functions
     private func showOptions() {
-//        self.showingActionSheet.toggle()
+        FeedbackManager.mediumFeedback()
         DispatchQueue.main.async {
             withAnimation {
                self.tapped.toggle()

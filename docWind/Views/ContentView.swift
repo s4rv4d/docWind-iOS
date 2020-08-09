@@ -35,7 +35,7 @@ struct ContentView: View {
     // MARK: - Properties
     var body: some View {
         NavigationView {
-            VStack {
+            ZStack {
                 VStack(alignment: .leading) {
                     //check if contents isnt empty
                     if items.first != nil {
@@ -61,7 +61,7 @@ struct ContentView: View {
                 ZStack(alignment: .bottom) {
                     Rectangle()
                     .foregroundColor(.clear)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                     
                     Button(action: showOptions) {
                         Image(systemName: "plus")
@@ -149,7 +149,7 @@ struct ContentView: View {
     }
     
     private func showOptions() {
-        self.animationAmount = 2
+        FeedbackManager.mediumFeedback()
         DispatchQueue.main.async {
             withAnimation {
                self.tapped.toggle()
