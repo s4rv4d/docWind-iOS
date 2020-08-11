@@ -39,8 +39,8 @@ struct DetailPdfView: View, Equatable {
     var body: some View {
         VStack {
             if url != "" {
-                PDFCustomView(fileURL: URL(string: url)!, options: options, canEdit: canEdit, canEditSignature: canEditSignature, color: color, saveTapped: saveTapped, image: image, alreadyAdded: $alreadyAdded)
-                .debugPrint("PRESENTED PDFCUSTOMVIEW 📄")
+                PDFCustomView(fileURL: $url, options: options, canEdit: canEdit, canEditSignature: canEditSignature, color: color, saveTapped: saveTapped, image: image, alreadyAdded: $alreadyAdded)
+                .debugPrint("PRESENTED PDFCUSTOMVIEW 📄 \(url)")
             }
             Spacer()
             HStack {
@@ -65,7 +65,6 @@ struct DetailPdfView: View, Equatable {
                         }.settingsBackground()
 
                         Button("Cancel") {
-                            print("cancelling changes..")
                             // give an alert
                             self.alertTitle = "Notice"
                             self.activeAlertContext = .notice
@@ -97,8 +96,24 @@ struct DetailPdfView: View, Equatable {
                                 self.showAlert.toggle()
                             } else {
                                 self.extractText()
-
                             }
+                        }
+                        
+                        Spacer()
+                        
+                        VStack{
+                            Image(systemName: "doc.on.doc.fill")
+                                .font(.system(size: 20))
+                                .foregroundColor(.blue)
+                                .padding(.top, 5)
+                                .padding([.leading, .trailing])
+                            Text("Edit").font(.caption)
+                                .foregroundColor(.blue)
+                                .padding(.bottom, 2)
+                        }
+                        .onTapGesture {
+                            FeedbackManager.mediumFeedback()
+                            self.getImages()
                         }
                     }
                 }
@@ -107,12 +122,12 @@ struct DetailPdfView: View, Equatable {
 
                 Spacer()
                 VStack {
-                    Image(systemName: "wand.and.stars")
+                    Image(systemName: "pencil.and.outline")
                     .font(.system(size: 20))
                     .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
                         .padding(.top, 5)
                         .padding([.leading, .trailing])
-                    Text("Edit").font(.caption)
+                    Text("Draw").font(.caption)
                         .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
                         .padding(.bottom, 2)
                 }
@@ -142,6 +157,8 @@ struct DetailPdfView: View, Equatable {
                 SignaturePageView(image: self.$image)
             } else if self.activeContext == .ocrPage {
                 OCRTextView(recognizedText: "Scanning", imageToScan: self.images)
+            } else if self.activeContext == .editPage {
+                EditPdfSubView(pdfName: self.item.wrappedItemName, selectedIconName: self.item.wrappedIconName, mainPages: self.images, url: self.url, pdfEditted: self.$url)
             }
         }
         .onAppear {
@@ -230,6 +247,35 @@ struct DetailPdfView: View, Equatable {
             self.images = imgs
             self.activeContext = .ocrPage
             self.isShown.toggle()
+        }
+    }
+    
+    func getImages() {
+        if let pdf = CGPDFDocument(URL(string: self.url)! as CFURL) {
+            let pageCount = pdf.numberOfPages
+            var images = [UIImage]()
+            
+            for i in 0 ... pageCount {
+                guard let page = pdf.page(at: i) else { continue }
+                let pageRect = page.getBoxRect(.mediaBox)
+                let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+                let img = renderer.image { ctx in
+                    UIColor.white.set()
+                    ctx.fill(pageRect)
+
+                    ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
+                    ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
+
+                    ctx.cgContext.drawPDFPage(page)
+                }
+                images.append(img)
+            }
+            
+            if pageCount == images.count {
+                self.images = images
+                self.activeContext = .editPage
+                self.isShown.toggle()
+            }
         }
     }
 }

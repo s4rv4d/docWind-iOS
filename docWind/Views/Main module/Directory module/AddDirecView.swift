@@ -93,7 +93,7 @@ struct AddDirecView: View {
                 }
                 
             } else {
-                self.alertMessage = "Error creating sub directory :("
+                self.alertMessage = "Folder name already exists chose a new"
                 self.showAlert.toggle()
             }
             

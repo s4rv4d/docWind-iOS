@@ -51,6 +51,7 @@
 		40920EB024B744BE00E2293C /* DrawOnImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40920EAF24B744BE00E2293C /* DrawOnImageView.swift */; };
 		40920EB224B74E7800E2293C /* SlideOverCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40920EB124B74E7800E2293C /* SlideOverCardView.swift */; };
 		409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409244BD24B19D640013BF8F /* Helper+Extensions.swift */; };
+		409F5BBB24E2E3B600749B00 /* EditPdfSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409F5BBA24E2E3B600749B00 /* EditPdfSubView.swift */; };
 		40C408E624B9F2EF00876FAF /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C408E524B9F2EF00876FAF /* PDFView.swift */; };
 		40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */; };
 		40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140424AE14C000126ABA /* SearchBarView.swift */; };
@@ -151,6 +152,7 @@
 		40920EAF24B744BE00E2293C /* DrawOnImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawOnImageView.swift; sourceTree = "<group>"; };
 		40920EB124B74E7800E2293C /* SlideOverCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOverCardView.swift; sourceTree = "<group>"; };
 		409244BD24B19D640013BF8F /* Helper+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Extensions.swift"; sourceTree = "<group>"; };
+		409F5BBA24E2E3B600749B00 /* EditPdfSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPdfSubView.swift; sourceTree = "<group>"; };
 		40C408E524B9F2EF00876FAF /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
 		40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWFMAppSettings.swift; sourceTree = "<group>"; };
 		40C5140424AE14C000126ABA /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				4010734C24BAD971002AFDD2 /* AddPdfFileGenView.swift */,
 				40DD4F7224C02CDC00D37EFA /* SignaturePageView.swift */,
 				40284BFC24D83745004EE44E /* EditPdfMainView.swift */,
+				409F5BBA24E2E3B600749B00 /* EditPdfSubView.swift */,
 			);
 			path = "Pdf module";
 			sourceTree = "<group>";
@@ -574,6 +577,7 @@
 				40CAFAE124BB480600C1E28A /* ShareSheetView.swift in Sources */,
 				4012033C24BDE0D700167917 /* NonSelectableView.swift in Sources */,
 				405EFDC824BCA11A0070BE5F /* AppIconView.swift in Sources */,
+				409F5BBB24E2E3B600749B00 /* EditPdfSubView.swift in Sources */,
 				402C0B6C24B0ACD600A5A6C9 /* NormalListRowView.swift in Sources */,
 				40DD4F7724C087AE00D37EFA /* ImagePanGestureRecognizer.swift in Sources */,
 				40CDC4C824AF72CD00462277 /* ItemModel+CoreDataProperties.swift in Sources */,
@@ -780,7 +784,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
@@ -790,7 +794,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sarvadShetty.docWind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -804,7 +808,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
@@ -814,7 +818,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sarvadShetty.docWind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

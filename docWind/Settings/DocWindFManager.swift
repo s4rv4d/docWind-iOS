@@ -476,16 +476,22 @@ extension DocWindFManager {
         print("File Manager Path: ------> \(documentsPath)")
         let logsPath = documentsPath.appendingPathComponent("\(direcName)", isDirectory: true)
         print("Updated Manager Path: ------> \(String(describing: logsPath))")
-                
-        do {
-            try FileManager.default.createDirectory(atPath: logsPath.path, withIntermediateDirectories: true, attributes: nil)
-            status = true
-            path = "\(logsPath)"
-            print("✅ SUCCESSFULLY CREATED  \(direcName) DIRECTORY")
-        } catch {
-            print("❌ FAILED TO CREATED DIRECTORY")
-            print("////reason: \(error.localizedDescription)")
+        
+        //check if path already exist
+        if self.pdfFileAlreadySaved(direcName: nil, fileName: direcName) {
             status = false
+            print("❌ PDF ALREADY SAVED BEFORE")
+        } else {
+            do {
+                try FileManager.default.createDirectory(atPath: logsPath.path, withIntermediateDirectories: true, attributes: nil)
+                status = true
+                path = "\(logsPath)"
+                print("✅ SUCCESSFULLY CREATED  \(direcName) DIRECTORY")
+            } catch {
+                print("❌ FAILED TO CREATED DIRECTORY")
+                print("////reason: \(error.localizedDescription)")
+                status = false
+            }
         }
         
         return (status, path)
@@ -499,16 +505,23 @@ extension DocWindFManager {
         print("File Manager Path: ------> \(documentsPath)")
         let logsPath = documentsPath.appendingPathComponent("\(newDirecName)", isDirectory: true)
         print("Updated Manager Path: ------> \(String(describing: logsPath))")
-                
-        do {
-            try FileManager.default.createDirectory(atPath: logsPath.path, withIntermediateDirectories: true, attributes: nil)
-            status = true
-            path = "\(logsPath)"
-            print("✅ SUCCESSFULLY CREATED  \(headName)\(newDirecName) DIRECTORY")
-        } catch {
-            print("❌ FAILED TO CREATED DIRECTORY")
-            print("////reason: \(error.localizedDescription)")
+
+        
+        if self.pdfFileAlreadySaved(direcName: headName.absoluteString, fileName: newDirecName) {
             status = false
+            print("❌ PDF ALREADY SAVED BEFORE")
+
+        } else {
+            do {
+                try FileManager.default.createDirectory(atPath: logsPath.path, withIntermediateDirectories: true, attributes: nil)
+                status = true
+                path = "\(logsPath)"
+                print("✅ SUCCESSFULLY CREATED  \(headName)\(newDirecName) DIRECTORY")
+            } catch {
+                print("❌ FAILED TO CREATED DIRECTORY")
+                print("////reason: \(error.localizedDescription)")
+                status = false
+            }
         }
         
         return (status, path)

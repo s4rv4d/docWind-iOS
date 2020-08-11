@@ -26,7 +26,7 @@ enum ActiveSheetForDetails {
 
 // Enum for activeSheetvar in PDFDetailView
 enum PDFDetailActiveView {
-    case shareSheet, toolBox, signature, ocrPage
+    case shareSheet, toolBox, signature, ocrPage, editPage
 }
 
 // enum for active sheet #2

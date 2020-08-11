@@ -12,7 +12,7 @@ import PDFKit
 struct PDFCustomView: UIViewRepresentable {
     
     // MARK: - Properties
-    var fileURL: URL
+    @Binding var fileURL: String
     var options: DrawingTool
     var canEdit: Bool
     var canEditSignature: Bool
@@ -27,7 +27,7 @@ struct PDFCustomView: UIViewRepresentable {
     
     func makeUIView(context: UIViewRepresentableContext<PDFCustomView>) -> PDFView {
         let pdfView = PDFView()
-        pdfView.document = PDFDocument(url: self.fileURL)
+        pdfView.document = PDFDocument(url: URL(string: self.fileURL)!)
         pdfView.backgroundColor = UIColor.lightGray
         pdfView.displayMode = .singlePageContinuous
         pdfView.displayDirection = .vertical
@@ -42,6 +42,7 @@ struct PDFCustomView: UIViewRepresentable {
         
         // assignig pdfDrawer
         pdfDrawer.pdfView = uiView
+        uiView.document = PDFDocument(url: URL(string: self.fileURL)!)
         
         // setting pdfThumbnailView
         pdfThumbnailView.pdfView = uiView
@@ -53,7 +54,7 @@ struct PDFCustomView: UIViewRepresentable {
         if saveTapped {
             print(uiView.currentPage!.annotations)
             print(uiView)
-            uiView.document?.write(to: fileURL)
+            uiView.document?.write(to: URL(string: fileURL)!)
         }
         print("resetting switching back to page gesture")
         for recog in uiView.gestureRecognizers! {
