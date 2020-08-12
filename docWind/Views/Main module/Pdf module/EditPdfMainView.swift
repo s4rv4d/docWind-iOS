@@ -19,6 +19,7 @@ struct EditPdfMainView: View {
     @State private var showScanner = false
     @State private var url = ""
     @State private var showingActionSheet = false
+    let item: ItemModel
     
     // for images
     @State var mainPages: [UIImage] = [UIImage]()
@@ -40,20 +41,21 @@ struct EditPdfMainView: View {
     var iconNameString: [Color: String] = [.blue:"blue", .red:"red", .green:"green", .yellow:"yellow", .pink:"pink"]
     
     // MARK: - Init
-    init(pdfName: String, selectedIconName: String, mainPages: [UIImage], url: String) {
+    init(pdfName: String, selectedIconName: String, mainPages: [UIImage], url: String, item: ItemModel) {
         self._pdfName = State(initialValue: pdfName)
         self._selectedIconName = State(initialValue: selectedIconName)
         self._mainPages = State(initialValue: mainPages)
         self._pages = State(initialValue: mainPages)
         self._pagesWithMark = State(initialValue: mainPages)
         self._url = State(initialValue: url)
+        self.item = item
     }
     
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("File name")) {
-                    Text(pdfName)
+                    TextField("Enter a name", text: $pdfName)
                 }
                 
 //                Section(header: Text("Choose a file icon")) {
@@ -191,18 +193,54 @@ struct EditPdfMainView: View {
         } else {
             let mainPages = (self.removeWatermark == true) ? self.pages : self.pagesWithMark
             
-            // convert to pdf
-            let pdfDocument = PDFDocument()
-            for page in mainPages {
-                let pdfPage = PDFPage(image: page)
-                let index = mainPages.firstIndex(of: page)!
-                
-                // store in pdfDocument
-                pdfDocument.insert(pdfPage!, at: index)
+            // name adjustment
+            let pdfName = self.pdfName
+            var finalPdfName = "\(pdfName).pdf"
+            if pdfName.contains(" ") {
+                finalPdfName = pdfName.replacingOccurrences(of: " ", with: "_")
+                finalPdfName += ".pdf"
             }
             
-            pdfDocument.write(to: URL(string: url)!)
-            self.presentationMode.wrappedValue.dismiss()
+            // moving files in file system first (cut copy mechanism basically)
+            let context = DWFMAppSettings.shared.renameFile(oldPath: item.wrappedItemUrl, newName: finalPdfName)
+            if context.0 {
+                let path = context.1
+                
+                if path != "" {
+                    print("SUCCESSFULLY CHANGED IN FM ✅")
+                    
+                    // update in core data
+                    item.itemURL = path
+                    item.itemName = pdfName
+                    ItemModel.updateObject(in: self.context)
+                    
+                    // and resave pdf file in new item url
+                    // convert to pdf
+                    let pdfDocument = PDFDocument()
+                    for page in mainPages {
+                        let pdfPage = PDFPage(image: page)
+                        let index = mainPages.firstIndex(of: page)!
+
+                        // store in pdfDocument
+                        pdfDocument.insert(pdfPage!, at: index)
+                    }
+                    pdfDocument.write(to: URL(string: path)!)
+                    self.presentationMode.wrappedValue.dismiss()
+                    
+                } else {
+                    self.activeAlertSheet = .notice
+                    self.alertMessage = "Error renaming file :("
+                    self.showAlert.toggle()
+                }
+                
+            } else {
+                self.activeAlertSheet = .notice
+                self.alertMessage = "Error renaming file :("
+                self.showAlert.toggle()
+            }
+            
+            
+//            self.presentationMode.wrappedValue.dismiss()
         }
     }
     

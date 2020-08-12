@@ -61,12 +61,17 @@ struct NormalListRowView: View {
                 .padding()
                 
             }.contextMenu {
-//                Button(action: {}) {
-//                    HStack {
-//                        Image(systemName: "pencil")
-//                        Text("Rename")
-//                    }
-//                }
+                Button(action: {
+                    self.selectedItem = self.itemArray
+                    self.uiImages = self.getImages()
+                    self.activeSheet = .editSheet
+                    self.showSheet.toggle()
+                }) {
+                    HStack {
+                        Image(systemName: "pencil")
+                        Text("Rename")
+                    }
+                }
                 
                 if self.itemArray.wrappedItemType == DWPDFFILE {
                     Button(action: {
@@ -125,7 +130,7 @@ struct NormalListRowView: View {
                 ShareSheetView(activityItems: [URL(string: self.url)!])
             } else if self.activeSheet == .editSheet{
                 if self.uiImages.count != 0 && self.url != "" {
-                    EditPdfMainView(pdfName: self.itemArray.wrappedItemName, selectedIconName: self.itemArray.wrappedIconName, mainPages: self.uiImages, url: self.url)
+                    EditPdfMainView(pdfName: self.itemArray.wrappedItemName, selectedIconName: self.itemArray.wrappedIconName, mainPages: self.uiImages, url: self.url, item: self.selectedItem!).environment(\.managedObjectContext, self.context)
                 }
             }
         }

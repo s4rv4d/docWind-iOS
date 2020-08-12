@@ -34,119 +34,106 @@ struct DetailPdfView: View, Equatable {
     @State var saveTapped = false
     @State var alreadyAdded = false
     @State var images = [UIImage]()
+    @State var isLoading = false
     
     // MARK: - Properties
     var body: some View {
-        VStack {
-            if url != "" {
-                PDFCustomView(fileURL: $url, options: options, canEdit: canEdit, canEditSignature: canEditSignature, color: color, saveTapped: saveTapped, image: image, alreadyAdded: $alreadyAdded)
-                .debugPrint("PRESENTED PDFCUSTOMVIEW 📄 \(url)")
-            }
-            Spacer()
-            HStack {
-                if canEdit {
-                    Button("Save Edit") {
-                        print("saving annotations")
-                        self.canEdit = false
-                        self.saveButton = true
-                    }.settingsBackground()
+        LoadingView(isShowing: $isLoading) {
+            VStack {
+                if self.url != "" {
+                    PDFCustomView(fileURL: self.$url, options: self.options, canEdit: self.canEdit, canEditSignature: self.canEditSignature, color: self.color, saveTapped: self.saveTapped, image: self.image, alreadyAdded: self.$alreadyAdded)
+                        .debugPrint("PRESENTED PDFCUSTOMVIEW 📄 \(self.url)")
                 }
-
-                if saveButton {
-                    if !canEdit && !canEditSignature {
-                        Button("Save PDF") {
-                            print("saving..")
-
-                            // save pdf
-                            self.saveTapped.toggle()
-                            self.saveButton.toggle()
-                            FeedbackManager.mediumFeedback()
-
+                Spacer()
+                HStack {
+                    if self.canEdit {
+                        Button("Save Edit") {
+                            print("saving annotations")
+                            self.canEdit = false
+                            self.saveButton = true
                         }.settingsBackground()
-
-                        Button("Cancel") {
-                            // give an alert
-                            self.alertTitle = "Notice"
-                            self.activeAlertContext = .notice
-                            self.alertMessage = "Are you sure you want to cancel the changes made"
-                            // dimiss without saving
-                            self.showAlert.toggle()
-
-                        }.settingsBackground()
-                            .foregroundColor(.red)
                     }
-                } else {
-                    if !canEdit && !canEditSignature {
-                        VStack{
-                            Image(systemName: "text.quote")
-                                .font(.system(size: 20))
-                                .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
-                                .padding(.top, 5)
-                                .padding([.leading, .trailing])
-                            Text("OCR").font(.caption)
-                                .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
-                                .padding(.bottom, 2)
+
+                    if self.saveButton {
+                        if !self.canEdit && !self.canEditSignature {
+                            Button("Save PDF") {
+                                print("saving..")
+
+                                // save pdf
+                                self.saveTapped.toggle()
+                                self.saveButton.toggle()
+                                FeedbackManager.mediumFeedback()
+
+                            }.settingsBackground()
+
+                            Button("Cancel") {
+                                // give an alert
+                                self.alertTitle = "Notice"
+                                self.activeAlertContext = .notice
+                                self.alertMessage = "Are you sure you want to cancel the changes made"
+                                // dimiss without saving
+                                self.showAlert.toggle()
+
+                            }.settingsBackground()
+                                .foregroundColor(.red)
                         }
+                    } else {
+                        if !self.canEdit && !self.canEditSignature {
+                            VStack{
+                                Image(systemName: "text.quote")
+                                    .font(.system(size: 20))
+                                    .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
+                                    .padding(.top, 5)
+                                    .padding([.leading, .trailing])
+                                Text("OCR").font(.caption)
+                                    .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
+                                    .padding(.bottom, 2)
+                            }
+                            .onTapGesture {
+                                FeedbackManager.mediumFeedback()
+                                if AppSettings.shared.bougthNonConsumable {
+                                    self.alertTitle = "Notice"
+                                    self.activeAlertContext = .noPurchase
+                                    self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
+                                    self.showAlert.toggle()
+                                } else {
+                                    self.isLoading.toggle()
+                                    self.extractText()
+                                }
+                            }
+                        }
+                    }
+
+
+
+                    Spacer()
+                    VStack {
+                        Image(systemName: "pencil.and.outline")
+                        .font(.system(size: 20))
+                        .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
+                            .padding(.top, 5)
+                            .padding([.leading, .trailing])
+                        Text("Draw").font(.caption)
+                            .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
+                            .padding(.bottom, 2)
+                    }
                         .onTapGesture {
                             FeedbackManager.mediumFeedback()
                             if !AppSettings.shared.bougthNonConsumable {
                                 self.alertTitle = "Notice"
                                 self.activeAlertContext = .noPurchase
                                 self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
+                                // dimiss without saving
                                 self.showAlert.toggle()
                             } else {
-                                self.extractText()
+                                self.toolsTapped()
+
                             }
-                        }
-                        
-                        Spacer()
-                        
-                        VStack{
-                            Image(systemName: "doc.on.doc.fill")
-                                .font(.system(size: 20))
-                                .foregroundColor(.blue)
-                                .padding(.top, 5)
-                                .padding([.leading, .trailing])
-                            Text("Edit").font(.caption)
-                                .foregroundColor(.blue)
-                                .padding(.bottom, 2)
-                        }
-                        .onTapGesture {
-                            FeedbackManager.mediumFeedback()
-                            self.getImages()
-                        }
                     }
-                }
-
-
-
-                Spacer()
-                VStack {
-                    Image(systemName: "pencil.and.outline")
-                    .font(.system(size: 20))
-                    .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
-                        .padding(.top, 5)
-                        .padding([.leading, .trailing])
-                    Text("Draw").font(.caption)
-                        .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
-                        .padding(.bottom, 2)
-                }
-                    .onTapGesture {
-                        FeedbackManager.mediumFeedback()
-                        if !AppSettings.shared.bougthNonConsumable {
-                            self.alertTitle = "Notice"
-                            self.activeAlertContext = .noPurchase
-                            self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
-                            // dimiss without saving
-                            self.showAlert.toggle()
-                        } else {
-                            self.toolsTapped()
-
-                        }
-                }
-            }.debugPrint("HStack 💻")
-            .background(Color(.secondarySystemBackground))
-        }.debugPrint("VStack 🧸")
+                }.debugPrint("HStack 💻")
+                .background(Color(.secondarySystemBackground))
+            }.debugPrint("VStack 🧸")
+        }
 
         .sheet(isPresented: $isShown) {
             if self.activeContext == .shareSheet {
@@ -156,7 +143,9 @@ struct DetailPdfView: View, Equatable {
             } else if self.activeContext == .signature {
                 SignaturePageView(image: self.$image)
             } else if self.activeContext == .ocrPage {
-                OCRTextView(recognizedText: "Scanning", imageToScan: self.images)
+                OCRTextView(recognizedText: "Scanning", imageToScan: self.images).onAppear {
+                    self.isLoading.toggle()
+                }
             } else if self.activeContext == .editPage {
                 EditPdfSubView(pdfName: self.item.wrappedItemName, selectedIconName: self.item.wrappedIconName, mainPages: self.images, url: self.url, pdfEditted: self.$url)
             }

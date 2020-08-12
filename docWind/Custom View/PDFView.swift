@@ -42,7 +42,6 @@ struct PDFCustomView: UIViewRepresentable {
         
         // assignig pdfDrawer
         pdfDrawer.pdfView = uiView
-        uiView.document = PDFDocument(url: URL(string: self.fileURL)!)
         
         // setting pdfThumbnailView
         pdfThumbnailView.pdfView = uiView
@@ -56,6 +55,7 @@ struct PDFCustomView: UIViewRepresentable {
             print(uiView)
             uiView.document?.write(to: URL(string: fileURL)!)
         }
+
         print("resetting switching back to page gesture")
         for recog in uiView.gestureRecognizers! {
             uiView.removeGestureRecognizer(recog)
@@ -93,6 +93,7 @@ struct PDFCustomView: UIViewRepresentable {
                     uiView.removeGestureRecognizer(recog)
                 }
                 uiView.addSubview(pdfThumbnailView)
+//                uiView.document = PDFDocument(url: URL(string: self.fileURL)!)
             }
             
         } else {
@@ -103,6 +104,7 @@ struct PDFCustomView: UIViewRepresentable {
                 for recog in uiView.gestureRecognizers! {
                     uiView.removeGestureRecognizer(recog)
                 }
+//                uiView.document = PDFDocument(url: URL(string: self.fileURL)!)
             }
         }
         
@@ -147,6 +149,7 @@ struct PDFCustomView: UIViewRepresentable {
                     for recog in uiView.gestureRecognizers! {
                         uiView.removeGestureRecognizer(recog)
                     }
+                    uiView.document = PDFDocument(url: URL(string: self.fileURL)!)
                 }
             } else {
                 print("CAN EDIT ON")

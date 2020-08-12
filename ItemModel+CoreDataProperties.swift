@@ -60,4 +60,12 @@ extension ItemModel {
             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
         }
     }
+    static func updateObject(in managedObjectContext: NSManagedObjectContext) {
+        do {
+            try managedObjectContext.save()
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+    }
 }

@@ -37,7 +37,7 @@ struct ScannerView: UIViewControllerRepresentable {
             let acIndicator = UIActivityIndicatorView(style: .large)
             acIndicator.hidesWhenStopped = true
             acIndicator.center = uiViewController.view.center
-            acIndicator.color = .cyan
+            acIndicator.color = .systemBlue
             uiViewController.view.addSubview(acIndicator)
             uiViewController.view.bringSubviewToFront(acIndicator)
             acIndicator.startAnimating()

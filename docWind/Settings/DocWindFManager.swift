@@ -18,6 +18,7 @@ protocol DocWindFManager {
     func creatingDirectory(direcName: String) -> Bool
     func createSubDirectory(direcName: String) -> (Bool, String)
     func createSubSubDirectory(headName: URL, newDirecName: String) -> (Bool, String)
+    func renameFile(oldPath: String, newName: String) -> (Bool, String)
     func savePdfWithDataContent(pdfData: Data, pdfName: String, direcName: String?) -> (Bool, String)
     func savePdfWithSubFolder(pdfData: Data, pdfName: String, subDir: String) -> (Bool, String)
     func deleteSavedPdf(direcName: String?, fileName: String) -> Bool
@@ -77,6 +78,29 @@ extension DocWindFManager {
                 print("////reason: \(error.localizedDescription)")
                 status = false
             }
+        }
+        
+        return (status, path)
+    }
+    
+    func renameFile(oldPath: String, newName: String) -> (Bool, String) {
+        var status = false
+        var path = ""
+        
+        guard let oldDirecURL = URL(string: oldPath) else { fatalError("couldnt get oldDirecURL") }
+        print("ORIGINAL PATH -----> \(oldDirecURL)")
+        let oldPathURLExcludingFileName = oldDirecURL.deletingLastPathComponent()
+        print("AFTER DELETING LAST COMPONENT -----> \(oldPathURLExcludingFileName)")
+        let newPathURLIncludingNewFileName = oldPathURLExcludingFileName.appendingPathComponent(newName, isDirectory: false)
+        print("AFTER APPENDING NEW PATH ----> \(newPathURLIncludingNewFileName)")
+        
+        do {
+            try FileManager.default.moveItem(at: oldDirecURL, to: newPathURLIncludingNewFileName)
+            status = true
+            path = newPathURLIncludingNewFileName.absoluteString
+        } catch {
+            status = false
+            print("❌ ERROR RENAMING FILE: \(error.localizedDescription)")
         }
         
         return (status, path)

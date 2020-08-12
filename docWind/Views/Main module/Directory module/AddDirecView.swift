@@ -93,7 +93,7 @@ struct AddDirecView: View {
                 }
                 
             } else {
-                self.alertMessage = "Folder name already exists chose a new"
+                self.alertMessage = "Folder name already exists chose a new one"
                 self.showAlert.toggle()
             }
             
