@@ -91,7 +91,7 @@ struct DetailPdfView: View, Equatable {
                             }
                             .onTapGesture {
                                 FeedbackManager.mediumFeedback()
-                                if AppSettings.shared.bougthNonConsumable {
+                                if !AppSettings.shared.bougthNonConsumable {
                                     self.alertTitle = "Notice"
                                     self.activeAlertContext = .noPurchase
                                     self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
