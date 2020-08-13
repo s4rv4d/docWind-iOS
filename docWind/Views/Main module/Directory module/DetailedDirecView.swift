@@ -60,7 +60,6 @@ struct DetailedDirecView: View {
                         .multilineTextAlignment(.center)
                             .padding([.leading, .trailing, .top])
                         Color.clear
-//                        .add(self.searchBar)
                     } else {
                         List {
                             Section(header: Text("\(String(masterFolder.split(separator: "/").last!)) > \(item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
@@ -82,12 +81,12 @@ struct DetailedDirecView: View {
                     .multilineTextAlignment(.center)
                         .padding([.leading, .trailing, .top])
                     Color.clear
-//                    .add(self.searchBar)
                 }
                 
 //                Spacer()
                     
-            }.add(self.searchBar)
+            }
+//            .add(self.searchBar)
             
             // button
             ZStack(alignment: .bottom) {

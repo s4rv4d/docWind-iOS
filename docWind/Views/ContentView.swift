@@ -52,7 +52,7 @@ struct ContentView: View {
                                             .environment(\.managedObjectContext, self.context)
                                     }.onDelete(perform: self.deleteRow(at:))
                                 }
-                            }
+                            }.add(self.searchBar)
                             .listStyle(GroupedListStyle())
                         }
                     } else {
@@ -107,7 +107,6 @@ struct ContentView: View {
                     .font(.system(size: 20))
                     .foregroundColor(.blue)
                 })
-            .add(self.searchBar)
     
         }
         .navigationViewStyle(StackNavigationViewStyle())
