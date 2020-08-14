@@ -28,14 +28,15 @@ struct LoadingView<Content>: View where Content: View {
                     
                     VStack {
     //                    Text("Loading...")
-                        ActivityIndicator(isAnimating: self.$isShowing)
-                        VStack {
-                            Text("This may take a few minutes ⏱")
+                        ActivityIndicator(isAnimating: self.$isShowing).padding(.top)
+                        VStack(spacing: 5) {
+                            Text("This may take a few minutes")
                                 .font(.body)
                             Text("Please wait")
                                 .font(.caption)
-                        }.settingsBackground()
-                    }
+                        }.padding(.bottom)
+//                        .settingsBackground()
+                    }.settingsBackground()
                 }
 
 

@@ -23,8 +23,8 @@ struct AddDirecView: View {
     @Environment(\.managedObjectContext) var context
     
     // MARK: - Properties
-    var iconColors: [Color] = [.blue, .red, .green, .yellow, .pink]
-    var iconNameString: [Color: String] = [.blue:"blue", .red:"red", .green:"green", .yellow:"yellow", .pink:"pink"]
+    var iconColors: [Color] = [.blue, .red, .green, .yellow, .pink, .black, .gray, .orange, .purple]
+    var iconNameString: [Color: String] = [.blue:"blue", .red:"red", .green:"green", .yellow:"yellow", .pink:"pink", .black : "black", .gray: "gray", .orange: "orange", .purple: "purple"]
     
     var body: some View {
         NavigationView {
@@ -62,9 +62,11 @@ struct AddDirecView: View {
 
             }
         .navigationBarTitle(Text("Add a new directory"))
-            .navigationBarItems(leading: Button("Cancel") {
+            .navigationBarItems(leading: Button(action: {
                 FeedbackManager.mediumFeedback()
                 self.presentationMode.wrappedValue.dismiss()
+            }) {
+                Text("Cancel")
                 }, trailing: Button(action:  saveTapped){
                     Text("Save")
             })

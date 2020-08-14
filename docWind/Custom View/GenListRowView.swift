@@ -15,7 +15,7 @@ struct GenListRowView: View {
     // MARK: - Properties
     let itemArray: ItemModel
     let masterFolder: String
-    var iconNameString: [String: Color] = ["blue":.blue, "red":.red, "green":.green, "yellow":.yellow, "pink":.pink]
+    var iconNameString: [String: Color] = ["blue":.blue, "red":.red, "green":.green, "yellow":.yellow, "pink":.pink, "black": .black, "gray": .gray, "orange": .orange, "purple": .purple]
     
     @State private var url = ""
     @State private var uiImages = [UIImage]()

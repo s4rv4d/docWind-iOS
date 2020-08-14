@@ -43,26 +43,26 @@ struct SubcriptionPageView: View {
                 HStack{
                     Text("You are a docWind" )
                         .font(.title)
-                        .fontWeight(.thin)
+                        .fontWeight(.regular)
                         + Text("+")
                             .font(.title)
                             .foregroundColor(.yellow)
                     + Text(" user 🤩, you have access to:")
                         .font(.title)
-                        .fontWeight(.thin)
+                        .fontWeight(.regular)
                 }.padding()
                     .multilineTextAlignment(.center)
             } else {
                 HStack{
                     Text("The docWind" )
                         .font(.title)
-                        .fontWeight(.thin)
+                        .fontWeight(.regular)
                         + Text("+")
                             .font(.title)
                             .foregroundColor(.yellow)
                     + Text(" features include the following")
                         .font(.title)
-                        .fontWeight(.thin)
+                        .fontWeight(.regular)
                 }.padding()
                     .multilineTextAlignment(.center)
             }
@@ -76,7 +76,7 @@ struct SubcriptionPageView: View {
                                 .multilineTextAlignment(.center)
                             Text("Get important info right after scanning a document")
                                 .font(.body)
-                                .fontWeight(.thin)
+                                .fontWeight(.regular)
                                 .multilineTextAlignment(.center)
                         }
                         VStack {
@@ -86,7 +86,7 @@ struct SubcriptionPageView: View {
                                 .multilineTextAlignment(.center)
                             Text("Be able to edit your documents with annotations and custom signature")
                                 .font(.body)
-                                .fontWeight(.thin)
+                                .fontWeight(.regular)
                                 .multilineTextAlignment(.center)
                         }
                         VStack {
@@ -96,7 +96,7 @@ struct SubcriptionPageView: View {
                                 .multilineTextAlignment(.center)
                             Text("Dont like the default watermark?, remove it with docWind+")
                                 .font(.body)
-                                .fontWeight(.thin)
+                                .fontWeight(.regular)
                                 .multilineTextAlignment(.center)
                         }
 

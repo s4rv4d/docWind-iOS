@@ -27,6 +27,16 @@ extension View {
             .padding(.horizontal)
     }
     
+    func settingsBackgroundButtons(color: Color) -> some View {
+        self
+            .padding(.horizontal)
+            .padding(.vertical, 8)
+            .background(RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(color.opacity(0.4)))
+            .padding(.bottom, 6)
+//            .padding(.horizontal)
+    }
+    
     func takeScreenshot(origin: CGPoint, size: CGSize) -> UIImage {
         let window = UIWindow(frame: CGRect(origin: origin, size: size))
         let hosting = UIHostingController(rootView: self)

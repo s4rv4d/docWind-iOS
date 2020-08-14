@@ -146,8 +146,6 @@ struct DetailPdfView: View, Equatable {
                 OCRTextView(recognizedText: "Scanning", imageToScan: self.images).onAppear {
                     self.isLoading.toggle()
                 }
-            } else if self.activeContext == .editPage {
-                EditPdfSubView(pdfName: self.item.wrappedItemName, selectedIconName: self.item.wrappedIconName, mainPages: self.images, url: self.url, pdfEditted: self.$url)
             }
         }
         .onAppear {
