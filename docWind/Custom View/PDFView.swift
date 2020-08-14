@@ -22,7 +22,7 @@ struct PDFCustomView: UIViewRepresentable {
     @Binding var alreadyAdded: Bool
 
     let pdfDrawer = PDFDrawer()
-    let pdfThumbnailView = PDFThumbnailView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 250, width: UIScreen.main.bounds.width, height: 150))
+    let pdfThumbnailView = PDFThumbnailView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 250, width: UIScreen.main.bounds.width, height: 100))
      
     
     func makeUIView(context: UIViewRepresentableContext<PDFCustomView>) -> PDFView {

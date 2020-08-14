@@ -160,29 +160,6 @@ struct GenListRowView: View {
         }
     }
     
-    func authenticateView(status: @escaping(Bool) -> Void) {
-        let context = LAContext()
-        var error: NSError?
-        
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "Unlock app"
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { (success, authError) in
-                DispatchQueue.main.async {
-                    if success {
-                        // allow access
-                        status(true)
-                    } else {
-//                        self.authenticateView()
-                        status(false)
-                    }
-                }
-            }
-        } else {
-            //show error
-            self.showAlert.toggle()
-        }
-    }
-    
     func deleteObject() {
         if isFile {
             // deleting file

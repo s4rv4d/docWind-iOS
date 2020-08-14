@@ -12,6 +12,7 @@ import CoreData
 struct ContentView: View {
     
     //MARK: - @State variables
+    @State var searchString = ""
     @State private var tapped = false
     @State private var isShown = false
     @State private var animationAmount: CGFloat = 1
@@ -34,25 +35,25 @@ struct ContentView: View {
     
     // MARK: - Properties
     var body: some View {
-        NavigationView {
+        SearchNavigation(text: $searchString, largeDisplay: true) {
             ZStack {
                 VStack(alignment: .leading) {
                     //check if contents isnt empty
-                    if items.first != nil {
+                    if self.items.first != nil {
                         // display contents of file
-                        if (items.first!.fileArray.count == 0) {
+                        if (self.items.first!.fileArray.count == 0) {
                             NewStarterView()
                             EmptyView()
                             Color.clear
                         } else {
                             List {
                                 Section(header: Text("DocWind >").font(.caption), footer: Text("Tap and hold on a cell for more options").font(.caption)) {
-                                    ForEach(self.items.first!.fileArray.filter { searchBar.text.isEmpty || $0.wrappedItemName.localizedStandardContains(searchBar.text)}, id: \.self) { item in
+                                    ForEach(self.items.first!.fileArray.filter { self.searchString.isEmpty || $0.wrappedItemName.localizedStandardContains(self.searchString)}, id: \.self) { item in
                                         NormalListRowView(itemArray: item, masterFolder: "\(DWFMAppSettings.shared.fileURL())")
                                             .environment(\.managedObjectContext, self.context)
                                     }.onDelete(perform: self.deleteRow(at:))
                                 }
-                            }.add(self.searchBar)
+                            }
                             .listStyle(GroupedListStyle())
                         }
                     } else {
@@ -66,9 +67,9 @@ struct ContentView: View {
                     .foregroundColor(.clear)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     
-                    Button(action: showOptions) {
+                    Button(action: self.showOptions) {
                         Image(systemName: "plus")
-                            .rotationEffect(.degrees(tapped ? 45 : 0))
+                            .rotationEffect(.degrees(self.tapped ? 45 : 0))
                             .foregroundColor(.white)
                             .font(.title)
                             .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
@@ -81,8 +82,8 @@ struct ContentView: View {
                             .overlay(
                                 Circle()
                                     .stroke(Color.blue, lineWidth: 1)
-                                    .scaleEffect(animationAmount)
-                                    .opacity(Double(2 - animationAmount))
+                                    .scaleEffect(self.animationAmount)
+                                    .opacity(Double(2 - self.animationAmount))
                                     .animation(
                                         Animation.easeOut(duration: 1)
                                         .repeatCount(10, autoreverses: false)
@@ -93,23 +94,24 @@ struct ContentView: View {
                         }
                         .padding()
                     // secondary buttons
-                    SecondaryButtonView(tapped: $tapped, icon: "folder.fill", color: .green, offsetX: 90, action: createDiectory).padding()
-                    SecondaryButtonView(tapped: $tapped, icon: "camera.fill", color: .pink, offsetY: -90, delay: 0.2, action: scanDocumentTapped).padding()
-                    SecondaryButtonView(tapped: $tapped, icon: "arrow.up.doc.fill", color: .orange, offsetX: -90, delay: 0.4, action: importTapped).padding()
+                    SecondaryButtonView(tapped: self.$tapped, icon: "folder.fill", color: .green, offsetX: 90, action: self.createDiectory).padding()
+                    SecondaryButtonView(tapped: self.$tapped, icon: "camera.fill", color: .pink, offsetY: -90, delay: 0.2, action: self.scanDocumentTapped).padding()
+                    SecondaryButtonView(tapped: self.$tapped, icon: "arrow.up.doc.fill", color: .orange, offsetX: -90, delay: 0.4, action: self.importTapped).padding()
                 }
             }
                 
             .navigationBarTitle(Text("docWind"))
             .navigationViewStyle(StackNavigationViewStyle())
             .navigationBarItems(leading:
-                Button(action: settingsTapped) {
+                Button(action: self.settingsTapped) {
                     Image(systemName: "gear")
                     .font(.system(size: 20))
                     .foregroundColor(.blue)
                 })
-    
+//            .add(self.searchBar)
         }
         .navigationViewStyle(StackNavigationViewStyle())
+            
                 
         // On appear code
         .onAppear {

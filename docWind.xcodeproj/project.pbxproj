@@ -79,6 +79,7 @@
 		40DD4F7724C087AE00D37EFA /* ImagePanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DD4F7624C087AE00D37EFA /* ImagePanGestureRecognizer.swift */; };
 		40DF994824B2E452001CEC67 /* DWDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DF994724B2E452001CEC67 /* DWDateFormatter.swift */; };
 		40DF994A24B2F5A2001CEC67 /* AddPdfMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */; };
+		40E387D524E65049001E23D2 /* SearchNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E387D424E65049001E23D2 /* SearchNavigation.swift */; };
 		40EF391C24BF5E82007BBAC0 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EF391B24BF5E82007BBAC0 /* ToastView.swift */; };
 		40EF462C24B4ADF700D07A06 /* ConfPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EF462B24B4ADF700D07A06 /* ConfPdfView.swift */; };
 		40FB481724B8AE900045CF13 /* OCRTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB481624B8AE900045CF13 /* OCRTextView.swift */; };
@@ -183,6 +184,7 @@
 		40DD4F7624C087AE00D37EFA /* ImagePanGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePanGestureRecognizer.swift; sourceTree = "<group>"; };
 		40DF994724B2E452001CEC67 /* DWDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWDateFormatter.swift; sourceTree = "<group>"; };
 		40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPdfMainView.swift; sourceTree = "<group>"; };
+		40E387D424E65049001E23D2 /* SearchNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNavigation.swift; sourceTree = "<group>"; };
 		40EF391B24BF5E82007BBAC0 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		40EF462B24B4ADF700D07A06 /* ConfPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfPdfView.swift; sourceTree = "<group>"; };
 		40FB481624B8AE900045CF13 /* OCRTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTextView.swift; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 				40D1B12024DC4E7D00859F1A /* SecondaryButtonView.swift */,
 				409B927E24E43E6300F30EFF /* ActivityIndicatorView.swift */,
 				409B928024E43EDF00F30EFF /* LoadingView.swift */,
+				40E387D424E65049001E23D2 /* SearchNavigation.swift */,
 			);
 			path = "Custom View";
 			sourceTree = "<group>";
@@ -613,6 +616,7 @@
 				40CDC4CA24AF72CD00462277 /* PdfFilemodel+CoreDataProperties.swift in Sources */,
 				40DF994A24B2F5A2001CEC67 /* AddPdfMainView.swift in Sources */,
 				40CDC4CB24AF72CD00462277 /* DirecModel+CoreDataClass.swift in Sources */,
+				40E387D524E65049001E23D2 /* SearchNavigation.swift in Sources */,
 				40CDC4C924AF72CD00462277 /* PdfFilemodel+CoreDataClass.swift in Sources */,
 				40920EB224B74E7800E2293C /* SlideOverCardView.swift in Sources */,
 				40FDE48124AB964B006AAFD2 /* docWind.xcdatamodeld in Sources */,
@@ -792,7 +796,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
@@ -816,7 +820,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;

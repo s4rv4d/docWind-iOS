@@ -230,10 +230,8 @@ struct NormalListRowView: View {
                                 let img = renderer.image { ctx in
                                     UIColor.white.set()
                                     ctx.fill(pageRect)
-
                                     ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
                                     ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
-
                                     ctx.cgContext.drawPDFPage(page)
                                 }
                                 imgs.append(img)

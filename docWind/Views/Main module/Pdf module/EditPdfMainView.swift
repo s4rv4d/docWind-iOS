@@ -58,31 +58,31 @@ struct EditPdfMainView: View {
                     TextField("Enter a name", text: $pdfName)
                 }
                 
-//                Section(header: Text("Choose a file icon")) {
-//                    ScrollView(.horizontal) {
-//                        HStack {
-//                            ForEach(0..<iconColors.count) { index in
-//                                VStack {
-//                                    Image(systemName: "doc.fill")
-//                                        .foregroundColor(self.iconColors[index])
-//                                        .font(.body)
-//                                        .padding(.bottom)
-//                                    if self.selectedIconName == self.iconNameString[self.iconColors[index]]! {
-//                                        withAnimation{
-//                                            Circle()
-//                                                .foregroundColor(.primary)
-//                                            .frame(width: 10, height: 10)
-//                                                .padding(.bottom)
-//                                        }
-//                                    }
-//                                    }.padding()
-//                                .onTapGesture {
-//                                    self.selectedIconName = self.iconNameString[self.iconColors[index]]!
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
+                Section(header: Text("Choose a file icon")) {
+                    ScrollView(.horizontal) {
+                        HStack {
+                            ForEach(0..<iconColors.count) { index in
+                                VStack {
+                                    Image(systemName: "doc.fill")
+                                        .foregroundColor(self.iconColors[index])
+                                        .font(.body)
+                                        .padding(.bottom)
+                                    if self.selectedIconName == self.iconNameString[self.iconColors[index]]! {
+                                        withAnimation{
+                                            Circle()
+                                                .foregroundColor(.primary)
+                                                .frame(width: 10, height: 10)
+                                                .padding(.bottom)
+                                        }
+                                    }
+                                    }.padding()
+                                .onTapGesture {
+                                    self.selectedIconName = self.iconNameString[self.iconColors[index]]!
+                                }
+                            }
+                        }
+                    }
+                }
                 
                 Section(header: Text("Add pages?"), footer: Text("Tap on image for more options").isHidden(pages.count == 0)) {
                     if pages.count == 0 {
@@ -137,14 +137,13 @@ struct EditPdfMainView: View {
                             Spacer()
                         }
                     }
-//                    .disabled(!AppSettings.shared.bougthNonConsumable)
-                        .onTapGesture {
-                            if !AppSettings.shared.bougthNonConsumable {
-                              print("You need to buy")
-                                self.activeAlertSheet = .notice
-                                self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
-                                self.showAlert.toggle()
-                            }
+                    .onTapGesture {
+                        if !AppSettings.shared.bougthNonConsumable {
+                          print("You need to buy")
+                            self.activeAlertSheet = .notice
+                            self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
+                            self.showAlert.toggle()
+                        }
                     }
                 }
                 
@@ -174,13 +173,6 @@ struct EditPdfMainView: View {
                     ImagePickerView(pages: self.$pages, pagesWithMark: self.$pagesWithMark)
                 }
             }
-        .actionSheet(isPresented: $showingActionSheet) {
-            ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
-                .default(Text("Scan a document"), action: scanTapped),
-                .default(Text("Choose an image"), action: addImagesTapped),
-                .cancel()
-            ])
-        }
     }
     
     private func saveTapped() {
@@ -212,6 +204,7 @@ struct EditPdfMainView: View {
                     // update in core data
                     item.itemURL = path
                     item.itemName = pdfName
+                    item.iconName = selectedIconName
                     ItemModel.updateObject(in: self.context)
                     
                     // and resave pdf file in new item url

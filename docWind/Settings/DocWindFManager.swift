@@ -452,6 +452,7 @@ extension DocWindFManager {
             
             do {
                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+                print(contents)
                 for url in contents {
                     if url.description.contains(fileName) {
                         status = true
@@ -502,7 +503,7 @@ extension DocWindFManager {
         print("Updated Manager Path: ------> \(String(describing: logsPath))")
         
         //check if path already exist
-        if self.pdfFileAlreadySaved(direcName: nil, fileName: direcName) {
+        if self.pdfFileAlreadySaved(direcName: nil, fileName: "/\(direcName)/") {
             status = false
             print("❌ PDF ALREADY SAVED BEFORE")
         } else {

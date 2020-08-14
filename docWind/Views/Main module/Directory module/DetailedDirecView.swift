@@ -48,71 +48,76 @@ struct DetailedDirecView: View {
     
     // MARK: - Properties
     var body: some View {
-        ZStack(alignment: .top) {
-            VStack(alignment: .leading) {
-                //check if contents isnt empty
-                if items.first != nil {
-                    // display contents of file
-                    if (items.first?.fileArray.count == 0) {
-                        Text("Looks empty here, scan a new document or create a new directory using the '+' button above.")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.center)
-                            .padding([.leading, .trailing, .top])
-                        Color.clear
-                    } else {
-                        List {
-                            Section(header: Text("\(String(masterFolder.split(separator: "/").last!)) > \(item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
-                                ForEach(items.first!.fileArray.filter {
-                                    searchBar.text.isEmpty ||
-                                        $0.wrappedItemName.localizedStandardContains(searchBar.text)
-                                }, id: \.self){ item in
-                                    GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
-                                }.onDelete(perform: self.deleteRow(at:))
+            ZStack(alignment: .top) {
+                        VStack(alignment: .leading) {
+                            //check if contents isnt empty
+                            if self.items.first != nil {
+                                // display contents of file
+                                if (self.items.first?.fileArray.count == 0) {
+                                    Text("Looks empty here, scan a new document or create a new directory using the '+' button above.")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                                    .multilineTextAlignment(.center)
+                                        .padding([.leading, .trailing, .top])
+                                    Color.clear
+                                } else {
+                                    List {
+                                        Section(header: Text("\(String(self.masterFolder.split(separator: "/").last!)) > \(self.item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
+                                            ForEach(self.items.first!.fileArray.filter {
+                                                self.searchBar.text.isEmpty ||
+                                                    $0.wrappedItemName.localizedStandardContains(self.searchBar.text)
+                                            }, id: \.self){ item in
+                                                GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
+                                            }.onDelete(perform: self.deleteRow(at:))
+                                        }
+                                    }
+                                    .listStyle(GroupedListStyle())
+                                    .add(self.searchBar)
+                                }
+                            } else {
+                                Text("Looks empty here, scan a new document using the '+' button above.")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                                .multilineTextAlignment(.center)
+                                    .padding([.leading, .trailing, .top])
+                                Color.clear
                             }
                         }
-                        .listStyle(GroupedListStyle())
-                        .add(self.searchBar)
+                        
+                        // button
+                        ZStack(alignment: .bottom) {
+                            Rectangle()
+                            .foregroundColor(.clear)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            
+                            Button(action: self.showOptions) {
+                                Image(systemName: "plus")
+                                    .rotationEffect(.degrees(self.tapped ? 45 : 0))
+                                    .foregroundColor(.white)
+                                    .font(.title)
+                                    .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
+                                }
+                                .padding(24)
+                                .background(Color.blue)
+                                .mask(Circle())
+                                .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
+                                .zIndex(10)
+                                .padding()
+                            // secondary buttons
+                            SecondaryButtonView(tapped: self.$tapped, icon: "folder.fill", color: .green, offsetX: 90, action: self.createDiectory).padding()
+                            SecondaryButtonView(tapped: self.$tapped, icon: "camera.fill", color: .pink, offsetY: -90, delay: 0.2, action: self.createFile).padding()
+                            SecondaryButtonView(tapped: self.$tapped, icon: "arrow.up.doc.fill", color: .orange, offsetX: -90, delay: 0.4, action: self.importTapped).padding()
+                        }
                     }
-                } else {
-                    Text("Looks empty here, scan a new document using the '+' button above.")
-                    .font(.caption)
-                    .foregroundColor(.gray)
-                    .multilineTextAlignment(.center)
-                        .padding([.leading, .trailing, .top])
-                    Color.clear
-                }
-                
-//                Spacer()
-                    
-            }
-//            .add(self.searchBar)
-            
-            // button
-            ZStack(alignment: .bottom) {
-                Rectangle()
-                .foregroundColor(.clear)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                
-                Button(action: showOptions) {
-                    Image(systemName: "plus")
-                        .rotationEffect(.degrees(tapped ? 45 : 0))
-                        .foregroundColor(.white)
-                        .font(.title)
-                        .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
-                    }
-                    .padding(24)
-                    .background(Color.blue)
-                    .mask(Circle())
-                    .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
-                    .zIndex(10)                    .padding()
-                // secondary buttons
-                SecondaryButtonView(tapped: $tapped, icon: "folder.fill", color: .green, offsetX: 90, action: createDiectory).padding()
-                SecondaryButtonView(tapped: $tapped, icon: "camera.fill", color: .pink, offsetY: -90, delay: 0.2, action: createFile).padding()
-                SecondaryButtonView(tapped: $tapped, icon: "arrow.up.doc.fill", color: .orange, offsetX: -90, delay: 0.4, action: importTapped).padding()
-            }
+                    // sheet code
+        .navigationBarTitle(Text(self.item.wrappedItemName), displayMode: .inline)
+        .navigationViewStyle(StackNavigationViewStyle())
+        .alert(isPresented: $showAlert) {
+             Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel(Text("Dismiss"), action: {
+                    print("retry")
+                }))
         }
-        // sheet code
+        
         .sheet(isPresented: $isShown) {
             if self.activeSheet == .intro {
 
@@ -123,14 +128,6 @@ struct DetailedDirecView: View {
             } else if self.activeSheet == .importDoc {
                 DocumentPickerView(headPath: self.item.wrappedItemUrl, headName: self.masterDirecName, alertState: self.$showAlert, alertMessage: self.$alertMessage).environment(\.managedObjectContext, self.context)
             }
-        }
-            
-        .navigationBarTitle(Text(item.wrappedItemName), displayMode: .inline)
-        .navigationViewStyle(StackNavigationViewStyle())
-        .alert(isPresented: $showAlert) {
-             Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel(Text("Dismiss"), action: {
-                    print("retry")
-                }))
         }
         
     }
