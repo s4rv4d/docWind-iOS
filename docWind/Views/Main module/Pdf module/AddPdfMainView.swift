@@ -146,6 +146,10 @@ struct AddPdfMainView: View {
                     Text("Save")
             })
         }
+        .onAppear {
+            self.activeSheet = .scannerView
+            self.showScanner.toggle()
+        }
         .alert(isPresented: $showAlert) {
             if self.activeAlertSheet == .notice {
                return Alert(title: Text("Notice"), message: Text(alertMessage), dismissButton: .cancel())
