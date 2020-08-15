@@ -117,7 +117,7 @@ struct SubcriptionPageView: View {
                 }
                 Spacer()
                 
-                if AppSettings.shared.bougthNonConsumable {
+                if !AppSettings.shared.bougthNonConsumable {
                     ShinyButton(text: "Buy docWind +", background: .green, action: {
                         FeedbackManager.mediumFeedback()
                         
