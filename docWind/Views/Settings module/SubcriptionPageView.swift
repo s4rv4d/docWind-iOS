@@ -145,7 +145,6 @@ struct SubcriptionPageView: View {
                                 IAPService.shared.restorePurchase()
                                 self.alertMessage = "Restored purchase"
                                 self.showAlert.toggle()
-//                                self.presentationMode.wrappedValue.dismiss()
                             }
                         }
                     }).padding()
@@ -154,7 +153,9 @@ struct SubcriptionPageView: View {
             }
             
             .alert(isPresented: $showAlert) {
-                Alert(title: Text("Notice"), message: Text(self.alertMessage), dismissButton: .default(Text("Dismiss")))
+                Alert(title: Text("Notice"), message: Text(self.alertMessage), dismissButton: .default(Text("Dismiss"), action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }))
             }
         }
     }
