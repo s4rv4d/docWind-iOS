@@ -117,8 +117,8 @@ struct SubcriptionPageView: View {
                 }
                 Spacer()
                 
-                if !AppSettings.shared.bougthNonConsumable {
-                    DWButton(text: "Buy docWind +", background: .green, action: {
+                if AppSettings.shared.bougthNonConsumable {
+                    ShinyButton(text: "Buy docWind +", background: .green, action: {
                         FeedbackManager.mediumFeedback()
                         
                         checkConnection { (status, statusCode) in
@@ -134,7 +134,7 @@ struct SubcriptionPageView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
-                    DWButton(text: "Restore purchase", background: .blue, action: {
+                    ShinyButton(text: "Restore purchase", background: .systemBlue, action: {
                         FeedbackManager.mediumFeedback()
                         
                         checkConnection { (status, statusCode) in

@@ -12,7 +12,7 @@ import PDFKit
 struct PDFCustomView: UIViewRepresentable {
     
     // MARK: - Properties
-    @Binding var fileURL: String
+    var fileURL: String
     var options: DrawingTool
     var canEdit: Bool
     var canEditSignature: Bool

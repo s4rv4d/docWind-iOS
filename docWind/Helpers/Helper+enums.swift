@@ -99,5 +99,9 @@ enum IAPProduct: String {
 // active sheet for settings
 
 enum SettingActiveSheet {
-    case appIcon, docSub, mailFeature, mailBug, shareSheet
+    case appIcon, docSub, mailFeature, mailBug, shareSheet, dependency
+}
+
+enum ViewSide {
+    case Left, Right, Top, Bottom
 }

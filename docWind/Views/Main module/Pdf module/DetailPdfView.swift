@@ -15,9 +15,9 @@ struct DetailPdfView: View, Equatable {
     @Environment(\.presentationMode) var presentationMode
     
     // MARK: - @State variables
-     var item: ItemModel
+    var item: ItemModel
     @State var url: String = ""
-     var master: String = ""
+    var master: String = ""
     @State private var alertTitle = "Error"
     @State private var alertMessage = ""
     @State private var showAlert = false
@@ -41,7 +41,7 @@ struct DetailPdfView: View, Equatable {
         LoadingView(isShowing: $isLoading) {
             VStack {
                 if self.url != "" {
-                    PDFCustomView(fileURL: self.$url, options: self.options, canEdit: self.canEdit, canEditSignature: self.canEditSignature, color: self.color, saveTapped: self.saveTapped, image: self.image, alreadyAdded: self.$alreadyAdded)
+                    PDFCustomView(fileURL: self.url, options: self.options, canEdit: self.canEdit, canEditSignature: self.canEditSignature, color: self.color, saveTapped: self.saveTapped, image: self.image, alreadyAdded: self.$alreadyAdded)
                         .debugPrint("PRESENTED PDFCUSTOMVIEW 📄 \(self.url)")
                 }
                 Spacer()
@@ -137,7 +137,8 @@ struct DetailPdfView: View, Equatable {
 
         .sheet(isPresented: $isShown) {
             if self.activeContext == .shareSheet {
-                ShareSheetView(activityItems: [URL(string: self.url)!])
+                ShareSheetView(activityItems: [URL(string: self.url)!]).onAppear{
+                    self.isLoading.toggle()}
             } else if self.activeContext == .toolBox {
                 PDFToolBarView(color: self.$color, lineWidth: self.$lineWidth, options: self.$options, openSignature: self.$isShown, activeContext: self.$activeContext, canEdit: self.$canEdit, canEditSignature: self.$canEditSignature, imageThere: self.$image)
             } else if self.activeContext == .signature {
@@ -195,9 +196,12 @@ struct DetailPdfView: View, Equatable {
     }
     
     func sharePdf() {
-        FeedbackManager.mediumFeedback()
-        self.activeContext = .shareSheet
-        self.isShown.toggle()
+        DispatchQueue.main.async {
+            FeedbackManager.mediumFeedback()
+            self.isLoading.toggle()
+            self.activeContext = .shareSheet
+            self.isShown.toggle()
+        }
     }
     
     func toolsTapped() {

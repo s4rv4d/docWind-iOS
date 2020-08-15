@@ -23,7 +23,6 @@ struct AddPdfMainView: View {
     @State var mainPages: [UIImage] = [UIImage]()
     @State var pages: [UIImage] = [UIImage]()
     @State var pagesWithMark: [UIImage] = [UIImage]()
-//    @State var pageImages: [Image] = [Image]()
         
     @State private var activeSheet: ActiveOdfMainViewSheet = .scannerView
     @State private var activeAlertSheet: ActiveAlertSheet = .notice
@@ -147,8 +146,10 @@ struct AddPdfMainView: View {
             })
         }
         .onAppear {
-            self.activeSheet = .scannerView
-            self.showScanner.toggle()
+            DispatchQueue.main.async {
+                self.activeSheet = .scannerView
+                self.showScanner.toggle()
+            }
         }
         .alert(isPresented: $showAlert) {
             if self.activeAlertSheet == .notice {

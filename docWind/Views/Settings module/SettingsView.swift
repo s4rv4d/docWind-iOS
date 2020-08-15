@@ -75,6 +75,8 @@ struct SettingsView: View {
                         SettingsRow(imageName: "square.and.arrow.up", title: "Share app?", imageColor: .blue, action: shareAppTapped)
                         Divider()
                         SettingsRow(imageName: "exclamationmark.circle", title: "About developer", imageColor: .purple, action: aboutDevTapped)
+                        Divider()
+                        SettingsRow(imageName: "sparkles", title: "Dependencies used", imageColor: .green, action: dependencyTapped)
                     }.settingsBackground()
                 }.padding(.bottom)
                 // ---- 4
@@ -108,6 +110,8 @@ struct SettingsView: View {
                     MailView(isShowing: self.$showSheet, result: self.$result, subject: "Feature request", message: "Hi, I have an idea that i would like to suggest ")
                 } else if self.activeSheet == .shareSheet {
                     ShareSheetView(activityItems: ["Try out docWind!! (We do not steal your data) \n\(SettingsHelper.appURL)"])
+                } else if self.activeSheet == .dependency {
+                    DependecyPageView()
                 }
             }
         }
@@ -195,5 +199,10 @@ struct SettingsView: View {
     func aboutDevTapped() {
         print("about dev tapped")
         SettingsHelper.openTwitter(twitterURLApp: SettingsHelper.personalTwitterApp, twitterURLWeb: SettingsHelper.personalTwitterWeb)
+    }
+    
+    func dependencyTapped() {
+        self.showSheet.toggle()
+        self.activeSheet = .dependency
     }
 }

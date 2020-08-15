@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,6 +25,8 @@
 		402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */; };
 		40485D8A24B98C9F008A137A /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40485D8924B98C9F008A137A /* TextView.swift */; };
 		40485D8C24B995E7008A137A /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40485D8B24B995E7008A137A /* BlurView.swift */; };
+		404BFAFC24E7C57400A13230 /* Shiny in Frameworks */ = {isa = PBXBuildFile; productRef = 404BFAFB24E7C57400A13230 /* Shiny */; };
+		404BFAFE24E7D59200A13230 /* DependecyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404BFAFD24E7D59200A13230 /* DependecyPageView.swift */; };
 		404D7F9A24B6ED3B002F53F0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404D7F9924B6ED3B002F53F0 /* SettingsView.swift */; };
 		405EE7A624B339B4005F525F /* RecognizedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EE7A524B339B4005F525F /* RecognizedText.swift */; };
 		405EE7A824B339DD005F525F /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EE7A724B339DD005F525F /* ScannerView.swift */; };
@@ -131,6 +133,7 @@
 		402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDirecView.swift; sourceTree = "<group>"; };
 		40485D8924B98C9F008A137A /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		40485D8B24B995E7008A137A /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
+		404BFAFD24E7D59200A13230 /* DependecyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependecyPageView.swift; sourceTree = "<group>"; };
 		404D7F9924B6ED3B002F53F0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		405EE7A524B339B4005F525F /* RecognizedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizedText.swift; sourceTree = "<group>"; };
 		405EE7A724B339DD005F525F /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
@@ -226,6 +229,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				404BFAFC24E7C57400A13230 /* Shiny in Frameworks */,
 				40CDC4D224AF91F800462277 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -274,6 +278,7 @@
 				404D7F9924B6ED3B002F53F0 /* SettingsView.swift */,
 				405EFDC724BCA11A0070BE5F /* AppIconView.swift */,
 				405EFDC924BCA12A0070BE5F /* SubcriptionPageView.swift */,
+				404BFAFD24E7D59200A13230 /* DependecyPageView.swift */,
 			);
 			path = "Settings module";
 			sourceTree = "<group>";
@@ -513,6 +518,9 @@
 			dependencies = (
 			);
 			name = docWind;
+			packageProductDependencies = (
+				404BFAFB24E7C57400A13230 /* Shiny */,
+			);
 			productName = docWind;
 			productReference = 40FDE47824AB964B006AAFD2 /* docWind.app */;
 			productType = "com.apple.product-type.application";
@@ -541,6 +549,9 @@
 				Base,
 			);
 			mainGroup = 40FDE46F24AB964B006AAFD2;
+			packageReferences = (
+				404BFAFA24E7C57400A13230 /* XCRemoteSwiftPackageReference "shiny" */,
+			);
 			productRefGroup = 40FDE47924AB964B006AAFD2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -639,6 +650,7 @@
 				40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */,
 				40FDE49C24AC4EC9006AAFD2 /* Helper+Struct.swift in Sources */,
 				405EFDC624BC9ED90070BE5F /* AppVersionRow.swift in Sources */,
+				404BFAFE24E7D59200A13230 /* DependecyPageView.swift in Sources */,
 				402C0B7224B0B0FF00A5A6C9 /* ScanPdfView.swift in Sources */,
 				40920EB024B744BE00E2293C /* DrawOnImageView.swift in Sources */,
 				40E387D924E66B0F001E23D2 /* ItunesAppInfoResult.swift in Sources */,
@@ -804,7 +816,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
@@ -828,7 +840,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
@@ -868,6 +880,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		404BFAFA24E7C57400A13230 /* XCRemoteSwiftPackageReference "shiny" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/maustinstar/shiny";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		404BFAFB24E7C57400A13230 /* Shiny */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 404BFAFA24E7C57400A13230 /* XCRemoteSwiftPackageReference "shiny" */;
+			productName = Shiny;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		40FDE47F24AB964B006AAFD2 /* docWind.xcdatamodeld */ = {

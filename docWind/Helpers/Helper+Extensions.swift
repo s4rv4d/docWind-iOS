@@ -161,6 +161,67 @@ extension UIImage {
         UIGraphicsEndImageContext();
         return newImage
     }
+    
+    func outline() -> UIImage? {
+
+        UIGraphicsBeginImageContext(size)
+//        let rect = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: 5)
+        let rect = CGRect(x: 0, y: size.height, width: size.width, height:100)
+        self.draw(in: rect, blendMode: .normal, alpha: 1.0)
+        let context = UIGraphicsGetCurrentContext()
+        context?.setStrokeColor(red: 1.0, green: 0.5, blue: 1.0, alpha: 1.0)
+        context?.setLineWidth(100)
+        context?.stroke(rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage
+
+    }
+    
+    // Example use: myView.addBorder(toSide: .Left, withColor: UIColor.redColor().CGColor, andThickness: 1.0)
+     //    func imageWithBorder(width: CGFloat, color: UIColor) -> UIImage? {
+     //        let square = CGSize(width: size.width, height: min(size.width, size.height) + width * 2)
+     //        let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: square))
+     //        imageView.contentMode = .center
+     //        imageView.image = self
+     //        imageView.layer.borderWidth = width
+     //        imageView.layer.borderColor = color.cgColor
+//             UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
+//             guard let context = UIGraphicsGetCurrentContext() else { return nil }
+//             imageView.layer.render(in: context)
+//             let result = UIGraphicsGetImageFromCurrentImageContext()
+//             UIGraphicsEndImageContext()
+//             return result
+     //    }
+     
+//     func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) {
+//
+//         let border = CALayer()
+//         border.backgroundColor = color
+//
+//         switch side {
+//         case .Left: border.frame = CGRect(x: frame.minX, y: frame.minY, width: thickness, height: frame.height); break
+//         case .Right: border.frame = CGRect(x: frame.maxX, y: frame.minY, width: thickness, height: frame.height); break
+//         case .Top: border.frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: thickness); break
+//         case .Bottom: border.frame = CGRect(x: frame.minX, y: frame.maxY, width: frame.width, height: thickness); break
+//         }
+//
+//         layer.addSublayer(border)
+//     }
+    
+    func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) -> UIImage? {
+
+        let imageView = UIImageView(image: self)
+        return imageView.addBorder(toSide: side, withColor: color, andThickness: thickness)!
+        
+//        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
+//        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+//        imageView.layer.render(in: context)
+//        let result = UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext()
+//        return result
+    }
 }
 
 extension Color {
@@ -211,7 +272,6 @@ extension Color {
     }
 }
 
-
 extension UIView {
     var renderedImage: UIImage {
         // rect of capure
@@ -238,6 +298,150 @@ extension UIView {
                 rendererContext.cgContext.fill(bounds)
             }
         }
+    
+    /// Attaches all sides of the receiver to its parent view
+    func coverWholeSuperview(margin: CGFloat = 0.0) {
+        let view = superview
+        layoutAttachTop(to: view, margin: margin)
+        layoutAttachBottom(to: view, margin: margin)
+        layoutAttachLeading(to: view, margin: margin)
+        layoutAttachTrailing(to: view, margin: margin)
+
+    }
+
+    /// Attaches the top of the current view to the given view's top if it's a superview of the current view
+    /// or to it's bottom if it's not (assuming this is then a sibling view).
+    @discardableResult
+    func layoutAttachTop(to: UIView? = nil, margin: CGFloat = 0.0) -> NSLayoutConstraint {
+
+        let view: UIView? = to ?? superview
+        let isSuperview = view == superview
+        let constraint = NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal,
+                                            toItem: view, attribute: isSuperview ? .top : .bottom, multiplier: 1.0,
+                                            constant: margin)
+        superview?.addConstraint(constraint)
+
+        return constraint
+    }
+
+    /// Attaches the bottom of the current view to the given view
+    @discardableResult
+    func layoutAttachBottom(to: UIView? = nil, margin: CGFloat = 0.0, priority: UILayoutPriority? = nil) -> NSLayoutConstraint {
+
+        let view: UIView? = to ?? superview
+        let isSuperview = (view == superview) || false
+        let constraint = NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal,
+                                            toItem: view, attribute: isSuperview ? .bottom : .top, multiplier: 1.0,
+                                            constant: -margin)
+        if let priority = priority {
+            constraint.priority = priority
+        }
+        superview?.addConstraint(constraint)
+
+        return constraint
+    }
+
+    /// Attaches the leading edge of the current view to the given view
+    @discardableResult
+    func layoutAttachLeading(to: UIView? = nil, margin: CGFloat = 0.0) -> NSLayoutConstraint {
+
+        let view: UIView? = to ?? superview
+        let isSuperview = (view == superview) || false
+        let constraint = NSLayoutConstraint(item: self, attribute: .leading, relatedBy: .equal,
+                                            toItem: view, attribute: isSuperview ? .leading : .trailing, multiplier: 1.0,
+                                            constant: margin)
+        superview?.addConstraint(constraint)
+
+        return constraint
+    }
+
+    /// Attaches the trailing edge of the current view to the given view
+    @discardableResult
+    func layoutAttachTrailing(to: UIView? = nil, margin: CGFloat = 0.0, priority: UILayoutPriority? = nil) -> NSLayoutConstraint {
+
+        let view: UIView? = to ?? superview
+        let isSuperview = (view == superview) || false
+        let constraint = NSLayoutConstraint(item: self, attribute: .trailing, relatedBy: .equal,
+                                            toItem: view, attribute: isSuperview ? .trailing : .leading, multiplier: 1.0,
+                                            constant: -margin)
+        if let priority = priority {
+            constraint.priority = priority
+        }
+        superview?.addConstraint(constraint)
+
+        return constraint
+    }
+
+    // For anchoring View
+    struct AnchoredConstraints {
+        var top, leading, bottom, trailing, width, height, centerX, centerY: NSLayoutConstraint?
+    }
+
+    @discardableResult
+    func constraints(top: NSLayoutYAxisAnchor? = nil, leading: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil,
+                trailing: NSLayoutXAxisAnchor? = nil, padding: UIEdgeInsets = .zero, size: CGSize = .zero,
+                centerX: NSLayoutXAxisAnchor? = nil, centerY: NSLayoutYAxisAnchor? = nil,
+                centerXOffset: CGFloat = 0, centerYOffset: CGFloat = 0) -> AnchoredConstraints {
+
+        translatesAutoresizingMaskIntoConstraints = false
+        var anchoredConstraints = AnchoredConstraints()
+
+        if let top = top {
+            anchoredConstraints.top = topAnchor.constraint(equalTo: top, constant: padding.top)
+        }
+
+        if let leading = leading {
+            anchoredConstraints.leading = leadingAnchor.constraint(equalTo: leading, constant: padding.left)
+        }
+
+        if let bottom = bottom {
+            anchoredConstraints.bottom = bottomAnchor.constraint(equalTo: bottom, constant: -padding.bottom)
+        }
+
+        if let trailing = trailing {
+            anchoredConstraints.trailing = trailingAnchor.constraint(equalTo: trailing, constant: -padding.right)
+        }
+
+        if size.width != 0 {
+            anchoredConstraints.width = widthAnchor.constraint(equalToConstant: size.width)
+        }
+
+        if size.height != 0 {
+            anchoredConstraints.height = heightAnchor.constraint(equalToConstant: size.height)
+        }
+
+        if let centerX = centerX {
+            anchoredConstraints.centerX = centerXAnchor.constraint(equalTo: centerX, constant: centerXOffset)
+        }
+
+        if let centerY = centerY {
+            anchoredConstraints.centerY = centerYAnchor.constraint(equalTo: centerY, constant: centerYOffset)
+        }
+
+        [anchoredConstraints.top, anchoredConstraints.leading, anchoredConstraints.bottom,
+         anchoredConstraints.trailing, anchoredConstraints.width,
+         anchoredConstraints.height, anchoredConstraints.centerX,
+         anchoredConstraints.centerY].forEach { $0?.isActive = true }
+
+        return anchoredConstraints
+    }
+    
+         func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) -> UIImage?{
+    
+             let border = CALayer()
+             border.backgroundColor = color
+    
+             switch side {
+             case .Left: border.frame = CGRect(x: frame.minX, y: frame.minY, width: thickness, height: frame.height); break
+             case .Right: border.frame = CGRect(x: frame.maxX, y: frame.minY, width: thickness, height: frame.height); break
+             case .Top: border.frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: thickness); break
+             case .Bottom: border.frame = CGRect(x: frame.minX, y: frame.maxY, width: frame.width, height: thickness); break
+             }
+    
+             layer.addSublayer(border)
+            
+            return self.asImage()
+         }
 }
 
 // MARK: - PDF stuff
@@ -399,3 +603,4 @@ extension String {
 
     static func >=(lhs: String, rhs: String) -> Bool { lhs.compare(toVersion: rhs) != .orderedAscending }
 }
+

@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SwiftUI
 import CoreGraphics
+import Shiny
 
 // MARK: - Helper struct
 ///use throughout the whole app
@@ -178,6 +179,12 @@ struct SettingsHelper {
             UIApplication.shared.open(twUrlWeb, options: [:], completionHandler: nil)
         }
     }
+    
+    static func openUrl(url: String) {
+        let webUrl = URL(string: url)!
+        UIApplication.shared.open(webUrl, options: [:], completionHandler: nil)
+        
+    }
 
     static func createEmailUrl(to: String, subject: String, body: String) -> URL? {
         let subjectEncoded = subject.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
@@ -230,6 +237,39 @@ struct DWButton: View {
             .cornerRadius(10)
         }
     .shadow(radius: 4)
+    }
+}
+
+struct ShinyButton: View {
+    //describing buttons
+    //MARK: - Properties
+    private let text: String
+    private let background: UIColor
+    private let action: () -> Void
+    
+    //MARK: - Dependency injection
+    init(text:String, background:UIColor = .red, action:@escaping() -> Void) {
+        self.text = text
+        self.background = background
+        self.action = action
+    }
+    
+    var body: some View {
+        Button(action:action){
+            HStack {
+                Spacer()
+                Text(text)
+                    .font(.title)
+                    .fontWeight(.semibold)
+//                    .foregroundColor(.black)
+                    .shiny(.hyperGlossy(.black))
+                Spacer()
+                }.padding()
+                .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .shiny(.hyperGlossy(background)))
+            .cornerRadius(10)
+        }
     }
 }
 

@@ -148,6 +148,11 @@ struct AddPdfFileGenView: View {
                 }, trailing: Button(action:  saveTapped){
                     Text("Save")
             })
+        }.onAppear {
+            DispatchQueue.main.async {
+                self.activeSheet = .scannerView
+                self.showScanner.toggle()
+            }
         }
         .alert(isPresented: $showAlert) {
             if self.activeAlertSheet == .notice {

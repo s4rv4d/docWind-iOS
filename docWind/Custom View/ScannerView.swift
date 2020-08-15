@@ -34,13 +34,40 @@ struct ScannerView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: VNDocumentCameraViewController, context: UIViewControllerRepresentableContext<ScannerView>) {
         
         if ac {
+            // activity indicator
             let acIndicator = UIActivityIndicatorView(style: .large)
             acIndicator.hidesWhenStopped = true
             acIndicator.center = uiViewController.view.center
             acIndicator.color = .systemBlue
-            uiViewController.view.addSubview(acIndicator)
-            uiViewController.view.bringSubviewToFront(acIndicator)
-            acIndicator.startAnimating()
+            
+            // black background view
+            let blackView = UIView()
+            blackView.frame = uiViewController.view.bounds
+            blackView.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+            
+            
+            // message for users
+            let yourLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 150))
+            yourLabel.textColor = UIColor.white
+            yourLabel.text = "This may take a minute, please wait :)"
+            yourLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+            // presenting everything
+            DispatchQueue.main.async {
+                uiViewController.view.addSubview(acIndicator)
+                uiViewController.view.addSubview(blackView)
+                blackView.addSubview(yourLabel)
+                NSLayoutConstraint.activate([
+                    yourLabel.centerXAnchor.constraint(equalTo: blackView.centerXAnchor),
+                    yourLabel.topAnchor.constraint(equalToSystemSpacingBelow: acIndicator.bottomAnchor, multiplier: 2)
+                ])
+
+                uiViewController.view.bringSubviewToFront(acIndicator)
+                uiViewController.delegate = nil
+                
+                // start animating
+                acIndicator.startAnimating()
+            }
         }
         
     }
@@ -62,9 +89,7 @@ struct ScannerView: UIViewControllerRepresentable {
             print("Save TAPPED")
             var imgs = [UIImage]()
             var imgsWithWatermarks = [UIImage]()
-            
-            
-            
+                        
             for pageIndex in 0 ..< scan.pageCount {
                 autoreleasepool {
                     let image = UIImage.resizeImageWithAspect(image: scan.imageOfPage(at: pageIndex), scaledToMaxWidth: 595, maxHeight: 842)!
@@ -86,8 +111,6 @@ struct ScannerView: UIViewControllerRepresentable {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 controller.dismiss(animated: true, completion: nil)
             }
-            
-            
         }
         
         private func compressedImage(_ originalImage: UIImage) -> UIImage {
@@ -96,6 +119,20 @@ struct ScannerView: UIViewControllerRepresentable {
                     return originalImage
             }
             return reloadedImage
+        }
+
+        func getImage(image: UIImage, backgroundColor: UIColor)->UIImage?{
+
+            UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
+            backgroundColor.setFill()
+            //UIRectFill(CGRect(origin: .zero, size: image.size))
+            let rect = CGRect(origin: .zero, size: image.size)
+            let path = UIBezierPath(arcCenter: CGPoint(x:rect.midX, y:rect.midY), radius: rect.midX, startAngle: 0, endAngle: 6.28319, clockwise: true)
+            path.fill()
+            image.draw(at: .zero)
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return newImage
         }
         
     }
