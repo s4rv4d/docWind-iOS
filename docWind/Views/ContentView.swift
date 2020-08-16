@@ -25,6 +25,7 @@ struct ContentView: View {
     @State private var alertTitle = "Error"
     @State private var alertContext: ActiveAlertSheet = .error
     @State private var showAlert = false
+    @State private var isOffgrid = false
     
     // MARK: - @Environment variables
     @Environment(\.managedObjectContext) var context
@@ -46,15 +47,19 @@ struct ContentView: View {
                             EmptyView()
                             Color.clear
                         } else {
-                            List {
-                                Section(header: Text("DocWind >").font(.caption), footer: Text("Tap and hold on a cell for more options").font(.caption)) {
-                                    ForEach(self.items.first!.fileArray.filter { self.searchString.isEmpty || $0.wrappedItemName.localizedStandardContains(self.searchString)}, id: \.self) { item in
-                                        NormalListRowView(itemArray: item, masterFolder: "\(DWFMAppSettings.shared.fileURL())")
-                                            .environment(\.managedObjectContext, self.context)
-                                    }.onDelete(perform: self.deleteRow(at:))
+                            if !self.isOffgrid {
+                                List {
+                                    Section(header: Text("DocWind >").font(.caption), footer: Text("Tap and hold on a cell for more options").font(.caption)) {
+                                        ForEach(self.items.first!.fileArray.filter { self.searchString.isEmpty || $0.wrappedItemName.localizedStandardContains(self.searchString)}, id: \.self) { item in
+                                            NormalListRowView(itemArray: item, masterFolder: "\(DWFMAppSettings.shared.fileURL())")
+                                                .environment(\.managedObjectContext, self.context)
+                                        }.onDelete(perform: self.deleteRow(at:))
+                                    }
                                 }
+                                .listStyle(GroupedListStyle())
+                            } else {
+                                // replace this with grid view layout
                             }
-                            .listStyle(GroupedListStyle())
                         }
                     } else {
                         NewStarterView()
@@ -107,7 +112,13 @@ struct ContentView: View {
                     Image(systemName: "gear")
                     .font(.system(size: 20))
                     .foregroundColor(.blue)
-                })
+                }, trailing: Button(action: {
+                    self.isOffgrid.toggle()
+                }){
+                    Image(systemName: (self.isOffgrid == false ? "rectangle.3.offgrid" : "rectangle.grid.1x2"))
+                        .font(.system(size: 20))
+                        .foregroundColor(.blue)
+            })
 //            .add(self.searchBar)
         }
         .navigationViewStyle(StackNavigationViewStyle())

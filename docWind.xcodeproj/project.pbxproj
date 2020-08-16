@@ -75,6 +75,7 @@
 		40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */; };
 		40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */; };
 		40D1B12124DC4E7D00859F1A /* SecondaryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D1B12024DC4E7D00859F1A /* SecondaryButtonView.swift */; };
+		40D678ED24E960C80006F74C /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 40D678EC24E960C80006F74C /* QGrid */; };
 		40DD4F7324C02CDC00D37EFA /* SignaturePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DD4F7224C02CDC00D37EFA /* SignaturePageView.swift */; };
 		40DD4F7524C02F3700D37EFA /* ImageAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DD4F7424C02F3700D37EFA /* ImageAnnotation.swift */; };
 		40DD4F7724C087AE00D37EFA /* ImagePanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DD4F7624C087AE00D37EFA /* ImagePanGestureRecognizer.swift */; };
@@ -229,6 +230,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40D678ED24E960C80006F74C /* QGrid in Frameworks */,
 				404BFAFC24E7C57400A13230 /* Shiny in Frameworks */,
 				40CDC4D224AF91F800462277 /* CloudKit.framework in Frameworks */,
 			);
@@ -520,6 +522,7 @@
 			name = docWind;
 			packageProductDependencies = (
 				404BFAFB24E7C57400A13230 /* Shiny */,
+				40D678EC24E960C80006F74C /* QGrid */,
 			);
 			productName = docWind;
 			productReference = 40FDE47824AB964B006AAFD2 /* docWind.app */;
@@ -551,6 +554,7 @@
 			mainGroup = 40FDE46F24AB964B006AAFD2;
 			packageReferences = (
 				404BFAFA24E7C57400A13230 /* XCRemoteSwiftPackageReference "shiny" */,
+				40D678EB24E960C80006F74C /* XCRemoteSwiftPackageReference "QGrid" */,
 			);
 			productRefGroup = 40FDE47924AB964B006AAFD2 /* Products */;
 			projectDirPath = "";
@@ -816,7 +820,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
@@ -826,7 +830,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sarvadShetty.docWind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -840,7 +844,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
@@ -850,7 +854,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sarvadShetty.docWind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -890,6 +894,14 @@
 				minimumVersion = 0.0.1;
 			};
 		};
+		40D678EB24E960C80006F74C /* XCRemoteSwiftPackageReference "QGrid" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Q-Mobile/QGrid";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -897,6 +909,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 404BFAFA24E7C57400A13230 /* XCRemoteSwiftPackageReference "shiny" */;
 			productName = Shiny;
+		};
+		40D678EC24E960C80006F74C /* QGrid */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 40D678EB24E960C80006F74C /* XCRemoteSwiftPackageReference "QGrid" */;
+			productName = QGrid;
 		};
 /* End XCSwiftPackageProductDependency section */
 
