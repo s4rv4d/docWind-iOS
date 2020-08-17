@@ -127,6 +127,7 @@ struct DetailedDirecView: View {
         .navigationBarTitle(Text(self.item.wrappedItemName), displayMode: .inline)
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarItems(trailing: Button(action: {
+            FeedbackManager.mediumFeedback()
                 self.isOffgrid.toggle()
             }){
                 Image(systemName: (self.isOffgrid == false ? "rectangle.3.offgrid" : "rectangle.grid.1x2"))

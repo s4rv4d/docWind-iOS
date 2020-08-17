@@ -44,6 +44,33 @@ struct DependecyPageView: View {
                 }
                 .settingsBackground()
                 // --> 1
+                // --> 2
+                VStack(alignment: .leading, spacing: 5) {
+                    HStack {
+                        Text("QGrid")
+                            .font(.largeTitle)
+                            .fontWeight(.semibold)
+                        Spacer()
+                        Image(systemName: "exclamationmark.circle")
+                            .foregroundColor(.blue)
+                    }
+                    .padding([.bottom])
+                    Text("by Karol Kulesza")
+                    Text("https://github.com/Q-Mobile/QGrid")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    Text("MIT License")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .padding(.bottom)
+                    
+                }.onTapGesture {
+                    print("hi")
+                    FeedbackManager.mediumFeedback()
+                    SettingsHelper.openUrl(url: "https://github.com/Q-Mobile/QGrid")
+                }
+                .settingsBackground()
+                // --> 2
                 
                 Spacer()
             }.padding(.top)

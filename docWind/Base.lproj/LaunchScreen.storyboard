@@ -22,11 +22,33 @@
                                     <constraint firstAttribute="height" constant="120" id="mQT-Na-NzY"/>
                                 </constraints>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="qfK-sU-GUb">
+                                <rect key="frame" x="126" y="424.5" width="162.5" height="47"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="doc" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7p6-ez-Nbh">
+                                        <rect key="frame" x="0.0" y="0.0" width="68.5" height="47"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="40"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wind" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Sh-AD-6GZ">
+                                        <rect key="frame" x="70.5" y="0.0" width="92" height="47"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="40"/>
+                                        <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="7p6-ez-Nbh" firstAttribute="height" secondItem="9Sh-AD-6GZ" secondAttribute="height" id="M6n-il-kTU"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="aK8-Vg-Tmk" secondAttribute="bottom" constant="71" id="JUf-NF-Qxd"/>
+                            <constraint firstItem="qfK-sU-GUb" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="RsU-XK-hjF"/>
                             <constraint firstItem="aK8-Vg-Tmk" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="fuF-jS-lRl"/>
+                            <constraint firstItem="qfK-sU-GUb" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="k2Y-eW-fR6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

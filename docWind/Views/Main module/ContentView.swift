@@ -119,13 +119,13 @@ struct ContentView: View {
                     .font(.system(size: 20))
                     .foregroundColor(.blue)
                 }, trailing: Button(action: {
+                    FeedbackManager.mediumFeedback()
                     self.isOffgrid.toggle()
                 }){
                     Image(systemName: (self.isOffgrid == false ? "rectangle.3.offgrid" : "rectangle.grid.1x2"))
                         .font(.system(size: 20))
                         .foregroundColor(.blue)
             })
-//            .add(self.searchBar)
         }
         .navigationViewStyle(StackNavigationViewStyle())
             
