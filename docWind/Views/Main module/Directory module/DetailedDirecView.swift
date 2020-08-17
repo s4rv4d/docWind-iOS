@@ -8,6 +8,7 @@
 
 import SwiftUI
 import CoreData
+import QGrid
 
 struct DetailedDirecView: View {
     
@@ -25,6 +26,7 @@ struct DetailedDirecView: View {
     @State private var alertTitle = ""
     @State private var alertContext: ActiveAlertSheet = .error
     @State private var showAlert = false
+    @State private var isOffgrid = false
     
     // MARK: - Objects
     @FetchRequest var items: FetchedResults<DirecModel>
@@ -61,18 +63,30 @@ struct DetailedDirecView: View {
                                         .padding([.leading, .trailing, .top])
                                     Color.clear
                                 } else {
-                                    List {
-                                        Section(header: Text("\(String(self.masterFolder.split(separator: "/").last!)) > \(self.item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
-                                            ForEach(self.items.first!.fileArray.filter {
-                                                self.searchBar.text.isEmpty ||
-                                                    $0.wrappedItemName.localizedStandardContains(self.searchBar.text)
-                                            }, id: \.self){ item in
-                                                GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
-                                            }.onDelete(perform: self.deleteRow(at:))
+                                    if !self.isOffgrid {
+                                        List {
+                                            Section(header: Text("\(String(self.masterFolder.split(separator: "/").last!)) > \(self.item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
+                                                ForEach(self.items.first!.fileArray.filter {
+                                                    self.searchBar.text.isEmpty ||
+                                                        $0.wrappedItemName.localizedStandardContains(self.searchBar.text)
+                                                }, id: \.self){ item in
+                                                    GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
+                                                }.onDelete(perform: self.deleteRow(at:))
+                                            }
+                                        }
+                                        .listStyle(GroupedListStyle())
+                                        .add(self.searchBar)
+                                    } else {
+                                        // replace this with grid view layout
+                                        GeometryReader { geometry in
+                                            ZStack {
+                                                self.gridView(geometry, items: self.items.first!.fileArray.filter {
+                                                    self.searchBar.text.isEmpty ||
+                                                        $0.wrappedItemName.localizedStandardContains(self.searchBar.text)
+                                                }).padding(.top)
+                                            }
                                         }
                                     }
-                                    .listStyle(GroupedListStyle())
-                                    .add(self.searchBar)
                                 }
                             } else {
                                 Text("Looks empty here, scan a new document using the '+' button above.")
@@ -112,6 +126,14 @@ struct DetailedDirecView: View {
                     // sheet code
         .navigationBarTitle(Text(self.item.wrappedItemName), displayMode: .inline)
         .navigationViewStyle(StackNavigationViewStyle())
+        .navigationBarItems(trailing: Button(action: {
+                self.isOffgrid.toggle()
+            }){
+                Image(systemName: (self.isOffgrid == false ? "rectangle.3.offgrid" : "rectangle.grid.1x2"))
+                    .font(.system(size: 20))
+                    .foregroundColor(.blue)
+        })
+        
         .alert(isPresented: $showAlert) {
              Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel(Text("Dismiss"), action: {
                     print("retry")
@@ -119,9 +141,7 @@ struct DetailedDirecView: View {
         }
         
         .sheet(isPresented: $isShown) {
-            if self.activeSheet == .intro {
-
-            } else if self.activeSheet == .createdDirec {
+            if self.activeSheet == .createdDirec {
                 AddDocGeneView(path: self.masterDirecName, headName: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
             } else if self.activeSheet == .createPdf {
                 AddPdfFileGenView(headPath: self.item.wrappedItemUrl, headName: self.masterDirecName).environment(\.managedObjectContext, self.context)
@@ -206,6 +226,19 @@ struct DetailedDirecView: View {
                 self.showAlert.toggle()
             }
 
+        }
+    }
+    
+    private func gridView(_ geometry: GeometryProxy, items: [ItemModel]) -> some View {
+        QGrid(items,
+              columns: 4,
+              columnsInLandscape: 0,
+              vSpacing: 8,
+              hSpacing: 16,
+              vPadding: 0,
+              hPadding: 10) {
+                QGridCellView(item: $0, masterFolder: self.item.wrappedItemUrl)
+                .environment(\.managedObjectContext, self.context)
         }
     }
 }

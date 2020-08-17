@@ -1,8 +1,8 @@
 //
-//  GenListRowView.swift
+//  NormalListRowView.swift
 //  docWind
 //
-//  Created by Sarvad shetty on 7/21/20.
+//  Created by Sarvad shetty on 7/4/20.
 //  Copyright © 2020 Sarvad shetty. All rights reserved.
 //
 
@@ -10,43 +10,47 @@ import SwiftUI
 import LocalAuthentication
 import CoreData
 
-struct GenListRowView: View {
+struct NormalListRowView: View {
     
     // MARK: - Properties
     let itemArray: ItemModel
     let masterFolder: String
     var iconNameString: [String: Color] = ["blue":.blue, "red":.red, "green":.green, "yellow":.yellow, "pink":.pink, "black": .black, "gray": .gray, "orange": .orange, "purple": .purple]
-    
+        
+    @State private var isDisabled = false
     @State private var url = ""
     @State private var uiImages = [UIImage]()
-    @State private var showSheet = false
-    @State private var activeSheet: ActiveSheetForDetails = .shareSheet
-    @State private var alertContext: ActiveAlertSheet = .error
-    @State private var isDisabled = false
     @State private var showAlert = false
+    @State private var showSheet = false
     @State private var alertMessage = ""
     @State private var alertTitle = ""
+    @State private var activeSheet: ActiveSheetForDetails = .shareSheet
+    @State private var alertContext: ActiveAlertSheet = .error
     @State private var isFile = false
-    @State private var selectedItem: ItemModel? = nil
+    @State var selectedItem: ItemModel?
+    @State private var selectedIndex: Int = 0
     
     @Environment(\.managedObjectContext) var context
     
+    
     var body: some View {
-                    
+        
         NavigationLink(destination: {
             VStack {
                     if self.itemArray.wrappedItemType == DWPDFFILE {
                         DetailPdfView(item: self.itemArray, master: self.masterFolder)
                     } else {
-                        DetailedDirecView(dirName: self.itemArray.wrappedItemName, pathName: self.masterFolder, item: self.itemArray)
+                        DetailedDirecView(dirName: self.itemArray.wrappedItemName, pathName: self.masterFolder, item: self.itemArray).environment(\.managedObjectContext, self.context)
                     }
 
-                }
+            }
+//            .debugPrint(self.masterFolder)
         }()) {
             HStack {
                 Image(systemName: (self.itemArray.wrappedItemType == DWPDFFILE) ? "doc.fill" : "folder.fill")
                     .foregroundColor(self.iconNameString[self.itemArray.iconName!])
                     .font(.body)
+                    
                 
                 VStack(alignment: .leading) {
                     Text(self.itemArray.wrappedItemName)
@@ -58,19 +62,19 @@ struct GenListRowView: View {
                 .padding()
                 
             }.contextMenu {
-                Button(action: {
-                    self.selectedItem = self.itemArray
-                    self.uiImages = self.getImages()
-                    self.activeSheet = .editSheet
-                    self.showSheet.toggle()
-                }) {
-                    HStack {
-                        Image(systemName: "pencil")
-                        Text("Rename")
-                    }
-                }
-                
                 if self.itemArray.wrappedItemType == DWPDFFILE {
+                    Button(action: {
+                        self.selectedItem = self.itemArray
+                        self.uiImages = self.getImages()
+                        self.activeSheet = .editSheet
+                        self.showSheet.toggle()
+                    }) {
+                        HStack {
+                            Image(systemName: "pencil")
+                            Text("Rename")
+                        }
+                    }
+                    
                     Button(action: {
                         self.selectedItem = self.itemArray
                         self.getUrl()
@@ -106,26 +110,26 @@ struct GenListRowView: View {
                 }
             }
         }
-            
-        .alert(isPresented: $showAlert) {
         
-        if alertContext == .notice {
-            return Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), primaryButton: .default(Text("Dismiss")), secondaryButton: .destructive(Text("Delete"), action: {
-                self.deleteObject()
-                
-            }))
-        } else {
-            return Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel(Text("Dismiss"), action: {
-                    print("retry")
+        .alert(isPresented: $showAlert) {
+            
+            if alertContext == .notice {
+                return Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), primaryButton: .default(Text("Dismiss")), secondaryButton: .destructive(Text("Delete"), action: {
+                    self.deleteObject()
+                    
                 }))
+            } else {
+                return Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel(Text("Dismiss"), action: {
+                        print("retry")
+                    }))
+                }
             }
-        }
         
         .sheet(isPresented: $showSheet) {
+            
             if self.activeSheet == .shareSheet {
                 ShareSheetView(activityItems: [URL(string: self.url)!])
             } else if self.activeSheet == .editSheet{
-                // open editView
                 if self.uiImages.count != 0 && self.url != "" {
                     EditPdfMainView(pdfName: self.itemArray.wrappedItemName, selectedIconName: self.itemArray.wrappedIconName, mainPages: self.uiImages, url: self.url, item: self.selectedItem!).environment(\.managedObjectContext, self.context)
                 }
@@ -166,10 +170,8 @@ struct GenListRowView: View {
             if selectedItem != nil {
                 if DWFMAppSettings.shared.deleteSavedPdf(direcName: self.masterFolder, fileName: selectedItem!.wrappedItemUrl) {
                     print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
-                    // now remove from coredata
                     ItemModel.deleteObject(in: context, sub: self.selectedItem!)
                 } else {
-                    // error
                     self.alertTitle = "Error"
                     self.alertMessage = "Couldnt delete file"
                     self.showAlert.toggle()
@@ -177,27 +179,31 @@ struct GenListRowView: View {
             }
         } else {
             // deleting directory
-            if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.masterFolder, fileName: selectedItem!.wrappedItemUrl) {
-                print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
-                // delete from direcmodel
-                let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
-                fetchRequest.predicate = NSPredicate(format: "name == %@", selectedItem!.wrappedItemName)
-                
-                do {
-                    let content = try context.fetch(fetchRequest)
-                    print(content)
-                    if let docWindDirec = content.first {
-                        DirecModel.deleteObject(in: context, sub: docWindDirec)
+            print("deleting direc")
+            if selectedItem != nil {
+                if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.masterFolder, fileName: selectedItem!.wrappedItemUrl) {
+                    print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
+                    // delete from direcmodel
+                    let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
+                    fetchRequest.predicate = NSPredicate(format: "name == %@", selectedItem!.wrappedItemName)
+                    
+                    do {
+                        let content = try context.fetch(fetchRequest)
+                        print(content)
+                        if let docWindDirec = content.first {
+                            DirecModel.deleteObject(in: context, sub: docWindDirec)
+                        }
+                    } catch {
+                      print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
                     }
-                } catch {
-                  print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
+                    
+                    ItemModel.deleteObject(in: context, sub: self.selectedItem!)
+                                        
+                } else {
+                    self.alertTitle = "Error"
+                    self.alertMessage = "Couldnt delete folder"
+                    self.showAlert.toggle()
                 }
-                
-                ItemModel.deleteObject(in: context, sub: self.selectedItem!)
-            } else {
-                self.alertTitle = "Error"
-                self.alertMessage = "Couldnt delete folder"
-                self.showAlert.toggle()
             }
         }
     }
@@ -225,10 +231,8 @@ struct GenListRowView: View {
                                 let img = renderer.image { ctx in
                                     UIColor.white.set()
                                     ctx.fill(pageRect)
-
                                     ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
                                     ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
-
                                     ctx.cgContext.drawPDFPage(page)
                                 }
                                 imgs.append(img)
@@ -262,9 +266,6 @@ struct GenListRowView: View {
                 self.showAlert.toggle()
             }
         }
-        
-        
         return imgs
     }
 }
-

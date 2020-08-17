@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 
 
-extension ItemModel {
+extension ItemModel: Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ItemModel> {
         return NSFetchRequest<ItemModel>(entityName: "ItemModel")

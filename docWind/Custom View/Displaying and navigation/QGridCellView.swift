@@ -1,23 +1,22 @@
 //
-//  NormalListRowView.swift
+//  QGridCellView.swift
 //  docWind
 //
-//  Created by Sarvad shetty on 7/4/20.
+//  Created by Sarvad shetty on 8/17/20.
 //  Copyright © 2020 Sarvad shetty. All rights reserved.
 //
 
 import SwiftUI
-import LocalAuthentication
+import QGrid
 import CoreData
 
-struct NormalListRowView: View {
+
+struct QGridCellView: View {
     
-    // MARK: - Properties
-    let itemArray: ItemModel
-    let masterFolder: String
+    var item: ItemModel
     var iconNameString: [String: Color] = ["blue":.blue, "red":.red, "green":.green, "yellow":.yellow, "pink":.pink, "black": .black, "gray": .gray, "orange": .orange, "purple": .purple]
-        
-    @State private var isDisabled = false
+    let masterFolder: String
+    
     @State private var url = ""
     @State private var uiImages = [UIImage]()
     @State private var showAlert = false
@@ -32,50 +31,46 @@ struct NormalListRowView: View {
     
     @Environment(\.managedObjectContext) var context
     
-    
     var body: some View {
-        
         NavigationLink(destination: {
             VStack {
-                    if self.itemArray.wrappedItemType == DWPDFFILE {
-                        DetailPdfView(item: self.itemArray, master: self.masterFolder)
-                    } else {
-                        DetailedDirecView(dirName: self.itemArray.wrappedItemName, pathName: self.masterFolder, item: self.itemArray).environment(\.managedObjectContext, self.context)
-                    }
-
-            }.debugPrint(self.masterFolder)
+                if self.item.wrappedItemType == DWPDFFILE {
+                    DetailPdfView(item: self.item, master: self.masterFolder)
+                } else {
+                    DetailedDirecView(dirName: self.item.wrappedItemName, pathName: self.masterFolder, item: self.item).environment(\.managedObjectContext, self.context)
+                }
+            }
         }()) {
-            HStack {
-                Image(systemName: (self.itemArray.wrappedItemType == DWPDFFILE) ? "doc.fill" : "folder.fill")
-                    .foregroundColor(self.iconNameString[self.itemArray.iconName!])
-                    .font(.body)
-                    
+                VStack {
+                Image(systemName: (self.item.wrappedItemType == DWPDFFILE) ? "doc.fill" : "folder.fill")
+                    .font(.largeTitle)
+                    .padding([.horizontal, .top], 7)
+                    .foregroundColor(self.iconNameString[self.item.iconName!])
                 
-                VStack(alignment: .leading) {
-                    Text(self.itemArray.wrappedItemName)
-                        .font(.body)
-                    Text(DWDateFormatter.shared.getStringFromDate(date: self.itemArray.wrappedItemCreated))
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                VStack {
+                    Text(self.item.wrappedItemName).lineLimit(1)
+                        .foregroundColor(.primary)
+                        .padding(.top)
                 }
-                .padding()
+                .font(.caption)
                 
-            }.contextMenu {
-                Button(action: {
-                    self.selectedItem = self.itemArray
-                    self.uiImages = self.getImages()
-                    self.activeSheet = .editSheet
-                    self.showSheet.toggle()
-                }) {
-                    HStack {
-                        Image(systemName: "pencil")
-                        Text("Rename")
-                    }
-                }
-                
-                if self.itemArray.wrappedItemType == DWPDFFILE {
+            }.buttonStyle(PlainButtonStyle())
+                .contextMenu {
+                if self.item.wrappedItemType == DWPDFFILE {
                     Button(action: {
-                        self.selectedItem = self.itemArray
+                        self.selectedItem = self.item
+                        self.uiImages = self.getImages()
+                        self.activeSheet = .editSheet
+                        self.showSheet.toggle()
+                    }) {
+                        HStack {
+                            Image(systemName: "pencil")
+                            Text("Rename")
+                        }
+                    }
+                    
+                    Button(action: {
+                        self.selectedItem = self.item
                         self.getUrl()
                     }) {
                         HStack {
@@ -85,7 +80,7 @@ struct NormalListRowView: View {
                     }
                     
                     Button(action: {
-                        self.selectedItem = self.itemArray
+                        self.selectedItem = self.item
                         self.uiImages = self.getImages()
                         self.activeSheet = .editSheet
                         self.showSheet.toggle()
@@ -98,8 +93,8 @@ struct NormalListRowView: View {
                 }
                 
                 Button(action: {
-                    self.isFile = self.itemArray.wrappedItemType == DWPDFFILE ? true : false
-                    self.selectedItem = self.itemArray
+                    self.isFile = self.item.wrappedItemType == DWPDFFILE ? true : false
+                    self.selectedItem = self.item
                     self.deleteObject()
                 }) {
                     HStack {
@@ -130,7 +125,7 @@ struct NormalListRowView: View {
                 ShareSheetView(activityItems: [URL(string: self.url)!])
             } else if self.activeSheet == .editSheet{
                 if self.uiImages.count != 0 && self.url != "" {
-                    EditPdfMainView(pdfName: self.itemArray.wrappedItemName, selectedIconName: self.itemArray.wrappedIconName, mainPages: self.uiImages, url: self.url, item: self.selectedItem!).environment(\.managedObjectContext, self.context)
+                    EditPdfMainView(pdfName: self.item.wrappedItemName, selectedIconName: self.item.wrappedIconName, mainPages: self.uiImages, url: self.url, item: self.selectedItem!).environment(\.managedObjectContext, self.context)
                 }
             }
         }
@@ -267,4 +262,6 @@ struct NormalListRowView: View {
         }
         return imgs
     }
+
+
 }

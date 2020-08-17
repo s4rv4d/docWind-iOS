@@ -16,7 +16,6 @@
 		4012033C24BDE0D700167917 /* NonSelectableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033B24BDE0D700167917 /* NonSelectableView.swift */; };
 		402333EE24DA9248007FE8C6 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402333ED24DA9247007FE8C6 /* ImagePickerView.swift */; };
 		40284BFD24D83745004EE44E /* EditPdfMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40284BFC24D83745004EE44E /* EditPdfMainView.swift */; };
-		402C0B6824B0A29500A5A6C9 /* ListCustomGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */; };
 		402C0B6A24B0A37A00A5A6C9 /* Helper+enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */; };
 		402C0B6C24B0ACD600A5A6C9 /* NormalListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */; };
 		402C0B6E24B0B0E800A5A6C9 /* DetailedDirecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6D24B0B0E800A5A6C9 /* DetailedDirecView.swift */; };
@@ -76,6 +75,7 @@
 		40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */; };
 		40D1B12124DC4E7D00859F1A /* SecondaryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D1B12024DC4E7D00859F1A /* SecondaryButtonView.swift */; };
 		40D678ED24E960C80006F74C /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 40D678EC24E960C80006F74C /* QGrid */; };
+		40D994A224EA479200DFBAB2 /* QGridCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D994A124EA479200DFBAB2 /* QGridCellView.swift */; };
 		40DD4F7324C02CDC00D37EFA /* SignaturePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DD4F7224C02CDC00D37EFA /* SignaturePageView.swift */; };
 		40DD4F7524C02F3700D37EFA /* ImageAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DD4F7424C02F3700D37EFA /* ImageAnnotation.swift */; };
 		40DD4F7724C087AE00D37EFA /* ImagePanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DD4F7624C087AE00D37EFA /* ImagePanGestureRecognizer.swift */; };
@@ -125,7 +125,6 @@
 		4012033B24BDE0D700167917 /* NonSelectableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonSelectableView.swift; sourceTree = "<group>"; };
 		402333ED24DA9247007FE8C6 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		40284BFC24D83745004EE44E /* EditPdfMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPdfMainView.swift; sourceTree = "<group>"; };
-		402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCustomGridView.swift; sourceTree = "<group>"; };
 		402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+enums.swift"; sourceTree = "<group>"; };
 		402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalListRowView.swift; sourceTree = "<group>"; };
 		402C0B6D24B0B0E800A5A6C9 /* DetailedDirecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedDirecView.swift; sourceTree = "<group>"; };
@@ -184,6 +183,7 @@
 		40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBarView.swift; sourceTree = "<group>"; };
 		40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocWindFManager.swift; sourceTree = "<group>"; };
 		40D1B12024DC4E7D00859F1A /* SecondaryButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButtonView.swift; sourceTree = "<group>"; };
+		40D994A124EA479200DFBAB2 /* QGridCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QGridCellView.swift; sourceTree = "<group>"; };
 		40DD4F7224C02CDC00D37EFA /* SignaturePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignaturePageView.swift; sourceTree = "<group>"; };
 		40DD4F7424C02F3700D37EFA /* ImageAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAnnotation.swift; sourceTree = "<group>"; };
 		40DD4F7624C087AE00D37EFA /* ImagePanGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePanGestureRecognizer.swift; sourceTree = "<group>"; };
@@ -258,6 +258,7 @@
 		402C0B7424B0B11500A5A6C9 /* Main module */ = {
 			isa = PBXGroup;
 			children = (
+				40FDE48224AB964B006AAFD2 /* ContentView.swift */,
 				402C0B9A24B0C0A800A5A6C9 /* Directory module */,
 				402C0B7324B0B10600A5A6C9 /* Pdf module */,
 			);
@@ -360,38 +361,70 @@
 		40D170B024ADA95A00F51F77 /* Custom View */ = {
 			isa = PBXGroup;
 			children = (
+				40D9949D24EA46C500DFBAB2 /* Displaying and navigation */,
+				40D9949E24EA46E800DFBAB2 /* adding pdf custom views */,
+				40D9949F24EA470E00DFBAB2 /* Displaying pdf custom views */,
+				40D994A024EA472100DFBAB2 /* Settings view custom views */,
+			);
+			path = "Custom View";
+			sourceTree = "<group>";
+		};
+		40D9949D24EA46C500DFBAB2 /* Displaying and navigation */ = {
+			isa = PBXGroup;
+			children = (
+				40E387D424E65049001E23D2 /* SearchNavigation.swift */,
+				4069EF9E24D69AAF003083C6 /* ViewControllerResolver.swift */,
+				4069EFA024D69D4C003083C6 /* CustomSearchBar.swift */,
+				406E9AFA24B617EE000FB8FD /* CustomHeaderView.swift */,
 				40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */,
 				40C5140424AE14C000126ABA /* SearchBarView.swift */,
-				402C0B6724B0A29400A5A6C9 /* ListCustomGridView.swift */,
 				402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */,
 				407C6A2E24C6D90D00FA0AAA /* GenListRowView.swift */,
+				40D994A124EA479200DFBAB2 /* QGridCellView.swift */,
+			);
+			path = "Displaying and navigation";
+			sourceTree = "<group>";
+		};
+		40D9949E24EA46E800DFBAB2 /* adding pdf custom views */ = {
+			isa = PBXGroup;
+			children = (
+				402333ED24DA9247007FE8C6 /* ImagePickerView.swift */,
+				40CFB04C24D9794100955957 /* DocumentPickerView.swift */,
+				40FE66A624CB126D00B6A064 /* HeaderView.swift */,
 				405EE7A724B339DD005F525F /* ScannerView.swift */,
 				406E9AF324B5E773000FB8FD /* SnapCarouselView.swift */,
-				406E9AFA24B617EE000FB8FD /* CustomHeaderView.swift */,
+			);
+			path = "adding pdf custom views";
+			sourceTree = "<group>";
+		};
+		40D9949F24EA470E00DFBAB2 /* Displaying pdf custom views */ = {
+			isa = PBXGroup;
+			children = (
+				409B928024E43EDF00F30EFF /* LoadingView.swift */,
+				409B927E24E43E6300F30EFF /* ActivityIndicatorView.swift */,
+				40D1B12024DC4E7D00859F1A /* SecondaryButtonView.swift */,
+				40EF391B24BF5E82007BBAC0 /* ToastView.swift */,
+				4012033324BDD9DF00167917 /* ODVThumbnailView.swift */,
+				40C408E524B9F2EF00876FAF /* PDFView.swift */,
 				40920EAF24B744BE00E2293C /* DrawOnImageView.swift */,
 				40920EB124B74E7800E2293C /* SlideOverCardView.swift */,
 				40485D8924B98C9F008A137A /* TextView.swift */,
 				40485D8B24B995E7008A137A /* BlurView.swift */,
 				40CAFAE024BB480600C1E28A /* ShareSheetView.swift */,
+			);
+			path = "Displaying pdf custom views";
+			sourceTree = "<group>";
+		};
+		40D994A024EA472100DFBAB2 /* Settings view custom views */ = {
+			isa = PBXGroup;
+			children = (
 				405EFDBF24BC886A0070BE5F /* SettingsRow.swift */,
 				405EFDC124BC88B50070BE5F /* UIToggleView.swift */,
 				405EFDC324BC8C180070BE5F /* SubHeadlineView.swift */,
 				405EFDC524BC9ED90070BE5F /* AppVersionRow.swift */,
 				405EFDCB24BCB3E30070BE5F /* MailView.swift */,
-				40C408E524B9F2EF00876FAF /* PDFView.swift */,
-				4012033324BDD9DF00167917 /* ODVThumbnailView.swift */,
-				40EF391B24BF5E82007BBAC0 /* ToastView.swift */,
-				40FE66A624CB126D00B6A064 /* HeaderView.swift */,
-				4069EF9E24D69AAF003083C6 /* ViewControllerResolver.swift */,
-				4069EFA024D69D4C003083C6 /* CustomSearchBar.swift */,
-				40CFB04C24D9794100955957 /* DocumentPickerView.swift */,
-				402333ED24DA9247007FE8C6 /* ImagePickerView.swift */,
-				40D1B12024DC4E7D00859F1A /* SecondaryButtonView.swift */,
-				409B927E24E43E6300F30EFF /* ActivityIndicatorView.swift */,
-				409B928024E43EDF00F30EFF /* LoadingView.swift */,
-				40E387D424E65049001E23D2 /* SearchNavigation.swift */,
 			);
-			path = "Custom View";
+			path = "Settings view custom views";
 			sourceTree = "<group>";
 		};
 		40FDE46F24AB964B006AAFD2 = {
@@ -455,7 +488,6 @@
 		40FDE49324AC4C2F006AAFD2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				40FDE48224AB964B006AAFD2 /* ContentView.swift */,
 				40D170AA24ADA90800F51F77 /* Intro module */,
 				402C0B7424B0B11500A5A6C9 /* Main module */,
 				404D7F9B24B6EF99002F53F0 /* Settings module */,
@@ -603,7 +635,6 @@
 				409B928124E43EDF00F30EFF /* LoadingView.swift in Sources */,
 				405EE7A624B339B4005F525F /* RecognizedText.swift in Sources */,
 				407567FA24B20CF00071B575 /* AddDocGeneView.swift in Sources */,
-				402C0B6824B0A29500A5A6C9 /* ListCustomGridView.swift in Sources */,
 				407C6A2F24C6D90D00FA0AAA /* GenListRowView.swift in Sources */,
 				40CAFAE124BB480600C1E28A /* ShareSheetView.swift in Sources */,
 				4012033C24BDE0D700167917 /* NonSelectableView.swift in Sources */,
@@ -620,6 +651,7 @@
 				40CFB04D24D9794100955957 /* DocumentPickerView.swift in Sources */,
 				405EE7A824B339DD005F525F /* ScannerView.swift in Sources */,
 				40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */,
+				40D994A224EA479200DFBAB2 /* QGridCellView.swift in Sources */,
 				4012033624BDE04100167917 /* PDFDrawer.swift in Sources */,
 				406E9AF924B5E80F000FB8FD /* UIStateModel.swift in Sources */,
 				40C408E624B9F2EF00876FAF /* PDFView.swift in Sources */,
