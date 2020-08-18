@@ -30,6 +30,7 @@ struct OCRTextView: View {
                     Button(action: {
                         FeedbackManager.mediumFeedback()
                         self.presentationMode.wrappedValue.dismiss()
+                        
                            }) {
                                Image(systemName: "multiply.circle.fill")
                                .foregroundColor(.blue)
@@ -48,8 +49,6 @@ struct OCRTextView: View {
                                    .imageScale(.large)
                                    .frame(width: 40, height: 40)
                                    .foregroundColor(.blue)
-//                                   .background(Color.blue)
-//                                   .clipShape(Circle())
                     
                            }
                            .padding()
