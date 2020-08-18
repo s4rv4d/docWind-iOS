@@ -28,15 +28,12 @@ struct OCRTextView: View {
                 
                 HStack {
                     Button(action: {
+                        FeedbackManager.mediumFeedback()
                         self.presentationMode.wrappedValue.dismiss()
                            }) {
-                               Image(systemName: "xmark")
-                                   .imageScale(.large)
-                                   .frame(width: 40, height: 40)
-                                   .foregroundColor(.white)
-                                   .background(Color.blue)
-                                   .clipShape(Circle())
-                    
+                               Image(systemName: "multiply.circle.fill")
+                               .foregroundColor(.blue)
+                               .font(.system(size: 25))
                            }
                            .padding()
                     Spacer()
@@ -44,14 +41,15 @@ struct OCRTextView: View {
                         .fontWeight(.medium)
                     Spacer()
                     Button(action: {
+                        FeedbackManager.mediumFeedback()
                                self.textStyle = (self.textStyle == .body) ? .title1 : .body
                            }) {
                                Image(systemName: "textformat")
                                    .imageScale(.large)
                                    .frame(width: 40, height: 40)
-                                   .foregroundColor(.white)
-                                   .background(Color.blue)
-                                   .clipShape(Circle())
+                                   .foregroundColor(.blue)
+//                                   .background(Color.blue)
+//                                   .clipShape(Circle())
                     
                            }
                            .padding()
@@ -81,58 +79,36 @@ struct OCRTextView: View {
                         } else {
                             VStack {
                                 ForEach(self.matches, id: \.text) { data in
-//                                    SettingsRow(imageName: "square.and.pencil", title: "\(data.text)", imageColor: .blue, action: {
-////                                        print(data.resultType)
-//                                        print(data.resultType.phoneNumber)
-//                                    })
-                                    HStack(spacing: 8) {
-                                        Image(systemName: "circle.fill")
-                                            .font(.caption)
-                                            .foregroundColor(.blue)
-                                            .frame(minWidth: 25, alignment: .leading)
-                                            .accessibility(hidden: true)
-                                        Text("\(data.text)")
-                                            .kerning(0)
-                                        Spacer()
-//                                        Image(systemName: "chevron.right")
-                                        .foregroundColor(.blue)
-                                    }
-                                    .padding(.vertical, 10)
-                                    .foregroundColor(.primary)
-//                                    Divider()
+                                    SettingsRowForOCR(imageName: "circle.fill", title: "\(data.text)", imageColor: .blue, action: {
+                                        FeedbackManager.mediumFeedback()
+                                        var str = ""
+                                        
+                                        switch data.resultType.resultType {
+                                        case .link :
+                                            if data.text.contains("@") {
+                                                str += "mailto:"
+                                            }
+                                            str += data.text
+                                            
+                                        case .address:
+                                            str += "mailto:"
+                                            str += data.text
+                                        case .phoneNumber :
+                                            str += "tel://"
+                                            str += data.text
+                                        default:
+                                            break
+                                        }
+                                        
+                                        guard let url = URL(string: str) else { return }
+                                        UIApplication.shared.open(url)
+                                    })
                                 }
                             }.settingsBackground()
                         }
-                        
-                        
-                        
-//                        HStack {
-//                            Button(action: {
-//                                print("test")
-//                            }){
-//
-//                                Image(systemName: "square.and.arrow.up")
-//                                .imageScale(.large)
-//                                .frame(width: 40, height: 40)
-//                                .foregroundColor(.white)
-//                                .background(Color.blue)
-//                                .clipShape(Circle())
-//                            }.padding()
-//
                         Spacer()
-//
-//                            Button(action: {
-//                                print("test")
-//                            }){
-//                                Image(systemName: "square.and.arrow.up")
-//                                .imageScale(.large)
-//                                .frame(width: 40, height: 40)
-//                                .foregroundColor(.white)
-//                                .background(Color.blue)
-//                                .clipShape(Circle())
-//                            }.padding()
-//                        }.padding()
-//                        Spacer()
+                        Rectangle()
+                            .foregroundColor(Color(.systemGray6))
                     }.onAppear {
                         self.detectedData(self.recognizedText)
                     }
@@ -164,7 +140,6 @@ struct OCRTextView: View {
             let res = ResultURL(text: String(url), resultType: match)
             self.matches.append(res)
         }
-//        matchesArray = matches
     }
 }
 

@@ -38,6 +38,37 @@ struct SettingsRow: View {
     }
 }
 
+struct SettingsRowForOCR: View {
+    var imageName: String
+    var title: String
+    var imageColor: Color
+    var action: (()->()) = {}
+    
+
+    var body: some View {
+        Button(action: {
+            self.action()
+            FeedbackManager.mediumFeedback()
+        }) {
+            HStack(spacing: 8) {
+                Image(systemName: imageName)
+//                    .font(.caption)
+                    .resizable()
+                    .foregroundColor(imageColor)
+                    .frame(width: 5, height: 5)
+                    .accessibility(hidden: true)
+                Text(title)
+                    .kerning(0)
+                Spacer()
+                Image(systemName: "chevron.right")
+                .foregroundColor(.blue)
+            }
+            .padding(.vertical, 10)
+            .foregroundColor(.primary)
+        }
+    }
+}
+
 struct SettingsRowWithToggleAuth: View {
     var imageName: String
     var title: String
