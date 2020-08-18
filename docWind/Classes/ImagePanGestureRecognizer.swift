@@ -46,3 +46,4 @@ class ImagePanGestureRecognizer: UIPanGestureRecognizer {
         state = .failed
     }
 }
+

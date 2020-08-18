@@ -125,8 +125,16 @@ struct PDFCustomView: UIViewRepresentable {
                         let imageStamp = ImageStampAnnotation(with: image, forBounds: imageBounds, withProperties: nil)
 
 //                         so that signatures isnt duplicated later on
-                        if page.annotations.last! == imageStamp {
-                            page.removeAnnotation(page.annotations.last!)
+                        for anno in page.annotations {
+                            if anno.isKind(of: ImageStampAnnotation.self) {
+                                page.removeAnnotation(anno)
+                            }
+                        }
+                        
+                        for view in uiView.subviews {
+                            if view.isKind(of: PDFThumbnailView.self) {
+                                view.removeFromSuperview()
+                            }
                         }
 
                         page.addAnnotation(imageStamp)
@@ -149,7 +157,7 @@ struct PDFCustomView: UIViewRepresentable {
                     for recog in uiView.gestureRecognizers! {
                         uiView.removeGestureRecognizer(recog)
                     }
-                    uiView.document = PDFDocument(url: URL(string: self.fileURL)!)
+//                    uiView.document = PDFDocument(url: URL(string: self.fileURL)!)
                 }
             } else {
                 print("CAN EDIT ON")

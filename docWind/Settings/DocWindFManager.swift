@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 // MARK: - Main protocol
 protocol DocWindFManager {
@@ -22,6 +23,7 @@ protocol DocWindFManager {
     func savePdfWithDataContent(pdfData: Data, pdfName: String, direcName: String?) -> (Bool, String)
     func savePdfWithSubFolder(pdfData: Data, pdfName: String, subDir: String) -> (Bool, String)
     func deleteSavedPdf(direcName: String?, fileName: String) -> Bool
+    func createPDF(images:[UIImage], maxSize:Int, quality:Int, pdfPathUrl: URL?) -> NSData?
 }
 
 //MARK: - Extension
@@ -550,6 +552,79 @@ extension DocWindFManager {
         }
         
         return (status, path)
+    }
+    
+    func createPDF(images:[UIImage], maxSize:Int, quality:Int, pdfPathUrl: URL?) -> NSData? {
+        if quality > 0 {
+            guard let pdfFilePath = pdfPathUrl else {
+                print("Error creating pdf path")
+                return nil
+            }
+
+            var largestImageSize = CGSize.zero
+
+            for image in images {
+                if image.size.width > largestImageSize.width {
+                    largestImageSize.width = image.size.width
+                }
+
+                if image.size.height > largestImageSize.height {
+                    largestImageSize.height = image.size.height
+                }
+            }
+
+            let pdfData = NSMutableData()
+            UIGraphicsBeginPDFContextToData(pdfData, CGRect(x: 0, y: 0, width: largestImageSize.width, height: largestImageSize.height), nil)
+
+            let context = UIGraphicsGetCurrentContext()
+
+            for image in images {
+                UIGraphicsBeginPDFPage()
+                UIGraphicsPushContext(context!)
+
+                if quality != 100 {
+                    print(CGFloat(quality)/100.0)
+                    guard let imageData = image.jpegData(compressionQuality: CGFloat(quality)/100.0) else {
+                        print("Error reducing image size")
+                        return nil
+                    }
+                    guard let newImage = UIImage(data: imageData) else {
+                        print("Error creating image from data")
+                        return nil
+                    }
+                    newImage.draw(at: CGPoint.zero)
+                } else {
+                    image.draw(at: CGPoint.zero)
+                }
+                UIGraphicsPopContext()
+            }
+
+            UIGraphicsEndPDFContext();
+
+            print(pdfData.length)
+            print(maxSize)
+            
+            if (pdfData.length > maxSize) {
+                print("reduces quality to \(quality - 10)")
+                return self.createPDF(images: images, maxSize: maxSize, quality: quality - 10, pdfPathUrl: pdfFilePath)
+            }
+
+            if pdfData.write(to: pdfFilePath, atomically: true) {
+                print("success writing to file")
+            } else {
+                print("write to pdfFilePath failed")
+            }
+            
+//            if pdfData.write(toFile: pdfFilePath.absoluteString, atomically: true)  ==  false{
+//                print("write to pdfFilePath failed")
+//            } else {
+//                print("success writing to file")
+//            }
+
+            return NSData(contentsOf: pdfFilePath)
+        }
+
+        return nil
     }
     
     /// END OF EXTENSION

@@ -34,4 +34,11 @@ class ImageStampAnnotation: PDFAnnotation {
         context.draw(cgImage, in: self.bounds)
         
     }
+    let pinch = UIPinchGestureRecognizer(target: self, action: #selector(pinchGesture))
+    
+    @objc func pinchGesture(sender: UIPinchGestureRecognizer){
+        sender.view?.transform = (sender.view?.transform)!.scaledBy(x:   sender.scale, y: sender.scale)
+        sender.scale = 1
+        print("pinch gesture")
+    }
 }

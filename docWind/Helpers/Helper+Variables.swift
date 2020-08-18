@@ -27,3 +27,12 @@ let FILES = "files"
 // Key names for item types
 let DWDIRECTORY = "directory"
 let DWPDFFILE = "pdfFile"
+
+//choose the size you want or use your own size
+let MB_10 = 10485760
+let MB_5 = 5242880
+let MB_3 = 3145728
+let MB_1 = 1048576
+let KByte_200 = 204800
+let KByte_500 = 512000
+

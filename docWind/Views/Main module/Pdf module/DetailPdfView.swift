@@ -53,6 +53,20 @@ struct DetailPdfView: View, Equatable {
                             self.saveButton = true
                         }.settingsBackground()
                     }
+                    
+                    if self.canEditSignature {
+//                        Button("Edit Sign") {
+//                            self.canEditSignature = true
+//                        }.settingsBackground()
+                        
+                        
+                        Button("Save") {
+                            print("saving signature")
+                            self.canEditSignature = false
+                            self.saveButton = true
+                        }.settingsBackground()
+                        
+                    }
 
                     if self.saveButton {
                         if !self.canEdit && !self.canEditSignature {
@@ -108,7 +122,7 @@ struct DetailPdfView: View, Equatable {
 
                     Spacer()
                     VStack {
-                        Image(systemName: "pencil.and.outline")
+                        Image(systemName: "scribble")
                         .font(.system(size: 20))
                         .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
                             .padding(.top, 5)
@@ -119,7 +133,8 @@ struct DetailPdfView: View, Equatable {
                     }
                         .onTapGesture {
                             FeedbackManager.mediumFeedback()
-                            if !AppSettings.shared.bougthNonConsumable {
+                            #warning("change this")
+                            if AppSettings.shared.bougthNonConsumable {
                                 self.alertTitle = "Notice"
                                 self.activeAlertContext = .noPurchase
                                 self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"

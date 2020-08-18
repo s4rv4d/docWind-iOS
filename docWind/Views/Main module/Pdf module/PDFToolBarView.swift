@@ -40,24 +40,24 @@ struct PDFToolBarView: View {
                     }.settingsBackground()
                     
 //                    // SAVING SIGNATURE
-//                    HStack {
-//                        Text("Signature")
-//                            .padding([.top, .leading, .trailing])
-//                        Spacer()
-//                    }
-//                    Button(action: {
-//                        self.activeContext = .signature
-//                        self.presentationMode.wrappedValue.dismiss()
-//                        self.openSignature.toggle()
-//                        self.canEditSignature.toggle()
-//                    }) {
-//                        HStack {
-//                            Image(systemName: "signature")
-//                            Text("Add signature")
-//                            Spacer()
-//                        }.padding()
-//                    }.settingsBackground()
-//
+                    HStack {
+                        Text("Signature")
+                            .padding([.top, .leading, .trailing])
+                        Spacer()
+                    }
+                    Button(action: {
+                        self.activeContext = .signature
+                        self.presentationMode.wrappedValue.dismiss()
+                        self.openSignature.toggle()
+                        self.canEditSignature.toggle()
+                    }) {
+                        HStack {
+                            Image(systemName: "signature")
+                            Text("Add signature")
+                            Spacer()
+                        }.padding()
+                    }.settingsBackground()
+
 //                    if imageThere != nil {
 //                       Button(action: {
 //                            self.presentationMode.wrappedValue.dismiss()
@@ -72,7 +72,7 @@ struct PDFToolBarView: View {
 //                        }.settingsBackground()
 //
 //                    }
-//                    // signature done
+                    // signature done
                     
                     HStack {
                         Text("Custom Annotations")

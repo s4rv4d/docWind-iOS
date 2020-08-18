@@ -44,7 +44,6 @@ struct NormalListRowView: View {
                     }
 
             }
-//            .debugPrint(self.masterFolder)
         }()) {
             HStack {
                 Image(systemName: (self.itemArray.wrappedItemType == DWPDFFILE) ? "doc.fill" : "folder.fill")
@@ -96,6 +95,18 @@ struct NormalListRowView: View {
                             Text("Edit")
                         }
                     }
+                    
+//                    Button(action: {
+//                        self.selectedItem = self.itemArray
+//                        self.uiImages = self.getImages()
+//                        self.activeSheet = .compressView
+//                        self.showSheet.toggle()
+//                    }) {
+//                        HStack {
+//                            Image(systemName: "square.stack.3d.up")
+//                            Text("Compress file")
+//                        }
+//                    }
                 }
                 
                 Button(action: {
@@ -133,6 +144,8 @@ struct NormalListRowView: View {
                 if self.uiImages.count != 0 && self.url != "" {
                     EditPdfMainView(pdfName: self.itemArray.wrappedItemName, selectedIconName: self.itemArray.wrappedIconName, mainPages: self.uiImages, url: self.url, item: self.selectedItem!).environment(\.managedObjectContext, self.context)
                 }
+            } else if self.activeSheet == .compressView {
+                LoadingScreenView(item: self.itemArray, uiImages: self.uiImages)
             }
         }
     }

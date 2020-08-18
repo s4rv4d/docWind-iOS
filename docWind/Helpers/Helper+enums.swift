@@ -21,7 +21,7 @@ enum ActiveContentViewSheet {
 }
 
 enum ActiveSheetForDetails {
-    case shareSheet, editSheet
+    case shareSheet, editSheet, compressView
 }
 
 // Enum for activeSheetvar in PDFDetailView
