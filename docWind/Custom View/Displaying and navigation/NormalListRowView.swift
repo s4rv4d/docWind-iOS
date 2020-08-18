@@ -54,6 +54,7 @@ struct NormalListRowView: View {
                 VStack(alignment: .leading) {
                     Text(self.itemArray.wrappedItemName)
                         .font(.body)
+                        .lineLimit(1)
                     Text(DWDateFormatter.shared.getStringFromDate(date: self.itemArray.wrappedItemCreated))
                         .font(.caption)
                         .foregroundColor(.secondary)

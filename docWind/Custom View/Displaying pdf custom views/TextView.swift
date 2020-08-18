@@ -19,9 +19,11 @@ struct TextView: UIViewRepresentable {
         textView.delegate = context.coordinator
         textView.font = UIFont.preferredFont(forTextStyle: textStyle)
         textView.autocapitalizationType = .sentences
+        textView.isEditable = false
         textView.isSelectable = true
         textView.backgroundColor = .clear
         textView.isUserInteractionEnabled = true
+        textView.dataDetectorTypes = .all
         return textView
     }
     

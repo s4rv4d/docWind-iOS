@@ -41,6 +41,7 @@
 		4069EF9F24D69AAF003083C6 /* ViewControllerResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4069EF9E24D69AAF003083C6 /* ViewControllerResolver.swift */; };
 		4069EFA124D69D4C003083C6 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4069EFA024D69D4C003083C6 /* CustomSearchBar.swift */; };
 		406B425824EB9DAB00CA149A /* LoadingScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406B425724EB9DAB00CA149A /* LoadingScreenView.swift */; };
+		406B425C24EBFCD200CA149A /* SlideCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406B425B24EBFCD200CA149A /* SlideCardView.swift */; };
 		406CAA4D24BECC2E00933F5D /* PDFToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406CAA4C24BECC2D00933F5D /* PDFToolBarView.swift */; };
 		406E9AF424B5E773000FB8FD /* SnapCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406E9AF324B5E773000FB8FD /* SnapCarouselView.swift */; };
 		406E9AF624B5E798000FB8FD /* CarouselCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406E9AF524B5E798000FB8FD /* CarouselCardModel.swift */; };
@@ -150,6 +151,7 @@
 		4069EF9E24D69AAF003083C6 /* ViewControllerResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerResolver.swift; sourceTree = "<group>"; };
 		4069EFA024D69D4C003083C6 /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		406B425724EB9DAB00CA149A /* LoadingScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreenView.swift; sourceTree = "<group>"; };
+		406B425B24EBFCD200CA149A /* SlideCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideCardView.swift; sourceTree = "<group>"; };
 		406CAA4C24BECC2D00933F5D /* PDFToolBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFToolBarView.swift; sourceTree = "<group>"; };
 		406E9AF324B5E773000FB8FD /* SnapCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapCarouselView.swift; sourceTree = "<group>"; };
 		406E9AF524B5E798000FB8FD /* CarouselCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCardModel.swift; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 				40485D8924B98C9F008A137A /* TextView.swift */,
 				40485D8B24B995E7008A137A /* BlurView.swift */,
 				40CAFAE024BB480600C1E28A /* ShareSheetView.swift */,
+				406B425B24EBFCD200CA149A /* SlideCardView.swift */,
 			);
 			path = "Displaying pdf custom views";
 			sourceTree = "<group>";
@@ -706,6 +709,7 @@
 				402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */,
 				40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */,
 				40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */,
+				406B425C24EBFCD200CA149A /* SlideCardView.swift in Sources */,
 				4012033824BDE06B00167917 /* DrawingGestureRecogniser.swift in Sources */,
 				407567F424B1FC4A0071B575 /* GeneralDocViewModel.swift in Sources */,
 				4010734D24BAD971002AFDD2 /* AddPdfFileGenView.swift in Sources */,
