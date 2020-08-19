@@ -48,7 +48,7 @@ struct GenListRowView: View {
                     .foregroundColor(self.iconNameString[self.itemArray.iconName!])
                     .font(.body)
                 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 8) {
                     Text(self.itemArray.wrappedItemName)
                         .font(.body)
                     HStack {

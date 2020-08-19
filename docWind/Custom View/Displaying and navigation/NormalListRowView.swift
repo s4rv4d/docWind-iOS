@@ -51,7 +51,7 @@ struct NormalListRowView: View {
                     .font(.body)
                     
                 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 8) {
                     Text(self.itemArray.wrappedItemName)
                         .font(.body)
                         .lineLimit(1)
