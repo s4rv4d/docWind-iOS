@@ -55,13 +55,22 @@ struct NormalListRowView: View {
                     Text(self.itemArray.wrappedItemName)
                         .font(.body)
                         .lineLimit(1)
-                    Text(DWDateFormatter.shared.getStringFromDate(date: self.itemArray.wrappedItemCreated))
+                    HStack {
+                        Text(DWDateFormatter.shared.getStringFromDate(date: self.itemArray.wrappedItemCreated))
                         .font(.caption)
                         .foregroundColor(.secondary)
+                        Spacer()
+                        if URL(string: self.itemArray.wrappedItemUrl)!.fileSize != nil {
+                            Text(NSString(format: "%.2f", URL(string: self.itemArray.wrappedItemUrl)!.fileSize!) as String + " MB")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
                 }
                 .padding()
                 
-            }.contextMenu {
+            }
+            .contextMenu {
                 if self.itemArray.wrappedItemType == DWPDFFILE {
                     Button(action: {
                         self.selectedItem = self.itemArray

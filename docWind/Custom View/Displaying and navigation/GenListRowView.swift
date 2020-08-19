@@ -51,9 +51,17 @@ struct GenListRowView: View {
                 VStack(alignment: .leading) {
                     Text(self.itemArray.wrappedItemName)
                         .font(.body)
-                    Text(DWDateFormatter.shared.getStringFromDate(date: self.itemArray.wrappedItemCreated))
+                    HStack {
+                        Text(DWDateFormatter.shared.getStringFromDate(date: self.itemArray.wrappedItemCreated))
                         .font(.caption)
                         .foregroundColor(.secondary)
+                        Spacer()
+                        if URL(string: self.itemArray.wrappedItemUrl)!.fileSize != nil {
+                            Text(NSString(format: "%.2f", URL(string: self.itemArray.wrappedItemUrl)!.fileSize!) as String + " MB")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
                 }
                 .padding()
                 

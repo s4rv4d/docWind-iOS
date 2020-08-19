@@ -604,3 +604,15 @@ extension String {
     static func >=(lhs: String, rhs: String) -> Bool { lhs.compare(toVersion: rhs) != .orderedAscending }
 }
 
+extension URL {
+    var fileSize: Float? {
+        if let value = try? resourceValues(forKeys: [.fileSizeKey]){
+            // need to convert into MB, mul with 0.000001
+            guard let floatVal = value.fileSize else { return nil }
+            let mbVal = Float(floatVal) * 0.000001
+            return mbVal
+        } else {
+            return nil
+        }
+    }
+}
