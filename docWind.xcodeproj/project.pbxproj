@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4010734D24BAD971002AFDD2 /* AddPdfFileGenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4010734C24BAD971002AFDD2 /* AddPdfFileGenView.swift */; };
 		4012033224BDD1F900167917 /* PinchToZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033124BDD1F900167917 /* PinchToZoom.swift */; };
-		4012033424BDD9DF00167917 /* ODVThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033324BDD9DF00167917 /* ODVThumbnailView.swift */; };
 		4012033624BDE04100167917 /* PDFDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033524BDE04100167917 /* PDFDrawer.swift */; };
 		4012033824BDE06B00167917 /* DrawingGestureRecogniser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033724BDE06B00167917 /* DrawingGestureRecogniser.swift */; };
 		4012033A24BDE09C00167917 /* DrawingAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033924BDE09C00167917 /* DrawingAnnotation.swift */; };
@@ -120,7 +119,6 @@
 /* Begin PBXFileReference section */
 		4010734C24BAD971002AFDD2 /* AddPdfFileGenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPdfFileGenView.swift; sourceTree = "<group>"; };
 		4012033124BDD1F900167917 /* PinchToZoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchToZoom.swift; sourceTree = "<group>"; };
-		4012033324BDD9DF00167917 /* ODVThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ODVThumbnailView.swift; sourceTree = "<group>"; };
 		4012033524BDE04100167917 /* PDFDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDrawer.swift; sourceTree = "<group>"; };
 		4012033724BDE06B00167917 /* DrawingGestureRecogniser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingGestureRecogniser.swift; sourceTree = "<group>"; };
 		4012033924BDE09C00167917 /* DrawingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingAnnotation.swift; sourceTree = "<group>"; };
@@ -409,7 +407,6 @@
 				409B927E24E43E6300F30EFF /* ActivityIndicatorView.swift */,
 				40D1B12024DC4E7D00859F1A /* SecondaryButtonView.swift */,
 				40EF391B24BF5E82007BBAC0 /* ToastView.swift */,
-				4012033324BDD9DF00167917 /* ODVThumbnailView.swift */,
 				40C408E524B9F2EF00876FAF /* PDFView.swift */,
 				40920EAF24B744BE00E2293C /* DrawOnImageView.swift */,
 				40920EB124B74E7800E2293C /* SlideOverCardView.swift */,
@@ -671,7 +668,6 @@
 				4069EFA124D69D4C003083C6 /* CustomSearchBar.swift in Sources */,
 				405EFDC024BC886A0070BE5F /* SettingsRow.swift in Sources */,
 				405EFDBE24BC76EB0070BE5F /* IAPService.swift in Sources */,
-				4012033424BDD9DF00167917 /* ODVThumbnailView.swift in Sources */,
 				40E387DB24E66B40001E23D2 /* ItunesAppInfoItunes.swift in Sources */,
 				40FDE49A24AC4C95006AAFD2 /* AppSettings.swift in Sources */,
 				40CDC4CA24AF72CD00462277 /* PdfFilemodel+CoreDataProperties.swift in Sources */,
@@ -860,7 +856,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
@@ -884,7 +880,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;

@@ -124,8 +124,6 @@
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
-	<key>UIFileSharingEnabled</key>
-	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to your camera to scan documents  </string>
 	<key>NSFaceIDUsageDescription</key>
@@ -161,6 +159,8 @@
 			</array>
 		</dict>
 	</dict>
+	<key>UIFileSharingEnabled</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

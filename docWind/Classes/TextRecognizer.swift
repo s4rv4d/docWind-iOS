@@ -28,22 +28,29 @@ public struct TextRecognizer {
             // Concatenate the recognised text from all the observations.
             let maximumCandidates = 1
             for observation in observations {
-                guard let candidate = observation.topCandidates(maximumCandidates).first else { continue }
-                tmp += candidate.string + "\n"
+                autoreleasepool {
+                    guard let candidate = observation.topCandidates(maximumCandidates).first else { return }
+                    tmp += candidate.string + "\n"
+                }
             }
         }
         textRecognitionRequest.recognitionLevel = .accurate
         for image in images {
-            let requestHandler = VNImageRequestHandler(cgImage: image, options: [:])
-            
-            do {
-                try requestHandler.perform([textRecognitionRequest])
-            } catch {
-                print(error)
+            autoreleasepool {
+                let requestHandler = VNImageRequestHandler(cgImage: image, options: [:])
+                
+                do {
+                    try requestHandler.perform([textRecognitionRequest])
+                } catch {
+                    print(error)
+                }
+                tmp += "\n\n"
             }
-            tmp += "\n\n"
         }
-        self.recognizedText = tmp
+        
+        textRecognitionWorkQueue.async {
+            self.recognizedText = tmp
+        }
     }
     
 }

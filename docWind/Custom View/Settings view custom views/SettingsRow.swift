@@ -42,7 +42,10 @@ struct SettingsRowForOCR: View {
     var imageName: String
     var title: String
     var imageColor: Color
+    var result: ResultURL
     var action: (()->()) = {}
+    
+    @State private var imageName2 = "info.circle"
     
 
     var body: some View {
@@ -60,11 +63,23 @@ struct SettingsRowForOCR: View {
                 Text(title)
                     .kerning(0)
                 Spacer()
-                Image(systemName: "chevron.right")
+                Image(systemName: imageName2)
                 .foregroundColor(.blue)
             }
             .padding(.vertical, 10)
             .foregroundColor(.primary)
+        }
+        .onAppear {
+            switch self.result.resultType.resultType {
+            case .link:
+                self.imageName2 = "link"
+            case .address:
+                self.imageName2 = "link"
+            case .phoneNumber:
+                self.imageName2 = "phone"
+            default:
+                break
+            }
         }
     }
 }

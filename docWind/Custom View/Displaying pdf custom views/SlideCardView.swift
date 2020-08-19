@@ -21,7 +21,7 @@ struct SlideCardView<Content: View> : View {
             .onEnded(onDragEnded)
         
         return VStack {
-            Handle()
+            Handle().padding(.top)
             self.content()
         }
         .frame(height: UIScreen.main.bounds.height)

@@ -34,7 +34,7 @@ struct OCRTextView: View {
                            }) {
                                Image(systemName: "multiply.circle.fill")
                                .foregroundColor(.blue)
-                               .font(.system(size: 25))
+                               .font(.system(size: 30))
                            }
                            .padding()
                     Spacer()
@@ -78,7 +78,8 @@ struct OCRTextView: View {
                         } else {
                             VStack {
                                 ForEach(self.matches, id: \.text) { data in
-                                    SettingsRowForOCR(imageName: "circle.fill", title: "\(data.text)", imageColor: .blue, action: {
+                                    
+                                    SettingsRowForOCR(imageName: "circle.fill", title: "\(data.text)", imageColor: .blue, result: data, action: {
                                         FeedbackManager.mediumFeedback()
                                         var str = ""
                                         
@@ -94,16 +95,21 @@ struct OCRTextView: View {
                                             str += data.text
                                         case .phoneNumber :
                                             str += "tel://"
-                                            str += data.text
+                                            
+                                            let num = data.text.replacingOccurrences(of: " ", with: "")
+                                            str += num
+                                            print(str)
+                                            
                                         default:
                                             break
                                         }
                                         
                                         guard let url = URL(string: str) else { return }
                                         UIApplication.shared.open(url)
-                                    })
+                                        }).settingsBackground()
                                 }
-                            }.settingsBackground()
+                            }
+//                            .settingsBackground()
                         }
                         Spacer()
                         Rectangle()

@@ -230,28 +230,32 @@ struct DetailPdfView: View, Equatable {
     }
     
     func extractText() {
-        if let pdf = CGPDFDocument(URL(string: self.url)! as CFURL) {
-            let pageCount = pdf.numberOfPages
-            var imgs = [UIImage]()
-            for i in 0 ... pageCount {
-                guard let page = pdf.page(at: i) else { continue }
-                let pageRect = page.getBoxRect(.mediaBox)
-                let renderer = UIGraphicsImageRenderer(size: pageRect.size)
-                let img = renderer.image { ctx in
-                    UIColor.white.set()
-                    ctx.fill(pageRect)
+        DispatchQueue(label: "OCR").async {
+            if let pdf = CGPDFDocument(URL(string: self.url)! as CFURL) {
+                let pageCount = pdf.numberOfPages
+                var imgs = [UIImage]()
+                for i in 0 ... pageCount {
+                    autoreleasepool {
+                        guard let page = pdf.page(at: i) else { return }
+                        let pageRect = page.getBoxRect(.mediaBox)
+                        let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+                        let img = renderer.image { ctx in
+                            UIColor.white.set()
+                            ctx.fill(pageRect)
 
-                    ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
-                    ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
+                            ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
+                            ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
 
-                    ctx.cgContext.drawPDFPage(page)
+                            ctx.cgContext.drawPDFPage(page)
+                        }
+                        imgs.append(img)
+                        print(imgs)
+                    }
                 }
-                imgs.append(img)
-                print(imgs)
+                self.images = imgs
+                self.activeContext = .ocrPage
+                self.isShown.toggle()
             }
-            self.images = imgs
-            self.activeContext = .ocrPage
-            self.isShown.toggle()
         }
     }
     
