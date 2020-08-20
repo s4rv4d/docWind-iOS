@@ -31,7 +31,7 @@ class AppStoreUpdate: NSObject {
             
             // Build App Store URL
             guard let url = URL(string:"http://itunes.apple.com/lookup?bundleId=" + bundleIdentifire) else {
-                print("Isse with generating URL.")
+                print("Is with generating URL.")
                 throw CustomError.invalidURL
             }
             
@@ -53,6 +53,8 @@ class AppStoreUpdate: NSObject {
                             print("No Short Version Info found.")
                             throw CustomError.invalidVersion
                         }
+                        
+                        print("local phone app version SIMULATOR: \(appShortVersion)")
                         
                         if appShortVersion >= itunesResult.version {
                             //App Store & Local App Have same Version.
