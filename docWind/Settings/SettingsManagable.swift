@@ -18,6 +18,7 @@ protocol SettingsManageable {
     mutating func reset() -> Bool
     func toDictionary() -> [String: Any?]?
     func toPlist() -> Bool
+    func resetFull()
 }
 
 //MARK: - Extension
@@ -29,6 +30,15 @@ extension SettingsManageable where Self: Codable {
 //        let cacheDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
 //        return cacheDirectory.appendingPathComponent("\(Self.self).plist")
     }
+    
+    func resetFull() {
+        do {
+            try FileManager.default.removeItem(atPath: settingsURL()!.path)
+        } catch {
+            print("MAIN ",error.localizedDescription)
+        }
+    }
+
     
     func update() -> Bool {
         do {
@@ -83,7 +93,7 @@ extension SettingsManageable where Self: Codable {
             try FileManager.default.removeItem(at: settingsURL()!)
             return true
         } catch {
-            print(error.localizedDescription)
+            print("second main ",error.localizedDescription)
             return false
         }
     }

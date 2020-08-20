@@ -38,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     // reset
                     print("NO DOCWIND dorec so reset")
                     DWFMAppSettings.shared.reset()
-
+                    AppSettings.shared.phoneSec = false
                     AppSettings.shared.firstLoginDone = false
                     _ = AppSettings.shared.update()
                 }
@@ -48,7 +48,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
                 // do reset
                 DWFMAppSettings.shared.reset()
-
+                AppSettings.shared.phoneSec = false
                 AppSettings.shared.firstLoginDone = false
                 _ = AppSettings.shared.update()
             }
