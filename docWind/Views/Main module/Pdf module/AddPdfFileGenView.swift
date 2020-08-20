@@ -114,10 +114,7 @@ struct AddPdfFileGenView: View {
                     Toggle(isOn: $removeWatermark.didSet(execute: { (status) in
                         if status {
                             if !AppSettings.shared.bougthNonConsumable {
-                                self.removeWatermark.toggle()
-                                self.activeAlertSheet = .notice
-                                self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
-                                self.showAlert.toggle()
+                                self.showSubView()
                             }
                         }
                     })) {
@@ -127,15 +124,6 @@ struct AddPdfFileGenView: View {
                                 .foregroundColor(.yellow)
                             Spacer()
                         }
-                    }
-//                    .disabled(!AppSettings.shared.bougthNonConsumable)
-                        .onTapGesture {
-                            if !AppSettings.shared.bougthNonConsumable {
-                              print("You need to buy")
-                                self.activeAlertSheet = .notice
-                                self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
-                                self.showAlert.toggle()
-                            }
                     }
                 }
             }.keyboardSensible(self.$offsetVal)
@@ -148,7 +136,8 @@ struct AddPdfFileGenView: View {
                 }, trailing: Button(action:  saveTapped){
                     Text("Save")
             })
-        }.onAppear {
+        }
+        .onAppear {
             DispatchQueue.main.async {
                 self.activeSheet = .scannerView
                 self.showScanner.toggle()
@@ -163,12 +152,13 @@ struct AddPdfFileGenView: View {
         }
         .sheet(isPresented: $showScanner) {
             if self.activeSheet == .scannerView {
-//                print(self.$pagesWithMark)
                 ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
             } else if self.activeSheet == .pdfView {
                 SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
             } else if self.activeSheet == .photoLibrary {
                 ImagePickerView(pages: self.$pages, pagesWithMark: self.$pagesWithMark)
+            } else if self.activeSheet == .subView {
+                SubcriptionPageView()
             }
         }
         
@@ -206,6 +196,12 @@ struct AddPdfFileGenView: View {
         FeedbackManager.mediumFeedback()
         self.activeAlertSheet = .delete
         self.showAlert.toggle()
+    }
+    
+    private func showSubView() {
+        self.removeWatermark = false
+        self.activeSheet = .subView
+        self.showScanner.toggle()
     }
     
     private func saveTapped() {
@@ -269,9 +265,6 @@ struct AddPdfFileGenView: View {
                 let content = try context.fetch(fetchRequest)
 
                 if let docWindContent = content.first {
-    //                self.contents = MainDocViewModel(directory: docWindContent)
-    //                self.direcObject = docWindContent
-                                    
                     // add new item
                     let itemName = itemName
                     let iconName = iconName
@@ -286,13 +279,6 @@ struct AddPdfFileGenView: View {
                     item.locked = NSNumber(booleanLiteral: isLocked)
                     item.itemCreated = Date()
                     item.origin = docWindContent
-                    
-    //                direcObject?.addToFiles(item)
-    //                self.contents = MainDocViewModel(directory: direcObject!)
-                            
-    //                let newDirec = DirecModel(context: context)
-    //                newDirec.name = itemName
-    //                newDirec.created = Date()
                     
                     do {
                        try context.save()

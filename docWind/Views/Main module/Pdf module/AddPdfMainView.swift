@@ -111,10 +111,7 @@ struct AddPdfMainView: View {
                     Toggle(isOn: $removeWatermark.didSet(execute: { (status) in
                         if status {
                             if !AppSettings.shared.bougthNonConsumable {
-                                self.removeWatermark.toggle()
-                                self.activeAlertSheet = .notice
-                                self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
-                                self.showAlert.toggle()
+                                self.showSubView()
                             }
                         }
                     })) {
@@ -124,14 +121,6 @@ struct AddPdfMainView: View {
                                 .foregroundColor(.yellow)
                             Spacer()
                         }
-                    }
-                        .onTapGesture {
-                            if !AppSettings.shared.bougthNonConsumable {
-                              print("You need to buy")
-                                self.activeAlertSheet = .notice
-                                self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
-                                self.showAlert.toggle()
-                            }
                     }
                 }
             }.keyboardSensible(self.$offsetVal)
@@ -165,6 +154,8 @@ struct AddPdfMainView: View {
                 SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
             } else if self.activeSheet == .photoLibrary {
                 ImagePickerView(pages: self.$pages, pagesWithMark: self.$pagesWithMark)
+            } else if self.activeSheet == .subView {
+                SubcriptionPageView()
             }
         }
         
@@ -235,6 +226,12 @@ struct AddPdfMainView: View {
     
     private func addPagesTapped() {
         self.showingActionSheet.toggle()
+    }
+    
+    private func showSubView() {
+        self.removeWatermark = false
+        self.activeSheet = .subView
+        self.showScanner.toggle()
     }
     
     private func scanTapped() {

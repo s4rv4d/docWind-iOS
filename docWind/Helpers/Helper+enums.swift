@@ -26,12 +26,12 @@ enum ActiveSheetForDetails {
 
 // Enum for activeSheetvar in PDFDetailView
 enum PDFDetailActiveView {
-    case shareSheet, toolBox, signature, ocrPage, editPage
+    case shareSheet, toolBox, signature, ocrPage, editPage, subView
 }
 
-// enum for active sheet #2
+// enum for active sheet #1&2
 enum ActiveOdfMainViewSheet {
-    case scannerView, pdfView, photoLibrary
+    case scannerView, pdfView, photoLibrary, subView
 }
 
 // enum for alert sheet
