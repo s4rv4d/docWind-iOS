@@ -9,6 +9,7 @@
 import SwiftUI
 import LocalAuthentication
 import CoreData
+import PDFKit
 
 struct NormalListRowView: View {
     
@@ -244,27 +245,49 @@ struct NormalListRowView: View {
                     
                     // now to extract imgs from pdf
                     if let pdf = CGPDFDocument(URL(string: url)! as CFURL) {
-                        let pageCount = pdf.numberOfPages
-                        
-                        for i in 0 ... pageCount {
-                            autoreleasepool {
-                                guard let page = pdf.page(at: i) else { return }
-                                let pageRect = page.getBoxRect(.mediaBox)
-                                let renderer = UIGraphicsImageRenderer(size: pageRect.size)
-                                let img = renderer.image { ctx in
-                                    UIColor.white.set()
-                                    ctx.fill(pageRect)
-                                    ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
-                                    ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
-                                    ctx.cgContext.drawPDFPage(page)
+//                        let pageCount = pdf.numberOfPages
+//
+//                        for i in 0 ... pageCount {
+//                            autoreleasepool {
+//                                guard let page = pdf.page(at: i) else { return }
+//                                let pageRect = page.getBoxRect(.mediaBox)
+//                                let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+//                                let img = renderer.image { ctx in
+//                                    UIColor.white.set()
+//                                    ctx.fill(pageRect)
+//                                    ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
+//                                    ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
+//                                    ctx.cgContext.drawPDFPage(page)
+//                                }
+//                                imgs.append(img)
+//                            }
+//                        }
+//
+//                        // now check if pageCount == imgs.count
+//                        if pageCount == imgs.count {
+//                            return imgs
+//                        }
+                        if let PDf = PDFDocument(url: URL(string: url)!) {
+                            let pageCount = PDf.pageCount
+                            
+                            for i in 0 ... pageCount {
+                                autoreleasepool {
+                                    guard let page = PDf.page(at: i) else { return }
+//                                    let pageRect = page.getBoxRect(.mediaBox
+                                    let pageRect = page.bounds(for: .mediaBox)
+                                    print(page.annotations)
+                                    let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+                                    let img = renderer.image { ctx in
+                                        UIColor.white.set()
+                                        ctx.fill(pageRect)
+                                        ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
+                                        ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
+//                                        ctx.cgContext.drawPDFPage(page as!)
+                                        ctx.cgContext.drawPDFPage(page.pageRef!)
+                                    }
+                                    imgs.append(img)
                                 }
-                                imgs.append(img)
                             }
-                        }
-                        
-                        // now check if pageCount == imgs.count
-                        if pageCount == imgs.count {
-                            return imgs
                         }
                         
                     } else {
