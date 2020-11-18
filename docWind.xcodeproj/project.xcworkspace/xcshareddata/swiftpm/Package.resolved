@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "QGrid",
+        "repositoryURL": "https://github.com/Q-Mobile/QGrid",
+        "state": {
+          "branch": null,
+          "revision": "804e59f8cb9f66b226685e9369fb82029742b83a",
+          "version": "0.1.4"
+        }
+      },
+      {
+        "package": "Shiny",
+        "repositoryURL": "https://github.com/maustinstar/shiny",
+        "state": {
+          "branch": null,
+          "revision": "8bb38bf8122d5b144ac0c09258c30aab46dcac7e",
+          "version": "0.0.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
