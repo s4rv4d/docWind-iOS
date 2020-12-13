@@ -118,9 +118,8 @@ struct DetailedDirecView: View {
                                 .zIndex(10)
                                 .padding()
                             // secondary buttons
-                            SecondaryButtonView(tapped: self.$tapped, icon: "folder.fill", color: .green, offsetX: 90, action: self.createDiectory).padding()
-                            SecondaryButtonView(tapped: self.$tapped, icon: "camera.fill", color: .pink, offsetY: -90, delay: 0.2, action: self.createFile).padding()
-                            SecondaryButtonView(tapped: self.$tapped, icon: "arrow.up.doc.fill", color: .orange, offsetX: -90, delay: 0.4, action: self.importTapped).padding()
+                            SecondaryButtonView(tapped: self.$tapped, icon: "camera.fill", color: .pink, offsetX: 45, offsetY: -90, delay: 0.2, action: self.createFile).padding()
+                            SecondaryButtonView(tapped: self.$tapped, icon: "arrow.up.doc.fill", color: .orange, offsetX: -45, offsetY: -90, delay: 0.4, action: self.importTapped).padding()
                         }
                     }
                     // sheet code

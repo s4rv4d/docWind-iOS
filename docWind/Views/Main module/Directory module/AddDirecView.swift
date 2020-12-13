@@ -85,6 +85,8 @@ struct AddDirecView: View {
             if defa.0 {
                 // make a coredata entry
                 let path = defa.1
+                print(path)
+                
                 if path != "" {
                     print("✅ SUCCESFULLY CREATED SUB DIRECTORY \(direcName)")
                     self.addANewItem(itemName: direcName, iconName: selectedIconName, itemType: DWDIRECTORY, locked: isLocked, filePath: path)

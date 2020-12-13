@@ -11,6 +11,4 @@ import Foundation
 import CoreData
 
 @objc(ItemModel)
-public class ItemModel: NSManagedObject {
-
-}
+public class ItemModel: NSManagedObject {}

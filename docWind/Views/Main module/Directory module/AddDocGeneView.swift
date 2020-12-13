@@ -83,15 +83,32 @@ struct AddDocGeneView: View {
     // MARK: - Functions
     private func saveTapped() {
         FeedbackManager.mediumFeedback()
-        // validation
+        print(headName)
+        let fullNameArr = headName.split{$0 == "/"}.map(String.init)
+        print(fullNameArr)
+        
+        let index = fullNameArr.index(of: "DocWind")! + 1
+        
+        let newArray = fullNameArr[index...]
+        print(direcName)
+        print(newArray)
+        
+        let newArrayString = newArray.joined(separator: "/")
+        print(newArrayString)
+        print(path)
+        
+        
+        
+        
+        /// validation
         if direcName != "" {
             if path != direcName {
                 // make a file in file manager
                 print(headName)
                 print(path)
-                
+
                 let dwas = DWFMAppSettings.shared.createSubSubDirectory(headName: URL(string: headName)!, newDirecName: direcName.replacingOccurrences(of: " ", with: "_"))
-                
+
                 if dwas.0 {
                     let path = dwas.1
                     if path != "" {
@@ -103,7 +120,7 @@ struct AddDocGeneView: View {
                         self.alertMessage = "Error creating sub directory :("
                         self.showAlert.toggle()
                     }
-                    
+
                 } else {
                     self.alertMessage = "Folder name already exists chose a new one"
                     self.showAlert.toggle()
@@ -112,7 +129,7 @@ struct AddDocGeneView: View {
                 self.alertMessage = "Main directory and sub directory cant have same names :("
                 self.showAlert.toggle()
             }
-            
+
         } else {
             // alert
             self.alertMessage = "Please make sure to fill all fields :)"

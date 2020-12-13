@@ -61,10 +61,13 @@ struct NormalListRowView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                         Spacer()
-                        if URL(string: self.itemArray.wrappedItemUrl)!.fileSize != nil {
-                            Text(NSString(format: "%.2f", URL(string: self.itemArray.wrappedItemUrl)!.fileSize!) as String + " MB")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+
+                        if self.itemArray.wrappedItemType == DWPDFFILE {
+                            if URL(string: self.itemArray.wrappedItemUrl)!.fileSize != nil {
+                                Text(NSString(format: "%.2f", URL(string: self.itemArray.wrappedItemUrl)!.fileSize!) as String + " MB")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
                         }
                     }
                 }

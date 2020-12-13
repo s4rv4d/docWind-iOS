@@ -15,7 +15,8 @@ protocol DocWindFManager {
     func reset()
     func savePdf(urlString: String, direcName: String?, fileName: String) -> Bool
     func showSavedPdf(direcName: String?, fileName: String) -> (Bool, String)
-    func pdfFileAlreadySaved(direcName: String?, fileName:String) -> Bool
+//    func pdfFileAlreadySaved(direcName: String?, fileName:String) -> Bool
+    func pdfAlreadySaved(directory url: String?, fileName: String, fileurl urlString: String?) -> Bool
     func creatingDirectory(direcName: String) -> Bool
     func createSubDirectory(direcName: String) -> (Bool, String)
     func createSubSubDirectory(headName: URL, newDirecName: String) -> (Bool, String)
@@ -60,27 +61,27 @@ extension DocWindFManager {
         let actualSavingFilePath = direcPath.appendingPathComponent((pdfName.removingPercentEncoding != nil) ? pdfName.removingPercentEncoding! : pdfName, isDirectory: false)
         print("Actiual saved path --------> \(actualSavingFilePath)")
         // before saving check if filename already exists
-        if self.pdfFileAlreadySaved(direcName: "\(direcPath)", fileName: pdfName) {
-            // already saved
-            status = false
-            print("❌ PDF ALREADY SAVED BEFORE")
-        } else {
-            // not saved
-            // start writing
-            do {
-                try pdfData.write(to: actualSavingFilePath, options: .atomic)
-                print("✅ SAVED PDF SUCCESSFULLY")
-                print(actualSavingFilePath)
-                path = "\(actualSavingFilePath)"
-                print(path)
-                
-                status = true
-            } catch {
-                print("❌ PDF COULD'NT BE SAVED ")
-                print("////reason: \(error.localizedDescription)")
-                status = false
-            }
-        }
+//        if self.pdfFileAlreadySaved(direcName: "\(direcPath)", fileName: pdfName) {
+//            // already saved
+//            status = false
+//            print("❌ PDF ALREADY SAVED BEFORE")
+//        } else {
+//            // not saved
+//            // start writing
+//            do {
+//                try pdfData.write(to: actualSavingFilePath, options: .atomic)
+//                print("✅ SAVED PDF SUCCESSFULLY")
+//                print(actualSavingFilePath)
+//                path = "\(actualSavingFilePath)"
+//                print(path)
+//
+//                status = true
+//            } catch {
+//                print("❌ PDF COULD'NT BE SAVED ")
+//                print("////reason: \(error.localizedDescription)")
+//                status = false
+//            }
+//        }
         
         return (status, path)
     }
@@ -127,24 +128,24 @@ extension DocWindFManager {
             print("SAVING FILE PATH ", actualSavingFilePath)
             
             // before saving check if filename already exists
-            if self.pdfFileAlreadySaved(direcName: direcName, fileName: pdfName) {
-                // already saved
-                status = false
-                print("❌ PDF ALREADY SAVED BEFORE")
-            } else {
-                // not saved
-                // start writing
-                do {
-                    try pdfData.write(to: actualSavingFilePath, options: .atomic)
-                    print("✅ SAVED PDF SUCCESSFULLY")
-                    path = "\(actualSavingFilePath)"
-                    status = true
-                } catch {
-                    print("❌ PDF COULD'NT BE SAVED ")
-                    print("////reason: \(error.localizedDescription)")
-                    status = false
-                }
-            }
+//            if self.pdfFileAlreadySaved(direcName: direcName, fileName: pdfName) {
+//                // already saved
+//                status = false
+//                print("❌ PDF ALREADY SAVED BEFORE")
+//            } else {
+//                // not saved
+//                // start writing
+//                do {
+//                    try pdfData.write(to: actualSavingFilePath, options: .atomic)
+//                    print("✅ SAVED PDF SUCCESSFULLY")
+//                    path = "\(actualSavingFilePath)"
+//                    status = true
+//                } catch {
+//                    print("❌ PDF COULD'NT BE SAVED ")
+//                    print("////reason: \(error.localizedDescription)")
+//                    status = false
+//                }
+//            }
         } else {
             let resourcePath = self.containerUrl!
             print("File Manager Path: ------> \(resourcePath)")
@@ -156,24 +157,24 @@ extension DocWindFManager {
             let actualSavingFilePath = resourcePath.appendingPathComponent(pdfName, isDirectory: false)
             print("SAVING FILE PATH ", actualSavingFilePath)
             // before saving check if filename already exists
-            if self.pdfFileAlreadySaved(direcName: "\(resourcePath)", fileName: pdfName) {
-                // already saved
-                status = false
-                print("❌ PDF ALREADY SAVED BEFORE")
-            } else {
-                // not saved
-                // start writing
-                do {
-                    try pdfData.write(to: actualSavingFilePath, options: .atomic)
-                    print("✅ SAVED PDF SUCCESSFULLY")
-                    path = "\(actualSavingFilePath)"
-                    status = true
-                } catch {
-                    print("❌ PDF COULD'NT BE SAVED ")
-                    print("////reason: \(error.localizedDescription)")
-                    status = false
-                }
-            }
+//            if self.pdfFileAlreadySaved(direcName: "\(resourcePath)", fileName: pdfName) {
+//                // already saved
+//                status = false
+//                print("❌ PDF ALREADY SAVED BEFORE")
+//            } else {
+//                // not saved
+//                // start writing
+//                do {
+//                    try pdfData.write(to: actualSavingFilePath, options: .atomic)
+//                    print("✅ SAVED PDF SUCCESSFULLY")
+//                    path = "\(actualSavingFilePath)"
+//                    status = true
+//                } catch {
+//                    print("❌ PDF COULD'NT BE SAVED ")
+//                    print("////reason: \(error.localizedDescription)")
+//                    status = false
+//                }
+//            }
         }
         
         return (status, path)
@@ -201,24 +202,24 @@ extension DocWindFManager {
                     let actualSavingPath = actualSavingDirec.appendingPathComponent(pdfName, isDirectory: false)
                     
                     // before saving check if file already exists
-                    if self.pdfFileAlreadySaved(direcName: direcName, fileName: fileName) {
-                        // already saved
-                        print("❌ PDF ALREADY SAVED BEFORE")
-                        status = false
-                    } else {
-                        // not saved
-                        
-                        // lets save now
-                        do {
-                            try pdfdata.write(to: actualSavingPath, options: .atomic)
-                            print("✅ SAVED PDF SUCCESSFULLY")
-                            status = true
-                        } catch {
-                            print("❌ PDF COULD'NT BE SAVED ")
-                            print("////reason: \(error.localizedDescription)")
-                            status = false
-                        }
-                    }
+//                    if self.pdfFileAlreadySaved(direcName: direcName, fileName: fileName) {
+//                        // already saved
+//                        print("❌ PDF ALREADY SAVED BEFORE")
+//                        status = false
+//                    } else {
+//                        // not saved
+//
+//                        // lets save now
+//                        do {
+//                            try pdfdata.write(to: actualSavingPath, options: .atomic)
+//                            print("✅ SAVED PDF SUCCESSFULLY")
+//                            status = true
+//                        } catch {
+//                            print("❌ PDF COULD'NT BE SAVED ")
+//                            print("////reason: \(error.localizedDescription)")
+//                            status = false
+//                        }
+//                    }
                     
                 } else {
                     // if failed alert
@@ -243,23 +244,23 @@ extension DocWindFManager {
                     let actualSavingPath = resourcePath.appendingPathComponent("\(pdfName)", isDirectory: false)
                     
                     // before saving check if file already exists
-                    if self.pdfFileAlreadySaved(direcName: direcName, fileName: fileName) {
-                        // already saved
-                        print("❌ PDF ALREADY SAVED BEFORE")
-                    } else {
-                        // not saved
-                        
-                        // lets save now
-                        do {
-                            try pdfdata.write(to: actualSavingPath, options: .atomic)
-                            print("✅ SAVED PDF SUCCESSFULLY")
-                            status = true
-                        } catch {
-                            print("❌ PDF COULD'NT BE SAVED ")
-                            print("////reason: \(error.localizedDescription)")
-                            status = false
-                        }
-                    }
+//                    if self.pdfFileAlreadySaved(direcName: direcName, fileName: fileName) {
+//                        // already saved
+//                        print("❌ PDF ALREADY SAVED BEFORE")
+//                    } else {
+//                        // not saved
+//                        
+//                        // lets save now
+//                        do {
+//                            try pdfdata.write(to: actualSavingPath, options: .atomic)
+//                            print("✅ SAVED PDF SUCCESSFULLY")
+//                            status = true
+//                        } catch {
+//                            print("❌ PDF COULD'NT BE SAVED ")
+//                            print("////reason: \(error.localizedDescription)")
+//                            status = false
+//                        }
+//                    }
                 } else {
                     // if failed alert
                     print("❌ PDF COULD'NT BE SAVED, ERROR CONVERTING INTO DATA TYPE")
@@ -421,64 +422,118 @@ extension DocWindFManager {
         return (status, path)
     }
     
-    func pdfFileAlreadySaved(direcName: String?, fileName:String) -> Bool {
-        var status = false
-        
-        // check for direc name
-        if direcName != nil {
+    func pdfAlreadySaved(directory url: String?, fileName: String, fileurl urlString: String?) -> Bool {
+            var status = false
+            print("urlString: ",urlString)
+            print("url: ",url)
             
-            let direcPath = URL(string: direcName!)!
-//            let resourcePath = self.containerUrl!
-            print("File Manager Path: ------> \(direcPath)")
-            print(fileName)
-            do {
-                let contents = try FileManager.default.contentsOfDirectory(at: direcPath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
-                print(contents)
-                for url in contents {
-                    if url.description.contains(fileName) {
-                        status = true
-                        print("✅ FOUND PDF SUCCESSFULLY, ALREADY SAVED")
+            if url != nil {
+                // directory name specified
+                let direcPath = URL(string: url!)!
+                print("File Manager Path: ------> \(direcPath)") // can force unwrap since we know its not nil
+                print("File name: ----> \(fileName)")
+                
+                do {
+                    let contents = try FileManager.default.contentsOfDirectory(atPath: url!)
+
+                    // need to remove symlinks ref while saving every where check stackoverflow
+                    print(contents)
+                    // /var is the symlink to /private/var
+                    for url in contents {
+                        
+                        if url.description.contains(fileName) {
+                            status = true
+                            print("✅ FOUND PDF SUCCESSFULLY, ALREADY SAVED")
+                        }
                     }
+                    
+                } catch {
+                    print("❌ PDF COULD'NT BE LOCATED ")
+                    print("////reason: \(error.localizedDescription)")
+                    status = false
                 }
                 
-            } catch {
-                print("❌ PDF COULD'NT BE LOCATED ")
-                print("////reason: \(error.localizedDescription)")
-                status = false
-            }
-            
-            return status
-        } else {
-            let resourcePath = self.containerUrl!
-            print("File Manager Path: ------> \(resourcePath)")
-            
-            do {
-                let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
-                print(contents)
-                for url in contents {
-                    if url.description.contains(fileName) {
-                        status = true
-                        print("✅ FOUND PDF SUCCESSFULLY, ALREADY SAVED")
+                return status
+                
+            } else {
+                // directory name not specified, there using main directory as ref i.e., `PhotoStat`
+                
+                let resourcePath = self.containerUrl!
+                print("File Manager Path: ------> \(resourcePath)")
+                
+                do {
+                    let contents = try FileManager.default.contentsOfDirectory(atPath: resourcePath.path)
+
+                    // need to remove symlinks ref while saving every where check stackoverflow
+                    print("inside DOCWIND")
+                    print(contents)
+                    // /var is the symlink to /private/var
+                    for url in contents {
+                        
+                        if url.description.contains(fileName) {
+                            status = true
+                            print("✅ FOUND PDF SUCCESSFULLY, ALREADY SAVED")
+                        }
                     }
+                    
+                } catch {
+                    print("❌ PDF COULD'NT BE LOCATED , SO SAVE NEW ONE")
+                    print("////reason: \(error.localizedDescription)")
+                    status = false
                 }
                 
-            } catch {
-                print("❌ PDF COULD'NT BE LOCATED , SO SAVE NEW ONE")
-                print("////reason: \(error.localizedDescription)")
-                status = false
+                return status
             }
-            
-            return status
         }
-    }
     
+//    func createSubSubDirectory(headName: URL, newDirecName: String) -> (Bool, String) {
+//        var status = false
+//        var path = ""
+//
+//        let documentsPath = headName
+//        print("File Manager Path: ------> \(documentsPath)")
+//        let logsPath = documentsPath.appendingPathComponent("\(newDirecName)", isDirectory: true)
+//        print("Updated Manager Path: ------> \(String(describing: logsPath))")
+//
+//
+////        if self.pdfFileAlreadySaved(direcName: headName.absoluteString, fileName: newDirecName) {
+////            status = false
+////            print("❌ PDF ALREADY SAVED BEFORE")
+////
+////        } else {
+////            do {
+////                try FileManager.default.createDirectory(atPath: logsPath.path, withIntermediateDirectories: true, attributes: nil)
+////                status = true
+////                path = "\(logsPath)"
+////                print("✅ SUCCESSFULLY CREATED  \(headName)\(newDirecName) DIRECTORY")
+////            } catch {
+////                print("❌ FAILED TO CREATED DIRECTORY")
+////                print("////reason: \(error.localizedDescription)")
+////                status = false
+////            }
+////        }
+//
+////        if pdfAlreadySaved(directory: <#T##String?#>, fileName: <#T##String#>, fileurl: <#T##String?#>) {
+////
+////        }
+//
+//        return (status, path)
+//    }
+    
+    /// to create main directory
+    /// - Parameter direcName: name for the directory to be created and saved
+    /// - Returns: returns status
     func creatingDirectory(direcName: String) -> Bool {
         var status = false
         
-        // check for container existence
-        if let url = self.containerUrl, !FileManager.default.fileExists(atPath: url.path, isDirectory: nil) {
+        // check for document directory sub dire named `PhotoStat`'s existance
+        print("Path: \(self.containerUrl!.path)") // -> use this for at path: key names
+        print("Absolute string: \(self.containerUrl!.absoluteString)") // -> use this for folder refrences
+        
+        if let mainURL = self.containerUrl, !FileManager.default.fileExists(atPath: mainURL.path, isDirectory: nil) {
+            // if mainURL is valid and folder doesnt exists, meaning this is first install or first creation of directory
             do {
-                try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+                try FileManager.default.createDirectory(at: mainURL, withIntermediateDirectories: true, attributes: nil)
                 status = true
                 print("✅ SUCCESSFULLY CREATED DIRECTORY")
             }
@@ -499,58 +554,35 @@ extension DocWindFManager {
         var status = false
         var path = ""
         
-        let documentsPath = self.containerUrl!
-        print("File Manager Path: ------> \(documentsPath)")
-        let logsPath = documentsPath.appendingPathComponent("\(direcName)", isDirectory: true)
-        print("Updated Manager Path: ------> \(String(describing: logsPath))")
-        
-        //check if path already exist
-        if self.pdfFileAlreadySaved(direcName: nil, fileName: "/\(direcName)/") {
-            status = false
-            print("❌ PDF ALREADY SAVED BEFORE")
-        } else {
-            do {
-                try FileManager.default.createDirectory(atPath: logsPath.path, withIntermediateDirectories: true, attributes: nil)
-                status = true
-                path = "\(logsPath)"
-                print("✅ SUCCESSFULLY CREATED  \(direcName) DIRECTORY")
-            } catch {
-                print("❌ FAILED TO CREATED DIRECTORY")
-                print("////reason: \(error.localizedDescription)")
-                status = false
-            }
-        }
-        
-        return (status, path)
-    }
-    
-    func createSubSubDirectory(headName: URL, newDirecName: String) -> (Bool, String) {
-        var status = false
-        var path = ""
-        
-        let documentsPath = headName
-        print("File Manager Path: ------> \(documentsPath)")
-        let logsPath = documentsPath.appendingPathComponent("\(newDirecName)", isDirectory: true)
-        print("Updated Manager Path: ------> \(String(describing: logsPath))")
+        if let mainURL = self.containerUrl, FileManager.default.fileExists(atPath: mainURL.path) {
+            print("yes this exists and we can create")
+            let subPath = mainURL.appendingPathComponent(direcName, isDirectory: true)
+            
 
-        
-        if self.pdfFileAlreadySaved(direcName: headName.absoluteString, fileName: newDirecName) {
-            status = false
-            print("❌ PDF ALREADY SAVED BEFORE")
-
-        } else {
-            do {
-                try FileManager.default.createDirectory(atPath: logsPath.path, withIntermediateDirectories: true, attributes: nil)
-                status = true
-                path = "\(logsPath)"
-                print("✅ SUCCESSFULLY CREATED  \(headName)\(newDirecName) DIRECTORY")
-            } catch {
-                print("❌ FAILED TO CREATED DIRECTORY")
-                print("////reason: \(error.localizedDescription)")
+            if !pdfAlreadySaved(directory: nil, fileName: direcName, fileurl: subPath.path) {
+                
+                // creating
+                do {
+                    try FileManager.default.createDirectory(at: subPath, withIntermediateDirectories: true, attributes: nil)
+                    status = true
+                    path = subPath.path
+                    print("sucessfully created at \(subPath)")
+                } catch {
+                    print("failed to created directory")
+                    print(error.localizedDescription)
+                    status = false
+                }
+                
+            } else {
                 status = false
+                print("ERROR: file/folder already saved")
             }
+            
+            status = true
+        } else {
+            print("ERROR: nope we cant go ahead")
+            status = false
         }
-        
         return (status, path)
     }
     

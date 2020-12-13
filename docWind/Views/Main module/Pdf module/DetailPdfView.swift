@@ -134,12 +134,11 @@ struct DetailPdfView: View, Equatable {
                                 self.subViewed()
                             } else {
                                 self.toolsTapped()
-
                             }
                     }
-                }.debugPrint("HStack 💻")
+                }
                 .background(Color(.secondarySystemBackground))
-            }.debugPrint("VStack 🧸")
+            }
         }
 
         .sheet(isPresented: $isShown) {
@@ -186,6 +185,9 @@ struct DetailPdfView: View, Equatable {
     // MARK: - Functions
     func getUrl() {
         let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(master)", fileName: item.wrappedItemUrl)
+        print(master)
+        print(item.wrappedItemUrl)
+        
         if dwfe.0 {
             let path = dwfe.1
             if path != "" {
