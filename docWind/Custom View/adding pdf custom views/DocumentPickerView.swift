@@ -68,6 +68,10 @@ struct DocumentPickerView: UIViewControllerRepresentable {
                 }
             }
             let selectedFileName = String(selectedFile.absoluteString.split(separator: "/").last!)
+            
+            print(selectedFile)
+            print(selectedFileName)
+            
             processFile(fileUrl: selectedFile, fileName: selectedFileName)
         }
         
@@ -80,7 +84,6 @@ struct DocumentPickerView: UIViewControllerRepresentable {
             // save to ubiquitous container first
             let finalName = fileName
             print("headPath: ",headPath)
-//
 //            let str = "\(String(headPath.split(separator: "/").last!).trimBothSides())"
             let finalCheck = DWFMAppSettings.shared.saveFileWithPDFContent(pdfData: rawData, pdfName: finalName, directoryRef: (headPath == "DocWind") ? nil : headPath)
 

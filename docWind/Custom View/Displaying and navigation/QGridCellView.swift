@@ -175,7 +175,14 @@ struct QGridCellView: View {
             // deleting directory
             print("deleting direc")
             if selectedItem != nil {
-                if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.masterFolder, fileName: selectedItem!.wrappedItemUrl) {
+                
+                var folderName = selectedItem!.wrappedItemName
+                
+                if folderName.contains(" ") {
+                    folderName = folderName.replacingOccurrences(of: " ", with: "_")
+                }
+                
+                if DWFMAppSettings.shared.deleteSavedFolder(folderName: folderName) {
                     print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
                     // delete from direcmodel
                     let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")

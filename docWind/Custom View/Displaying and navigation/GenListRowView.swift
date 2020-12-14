@@ -186,8 +186,15 @@ struct GenListRowView: View {
                 }
             }
         } else {
+            
+            var folderName = selectedItem!.wrappedItemName
+            
+            if folderName.contains(" ") {
+                folderName = folderName.replacingOccurrences(of: " ", with: "_")
+            }
+            
             // deleting directory
-            if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.masterFolder, fileName: selectedItem!.wrappedItemUrl) {
+            if DWFMAppSettings.shared.deleteSavedFolder(folderName: folderName) {
                 print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
                 // delete from direcmodel
                 let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")

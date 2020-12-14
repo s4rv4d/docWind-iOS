@@ -196,7 +196,19 @@ struct NormalListRowView: View {
         if isFile {
             // deleting file
             if selectedItem != nil {
-                if DWFMAppSettings.shared.deleteSavedPdf(direcName: self.masterFolder, fileName: selectedItem!.wrappedItemUrl) {
+                
+                let ref = "\(selectedItem!.wrappedItemUrl.split(separator: "/").reversed()[1])".trimBothSides()
+                var fileName = selectedItem!.wrappedItemName
+                
+                if fileName.contains(" ") {
+                    fileName = fileName.replacingOccurrences(of: " ", with: "_")
+                }
+                
+                if !fileName.contains(".pdf") {
+                    fileName += ".pdf"
+                }
+                
+                if DWFMAppSettings.shared.deleteSavedPdf(direcName: (ref == "DocWind") ? nil : ref, fileName: fileName) {
                     print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
                     ItemModel.deleteObject(in: context, sub: self.selectedItem!)
                 } else {
@@ -209,7 +221,18 @@ struct NormalListRowView: View {
             // deleting directory
             print("deleting direc")
             if selectedItem != nil {
-                if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.masterFolder, fileName: selectedItem!.wrappedItemUrl) {
+                
+                var folderName = selectedItem!.wrappedItemName
+                
+                if folderName.contains(" ") {
+                    folderName = folderName.replacingOccurrences(of: " ", with: "_")
+                }
+                
+                guard folderName != "PhotoStat" else {
+                    return
+                }
+                
+                if DWFMAppSettings.shared.deleteSavedFolder(folderName: folderName) {
                     print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
                     // delete from direcmodel
                     let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")

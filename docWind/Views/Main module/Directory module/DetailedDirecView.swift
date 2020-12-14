@@ -149,7 +149,6 @@ struct DetailedDirecView: View {
             } else if self.activeSheet == .importDoc {
                 
                 let str = "\(String(self.item.wrappedItemUrl.split(separator: "/").last!).trimBothSides())"
-                
                 DocumentPickerView(headPath: str, headName: self.masterDirecName, alertState: self.$showAlert, alertMessage: self.$alertMessage).environment(\.managedObjectContext, self.context)
                 
             }
@@ -196,7 +195,14 @@ struct DetailedDirecView: View {
         let item = self.items.first!.fileArray[indexToDelete]
         print(item.wrappedItemUrl)
         if item.itemType == DWDIRECTORY {
-            if DWFMAppSettings.shared.deleteSavedFolder(dirname: self.item.wrappedItemUrl, fileName: item.wrappedItemUrl) {
+            
+            var folderName = item.wrappedItemName
+            
+            if folderName.contains(" ") {
+                folderName = folderName.replacingOccurrences(of: " ", with: "_")
+            }
+            
+            if DWFMAppSettings.shared.deleteSavedFolder(folderName: folderName) {
                 print("SUCCESSFULLY DELETED FROM iCloud container ✅")
                 
                 // delete from direcmodel

@@ -25,6 +25,7 @@ protocol DocWindFManager {
     func saveFileWithPDFContent(pdfData: Data, pdfName: String, directoryRef: String?) -> (Bool, String)
     func savePdfWithSubFolder(pdfData: Data, pdfName: String, subDir: String) -> (Bool, String)
     func deleteSavedPdf(direcName: String?, fileName: String) -> Bool
+    func deleteSavedFolder(folderName: String) -> Bool
     func createPDF(images:[UIImage], maxSize:Int, quality:Int, pdfPathUrl: URL?) -> NSData?
 }
 
@@ -137,7 +138,6 @@ extension DocWindFManager {
             print("FINAL SAVING PATH: \(newSavingPath)")
             
             print(resourceURL.path)
-            
             // to check if the file is already saved before
             if self.pdfAlreadySaved(directory: resourceURL.path, fileName: actualPDFName, fileurl: newSavingPath.path) {
                 // found file
@@ -307,54 +307,29 @@ extension DocWindFManager {
         }
     }
     
-    func deleteSavedFolder(dirname: String?, fileName: String) -> Bool {
+    func deleteSavedFolder(folderName: String) -> Bool {
         var status = false
+        // any direc
+        guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
+//        let actualFilePath = resourceURL.appendingPathComponent(folderName, isDirectory: true)
         
-        if dirname != nil {
-            let resourcePath = URL(string: dirname!)!
-            print("File Manager Path OVER HERE: ------> \(resourcePath)")
+        do {
+            let contents = try FileManager.default.contentsOfDirectory(at: resourceURL, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+            print(contents)
             
-            do {
-                let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
-                print(contents)
-//                print(fileName)
-                for url in contents {
-                    print(url)
-                    
-                    if url.description.contains(fileName) {
-                        try FileManager.default.removeItem(at: url)
-                        print("SUCCESSFULLY DELETED folder ✅")
-                        status = true
-                    } else {
-                        print("Couldnt find the folder 😞")
-                    }
-                }
+            for url in contents {
                 
-            } catch {
-                status = false
-                print("error while deleting file \(error.localizedDescription)")
-            }
-        } else {
-            let resourcePath = self.containerUrl!
-            print("File Manager Path OVER HERE: ------> \(resourcePath)")
-            
-            do {
-                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
-                    for url in contents {
-                        if url.description.contains("/\(fileName.replacingOccurrences(of: " ", with: "_"))/") {
-                            try FileManager.default.removeItem(at: url)
-                            print("SUCCESSFULLY DELETED FILE ✅")
-                            status = true
-                        } else {
-                            print("Couldnt find the file 😞")
-                            status = false
-                        }
-                    }
-            } catch {
-                status = false
-                print("error while deleting file \(error.localizedDescription)")
-            }
+                if url.description.contains(folderName) {
+                    try FileManager.default.removeItem(at: url)
+                    print("SUCCESSFULLY DELETED FILE ✅")
+                    status = true
+                }
 
+            }
+        } catch {
+            print("❌ PDF COULD'NT BE FOUND ")
+            print("////reason: \(error.localizedDescription)")
+            status = false
         }
         
         return status
@@ -363,46 +338,74 @@ extension DocWindFManager {
     func deleteSavedPdf(direcName: String?, fileName: String) -> Bool {
         var status = false
         
-        if direcName != nil {
-            let resourcePath = URL(string: direcName!)!
-            print("File Manager Path OVER HERE: ------> \(resourcePath)")
+        if direcName == nil {
+            // PhotoStat
+            // getting the main directory file URL
+            guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
+            let actualFilePath = resourceURL.appendingPathComponent(fileName)
+            print("ACTUAL FILE PATH: \(actualFilePath)")
             
             // search and deletion part
-            do {
-                let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
-                print(contents)
-                for url in contents {
-                    if url.description.contains(fileName) {
-                        try FileManager.default.removeItem(at: url)
-                        print("SUCCESSFULLY DELETED FILE ✅")
-                        status = true
-                    } else {
-                        print("Couldnt find the file 😞")
-                    }
-                }
-            } catch {
-                status = false
-                print("error while deleting file \(error.localizedDescription)")
-            }
-        } else {
-            let resourcePath = self.containerUrl!
-            print("File Manager Path OVER HERE: ------> \(resourcePath)")
-            
-            do {
-                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+            if FileManager.default.fileExists(atPath: actualFilePath.path) {
+                print("here")
+                
+                do {
+                    let contents = try FileManager.default.contentsOfDirectory(at: resourceURL, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+                    print(contents)
+                    
                     for url in contents {
-                        if url.description.contains("\(fileName.replacingOccurrences(of: " ", with: "_"))") {
+                        
+                        if url.description.contains(fileName) {
                             try FileManager.default.removeItem(at: url)
                             print("SUCCESSFULLY DELETED FILE ✅")
                             status = true
-                        } else {
-                            print("Couldnt find the file 😞")
-                            status = false
                         }
+
                     }
-            } catch {
+                } catch {
+                    print("❌ PDF COULD'NT BE FOUND ")
+                    print("////reason: \(error.localizedDescription)")
+                    status = false
+                }
+                
+            } else {
                 status = false
-                print("error while deleting file \(error.localizedDescription)")
+                print("❌ PDF COULD'NT BE FOUND ")
+            }
+            
+        } else {
+            // any direc
+            guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
+            let actualDirec = resourceURL.appendingPathComponent(direcName!, isDirectory: true)
+            let actualFilePath = actualDirec.appendingPathComponent(fileName)
+            print("ACTUAL FILE PATH: \(actualFilePath)")
+            
+            // search and deletion part
+            if FileManager.default.fileExists(atPath: actualFilePath.path) {
+                print("here")
+                
+                do {
+                    let contents = try FileManager.default.contentsOfDirectory(at: actualDirec, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+                    print(contents)
+                    
+                    for url in contents {
+                        
+                        if url.description.contains(fileName) {
+                            try FileManager.default.removeItem(at: url)
+                            print("SUCCESSFULLY DELETED FILE ✅")
+                            status = true
+                        }
+
+                    }
+                } catch {
+                    print("❌ PDF COULD'NT BE FOUND ")
+                    print("////reason: \(error.localizedDescription)")
+                    status = false
+                }
+                
+            } else {
+                status = false
+                print("❌ PDF COULD'NT BE FOUND ")
             }
         }
         

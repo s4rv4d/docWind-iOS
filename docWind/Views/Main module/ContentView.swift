@@ -212,7 +212,18 @@ struct ContentView: View {
         
         
         if item.itemType == DWDIRECTORY {
-            if DWFMAppSettings.shared.deleteSavedFolder(dirname: "\(DWFMAppSettings.shared.fileURL())", fileName: item.wrappedItemUrl) {
+            
+            var folderName = item.wrappedItemName
+            
+            if folderName.contains(" ") {
+                folderName = folderName.replacingOccurrences(of: " ", with: "_")
+            }
+            
+            guard folderName != "PhotoStat" else {
+                return
+            }
+            
+            if DWFMAppSettings.shared.deleteSavedFolder(folderName: folderName) {
                 print("SUCCESSFULLY DELETED FROM iCloud container ✅")
                 
                 // delete from direcmodel
