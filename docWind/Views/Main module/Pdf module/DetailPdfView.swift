@@ -184,7 +184,17 @@ struct DetailPdfView: View, Equatable {
 
     // MARK: - Functions
     func getUrl() {
-        let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(master)", fileName: item.wrappedItemUrl)
+        print(master)
+        print(self.item.wrappedItemName)
+        
+        let str = "\(String(self.item.wrappedItemUrl.split(separator: "/").reversed()[1]).trimBothSides())"
+        var name = item.wrappedItemName
+        
+        if !name.contains(".pdf") {
+            name += ".pdf"
+        }
+        
+        let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: (str == "DocWind") ? nil : str, fileName: name)
         print(master)
         print(item.wrappedItemUrl)
         

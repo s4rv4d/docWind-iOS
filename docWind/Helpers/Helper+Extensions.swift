@@ -556,8 +556,13 @@ extension Binding {
     }
 }
 
-
+// MARK: - String extension
 extension String {
+    
+    func trimBothSides() -> String{
+        return self.components(separatedBy:.whitespacesAndNewlines).filter { $0.count > 0 }.joined(separator: " ")
+    }
+    
     // Modified from the DragonCherry extension - https://github.com/DragonCherry/VersionCompare
     private func compare(toVersion targetVersion: String) -> ComparisonResult {
         let versionDelimiter = "."

@@ -19,9 +19,10 @@ protocol DocWindFManager {
     func pdfAlreadySaved(directory url: String?, fileName: String, fileurl urlString: String?) -> Bool
     func creatingDirectory(direcName: String) -> Bool
     func createSubDirectory(direcName: String) -> (Bool, String)
-    func createSubSubDirectory(headName: URL, newDirecName: String) -> (Bool, String)
+//    func createSubSubDirectory(headName: URL, newDirecName: String) -> (Bool, String)
     func renameFile(oldPath: String, newName: String) -> (Bool, String)
-    func savePdfWithDataContent(pdfData: Data, pdfName: String, direcName: String?) -> (Bool, String)
+//    func savePdfWithDataContent(pdfData: Data, pdfName: String, direcName: String?) -> (Bool, String)
+    func saveFileWithPDFContent(pdfData: Data, pdfName: String, directoryRef: String?) -> (Bool, String)
     func savePdfWithSubFolder(pdfData: Data, pdfName: String, subDir: String) -> (Bool, String)
     func deleteSavedPdf(direcName: String?, fileName: String) -> Bool
     func createPDF(images:[UIImage], maxSize:Int, quality:Int, pdfPathUrl: URL?) -> NSData?
@@ -109,72 +110,107 @@ extension DocWindFManager {
         return (status, path)
     }
     
-    func savePdfWithDataContent(pdfData: Data, pdfName: String, direcName: String?) -> (Bool, String) {
+    /// saving pdf file to documents directory
+    /// - Parameters:
+    ///   - pdfData: data of pdf to store
+    ///   - pdfName: pdf name
+    ///   - directoryRef: folder reference to store file in
+    /// - Returns: state of the completion of executing
+    func saveFileWithPDFContent(pdfData: Data, pdfName: String, directoryRef: String?) -> (Bool, String) {
         var status = false
         var path = ""
         
-        if direcName != nil {
-            let resourcePath = self.containerUrl!
-            print("File Manager Path: ------> \(resourcePath)")
-            let pdfName = "\(pdfName)"
-            print("Pdf name to save: -------> \(pdfName)")
-            let pdfData = pdfData
+        // getting the main directory file URL
+        guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
+        
+        if directoryRef == nil {
+            // when nothing is specified, saving in main is assumed
             
-            // saving part
-            let actualSavingDirectory = resourcePath.appendingPathComponent("\(direcName!)", isDirectory: true)
-            let actualSavingFilePath = actualSavingDirectory.appendingPathComponent(pdfName, isDirectory: false)
+            let actualPDFName = pdfName
+            print("PDF NAME TO BE SAVED: \(actualPDFName) ---!") // contains .pdf
             
-            print("SAVING DIREC PATH ", actualSavingDirectory)
-            print("SAVING FILE PATH ", actualSavingFilePath)
+            let actualPDFData = pdfData
+            print("PDF does contain data: \(!actualPDFData.isEmpty)")
             
-            // before saving check if filename already exists
-//            if self.pdfFileAlreadySaved(direcName: direcName, fileName: pdfName) {
-//                // already saved
-//                status = false
-//                print("❌ PDF ALREADY SAVED BEFORE")
-//            } else {
-//                // not saved
-//                // start writing
-//                do {
-//                    try pdfData.write(to: actualSavingFilePath, options: .atomic)
-//                    print("✅ SAVED PDF SUCCESSFULLY")
-//                    path = "\(actualSavingFilePath)"
-//                    status = true
-//                } catch {
-//                    print("❌ PDF COULD'NT BE SAVED ")
-//                    print("////reason: \(error.localizedDescription)")
-//                    status = false
-//                }
-//            }
+            // getting final saving path
+            let newSavingPath = resourceURL.appendingPathComponent(actualPDFName, isDirectory: false)
+            print("FINAL SAVING PATH: \(newSavingPath)")
+            
+            print(resourceURL.path)
+            
+            // to check if the file is already saved before
+            if self.pdfAlreadySaved(directory: resourceURL.path, fileName: actualPDFName, fileurl: newSavingPath.path) {
+                // found file
+                status = false
+                print("❌ PDF ALREADY SAVED BEFORE")
+            } else {
+                // not found file\
+                // start writing to file
+                do {
+                    if !FileManager.default.fileExists(atPath: resourceURL.path) {
+                        try FileManager.default.createDirectory(at: resourceURL, withIntermediateDirectories: true, attributes: nil)
+                    } else {
+                        print("directory already created")
+                    }
+                    
+                    try actualPDFData.write(to: newSavingPath, options: .atomic)
+                    print("saved pdf successfully")
+                    path = newSavingPath.path
+                    status = true
+                    
+                } catch {
+                    print("pdf couldnt be saved")
+                    print(error.localizedDescription)
+                    status = false
+                }
+            }
+            
         } else {
-            let resourcePath = self.containerUrl!
-            print("File Manager Path: ------> \(resourcePath)")
-            let pdfName = "\(pdfName)"
-            print("Pdf name to save: -------> \(pdfName)")
-            let pdfData = pdfData
+            // when something is specified, saving in sub is assumed
             
-            // saving part
-            let actualSavingFilePath = resourcePath.appendingPathComponent(pdfName, isDirectory: false)
-            print("SAVING FILE PATH ", actualSavingFilePath)
-            // before saving check if filename already exists
-//            if self.pdfFileAlreadySaved(direcName: "\(resourcePath)", fileName: pdfName) {
-//                // already saved
-//                status = false
-//                print("❌ PDF ALREADY SAVED BEFORE")
-//            } else {
-//                // not saved
-//                // start writing
-//                do {
-//                    try pdfData.write(to: actualSavingFilePath, options: .atomic)
-//                    print("✅ SAVED PDF SUCCESSFULLY")
-//                    path = "\(actualSavingFilePath)"
-//                    status = true
-//                } catch {
-//                    print("❌ PDF COULD'NT BE SAVED ")
-//                    print("////reason: \(error.localizedDescription)")
-//                    status = false
-//                }
-//            }
+            let actualPDFName = pdfName
+            print("PDF NAME TO BE SAVED: \(actualPDFName) ---!") // contains .pdf
+            
+            let actualPDFData = pdfData
+            print("PDF does contain data: \(!actualPDFData.isEmpty)")
+                        
+            guard let ref = directoryRef?.trimBothSides() else { fatalError() }
+            
+            let relativeFilePath = resourceURL.appendingPathComponent(ref, isDirectory: true)
+            print("RELATIVE PATH: \(relativeFilePath)")
+            // getting final directory path
+            let newSavingPath = relativeFilePath.appendingPathComponent(actualPDFName, isDirectory: false)
+            print("FINAL SAVING PATH: \(newSavingPath) --!")
+            
+            // to check if the file is already saved before
+            if self.pdfAlreadySaved(directory: relativeFilePath.path, fileName: actualPDFName, fileurl: newSavingPath.path) {
+                // found file
+                status = false
+                print("❌ PDF ALREADY SAVED BEFORE")
+            } else {
+                // not found file\
+                // start writing to file
+                do {
+                    if !FileManager.default.fileExists(atPath: relativeFilePath.path) {
+                        try FileManager.default.createDirectory(at: relativeFilePath, withIntermediateDirectories: true, attributes: nil)
+                    } else {
+                        print("directory already created")
+                    }
+                    
+                    try actualPDFData.write(to: newSavingPath, options: .atomic)
+                    print("saved pdf successfully")
+                    path = newSavingPath.path
+                    status = true
+                    
+                } catch {
+                    print("pdf couldnt be saved")
+                    print(error.localizedDescription)
+                    status = false
+                }
+
+            }
+            
+                        
         }
         
         return (status, path)
@@ -377,41 +413,61 @@ extension DocWindFManager {
         var status = false
         var path = ""
         
-        if direcName != nil {
-            let resourcePath = URL(string: direcName!)!
-            print("File Manager Path OVER HERE: ------> \(resourcePath)")
-            print(fileName)
+        // getting the main directory file URL
+        guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
+        print(direcName)
+        print("name",fileName)
+        
+        if direcName == nil {
             
+            print(resourceURL.appendingPathComponent(fileName).path)
+            
+            if FileManager.default.fileExists(atPath: resourceURL.appendingPathComponent(fileName).path) {
+                print("here")
+            } else {
+                print("not here")
+            }
+            
+            // do a file check
             do {
-                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+                let contents = try FileManager.default.contentsOfDirectory(at: resourceURL, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
                 print(contents)
-                    for url in contents {
-                        if url.description.contains(fileName) {
-                            status = true
-                            path = "\(url.description)"
-                            print("✅ FOUND PDF SUCCESSFULLY \(url.description)")
-                            // do something with file
-                        }
+                
+                for url in contents {
+                    
+                    if url.description.contains(fileName) {
+                        status = true
+                        path = url.description
+                        print("✅ FOUND PDF SUCCESSFULLY, ALREADY SAVED")
                     }
+
+                }
             } catch {
                 print("❌ PDF COULD'NT BE FOUND ")
                 print("////reason: \(error.localizedDescription)")
                 status = false
             }
+            
+            
         } else {
-            let resourcePath = self.containerUrl!
+            let resourcePath = resourceURL.appendingPathComponent(direcName!, isDirectory: true)
             print("File Manager Path OVER HERE: ------> \(resourcePath)")
+            print(fileName)
+//            print(urlString!)
             
             do {
-                 let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
-                    for url in contents {
-                        if url.description.contains("\(fileName)") {
-                            status = true
-                            path = "\(url.description)"
-                            print("✅ FOUND PDF SUCCESSFULLY \(url.description)")
-                            // do something with file
-                        }
+                let contents = try FileManager.default.contentsOfDirectory(at: resourcePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+                print(contents)
+                
+                for url in contents {
+                    
+                    if url.description.contains(fileName) {
+                        status = true
+                        path = url.description
+                        print("✅ FOUND PDF SUCCESSFULLY, ALREADY SAVED")
                     }
+                }
+                
             } catch {
                 print("❌ PDF COULD'NT BE FOUND ")
                 print("////reason: \(error.localizedDescription)")
@@ -429,7 +485,8 @@ extension DocWindFManager {
             
             if url != nil {
                 // directory name specified
-                let direcPath = URL(string: url!)!
+                let direcPath = URL(fileURLWithPath: url!)
+                
                 print("File Manager Path: ------> \(direcPath)") // can force unwrap since we know its not nil
                 print("File name: ----> \(fileName)")
                 
@@ -485,40 +542,6 @@ extension DocWindFManager {
                 return status
             }
         }
-    
-//    func createSubSubDirectory(headName: URL, newDirecName: String) -> (Bool, String) {
-//        var status = false
-//        var path = ""
-//
-//        let documentsPath = headName
-//        print("File Manager Path: ------> \(documentsPath)")
-//        let logsPath = documentsPath.appendingPathComponent("\(newDirecName)", isDirectory: true)
-//        print("Updated Manager Path: ------> \(String(describing: logsPath))")
-//
-//
-////        if self.pdfFileAlreadySaved(direcName: headName.absoluteString, fileName: newDirecName) {
-////            status = false
-////            print("❌ PDF ALREADY SAVED BEFORE")
-////
-////        } else {
-////            do {
-////                try FileManager.default.createDirectory(atPath: logsPath.path, withIntermediateDirectories: true, attributes: nil)
-////                status = true
-////                path = "\(logsPath)"
-////                print("✅ SUCCESSFULLY CREATED  \(headName)\(newDirecName) DIRECTORY")
-////            } catch {
-////                print("❌ FAILED TO CREATED DIRECTORY")
-////                print("////reason: \(error.localizedDescription)")
-////                status = false
-////            }
-////        }
-//
-////        if pdfAlreadySaved(directory: <#T##String?#>, fileName: <#T##String#>, fileurl: <#T##String?#>) {
-////
-////        }
-//
-//        return (status, path)
-//    }
     
     /// to create main directory
     /// - Parameter direcName: name for the directory to be created and saved

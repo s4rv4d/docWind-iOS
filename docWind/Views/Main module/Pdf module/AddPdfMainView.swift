@@ -193,15 +193,20 @@ struct AddPdfMainView: View {
             // get raw data of pdf
             let rawPDFData = pdfDocument.dataRepresentation()!
             let pdfName = self.pdfName
-            var finalPdfName = "\(pdfName).pdf"
+            var finalPdfName = pdfName
+            
             if pdfName.contains(" ") {
                 finalPdfName = pdfName.replacingOccurrences(of: " ", with: "_")
                 finalPdfName += ".pdf"
             }
             
+            if !pdfName.contains(".pdf") {
+                finalPdfName += ".pdf"
+            }
+            
             
             // store to FM
-            let dwfa = DWFMAppSettings.shared.savePdfWithDataContent(pdfData: rawPDFData, pdfName: finalPdfName, direcName: nil)
+            let dwfa = DWFMAppSettings.shared.saveFileWithPDFContent(pdfData: rawPDFData, pdfName: finalPdfName, directoryRef: nil)
             if dwfa.0 {
                 let path = dwfa.1
                 if path != "" {

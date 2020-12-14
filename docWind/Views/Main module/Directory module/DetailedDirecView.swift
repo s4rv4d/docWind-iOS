@@ -144,9 +144,14 @@ struct DetailedDirecView: View {
             if self.activeSheet == .createdDirec {
                 AddDocGeneView(path: self.masterDirecName, headName: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
             } else if self.activeSheet == .createPdf {
-                AddPdfFileGenView(headPath: self.item.wrappedItemUrl, headName: self.masterDirecName).environment(\.managedObjectContext, self.context)
+                let str = "\(String(self.item.wrappedItemUrl.split(separator: "/").last!).trimBothSides())"
+                AddPdfFileGenView(headPath: str, headName: self.masterDirecName).environment(\.managedObjectContext, self.context)
             } else if self.activeSheet == .importDoc {
-                DocumentPickerView(headPath: self.item.wrappedItemUrl, headName: self.masterDirecName, alertState: self.$showAlert, alertMessage: self.$alertMessage).environment(\.managedObjectContext, self.context)
+                
+                let str = "\(String(self.item.wrappedItemUrl.split(separator: "/").last!).trimBothSides())"
+                
+                DocumentPickerView(headPath: str, headName: self.masterDirecName, alertState: self.$showAlert, alertMessage: self.$alertMessage).environment(\.managedObjectContext, self.context)
+                
             }
         }
         

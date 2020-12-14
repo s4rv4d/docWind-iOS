@@ -52,6 +52,8 @@ struct DocumentPickerView: UIViewControllerRepresentable {
             self.context = context
             self.alertState = alertState
             self.alertMessage = alertMessage
+            
+            print(headPath)
         }
         
         // MARK: - Delegate functions
@@ -77,7 +79,10 @@ struct DocumentPickerView: UIViewControllerRepresentable {
             guard let rawData = pdfDocument.dataRepresentation() else { return }
             // save to ubiquitous container first
             let finalName = fileName
-            let finalCheck = DWFMAppSettings.shared.savePdfWithSubFolder(pdfData: rawData, pdfName: finalName, subDir: self.headPath)
+            print("headPath: ",headPath)
+//
+//            let str = "\(String(headPath.split(separator: "/").last!).trimBothSides())"
+            let finalCheck = DWFMAppSettings.shared.saveFileWithPDFContent(pdfData: rawData, pdfName: finalName, directoryRef: (headPath == "DocWind") ? nil : headPath)
 
             // checks
             if finalCheck.0 {

@@ -148,7 +148,8 @@ struct ContentView: View {
             } else if self.activeSheet == .settingsTapped {
                 SettingsView()
             } else if self.activeSheet == .importDoc {
-                DocumentPickerView(headPath: "\(DWFMAppSettings.shared.fileURL())", headName: "DocWind", alertState: self.$showAlert, alertMessage: self.$alertMessage).environment(\.managedObjectContext, self.context)
+                let str = "\(String("\(DWFMAppSettings.shared.fileURL())".split(separator: "/").last!).trimBothSides())"
+                DocumentPickerView(headPath: str, headName: "DocWind", alertState: self.$showAlert, alertMessage: self.$alertMessage).environment(\.managedObjectContext, self.context)
             }
         }
         
