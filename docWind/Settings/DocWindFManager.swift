@@ -20,7 +20,7 @@ protocol DocWindFManager {
     func creatingDirectory(direcName: String) -> Bool
     func createSubDirectory(direcName: String) -> (Bool, String)
 //    func createSubSubDirectory(headName: URL, newDirecName: String) -> (Bool, String)
-    func renameFile(oldPath: String, newName: String) -> (Bool, String)
+    func renameFile(direcName: String?, oldFileName: String, newFileName: String) -> (Bool, String)
 //    func savePdfWithDataContent(pdfData: Data, pdfName: String, direcName: String?) -> (Bool, String)
     func saveFileWithPDFContent(pdfData: Data, pdfName: String, directoryRef: String?) -> (Bool, String)
     func savePdfWithSubFolder(pdfData: Data, pdfName: String, subDir: String) -> (Bool, String)
@@ -88,28 +88,65 @@ extension DocWindFManager {
         return (status, path)
     }
     
-    func renameFile(oldPath: String, newName: String) -> (Bool, String) {
-        var status = false
-        var path = ""
-        
-        guard let oldDirecURL = URL(string: oldPath) else { fatalError("couldnt get oldDirecURL") }
-        print("ORIGINAL PATH -----> \(oldDirecURL)")
-        let oldPathURLExcludingFileName = oldDirecURL.deletingLastPathComponent()
-        print("AFTER DELETING LAST COMPONENT -----> \(oldPathURLExcludingFileName)")
-        let newPathURLIncludingNewFileName = oldPathURLExcludingFileName.appendingPathComponent(newName, isDirectory: false)
-        print("AFTER APPENDING NEW PATH ----> \(newPathURLIncludingNewFileName)")
-        
-        do {
-            try FileManager.default.moveItem(at: oldDirecURL, to: newPathURLIncludingNewFileName)
-            status = true
-            path = newPathURLIncludingNewFileName.absoluteString
-        } catch {
-            status = false
-            print("❌ ERROR RENAMING FILE: \(error.localizedDescription)")
+    /// renaming a file
+        /// - Parameters:
+        ///   - direcName: directory where the file is present
+        ///   - oldFileName: old file name
+        ///   - newFileName: new file name
+        /// - Returns: status of completion of execution of this function
+        func renameFile(direcName: String?, oldFileName: String, newFileName: String) -> (Bool, String) {
+            var status = false
+            var path = ""
+            
+            if direcName == nil {
+                
+                print(oldFileName)
+                print(newFileName)
+                
+                let con = try! FileManager.default.contentsOfDirectory(atPath: containerUrl!.path)
+                print(con)
+                
+                
+                // getting the main directory file URL
+                guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
+                let oldPath = resourceURL.appendingPathComponent(oldFileName)
+                let newPath = resourceURL.appendingPathComponent(newFileName)
+                
+                print("OLD PATH:")
+                print(oldPath)
+                print("NEW PATH:")
+                print(newPath)
+                
+                do {
+                    try FileManager.default.moveItem(at: oldPath, to: newPath)
+                    status = true
+                    path = newPath.path
+                } catch {
+                    status = false
+                    print("❌ ERROR RENAMING FILE: \(error.localizedDescription)")
+                }
+                
+                
+            } else {
+                guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
+                let resourcePath = resourceURL.appendingPathComponent(direcName!, isDirectory: true)
+                print("File Manager Path OVER HERE: ------> \(resourcePath)")
+                
+                let oldPath = resourcePath.appendingPathComponent(oldFileName)
+                let newPath = resourcePath.appendingPathComponent(newFileName)
+                
+                do {
+                    try FileManager.default.moveItem(at: oldPath, to: newPath)
+                    status = true
+                    path = newPath.path
+                } catch {
+                    status = false
+                    print("❌ ERROR RENAMING FILE: \(error.localizedDescription)")
+                }
+            }
+            
+            return (status, path)
         }
-        
-        return (status, path)
-    }
     
     /// saving pdf file to documents directory
     /// - Parameters:
@@ -339,7 +376,8 @@ extension DocWindFManager {
         var status = false
         
         if direcName == nil {
-            // PhotoStat
+            // DocWind
+            
             // getting the main directory file URL
             guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
             let actualFilePath = resourceURL.appendingPathComponent(fileName)
@@ -516,7 +554,7 @@ extension DocWindFManager {
                 return status
                 
             } else {
-                // directory name not specified, there using main directory as ref i.e., `PhotoStat`
+                // directory name not specified, there using main directory as ref i.e., `DocWind`
                 
                 let resourcePath = self.containerUrl!
                 print("File Manager Path: ------> \(resourcePath)")
@@ -552,7 +590,7 @@ extension DocWindFManager {
     func creatingDirectory(direcName: String) -> Bool {
         var status = false
         
-        // check for document directory sub dire named `PhotoStat`'s existance
+        // check for document directory sub dire named `DocWind`'s existance
         print("Path: \(self.containerUrl!.path)") // -> use this for at path: key names
         print("Absolute string: \(self.containerUrl!.absoluteString)") // -> use this for folder refrences
         

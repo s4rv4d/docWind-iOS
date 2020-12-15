@@ -122,7 +122,7 @@ struct QGridCellView: View {
         .sheet(isPresented: $showSheet) {
             
             if self.activeSheet == .shareSheet {
-                ShareSheetView(activityItems: [URL(string: self.url)!])
+                ShareSheetView(activityItems: [URL(fileURLWithPath: self.url)])
             } else if self.activeSheet == .editSheet{
                 if self.uiImages.count != 0 && self.url != "" {
                     EditPdfMainView(pdfName: self.item.wrappedItemName, selectedIconName: self.item.wrappedIconName, mainPages: self.uiImages, url: self.url, item: self.selectedItem!).environment(\.managedObjectContext, self.context)
@@ -134,7 +134,14 @@ struct QGridCellView: View {
     // MARK: - Functions
     func getUrl() {
         if selectedItem != nil {
-            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: selectedItem!.wrappedItemUrl)
+            let str = "\(String(self.selectedItem!.wrappedItemUrl.split(separator: "/").reversed()[1]).trimBothSides())"
+            var name = selectedItem!.wrappedItemName
+            
+            if !name.contains(".pdf") {
+                name += ".pdf"
+            }
+            
+            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: (str == "DocWind") ? nil : str, fileName: name)
             if dwfe.0 {
                 let path = dwfe.1
                 if path != "" {
@@ -162,7 +169,19 @@ struct QGridCellView: View {
         if isFile {
             // deleting file
             if selectedItem != nil {
-                if DWFMAppSettings.shared.deleteSavedPdf(direcName: self.masterFolder, fileName: selectedItem!.wrappedItemUrl) {
+                
+                let ref = "\(selectedItem!.wrappedItemUrl.split(separator: "/").reversed()[1])".trimBothSides()
+                var fileName = selectedItem!.wrappedItemName
+                
+                if fileName.contains(" ") {
+                    fileName = fileName.replacingOccurrences(of: " ", with: "_")
+                }
+                
+                if !fileName.contains(".pdf") {
+                    fileName += ".pdf"
+                }
+                
+                if DWFMAppSettings.shared.deleteSavedPdf(direcName: (ref == "DocWind") ? nil : ref, fileName: fileName) {
                     print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
                     ItemModel.deleteObject(in: context, sub: self.selectedItem!)
                 } else {
@@ -180,6 +199,10 @@ struct QGridCellView: View {
                 
                 if folderName.contains(" ") {
                     folderName = folderName.replacingOccurrences(of: " ", with: "_")
+                }
+                
+                guard folderName != "DocWind" else {
+                    return
                 }
                 
                 if DWFMAppSettings.shared.deleteSavedFolder(folderName: folderName) {
@@ -213,7 +236,14 @@ struct QGridCellView: View {
         var imgs = [UIImage]()
         
         if selectedItem != nil {
-            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: selectedItem!.wrappedItemUrl)
+            let str = "\(String(self.selectedItem!.wrappedItemUrl.split(separator: "/").reversed()[1]).trimBothSides())"
+            var name = selectedItem!.wrappedItemName
+            
+            if !name.contains(".pdf") {
+                name += ".pdf"
+            }
+            
+            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: (str == "DocWind") ? nil : str, fileName: name)
             if dwfe.0 {
                 let path = dwfe.1
                 if path != "" {

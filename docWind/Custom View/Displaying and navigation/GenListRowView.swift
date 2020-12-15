@@ -133,7 +133,7 @@ struct GenListRowView: View {
         
         .sheet(isPresented: $showSheet) {
             if self.activeSheet == .shareSheet {
-                ShareSheetView(activityItems: [URL(string: self.url)!])
+                ShareSheetView(activityItems: [URL(fileURLWithPath: self.url)])
             } else if self.activeSheet == .editSheet{
                 // open editView
                 if self.uiImages.count != 0 && self.url != "" {
@@ -146,7 +146,16 @@ struct GenListRowView: View {
     // MARK: - Functions
     func getUrl() {
         if selectedItem != nil {
-            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: selectedItem!.wrappedItemUrl)
+            print(masterFolder)
+            print(selectedItem!.wrappedItemUrl)
+            let str = "\(String(self.selectedItem!.wrappedItemUrl.split(separator: "/").reversed()[1]).trimBothSides())"
+            var name = selectedItem!.wrappedItemName
+            
+            if !name.contains(".pdf") {
+                name += ".pdf"
+            }
+            
+            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: (str == "DocWind") ? nil : str, fileName: name)
             if dwfe.0 {
                 let path = dwfe.1
                 if path != "" {
@@ -174,47 +183,65 @@ struct GenListRowView: View {
         if isFile {
             // deleting file
             if selectedItem != nil {
-                if DWFMAppSettings.shared.deleteSavedPdf(direcName: self.masterFolder, fileName: selectedItem!.wrappedItemUrl) {
+                
+                let ref = "\(selectedItem!.wrappedItemUrl.split(separator: "/").reversed()[1])".trimBothSides()
+                var fileName = selectedItem!.wrappedItemName
+                
+                if fileName.contains(" ") {
+                    fileName = fileName.replacingOccurrences(of: " ", with: "_")
+                }
+                
+                if !fileName.contains(".pdf") {
+                    fileName += ".pdf"
+                }
+                
+                if DWFMAppSettings.shared.deleteSavedPdf(direcName: (ref == "DocWind") ? nil : ref, fileName: fileName) {
                     print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
-                    // now remove from coredata
                     ItemModel.deleteObject(in: context, sub: self.selectedItem!)
                 } else {
-                    // error
                     self.alertTitle = "Error"
                     self.alertMessage = "Couldnt delete file"
                     self.showAlert.toggle()
                 }
             }
         } else {
-            
-            var folderName = selectedItem!.wrappedItemName
-            
-            if folderName.contains(" ") {
-                folderName = folderName.replacingOccurrences(of: " ", with: "_")
-            }
-            
             // deleting directory
-            if DWFMAppSettings.shared.deleteSavedFolder(folderName: folderName) {
-                print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
-                // delete from direcmodel
-                let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
-                fetchRequest.predicate = NSPredicate(format: "name == %@", selectedItem!.wrappedItemName)
+            print("deleting direc")
+            if selectedItem != nil {
                 
-                do {
-                    let content = try context.fetch(fetchRequest)
-                    print(content)
-                    if let docWindDirec = content.first {
-                        DirecModel.deleteObject(in: context, sub: docWindDirec)
-                    }
-                } catch {
-                  print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
+                var folderName = selectedItem!.wrappedItemName
+                
+                if folderName.contains(" ") {
+                    folderName = folderName.replacingOccurrences(of: " ", with: "_")
                 }
                 
-                ItemModel.deleteObject(in: context, sub: self.selectedItem!)
-            } else {
-                self.alertTitle = "Error"
-                self.alertMessage = "Couldnt delete folder"
-                self.showAlert.toggle()
+                guard folderName != "DocWind" else {
+                    return
+                }
+                
+                if DWFMAppSettings.shared.deleteSavedFolder(folderName: folderName) {
+                    print("SUCCESSFULLY DELETED CONFIRM 2 ✅")
+                    // delete from direcmodel
+                    let fetchRequest = NSFetchRequest<DirecModel>(entityName: "DirecModel")
+                    fetchRequest.predicate = NSPredicate(format: "name == %@", selectedItem!.wrappedItemName)
+                    
+                    do {
+                        let content = try context.fetch(fetchRequest)
+                        print(content)
+                        if let docWindDirec = content.first {
+                            DirecModel.deleteObject(in: context, sub: docWindDirec)
+                        }
+                    } catch {
+                      print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
+                    }
+                    
+                    ItemModel.deleteObject(in: context, sub: self.selectedItem!)
+                                        
+                } else {
+                    self.alertTitle = "Error"
+                    self.alertMessage = "Couldnt delete folder"
+                    self.showAlert.toggle()
+                }
             }
         }
     }
@@ -223,7 +250,14 @@ struct GenListRowView: View {
         var imgs = [UIImage]()
         
         if selectedItem != nil {
-            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: selectedItem!.wrappedItemUrl)
+            let str = "\(String(self.selectedItem!.wrappedItemUrl.split(separator: "/").reversed()[1]).trimBothSides())"
+            var name = selectedItem!.wrappedItemName
+            
+            if !name.contains(".pdf") {
+                name += ".pdf"
+            }
+            
+            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: (str == "DocWind") ? nil : str, fileName: name)
             if dwfe.0 {
                 let path = dwfe.1
                 if path != "" {

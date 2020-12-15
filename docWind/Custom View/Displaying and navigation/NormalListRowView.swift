@@ -154,7 +154,7 @@ struct NormalListRowView: View {
         .sheet(isPresented: $showSheet) {
             
             if self.activeSheet == .shareSheet {
-                ShareSheetView(activityItems: [URL(string: self.url)!])
+                ShareSheetView(activityItems: [URL(fileURLWithPath: self.url)])
             } else if self.activeSheet == .editSheet{
                 if self.uiImages.count != 0 && self.url != "" {
                     EditPdfMainView(pdfName: self.itemArray.wrappedItemName, selectedIconName: self.itemArray.wrappedIconName, mainPages: self.uiImages, url: self.url, item: self.selectedItem!).environment(\.managedObjectContext, self.context)
@@ -168,7 +168,16 @@ struct NormalListRowView: View {
     // MARK: - Functions
     func getUrl() {
         if selectedItem != nil {
-            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: selectedItem!.wrappedItemUrl)
+            print(masterFolder)
+            print(selectedItem!.wrappedItemUrl)
+            let str = "\(String(self.selectedItem!.wrappedItemUrl.split(separator: "/").reversed()[1]).trimBothSides())"
+            var name = selectedItem!.wrappedItemName
+            
+            if !name.contains(".pdf") {
+                name += ".pdf"
+            }
+            
+            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: (str == "DocWind") ? nil : str, fileName: name)
             if dwfe.0 {
                 let path = dwfe.1
                 if path != "" {
@@ -228,7 +237,7 @@ struct NormalListRowView: View {
                     folderName = folderName.replacingOccurrences(of: " ", with: "_")
                 }
                 
-                guard folderName != "PhotoStat" else {
+                guard folderName != "DocWind" else {
                     return
                 }
                 
@@ -261,9 +270,17 @@ struct NormalListRowView: View {
     
     func getImages() -> [UIImage] {
         var imgs = [UIImage]()
-        
+                
         if selectedItem != nil {
-            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: "\(masterFolder)", fileName: selectedItem!.wrappedItemUrl)
+            
+            let str = "\(String(self.selectedItem!.wrappedItemUrl.split(separator: "/").reversed()[1]).trimBothSides())"
+            var name = selectedItem!.wrappedItemName
+            
+            if !name.contains(".pdf") {
+                name += ".pdf"
+            }
+            
+            let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: (str == "DocWind") ? nil : str, fileName: name)
             if dwfe.0 {
                 let path = dwfe.1
                 if path != "" {

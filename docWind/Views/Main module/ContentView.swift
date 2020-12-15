@@ -17,7 +17,7 @@ struct ContentView: View {
     @State private var tapped = false
     @State private var isShown = false
     @State private var animationAmount: CGFloat = 1
-    @State var activeSheet: ActiveContentViewSheet = .intro
+    @State var activeSheet: ActiveContentViewSheet? = nil
     @State private var presentAlert = false
     @State private var toggleSearchIcon = false
     @State private var item: ItemModel? = nil
@@ -137,20 +137,28 @@ struct ContentView: View {
         }
             
         // sheet code
-        .sheet(isPresented: $isShown) {
-            if self.activeSheet == .intro {
+        // make sure to conform to identifiable
+        .sheet(item: $activeSheet, onDismiss: {
+            self.activeSheet = nil
+        }) { item in
+            
+            switch item {
+            case .intro:
                 IntroView()
-                .environment(\.managedObjectContext, self.context)
-            } else if self.activeSheet == .createdDirec {
+                    .environment(\.managedObjectContext, self.context)
+            case .createdDirec:
                 AddDirecView().environment(\.managedObjectContext, self.context)
-            } else if self.activeSheet == .createPdf {
+            case .createPdf:
                 AddPdfMainView().environment(\.managedObjectContext, self.context)
-            } else if self.activeSheet == .settingsTapped {
+            case .settingsTapped:
                 SettingsView()
-            } else if self.activeSheet == .importDoc {
+            case .importDoc:
                 let str = "\(String("\(DWFMAppSettings.shared.fileURL())".split(separator: "/").last!).trimBothSides())"
                 DocumentPickerView(headPath: str, headName: "DocWind", alertState: self.$showAlert, alertMessage: self.$alertMessage).environment(\.managedObjectContext, self.context)
+            default:
+                EmptyView()
             }
+            
         }
         
         .alert(isPresented: $showAlert) {
@@ -219,7 +227,7 @@ struct ContentView: View {
                 folderName = folderName.replacingOccurrences(of: " ", with: "_")
             }
             
-            guard folderName != "PhotoStat" else {
+            guard folderName != "DocWind" else {
                 return
             }
             

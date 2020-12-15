@@ -186,15 +186,38 @@ struct EditPdfMainView: View {
             let mainPages = (self.removeWatermark == true) ? self.pages : self.pagesWithMark
             
             // name adjustment
+            
+            // new name
             let pdfName = self.pdfName
-            var finalPdfName = "\(pdfName).pdf"
+            var finalPdfName = pdfName
             if pdfName.contains(" ") {
                 finalPdfName = pdfName.replacingOccurrences(of: " ", with: "_")
-                finalPdfName += ".pdf"
+            }
+            
+            var newNameEdit = finalPdfName
+            
+            if !newNameEdit.contains(".pdf") {
+                newNameEdit += ".pdf"
+            }
+            
+            // directory ref
+            let ref = "\(String(self.item.wrappedItemUrl.split(separator: "/").reversed()[1]).trimBothSides())"
+            
+            // old name
+            var oldName = item.wrappedItemName
+            
+            if oldName.contains(" ") {
+                oldName = oldName.replacingOccurrences(of: " ", with: "_")
+            }
+                        
+            if !oldName.contains(".pdf") {
+                oldName += ".pdf"
             }
             
             // moving files in file system first (cut copy mechanism basically)
-            let context = DWFMAppSettings.shared.renameFile(oldPath: item.wrappedItemUrl, newName: finalPdfName)
+            print(ref)
+            
+            let context = DWFMAppSettings.shared.renameFile(direcName: (ref == "DocWind") ? nil : ref.trimBothSides(), oldFileName: oldName, newFileName: newNameEdit)
             if context.0 {
                 let path = context.1
                 
@@ -217,7 +240,8 @@ struct EditPdfMainView: View {
                         // store in pdfDocument
                         pdfDocument.insert(pdfPage!, at: index)
                     }
-                    pdfDocument.write(to: URL(string: path)!)
+                    pdfDocument.write(to: URL(fileURLWithPath: path))
+                    
                     self.presentationMode.wrappedValue.dismiss()
                     
                 } else {

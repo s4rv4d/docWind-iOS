@@ -24,7 +24,7 @@ struct AddPdfFileGenView: View {
     @State var pages: [UIImage] = [UIImage]()
     @State var pagesWithMark: [UIImage] = [UIImage]()
         
-    @State private var activeSheet: ActiveOdfMainViewSheet = .photoLibrary
+    @State private var activeSheet: ActiveOdfMainViewSheet = .scannerView
     @State private var activeAlertSheet: ActiveAlertSheet = .notice
     @State private var removeWatermark = false
     @State var deleteDoc = false

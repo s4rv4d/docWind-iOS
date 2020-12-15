@@ -20,6 +20,12 @@ enum ActiveContentViewSheet {
     case intro, tappedDirec, tappedPdf, createdDirec, createPdf, settingsTapped, editPdf, importDoc
 }
 
+extension ActiveContentViewSheet: Identifiable {
+    var id: ObjectIdentifier {
+        ObjectIdentifier(Self.self)
+    }
+}
+
 enum ActiveSheetForDetails {
     case shareSheet, editSheet, compressView
 }
