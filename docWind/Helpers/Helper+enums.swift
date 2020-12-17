@@ -27,7 +27,13 @@ extension ActiveContentViewSheet: Identifiable {
 }
 
 enum ActiveSheetForDetails {
-    case shareSheet, editSheet, compressView
+    case shareSheet(url: String), editSheet(images: [UIImage], url: String, item: ItemModel), compressView
+}
+
+extension ActiveSheetForDetails: Identifiable {
+    var id: ObjectIdentifier {
+        ObjectIdentifier(Self.self)
+    }
 }
 
 // Enum for activeSheetvar in PDFDetailView
@@ -35,9 +41,21 @@ enum PDFDetailActiveView {
     case shareSheet, toolBox, signature, ocrPage, editPage, subView
 }
 
+extension PDFDetailActiveView: Identifiable {
+    var id: ObjectIdentifier {
+        ObjectIdentifier(Self.self)
+    }
+}
+
 // enum for active sheet #1&2
 enum ActiveOdfMainViewSheet {
     case scannerView, pdfView, photoLibrary, subView
+}
+
+extension ActiveOdfMainViewSheet: Identifiable {
+    var id: ObjectIdentifier {
+        ObjectIdentifier(Self.self)
+    }
 }
 
 // enum for alert sheet

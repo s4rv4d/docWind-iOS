@@ -173,7 +173,8 @@ struct ContentView: View {
         print(AppSettings.shared.firstLoginDone)
         if !AppSettings.shared.firstLoginDone {
             if Device.IS_IPAD || Device.IS_IPHONE{
-                self.isShown.toggle()
+                self.activeSheet = .intro
+//                self.isShown.toggle()
             }
         }
     }

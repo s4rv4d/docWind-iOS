@@ -9,11 +9,11 @@
 import SwiftUI
 import QGrid
 import CoreData
-
+import PDFKit
 
 struct QGridCellView: View {
     
-    var item: ItemModel
+    @ObservedObject var item: ItemModel
     var iconNameString: [String: Color] = ["blue":.blue, "red":.red, "green":.green, "yellow":.yellow, "pink":.pink, "black": .black, "gray": .gray, "orange": .orange, "purple": .purple]
     let masterFolder: String
     
@@ -23,7 +23,7 @@ struct QGridCellView: View {
     @State private var showSheet = false
     @State private var alertMessage = ""
     @State private var alertTitle = ""
-    @State private var activeSheet: ActiveSheetForDetails = .shareSheet
+    @State private var activeSheet: ActiveSheetForDetails? = nil
     @State private var alertContext: ActiveAlertSheet = .error
     @State private var isFile = false
     @State var selectedItem: ItemModel?
@@ -45,7 +45,7 @@ struct QGridCellView: View {
                 Image(systemName: (self.item.wrappedItemType == DWPDFFILE) ? "doc.fill" : "folder.fill")
                     .font(.largeTitle)
                     .padding([.horizontal, .top], 7)
-                    .foregroundColor(self.iconNameString[self.item.iconName!])
+                    .foregroundColor(self.iconNameString[self.item.wrappedIconName])
                 
                 VStack {
                     Text(self.item.wrappedItemName).lineLimit(1)
@@ -58,10 +58,11 @@ struct QGridCellView: View {
                 .contextMenu {
                 if self.item.wrappedItemType == DWPDFFILE {
                     Button(action: {
-                        self.selectedItem = self.item
-                        self.uiImages = self.getImages()
-                        self.activeSheet = .editSheet
-                        self.showSheet.toggle()
+                        DispatchQueue.main.async {
+                            self.selectedItem = self.item
+                            self.uiImages = self.getImages()
+                            self.activeSheet = .editSheet(images: self.uiImages, url: self.url, item: self.item)
+                        }
                     }) {
                         HStack {
                             Image(systemName: "pencil")
@@ -70,8 +71,10 @@ struct QGridCellView: View {
                     }
                     
                     Button(action: {
-                        self.selectedItem = self.item
-                        self.getUrl()
+                        DispatchQueue.main.async {
+                            self.selectedItem = self.item
+                            self.getUrl()
+                        }
                     }) {
                         HStack {
                             Image(systemName: "square.and.arrow.up")
@@ -80,10 +83,11 @@ struct QGridCellView: View {
                     }
                     
                     Button(action: {
-                        self.selectedItem = self.item
-                        self.uiImages = self.getImages()
-                        self.activeSheet = .editSheet
-                        self.showSheet.toggle()
+                        DispatchQueue.main.async {
+                            self.selectedItem = self.item
+                            self.uiImages = self.getImages()
+                            self.activeSheet = .editSheet(images: self.uiImages, url: self.url, item: self.item)
+                        }
                     }) {
                         HStack {
                             Image(systemName: "pencil.circle")
@@ -119,23 +123,35 @@ struct QGridCellView: View {
                 }
             }
         
-        .sheet(isPresented: $showSheet) {
-            
-            if self.activeSheet == .shareSheet {
-                ShareSheetView(activityItems: [URL(fileURLWithPath: self.url)])
-            } else if self.activeSheet == .editSheet{
-                if self.uiImages.count != 0 && self.url != "" {
-                    EditPdfMainView(pdfName: self.item.wrappedItemName, selectedIconName: self.item.wrappedIconName, mainPages: self.uiImages, url: self.url, item: self.selectedItem!).environment(\.managedObjectContext, self.context)
-                }
+        .sheet(item: $activeSheet, onDismiss: { self.activeSheet = nil }) { state in
+            switch state {
+            case .shareSheet(let url):
+                ShareSheetView(activityItems: [URL(fileURLWithPath: url)])
+                    .onAppear {
+                        print("/////")
+                        print(self.url)
+                        print("/////")
+                    }
+            case .editSheet(let images, let url, let item):
+                    EditPdfMainView(pdfName: self.item.wrappedItemName, selectedIconName: self.item.wrappedIconName, mainPages: images, url: url, item: item).environment(\.managedObjectContext, self.context)
+            case .compressView:
+                LoadingScreenView(item: self.item, uiImages: self.uiImages)
             }
         }
+        
     }
     
     // MARK: - Functions
     func getUrl() {
         if selectedItem != nil {
+            print(masterFolder)
+            print(selectedItem!.wrappedItemUrl)
             let str = "\(String(self.selectedItem!.wrappedItemUrl.split(separator: "/").reversed()[1]).trimBothSides())"
             var name = selectedItem!.wrappedItemName
+            
+            if name.contains(" ") {
+                name = name.replacingOccurrences(of: " ", with: "_")
+            }
             
             if !name.contains(".pdf") {
                 name += ".pdf"
@@ -146,8 +162,11 @@ struct QGridCellView: View {
                 let path = dwfe.1
                 if path != "" {
                     url = path
-                    self.activeSheet = .shareSheet
-                    self.showSheet.toggle()
+                    DispatchQueue.main.async {
+                        if self.url != "" {
+                            self.activeSheet = .shareSheet(url: self.url)
+                        }
+                    }
                 } else {
                     //error
                     self.alertContext = .error
@@ -232,46 +251,54 @@ struct QGridCellView: View {
         }
     }
     
-    func getImages() -> [UIImage] {
+    func getImages() -> [UIImage]{
         var imgs = [UIImage]()
-        
+                
         if selectedItem != nil {
+            
             let str = "\(String(self.selectedItem!.wrappedItemUrl.split(separator: "/").reversed()[1]).trimBothSides())"
             var name = selectedItem!.wrappedItemName
+            
+            if name.contains(" ") {
+                name = name.replacingOccurrences(of: " ", with: "_")
+            }
             
             if !name.contains(".pdf") {
                 name += ".pdf"
             }
-            
+                        
             let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: (str == "DocWind") ? nil : str, fileName: name)
             if dwfe.0 {
                 let path = dwfe.1
                 if path != "" {
                     // go url of pdf
-                    url = path
                     
                     // now to extract imgs from pdf
-                    if let pdf = CGPDFDocument(URL(string: url)! as CFURL) {
-                        let pageCount = pdf.numberOfPages
+                    if let PDf = PDFDocument(url: URL(string: path)!) {
+                        let pageCount = PDf.pageCount
                         
                         for i in 0 ... pageCount {
                             autoreleasepool {
-                                guard let page = pdf.page(at: i) else { return }
-                                let pageRect = page.getBoxRect(.mediaBox)
+                                guard let page = PDf.page(at: i) else { return }
+                                let pageRect = page.bounds(for: .mediaBox)
+                                print(page.annotations)
                                 let renderer = UIGraphicsImageRenderer(size: pageRect.size)
                                 let img = renderer.image { ctx in
                                     UIColor.white.set()
                                     ctx.fill(pageRect)
                                     ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
                                     ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
-                                    ctx.cgContext.drawPDFPage(page)
+                                    ctx.cgContext.drawPDFPage(page.pageRef!)
                                 }
                                 imgs.append(img)
                             }
                         }
                         
-                        // now check if pageCount == imgs.count
                         if pageCount == imgs.count {
+                            DispatchQueue.main.async {
+                                self.url = path
+                                
+                            }
                             return imgs
                         }
                         

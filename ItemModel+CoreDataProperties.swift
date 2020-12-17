@@ -47,7 +47,7 @@ extension ItemModel: Identifiable {
     }
     
     public var wrappedIconName: String {
-        iconName ?? "blueFolder"
+        iconName ?? "blue"
     }
     
     static func deleteObject(in managedObjectContext: NSManagedObjectContext, sub: ItemModel) {

@@ -190,9 +190,18 @@ struct DetailPdfView: View, Equatable {
         let str = "\(String(self.item.wrappedItemUrl.split(separator: "/").reversed()[1]).trimBothSides())"
         var name = item.wrappedItemName
         
+        print(str)
+        
+        if name.contains(" ") {
+            name = name.replacingOccurrences(of: " ", with: "_")
+        }
+        
         if !name.contains(".pdf") {
             name += ".pdf"
         }
+        
+        print(name)
+        
         
         let dwfe = DWFMAppSettings.shared.showSavedPdf(direcName: (str == "DocWind") ? nil : str, fileName: name)
         print(master)

@@ -34,7 +34,8 @@ extension DocWindFManager {
     /// START OF EXTENSION
     
     var containerUrl: URL? {
-        return FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("DocWind")
+        let container =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        return container.appendingPathComponent("DocWind", isDirectory: true)
     }
     
     func reset() {
@@ -46,7 +47,8 @@ extension DocWindFManager {
     }
     
     func fileURL() -> URL {
-        return (FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("DocWind"))!
+        let container =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        return container.appendingPathComponent("DocWind", isDirectory: true)
     }
     
     func savePdfWithSubFolder(pdfData: Data, pdfName: String, subDir: String) -> (Bool, String) {
