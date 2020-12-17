@@ -53,6 +53,24 @@
 		40920EB024B744BE00E2293C /* DrawOnImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40920EAF24B744BE00E2293C /* DrawOnImageView.swift */; };
 		40920EB224B74E7800E2293C /* SlideOverCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40920EB124B74E7800E2293C /* SlideOverCardView.swift */; };
 		409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409244BD24B19D640013BF8F /* Helper+Extensions.swift */; };
+		4095AC53258BC7DE0008BD71 /* Helper+Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC52258BC7DE0008BD71 /* Helper+Functions.swift */; };
+		4095AC72258BCB9A0008BD71 /* GraphicContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC5E258BCB990008BD71 /* GraphicContext.swift */; };
+		4095AC73258BCB9A0008BD71 /* FilterProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC5F258BCB990008BD71 /* FilterProcessor.swift */; };
+		4095AC74258BCB9A0008BD71 /* MediaFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC60258BCB990008BD71 /* MediaFilter.swift */; };
+		4095AC75258BCB9A0008BD71 /* FilterShaderParamManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC62258BCB990008BD71 /* FilterShaderParamManager.swift */; };
+		4095AC76258BCB9A0008BD71 /* ColorFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC63258BCB990008BD71 /* ColorFilter.swift */; };
+		4095AC77258BCB9A0008BD71 /* FilterShaderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC64258BCB990008BD71 /* FilterShaderProvider.swift */; };
+		4095AC78258BCB9A0008BD71 /* BlurFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC65258BCB990008BD71 /* BlurFilter.swift */; };
+		4095AC79258BCB9A0008BD71 /* SobelFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC66258BCB990008BD71 /* SobelFilter.swift */; };
+		4095AC7A258BCB9A0008BD71 /* ThresholdFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC67258BCB990008BD71 /* ThresholdFilter.swift */; };
+		4095AC7B258BCB9A0008BD71 /* SepiaFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC68258BCB9A0008BD71 /* SepiaFilter.swift */; };
+		4095AC7C258BCB9A0008BD71 /* MediaImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC6A258BCB9A0008BD71 /* MediaImageProcessor.swift */; };
+		4095AC7D258BCB9A0008BD71 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC6B258BCB9A0008BD71 /* MediaItem.swift */; };
+		4095AC7E258BCB9A0008BD71 /* MediaProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC6C258BCB9A0008BD71 /* MediaProcessor.swift */; };
+		4095AC7F258BCB9A0008BD71 /* MediaElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC6D258BCB9A0008BD71 /* MediaElement.swift */; };
+		4095AC80258BCB9A0008BD71 /* MediaVideoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC6E258BCB9A0008BD71 /* MediaVideoProcessor.swift */; };
+		4095AC81258BCB9A0008BD71 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC70258BCB9A0008BD71 /* Assets.swift */; };
+		4095AC82258BCB9A0008BD71 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC71258BCB9A0008BD71 /* Images.swift */; };
 		409B927F24E43E6300F30EFF /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B927E24E43E6300F30EFF /* ActivityIndicatorView.swift */; };
 		409B928124E43EDF00F30EFF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B928024E43EDF00F30EFF /* LoadingView.swift */; };
 		40C408E624B9F2EF00876FAF /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C408E524B9F2EF00876FAF /* PDFView.swift */; };
@@ -162,6 +180,24 @@
 		40920EAF24B744BE00E2293C /* DrawOnImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawOnImageView.swift; sourceTree = "<group>"; };
 		40920EB124B74E7800E2293C /* SlideOverCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOverCardView.swift; sourceTree = "<group>"; };
 		409244BD24B19D640013BF8F /* Helper+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Extensions.swift"; sourceTree = "<group>"; };
+		4095AC52258BC7DE0008BD71 /* Helper+Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Functions.swift"; sourceTree = "<group>"; };
+		4095AC5E258BCB990008BD71 /* GraphicContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphicContext.swift; sourceTree = "<group>"; };
+		4095AC5F258BCB990008BD71 /* FilterProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterProcessor.swift; sourceTree = "<group>"; };
+		4095AC60258BCB990008BD71 /* MediaFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaFilter.swift; sourceTree = "<group>"; };
+		4095AC62258BCB990008BD71 /* FilterShaderParamManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterShaderParamManager.swift; sourceTree = "<group>"; };
+		4095AC63258BCB990008BD71 /* ColorFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFilter.swift; sourceTree = "<group>"; };
+		4095AC64258BCB990008BD71 /* FilterShaderProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterShaderProvider.swift; sourceTree = "<group>"; };
+		4095AC65258BCB990008BD71 /* BlurFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurFilter.swift; sourceTree = "<group>"; };
+		4095AC66258BCB990008BD71 /* SobelFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SobelFilter.swift; sourceTree = "<group>"; };
+		4095AC67258BCB990008BD71 /* ThresholdFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThresholdFilter.swift; sourceTree = "<group>"; };
+		4095AC68258BCB9A0008BD71 /* SepiaFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SepiaFilter.swift; sourceTree = "<group>"; };
+		4095AC6A258BCB9A0008BD71 /* MediaImageProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaImageProcessor.swift; sourceTree = "<group>"; };
+		4095AC6B258BCB9A0008BD71 /* MediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
+		4095AC6C258BCB9A0008BD71 /* MediaProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaProcessor.swift; sourceTree = "<group>"; };
+		4095AC6D258BCB9A0008BD71 /* MediaElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaElement.swift; sourceTree = "<group>"; };
+		4095AC6E258BCB9A0008BD71 /* MediaVideoProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaVideoProcessor.swift; sourceTree = "<group>"; };
+		4095AC70258BCB9A0008BD71 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		4095AC71258BCB9A0008BD71 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		409B927E24E43E6300F30EFF /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
 		409B928024E43EDF00F30EFF /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		40C408E524B9F2EF00876FAF /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
@@ -291,6 +327,7 @@
 		405EE7A424B3398E005F525F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4095AC84258BCBA40008BD71 /* MediaProcessor */,
 				40DF994724B2E452001CEC67 /* DWDateFormatter.swift */,
 				405EE7A524B339B4005F525F /* RecognizedText.swift */,
 				405EE7A924B33AB1005F525F /* TextRecognizer.swift */,
@@ -316,6 +353,62 @@
 				406E9AF524B5E798000FB8FD /* CarouselCardModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		4095AC5D258BCB990008BD71 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				4095AC5E258BCB990008BD71 /* GraphicContext.swift */,
+				4095AC5F258BCB990008BD71 /* FilterProcessor.swift */,
+				4095AC60258BCB990008BD71 /* MediaFilter.swift */,
+				4095AC61258BCB990008BD71 /* Effects */,
+			);
+			path = Filters;
+			sourceTree = "<group>";
+		};
+		4095AC61258BCB990008BD71 /* Effects */ = {
+			isa = PBXGroup;
+			children = (
+				4095AC62258BCB990008BD71 /* FilterShaderParamManager.swift */,
+				4095AC63258BCB990008BD71 /* ColorFilter.swift */,
+				4095AC64258BCB990008BD71 /* FilterShaderProvider.swift */,
+				4095AC65258BCB990008BD71 /* BlurFilter.swift */,
+				4095AC66258BCB990008BD71 /* SobelFilter.swift */,
+				4095AC67258BCB990008BD71 /* ThresholdFilter.swift */,
+				4095AC68258BCB9A0008BD71 /* SepiaFilter.swift */,
+			);
+			path = Effects;
+			sourceTree = "<group>";
+		};
+		4095AC69258BCB9A0008BD71 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				4095AC6A258BCB9A0008BD71 /* MediaImageProcessor.swift */,
+				4095AC6B258BCB9A0008BD71 /* MediaItem.swift */,
+				4095AC6C258BCB9A0008BD71 /* MediaProcessor.swift */,
+				4095AC6D258BCB9A0008BD71 /* MediaElement.swift */,
+				4095AC6E258BCB9A0008BD71 /* MediaVideoProcessor.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		4095AC6F258BCB9A0008BD71 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4095AC70258BCB9A0008BD71 /* Assets.swift */,
+				4095AC71258BCB9A0008BD71 /* Images.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4095AC84258BCBA40008BD71 /* MediaProcessor */ = {
+			isa = PBXGroup;
+			children = (
+				4095AC69258BCB9A0008BD71 /* Core */,
+				4095AC6F258BCB9A0008BD71 /* Extensions */,
+				4095AC5D258BCB990008BD71 /* Filters */,
+			);
+			path = MediaProcessor;
 			sourceTree = "<group>";
 		};
 		40CDC4C024AF728C00462277 /* CoreData Models */ = {
@@ -516,6 +609,7 @@
 				40CDC49E24AF691900462277 /* Helper+Variables.swift */,
 				402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */,
 				409244BD24B19D640013BF8F /* Helper+Extensions.swift */,
+				4095AC52258BC7DE0008BD71 /* Helper+Functions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -634,6 +728,7 @@
 				406B425824EB9DAB00CA149A /* LoadingScreenView.swift in Sources */,
 				4012033224BDD1F900167917 /* PinchToZoom.swift in Sources */,
 				40DF994824B2E452001CEC67 /* DWDateFormatter.swift in Sources */,
+				4095AC75258BCB9A0008BD71 /* FilterShaderParamManager.swift in Sources */,
 				402C0B6E24B0B0E800A5A6C9 /* DetailedDirecView.swift in Sources */,
 				40CDC4C724AF72CD00462277 /* ItemModel+CoreDataClass.swift in Sources */,
 				409B928124E43EDF00F30EFF /* LoadingView.swift in Sources */,
@@ -652,9 +747,11 @@
 				40E387D724E66A6C001E23D2 /* AppstoreUpdate.swift in Sources */,
 				40485D8A24B98C9F008A137A /* TextView.swift in Sources */,
 				40DD4F7324C02CDC00D37EFA /* SignaturePageView.swift in Sources */,
+				4095AC73258BCB9A0008BD71 /* FilterProcessor.swift in Sources */,
 				40CFB04D24D9794100955957 /* DocumentPickerView.swift in Sources */,
 				405EE7A824B339DD005F525F /* ScannerView.swift in Sources */,
 				40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */,
+				4095AC82258BCB9A0008BD71 /* Images.swift in Sources */,
 				40D994A224EA479200DFBAB2 /* QGridCellView.swift in Sources */,
 				4012033624BDE04100167917 /* PDFDrawer.swift in Sources */,
 				406E9AF924B5E80F000FB8FD /* UIStateModel.swift in Sources */,
@@ -663,9 +760,11 @@
 				405EFDC224BC88B50070BE5F /* UIToggleView.swift in Sources */,
 				40FDE49724AC4C6C006AAFD2 /* SettingsManagable.swift in Sources */,
 				4012033A24BDE09C00167917 /* DrawingAnnotation.swift in Sources */,
+				4095AC7C258BCB9A0008BD71 /* MediaImageProcessor.swift in Sources */,
 				405EFDCC24BCB3E30070BE5F /* MailView.swift in Sources */,
 				40FE66A724CB126D00B6A064 /* HeaderView.swift in Sources */,
 				4069EFA124D69D4C003083C6 /* CustomSearchBar.swift in Sources */,
+				4095AC7F258BCB9A0008BD71 /* MediaElement.swift in Sources */,
 				405EFDC024BC886A0070BE5F /* SettingsRow.swift in Sources */,
 				405EFDBE24BC76EB0070BE5F /* IAPService.swift in Sources */,
 				40E387DB24E66B40001E23D2 /* ItunesAppInfoItunes.swift in Sources */,
@@ -676,6 +775,7 @@
 				40E387D524E65049001E23D2 /* SearchNavigation.swift in Sources */,
 				40CDC4C924AF72CD00462277 /* PdfFilemodel+CoreDataClass.swift in Sources */,
 				40920EB224B74E7800E2293C /* SlideOverCardView.swift in Sources */,
+				4095AC7B258BCB9A0008BD71 /* SepiaFilter.swift in Sources */,
 				40FDE48124AB964B006AAFD2 /* docWind.xcdatamodeld in Sources */,
 				40485D8C24B995E7008A137A /* BlurView.swift in Sources */,
 				402333EE24DA9248007FE8C6 /* ImagePickerView.swift in Sources */,
@@ -689,22 +789,29 @@
 				40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */,
 				40FDE49C24AC4EC9006AAFD2 /* Helper+Struct.swift in Sources */,
 				405EFDC624BC9ED90070BE5F /* AppVersionRow.swift in Sources */,
+				4095AC77258BCB9A0008BD71 /* FilterShaderProvider.swift in Sources */,
 				404BFAFE24E7D59200A13230 /* DependecyPageView.swift in Sources */,
 				402C0B7224B0B0FF00A5A6C9 /* ScanPdfView.swift in Sources */,
 				40920EB024B744BE00E2293C /* DrawOnImageView.swift in Sources */,
 				40E387D924E66B0F001E23D2 /* ItunesAppInfoResult.swift in Sources */,
+				4095AC7E258BCB9A0008BD71 /* MediaProcessor.swift in Sources */,
+				4095AC81258BCB9A0008BD71 /* Assets.swift in Sources */,
 				40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */,
 				40CF63E224CD565F0089D3D3 /* Reachability.swift in Sources */,
+				4095AC53258BC7DE0008BD71 /* Helper+Functions.swift in Sources */,
 				409B927F24E43E6300F30EFF /* ActivityIndicatorView.swift in Sources */,
 				405EFDC424BC8C180070BE5F /* SubHeadlineView.swift in Sources */,
 				40FB481724B8AE900045CF13 /* OCRTextView.swift in Sources */,
+				4095AC76258BCB9A0008BD71 /* ColorFilter.swift in Sources */,
 				405EFDCA24BCA12A0070BE5F /* SubcriptionPageView.swift in Sources */,
 				40CDC4CC24AF72CD00462277 /* DirecModel+CoreDataProperties.swift in Sources */,
 				406E9AF424B5E773000FB8FD /* SnapCarouselView.swift in Sources */,
 				40284BFD24D83745004EE44E /* EditPdfMainView.swift in Sources */,
 				402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */,
 				40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */,
+				4095AC74258BCB9A0008BD71 /* MediaFilter.swift in Sources */,
 				40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */,
+				4095AC7D258BCB9A0008BD71 /* MediaItem.swift in Sources */,
 				406B425C24EBFCD200CA149A /* SlideCardView.swift in Sources */,
 				4012033824BDE06B00167917 /* DrawingGestureRecogniser.swift in Sources */,
 				407567F424B1FC4A0071B575 /* GeneralDocViewModel.swift in Sources */,
@@ -713,12 +820,17 @@
 				409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */,
 				405EE7AA24B33AB1005F525F /* TextRecognizer.swift in Sources */,
 				402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */,
+				4095AC78258BCB9A0008BD71 /* BlurFilter.swift in Sources */,
 				406CAA4D24BECC2E00933F5D /* PDFToolBarView.swift in Sources */,
 				40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */,
 				40DD4F7524C02F3700D37EFA /* ImageAnnotation.swift in Sources */,
+				4095AC7A258BCB9A0008BD71 /* ThresholdFilter.swift in Sources */,
 				40CDC4CE24AF80DF00462277 /* MainDocListViewModel.swift in Sources */,
 				40CDC49F24AF691900462277 /* Helper+Variables.swift in Sources */,
+				4095AC79258BCB9A0008BD71 /* SobelFilter.swift in Sources */,
 				407567F624B1FC620071B575 /* GeneralDocListViewModel.swift in Sources */,
+				4095AC80258BCB9A0008BD71 /* MediaVideoProcessor.swift in Sources */,
+				4095AC72258BCB9A0008BD71 /* GraphicContext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

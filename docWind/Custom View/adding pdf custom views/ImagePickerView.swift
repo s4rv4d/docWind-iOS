@@ -48,18 +48,40 @@ struct ImagePickerView: UIViewControllerRepresentable {
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-                let img = UIImage.resizeImageWithAspect(image: image, scaledToMaxWidth: 595, maxHeight: 842)!
-                if self.uiImages.wrappedValue.count == 0 {
+                let img = image.resizeImageUsingVImage(size: CGSize(width: 600, height: 900))!
+                
+                // watermark
+                let item = MediaItem(image: img)
+                                                    
+                let testStr = "Scanned by DocWind"
+                let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15) ]
+                let attrStr = NSAttributedString(string: testStr, attributes: attributes)
+                        
+                let secondElement = MediaElement(text: attrStr)
+                secondElement.frame = CGRect(x: 10, y: item.size.height - 50, width: item.size.width, height: item.size.height)
+                        
+                item.add(elements: [secondElement])
+                        
+                let mediaProcessor = MediaProcessor()
+                mediaProcessor.processElements(item: item) {  (result, error) in
                     
-                    self.uiImages.wrappedValue = [img]
-                    self.uiImagesWithWatermarks.wrappedValue = [UIImage.imageWithWatermark(image1: img, image2: UIImage(named: "watermark")!)]
-                } else {
-                    self.uiImages.wrappedValue.append(img)
-                    self.uiImagesWithWatermarks.wrappedValue.append(UIImage.imageWithWatermark(image1: img, image2: UIImage(named: "watermark")!))
+                    DispatchQueue.main.async {
+                        if self.uiImages.wrappedValue.count == 0 {
+                            
+                            self.uiImages.wrappedValue = [img]
+                            self.uiImagesWithWatermarks.wrappedValue = [result.image!]
+                        } else {
+                            self.uiImages.wrappedValue.append(img)
+                            self.uiImagesWithWatermarks.wrappedValue.append(result.image!)
+                        }
+                    }
+
                 }
             }
             
-            self.parent.presentationMode.wrappedValue.dismiss()
+            DispatchQueue.main.async {
+                self.parent.presentationMode.wrappedValue.dismiss()
+            }
         }
     }
 }

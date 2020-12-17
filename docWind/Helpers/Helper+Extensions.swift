@@ -10,7 +10,11 @@ import SwiftUI
 import UIKit
 import CoreImage
 import PDFKit
+import Accelerate
+import Metal
+import AVFoundation
 
+// MARK: - View
 extension View {
     
     func pinchToZoom() -> some View {
@@ -120,8 +124,40 @@ extension View {
     }
 }
 
-
+// MARK: - UIImage
 extension UIImage {
+    
+    func resizeImageUsingVImage(size:CGSize) -> UIImage? {
+            let cgImage = self.cgImage!
+            var format = vImage_CGImageFormat(bitsPerComponent: 8, bitsPerPixel: 32, colorSpace: nil, bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.first.rawValue), version: 0, decode: nil, renderingIntent: CGColorRenderingIntent.defaultIntent)
+            var sourceBuffer = vImage_Buffer()
+            defer {
+                  free(sourceBuffer.data)
+            }
+            var error = vImageBuffer_InitWithCGImage(&sourceBuffer, &format, nil, cgImage, numericCast(kvImageNoFlags))
+            guard error == kvImageNoError else { return nil }
+            // create a destination buffer
+            let scale = self.scale
+            let destWidth = Int(size.width)
+            let destHeight = Int(size.height)
+            let bytesPerPixel = self.cgImage!.bitsPerPixel/8
+            let destBytesPerRow = destWidth * bytesPerPixel
+            let destData = UnsafeMutablePointer<UInt8>.allocate(capacity: destHeight * destBytesPerRow)
+            defer {
+                destData.deallocate()
+            }
+            var destBuffer = vImage_Buffer(data: destData, height: vImagePixelCount(destHeight), width: vImagePixelCount(destWidth), rowBytes: destBytesPerRow)
+            // scale the image
+            error = vImageScale_ARGB8888(&sourceBuffer, &destBuffer, nil, numericCast(kvImageHighQualityResampling))
+            guard error == kvImageNoError else { return nil }
+            // create a CGImage from vImage_Buffer
+            var destCGImage = vImageCreateCGImageFromBuffer(&destBuffer, &format, nil, nil, numericCast(kvImageNoFlags), &error)?.takeRetainedValue()
+            guard error == kvImageNoError else { return nil }
+            // create a UIImage
+            let resizedImage = destCGImage.flatMap { UIImage(cgImage: $0, scale: 0.0, orientation: self.imageOrientation) }
+            destCGImage = nil
+            return resizedImage
+        }
 
     class func imageWithWatermark(image1: UIImage, image2: UIImage) -> UIImage {
         let rect = CGRect(x: 0, y: 0, width: image1.size.width, height: image1.size.height)
@@ -179,51 +215,14 @@ extension UIImage {
 
     }
     
-    // Example use: myView.addBorder(toSide: .Left, withColor: UIColor.redColor().CGColor, andThickness: 1.0)
-     //    func imageWithBorder(width: CGFloat, color: UIColor) -> UIImage? {
-     //        let square = CGSize(width: size.width, height: min(size.width, size.height) + width * 2)
-     //        let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: square))
-     //        imageView.contentMode = .center
-     //        imageView.image = self
-     //        imageView.layer.borderWidth = width
-     //        imageView.layer.borderColor = color.cgColor
-//             UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
-//             guard let context = UIGraphicsGetCurrentContext() else { return nil }
-//             imageView.layer.render(in: context)
-//             let result = UIGraphicsGetImageFromCurrentImageContext()
-//             UIGraphicsEndImageContext()
-//             return result
-     //    }
-     
-//     func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) {
-//
-//         let border = CALayer()
-//         border.backgroundColor = color
-//
-//         switch side {
-//         case .Left: border.frame = CGRect(x: frame.minX, y: frame.minY, width: thickness, height: frame.height); break
-//         case .Right: border.frame = CGRect(x: frame.maxX, y: frame.minY, width: thickness, height: frame.height); break
-//         case .Top: border.frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: thickness); break
-//         case .Bottom: border.frame = CGRect(x: frame.minX, y: frame.maxY, width: frame.width, height: thickness); break
-//         }
-//
-//         layer.addSublayer(border)
-//     }
-    
     func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) -> UIImage? {
 
         let imageView = UIImageView(image: self)
         return imageView.addBorder(toSide: side, withColor: color, andThickness: thickness)!
-        
-//        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
-//        guard let context = UIGraphicsGetCurrentContext() else { return nil }
-//        imageView.layer.render(in: context)
-//        let result = UIGraphicsGetImageFromCurrentImageContext()
-//        UIGraphicsEndImageContext()
-//        return result
     }
 }
 
+// MARK: - Color
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
@@ -272,6 +271,7 @@ extension Color {
     }
 }
 
+// MARK: - UIView
 extension UIView {
     var renderedImage: UIImage {
         // rect of capure
@@ -444,31 +444,21 @@ extension UIView {
          }
 }
 
-// MARK: - PDF stuff
-extension PDFAnnotation {
-    
-    func contains(point: CGPoint) -> Bool {
-        var hitPath: CGPath?
-        print("point to test \(point)")
-        if let path = self.paths?.first {
-            hitPath = path.cgPath.copy(strokingWithWidth: 10.0, lineCap: .round, lineJoin: .round, miterLimit: 0)
-        }
-        return hitPath?.contains(point) ?? false
-    }
-}
-
-
+// MARK: - CGRect
 extension CGRect{
     var center: CGPoint {
         return CGPoint( x: self.size.width/2.0,y: self.size.height/2.0)
     }
 }
+
+// MARK: - CGPoint
 extension CGPoint{
     func vector(to p1:CGPoint) -> CGVector{
         return CGVector(dx: p1.x-self.x, dy: p1.y-self.y)
     }
 }
 
+// MARK: - UIBezierPath
 extension UIBezierPath{
     func moveCenter(to:CGPoint) -> Self{
         let bound  = self.cgPath.boundingBox
@@ -518,6 +508,7 @@ extension UIBezierPath{
     }
 }
 
+// MARK: - PDFPage
 extension PDFPage {
     func annotationWithHitTest(at: CGPoint) -> PDFAnnotation? {
         for annotation in self.annotations {
@@ -529,7 +520,7 @@ extension PDFPage {
     }
 }
 
-
+// MARK: - PDFAnnotation
 extension PDFAnnotation: Comparable {
     // made for comparing annotations in pdf, with respect to their type
     public static func < (lhs: PDFAnnotation, rhs: PDFAnnotation) -> Bool {
@@ -540,8 +531,18 @@ extension PDFAnnotation: Comparable {
     public static func == (lhs: PDFAnnotation, rhs: PDFAnnotation) -> Bool {
         return (lhs.type == rhs.type && lhs.bounds == rhs.bounds)
     }
+    
+    func contains(point: CGPoint) -> Bool {
+        var hitPath: CGPath?
+        print("point to test \(point)")
+        if let path = self.paths?.first {
+            hitPath = path.cgPath.copy(strokingWithWidth: 10.0, lineCap: .round, lineJoin: .round, miterLimit: 0)
+        }
+        return hitPath?.contains(point) ?? false
+    }
 }
 
+// MARK: - Binding
 extension Binding {
     func didSet(execute: @escaping (Value) -> Void) -> Binding {
         return Binding(
@@ -609,6 +610,7 @@ extension String {
     static func >=(lhs: String, rhs: String) -> Bool { lhs.compare(toVersion: rhs) != .orderedAscending }
 }
 
+// MARK: - URL
 extension URL {
     var fileSize: Float? {
         if let value = try? resourceValues(forKeys: [.fileSizeKey]){

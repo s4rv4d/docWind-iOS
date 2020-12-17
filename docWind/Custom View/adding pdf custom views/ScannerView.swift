@@ -92,20 +92,41 @@ struct ScannerView: UIViewControllerRepresentable {
                         
             for pageIndex in 0 ..< scan.pageCount {
                 autoreleasepool {
-                    let image = UIImage.resizeImageWithAspect(image: scan.imageOfPage(at: pageIndex), scaledToMaxWidth: 595, maxHeight: 842)!
-                    imgsWithWatermarks.append(UIImage.imageWithWatermark(image1: image, image2: UIImage(named: "watermark")!))
+                    let image = scan.imageOfPage(at: pageIndex).resizeImageUsingVImage(size: CGSize(width: 600, height: 900))!
+                    
+                    // watermark
+                    let item = MediaItem(image: image)
+                                                        
+                    let testStr = "Scanned by DocWind"
+                    let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15) ]
+                    let attrStr = NSAttributedString(string: testStr, attributes: attributes)
+                            
+                    let secondElement = MediaElement(text: attrStr)
+                    secondElement.frame = CGRect(x: 10, y: item.size.height - 50, width: item.size.width, height: item.size.height)
+                            
+                    item.add(elements: [secondElement])
+                            
+                    let mediaProcessor = MediaProcessor()
+                    mediaProcessor.processElements(item: item) { [weak self] (result, error) in
+                        // to remove warning
+                        _ = self
+                        imgsWithWatermarks.append(result.image!)
+                    }
+                    
                     imgs.append(image)
                 }
             }
             state.wrappedValue.toggle()
             
             // appending images based on image counts
-            if self.uiImages.wrappedValue.count == 0 {
-                self.uiImages.wrappedValue = imgs
-                self.uiImagesWithWatermarks.wrappedValue = imgsWithWatermarks
-            } else {
-                self.uiImages.wrappedValue +=  imgs
-                self.uiImagesWithWatermarks.wrappedValue += imgsWithWatermarks
+            DispatchQueue.main.async {
+                if self.uiImages.wrappedValue.count == 0 {
+                    self.uiImages.wrappedValue = imgs
+                    self.uiImagesWithWatermarks.wrappedValue = imgsWithWatermarks
+                } else {
+                    self.uiImages.wrappedValue +=  imgs
+                    self.uiImagesWithWatermarks.wrappedValue += imgsWithWatermarks
+                }
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
