@@ -126,6 +126,12 @@ enum SettingActiveSheet {
     case appIcon, docSub, mailFeature, mailBug, shareSheet, dependency
 }
 
+extension SettingActiveSheet: Identifiable {
+    var id: ObjectIdentifier {
+        ObjectIdentifier(Self.self)
+    }
+}
+
 enum ViewSide {
     case Left, Right, Top, Bottom
 }

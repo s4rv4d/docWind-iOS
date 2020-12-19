@@ -18,7 +18,7 @@ struct SettingsView: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var alertTitle = ""
-    @State private var activeSheet: SettingActiveSheet = .docSub
+    @State private var activeSheet: SettingActiveSheet? = nil
     
     // MARK: - Environment object
     @Environment(\.presentationMode) var presentationMode
@@ -97,18 +97,20 @@ struct SettingsView: View {
             .alert(isPresented: $showAlert) {
                 Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .default(Text("Dismiss")))
             }
-            .sheet(isPresented: $showSheet) {
-                if self.activeSheet == .docSub {
+            
+            .sheet(item: $activeSheet, onDismiss: { self.activeSheet = nil }) { item in
+                switch item {
+                case .docSub:
                     SubcriptionPageView()
-                } else if self.activeSheet == .appIcon {
+                case .appIcon:
                     AppIconView()
-                } else if self.activeSheet == .mailBug {
+                case .mailBug:
                     MailView(isShowing: self.$showSheet, result: self.$result, subject: "Bug report", message: "Hi, I found a bug that i would like to report ")
-                } else if self.activeSheet == .mailFeature {
+                case .mailFeature:
                     MailView(isShowing: self.$showSheet, result: self.$result, subject: "Feature request", message: "Hi, I have an idea that i would like to suggest ")
-                } else if self.activeSheet == .shareSheet {
+                case .shareSheet:
                     ShareSheetView(activityItems: ["Try out docWind!! (We do not steal your data) \n\(SettingsHelper.appURL)"])
-                } else if self.activeSheet == .dependency {
+                case .dependency:
                     DependecyPageView()
                 }
             }

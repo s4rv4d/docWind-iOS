@@ -55,24 +55,17 @@ struct DetailPdfView: View, Equatable {
                     }
                     
                     if self.canEditSignature {
-//                        Button("Edit Sign") {
-//                            self.canEditSignature = true
-//                        }.settingsBackground()
-                        
-                        
                         Button("Save") {
                             print("saving signature")
                             self.canEditSignature = false
                             self.saveButton = true
                         }.settingsBackground()
-                        
                     }
 
                     if self.saveButton {
                         if !self.canEdit && !self.canEditSignature {
                             Button("Save PDF") {
                                 print("saving..")
-
                                 // save pdf
                                 self.saveTapped.toggle()
                                 self.saveButton.toggle()
@@ -96,10 +89,11 @@ struct DetailPdfView: View, Equatable {
                             VStack{
                                 Image(systemName: "text.quote")
                                     .font(.system(size: 20))
-                                    .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
+                                    .foregroundColor((AppSettings.shared.bougthNonConsumable) ? .blue : .yellow)
                                     .padding(.top, 5)
                                     .padding([.leading, .trailing])
-                                Text("OCR").font(.caption)
+                                Text("OCR")
+                                    .font(.caption)
                                     .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
                                     .padding(.bottom, 2)
                             }
@@ -143,16 +137,19 @@ struct DetailPdfView: View, Equatable {
 
         .sheet(isPresented: $isShown) {
             if self.activeContext == .shareSheet {
-                ShareSheetView(activityItems: [URL(string: self.url)!]).onAppear{
-                    self.isLoading.toggle()}
+                ShareSheetView(activityItems: [URL(string: self.url)!])
+                    .onAppear{
+                        self.isLoading.toggle()
+                    }
             } else if self.activeContext == .toolBox {
                 PDFToolBarView(color: self.$color, lineWidth: self.$lineWidth, options: self.$options, openSignature: self.$isShown, activeContext: self.$activeContext, canEdit: self.$canEdit, canEditSignature: self.$canEditSignature, imageThere: self.$image)
             } else if self.activeContext == .signature {
                 SignaturePageView(image: self.$image)
             } else if self.activeContext == .ocrPage {
-                OCRTextView(recognizedText: "Scanning", imageToScan: self.images).onAppear {
-                    self.isLoading.toggle()
-                }
+                OCRTextView(recognizedText: "Scanning", imageToScan: self.images)
+                    .onAppear {
+                        self.isLoading.toggle()
+                    }
             } else if self.activeContext == .subView {
                 SubcriptionPageView()
             }

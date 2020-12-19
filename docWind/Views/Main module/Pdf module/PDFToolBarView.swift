@@ -58,20 +58,6 @@ struct PDFToolBarView: View {
                         }.padding()
                     }.settingsBackground()
 
-//                    if imageThere != nil {
-//                       Button(action: {
-//                            self.presentationMode.wrappedValue.dismiss()
-//                            self.canEditSignature.toggle()
-//                        }) {
-//                            HStack {
-//                                Image(systemName: "signature")
-//                                Text("Edit signature")
-//                                Spacer()
-//                            }.foregroundColor(.yellow)
-//                            .padding()
-//                        }.settingsBackground()
-//
-//                    }
                     // signature done
                     
                     HStack {
