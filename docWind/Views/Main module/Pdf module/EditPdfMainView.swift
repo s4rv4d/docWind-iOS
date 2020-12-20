@@ -13,13 +13,17 @@ struct EditPdfMainView: View {
     
     // MARK: - @State properties
     @State private var pdfName = ""
+    @State private var pdfNameRef = ""
     @State private var selectedIconName = "blue"
+    @State private var oldSelectedIconName = "blue"
+    @State private var oldPageCount = 0
     @State private var alertMessage = ""
     @State private var showAlert = false
     @State private var showScanner = false
     @State private var url = ""
     @State private var showingActionSheet = false
-    let item: ItemModel
+    @State private var editType: EditType = .rename
+    @ObservedObject var item: ItemModel
     
     // for images
     @State var mainPages: [UIImage] = [UIImage]()
@@ -49,6 +53,11 @@ struct EditPdfMainView: View {
         self._pagesWithMark = State(initialValue: mainPages)
         self._url = State(initialValue: url)
         self.item = item
+        
+        // old ref check
+        self._oldPageCount = State(initialValue: mainPages.count)
+        self._oldSelectedIconName = State(initialValue: selectedIconName)
+        self._pdfNameRef = State(initialValue: pdfName)
     }
     
     var body: some View {
@@ -148,7 +157,6 @@ struct EditPdfMainView: View {
                 }
                 
             }
-//            .keyboardSensible(self.$offsetVal)
             .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
                 
             .navigationBarTitle(Text("Edit PDF"))
@@ -196,6 +204,76 @@ struct EditPdfMainView: View {
             self.alertMessage = "Make sure you have scan atleast one document"
             self.showAlert.toggle()
         } else {
+            if pdfName != pdfNameRef {
+                editType = .rename
+                saveFinal()
+            } else {
+                // name is same
+                // check if new pages added or icon changed
+                
+                // check icon change now
+                if selectedIconName != oldSelectedIconName {
+                    // icon color changed
+                    editType = .iconColor
+                    saveFinal()
+                } else {
+                    // same icon, now check if new images added
+                    let mainPages = (self.removeWatermark == true) ? self.pages : self.pagesWithMark
+                    
+                    if mainPages.count != oldPageCount {
+                        // pages updated, need to update file path and save
+                        editType = .newImagesAdded
+                        saveFinal()
+                    } else {
+                        // nothing to change, dismiss
+                        print("nothing to change")
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }
+                
+                // second check regardless
+                let mainPages = (self.removeWatermark == true) ? self.pages : self.pagesWithMark
+                
+                if mainPages.count != oldPageCount {
+                    // pages updated, need to update file path and save
+                    editType = .newImagesAdded
+                    saveFinal()
+                } else {
+                    // nothing to change, dismiss
+                    print("nothing to change")
+                    presentationMode.wrappedValue.dismiss()
+                }
+                
+            }
+        }
+    }
+    
+    private func addPagesTapped() {
+        self.showingActionSheet.toggle()
+    }
+    
+    private func scanTapped() {
+        self.activeSheet = .scannerView
+    }
+    
+    private func addImagesTapped() {
+        self.activeSheet = .photoLibrary
+    }
+    
+    private func imageTapped() {
+        self.activeSheet = .pdfView
+    }
+    
+    private func deleteFile() {
+        FeedbackManager.mediumFeedback()
+        self.presentationMode.wrappedValue.dismiss()
+    }
+    
+    private func saveFinal() {
+        switch editType {
+        case .rename:
+            // different pdf name
+            print("renaming file name")
             let mainPages = (self.removeWatermark == true) ? self.pages : self.pagesWithMark
             
             // name adjustment
@@ -268,27 +346,71 @@ struct EditPdfMainView: View {
                 self.alertMessage = "Error renaming file :("
                 self.showAlert.toggle()
             }
+
+        case .iconColor:
+            print("new icon chosen")
+            item.iconName = selectedIconName
+            ItemModel.updateObject(in: self.context)
+            
+            self.presentationMode.wrappedValue.dismiss()
+        case .newImagesAdded:
+            print("new images added")
+            
+            // actual updated pages
+            let mainPages = (self.removeWatermark == true) ? self.pages : self.pagesWithMark
+            // directory ref
+            let ref = "\(String(self.item.wrappedItemUrl.split(separator: "/").reversed()[1]).trimBothSides())"
+            
+            // old name
+            var oldName = item.wrappedItemName
+            
+            if oldName.contains(" ") {
+                oldName = oldName.replacingOccurrences(of: " ", with: "_")
+            }
+                        
+            if !oldName.contains(".pdf") {
+                oldName += ".pdf"
+            }
+            
+            // create PDFDocument instance
+            let pdfDocument = PDFDocument()
+            
+            // converting images to pages
+            for page in mainPages {
+                guard let pdfPage = PDFPage(image: page) else { fatalError("couldnt convert into PDFPage") }
+                guard let index = mainPages.firstIndex(of: page) else { fatalError("couldnt find index of page") }
+                
+                // store in pdfDocument
+                pdfDocument.insert(pdfPage, at: index)
+            }
+            
+            // get raw data of PDF
+            guard let rawPDFData = pdfDocument.dataRepresentation() else { fatalError("couldnt get raw data of pdf document") }
+            
+            let FMState = DWFMAppSettings.shared.updateFileWithPDFContent(pdfData: rawPDFData, pdfName: oldName, directoryRef: (ref == "DocWind") ? nil : ref)
+            
+            if FMState.0 {
+                
+                let path = FMState.1
+                
+                if path != "" {
+                    item.itemURL = path
+                    ItemModel.updateObject(in: self.context)
+                    self.presentationMode.wrappedValue.dismiss()
+                    
+                } else {
+                    // bring up alert
+                    self.activeAlertSheet = .notice
+                    self.alertMessage = "Error updating file :("
+                    self.showAlert.toggle()
+                }
+                
+            } else {
+                // bring up alert
+                self.activeAlertSheet = .notice
+                self.alertMessage = "Error updating file :("
+                self.showAlert.toggle()
+            }
         }
-    }
-    
-    private func addPagesTapped() {
-        self.showingActionSheet.toggle()
-    }
-    
-    private func scanTapped() {
-        self.activeSheet = .scannerView
-    }
-    
-    private func addImagesTapped() {
-        self.activeSheet = .photoLibrary
-    }
-    
-    private func imageTapped() {
-        self.activeSheet = .pdfView
-    }
-    
-    private func deleteFile() {
-        FeedbackManager.mediumFeedback()
-        self.presentationMode.wrappedValue.dismiss()
     }
 }

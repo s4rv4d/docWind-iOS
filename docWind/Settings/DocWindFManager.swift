@@ -27,6 +27,7 @@ protocol DocWindFManager {
     func deleteSavedPdf(direcName: String?, fileName: String) -> Bool
     func deleteSavedFolder(folderName: String) -> Bool
     func createPDF(images:[UIImage], maxSize:Int, quality:Int, pdfPathUrl: URL?) -> NSData?
+    func updateFileWithPDFContent(pdfData: Data, pdfName: String, directoryRef: String?) -> (Bool, String)
 }
 
 //MARK: - Extension
@@ -91,64 +92,64 @@ extension DocWindFManager {
     }
     
     /// renaming a file
-        /// - Parameters:
-        ///   - direcName: directory where the file is present
-        ///   - oldFileName: old file name
-        ///   - newFileName: new file name
-        /// - Returns: status of completion of execution of this function
-        func renameFile(direcName: String?, oldFileName: String, newFileName: String) -> (Bool, String) {
-            var status = false
-            var path = ""
+    /// - Parameters:
+    ///   - direcName: directory where the file is present
+    ///   - oldFileName: old file name
+    ///   - newFileName: new file name
+    /// - Returns: status of completion of execution of this function
+    func renameFile(direcName: String?, oldFileName: String, newFileName: String) -> (Bool, String) {
+        var status = false
+        var path = ""
+        
+        if direcName == nil {
             
-            if direcName == nil {
-                
-                print(oldFileName)
-                print(newFileName)
-                
-                let con = try! FileManager.default.contentsOfDirectory(atPath: containerUrl!.path)
-                print(con)
-                
-                
-                // getting the main directory file URL
-                guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
-                let oldPath = resourceURL.appendingPathComponent(oldFileName)
-                let newPath = resourceURL.appendingPathComponent(newFileName)
-                
-                print("OLD PATH:")
-                print(oldPath)
-                print("NEW PATH:")
-                print(newPath)
-                
-                do {
-                    try FileManager.default.moveItem(at: oldPath, to: newPath)
-                    status = true
-                    path = newPath.path
-                } catch {
-                    status = false
-                    print("❌ ERROR RENAMING FILE: \(error.localizedDescription)")
-                }
-                
-                
-            } else {
-                guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
-                let resourcePath = resourceURL.appendingPathComponent(direcName!, isDirectory: true)
-                print("File Manager Path OVER HERE: ------> \(resourcePath)")
-                
-                let oldPath = resourcePath.appendingPathComponent(oldFileName)
-                let newPath = resourcePath.appendingPathComponent(newFileName)
-                
-                do {
-                    try FileManager.default.moveItem(at: oldPath, to: newPath)
-                    status = true
-                    path = newPath.path
-                } catch {
-                    status = false
-                    print("❌ ERROR RENAMING FILE: \(error.localizedDescription)")
-                }
+            print(oldFileName)
+            print(newFileName)
+            
+            let con = try! FileManager.default.contentsOfDirectory(atPath: containerUrl!.path)
+            print(con)
+            
+            
+            // getting the main directory file URL
+            guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
+            let oldPath = resourceURL.appendingPathComponent(oldFileName)
+            let newPath = resourceURL.appendingPathComponent(newFileName)
+            
+            print("OLD PATH:")
+            print(oldPath)
+            print("NEW PATH:")
+            print(newPath)
+            
+            do {
+                try FileManager.default.moveItem(at: oldPath, to: newPath)
+                status = true
+                path = newPath.path
+            } catch {
+                status = false
+                print("❌ ERROR RENAMING FILE: \(error.localizedDescription)")
             }
             
-            return (status, path)
+            
+        } else {
+            guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
+            let resourcePath = resourceURL.appendingPathComponent(direcName!, isDirectory: true)
+            print("File Manager Path OVER HERE: ------> \(resourcePath)")
+            
+            let oldPath = resourcePath.appendingPathComponent(oldFileName)
+            let newPath = resourcePath.appendingPathComponent(newFileName)
+            
+            do {
+                try FileManager.default.moveItem(at: oldPath, to: newPath)
+                status = true
+                path = newPath.path
+            } catch {
+                status = false
+                print("❌ ERROR RENAMING FILE: \(error.localizedDescription)")
+            }
         }
+        
+        return (status, path)
+    }
     
     /// saving pdf file to documents directory
     /// - Parameters:
@@ -723,6 +724,111 @@ extension DocWindFManager {
         }
 
         return nil
+    }
+    
+    /// update pdf file to documents directory
+    /// - Parameters:
+    ///   - pdfData: data of pdf to store
+    ///   - pdfName: pdf name
+    ///   - directoryRef: folder reference to store file in
+    /// - Returns: state of the completion of executing
+    func updateFileWithPDFContent(pdfData: Data, pdfName: String, directoryRef: String?) -> (Bool, String) {
+        var status = false
+        var path = ""
+        
+        // getting the main directory file URL
+        guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
+        
+        if directoryRef == nil {
+            // when nothing is specified, saving in main is assumed
+            
+            let actualPDFName = pdfName
+            print("PDF NAME TO BE SAVED: \(actualPDFName) ---!") // contains .pdf
+            
+            let actualPDFData = pdfData
+            print("PDF does contain data: \(!actualPDFData.isEmpty)")
+            
+            // getting final saving path
+            let newSavingPath = resourceURL.appendingPathComponent(actualPDFName, isDirectory: false)
+            print("FINAL SAVING PATH: \(newSavingPath)")
+            
+            // to check if the file is already saved before
+            if self.pdfAlreadySaved(directory: resourceURL.path, fileName: actualPDFName, fileurl: newSavingPath.path) {
+                // found file
+                do {
+                    if !FileManager.default.fileExists(atPath: resourceURL.path) {
+                        try FileManager.default.createDirectory(at: resourceURL, withIntermediateDirectories: true, attributes: nil)
+                    } else {
+                        print("directory already created")
+                    }
+                    
+                    try actualPDFData.write(to: newSavingPath, options: .atomic)
+                    print("saved pdf successfully")
+                    path = newSavingPath.path
+                    status = true
+                    
+                } catch {
+                    print("pdf couldnt be saved")
+                    print(error.localizedDescription)
+                    status = false
+                }
+
+            } else {
+                // not found file\
+                status = false
+                print("❌ PDF NOT FOUND")
+            }
+            
+        } else {
+            // when something is specified, saving in sub is assumed
+            
+            let actualPDFName = pdfName
+            print("PDF NAME TO BE SAVED: \(actualPDFName) ---!") // contains .pdf
+            
+            let actualPDFData = pdfData
+            print("PDF does contain data: \(!actualPDFData.isEmpty)")
+                        
+            guard let ref = directoryRef else { fatalError() }
+            
+            let relativeFilePath = resourceURL.appendingPathComponent(ref, isDirectory: true)
+            print("RELATIVE PATH: \(relativeFilePath)")
+            // getting final directory path
+            let newSavingPath = relativeFilePath.appendingPathComponent(actualPDFName, isDirectory: false)
+            print("FINAL SAVING PATH: \(newSavingPath) --!")
+            
+            // to check if the file is already saved before
+            if self.pdfAlreadySaved(directory: relativeFilePath.path, fileName: actualPDFName, fileurl: newSavingPath.path) {
+                
+                do {
+                    if !FileManager.default.fileExists(atPath: relativeFilePath.path) {
+                        try FileManager.default.createDirectory(at: relativeFilePath, withIntermediateDirectories: true, attributes: nil)
+                    } else {
+                        print("directory already created")
+                    }
+                    
+                    try actualPDFData.write(to: newSavingPath, options: .atomic)
+                    print("saved pdf successfully")
+                    path = newSavingPath.path
+                    status = true
+                    
+                } catch {
+                    print("pdf couldnt be saved")
+                    print(error.localizedDescription)
+                    status = false
+                }
+                
+            } else {
+                // not found file\
+                
+                // found file
+                status = false
+                print("❌ PDF NOT FOUND")
+            }
+            
+                        
+        }
+        
+        return (status, path)
     }
     
     /// END OF EXTENSION

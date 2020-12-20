@@ -123,7 +123,7 @@ struct DetailPdfView: View, Equatable {
                     }
                         .onTapGesture {
                             FeedbackManager.mediumFeedback()
-                            if AppSettings.shared.bougthNonConsumable {
+                            if !AppSettings.shared.bougthNonConsumable {
                                 self.subViewed()
                             } else {
                                 self.toolsTapped()
@@ -156,6 +156,8 @@ struct DetailPdfView: View, Equatable {
                     .onAppear {
                         self.isLoading.toggle()
                     }
+            case .subView:
+                SubcriptionPageView()
             default:
                 EmptyView()
             }
@@ -234,18 +236,18 @@ struct DetailPdfView: View, Equatable {
             FeedbackManager.mediumFeedback()
             self.isLoading.toggle()
             self.activeContext = .shareSheet
-            self.isShown.toggle()
+//            self.isShown.toggle()
         }
     }
     
     func toolsTapped() {
         self.activeContext = .toolBox
-        self.isShown.toggle()
+//        self.isShown.toggle()
     }
     
     func subViewed() {
         self.activeContext = .subView
-        self.isShown.toggle()
+//        self.isShown.toggle()
     }
     
     static func == (lhs: DetailPdfView, rhs: DetailPdfView) -> Bool {
@@ -308,7 +310,7 @@ struct DetailPdfView: View, Equatable {
             if pageCount == images.count {
                 self.images = images
                 self.activeContext = .editPage
-                self.isShown.toggle()
+//                self.isShown.toggle()
             }
         }
     }

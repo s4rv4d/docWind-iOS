@@ -135,3 +135,10 @@ extension SettingActiveSheet: Identifiable {
 enum ViewSide {
     case Left, Right, Top, Bottom
 }
+
+// different edit types ref for saving and editted doc
+enum EditType {
+    case rename
+    case iconColor
+    case newImagesAdded
+}
