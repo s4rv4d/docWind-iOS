@@ -24,7 +24,7 @@ struct AddPdfFileGenView: View {
     @State var pages: [UIImage] = [UIImage]()
     @State var pagesWithMark: [UIImage] = [UIImage]()
         
-    @State private var activeSheet: ActiveOdfMainViewSheet = .scannerView
+    @State private var activeSheet: ActiveOdfMainViewSheet? = .scannerView
     @State private var activeAlertSheet: ActiveAlertSheet = .notice
     @State private var removeWatermark = false
     @State var deleteDoc = false
@@ -138,12 +138,7 @@ struct AddPdfFileGenView: View {
                     Text("Save")
             })
         }
-        .onAppear {
-            DispatchQueue.main.async {
-                self.activeSheet = .scannerView
-                self.showScanner.toggle()
-            }
-        }
+        
         .alert(isPresented: $showAlert) {
             if self.activeAlertSheet == .notice {
                return Alert(title: Text("Notice"), message: Text(alertMessage), primaryButton: .cancel(), secondaryButton: .default(Text("Retry")))
@@ -151,17 +146,20 @@ struct AddPdfFileGenView: View {
                return Alert(title: Text("Alert"), message: Text("Are you sure you want to delete this document?"), primaryButton: .destructive(Text("Delete"), action: { self.presentationMode.wrappedValue.dismiss() }), secondaryButton: .cancel())
             }
         }
-        .sheet(isPresented: $showScanner) {
-            if self.activeSheet == .scannerView {
+        
+        .sheet(item: $activeSheet, onDismiss: { self.activeSheet = nil }) { item in
+            switch item {
+            case .scannerView:
                 ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
-            } else if self.activeSheet == .pdfView {
+            case .pdfView:
                 SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
-            } else if self.activeSheet == .photoLibrary {
+            case .photoLibrary:
                 ImagePickerView(pages: self.$pages, pagesWithMark: self.$pagesWithMark)
-            } else if self.activeSheet == .subView {
+            case .subView:
                 SubcriptionPageView()
             }
         }
+        
         
         .actionSheet(isPresented: $showingActionSheet) {
             ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
@@ -180,17 +178,14 @@ struct AddPdfFileGenView: View {
     
     private func scanTapped() {
         self.activeSheet = .scannerView
-        self.showScanner.toggle()
     }
     
     private func addImagesTapped() {
         self.activeSheet = .photoLibrary
-        self.showScanner.toggle()
     }
     
     private func imageTapped() {
         self.activeSheet = .pdfView
-        self.showScanner.toggle()
     }
     
     private func deleteFile() {
@@ -202,7 +197,6 @@ struct AddPdfFileGenView: View {
     private func showSubView() {
         self.removeWatermark = false
         self.activeSheet = .subView
-        self.showScanner.toggle()
     }
     
     private func saveTapped() {

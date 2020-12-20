@@ -93,7 +93,6 @@ struct PDFCustomView: UIViewRepresentable {
                     uiView.removeGestureRecognizer(recog)
                 }
                 uiView.addSubview(pdfThumbnailView)
-//                uiView.document = PDFDocument(url: URL(string: self.fileURL)!)
             }
             
         } else {
@@ -116,15 +115,18 @@ struct PDFCustomView: UIViewRepresentable {
             if !canEdit  {
                 if canEditSignature {
                     print("adding image pan gesture")
-
+                    print(pdfDrawer.calledOnce)
                     
                     if !pdfDrawer.calledOnce {
                         let page = uiView.currentPage!
                         let pageBounds = page.bounds(for: .cropBox)
-                        let imageBounds = CGRect(x: pageBounds.minX, y: pageBounds.minY, width: 200, height: 100)
+                        let imageBounds = CGRect(x: 100, y: 100, width: 300, height: 300)
                         let imageStamp = ImageStampAnnotation(with: image, forBounds: imageBounds, withProperties: nil)
 
 //                         so that signatures isnt duplicated later on
+                        
+                        print(page.annotations)
+                        
                         for anno in page.annotations {
                             if anno.isKind(of: ImageStampAnnotation.self) {
                                 page.removeAnnotation(anno)
@@ -167,7 +169,7 @@ struct PDFCustomView: UIViewRepresentable {
                 let page = uiView.currentPage!
                 page.removeAnnotation(page.annotations.last!)
                 let pageBounds = page.bounds(for: .cropBox)
-                let imageBounds = CGRect(x: pageBounds.minX, y: pageBounds.minY, width: 200, height: 100)
+                let imageBounds = CGRect(x: 100, y: 100, width: 300, height: 300)
                 let imageStamp = ImageStampAnnotation(with: image, forBounds: imageBounds, withProperties: nil)
                 page.addAnnotation(imageStamp)
                 uiView.addGestureRecognizer(pdfPanGestureRecognizer)

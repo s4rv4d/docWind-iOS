@@ -27,7 +27,7 @@ struct EditPdfMainView: View {
     @State var pagesWithMark: [UIImage] = [UIImage]()
     
     // addtional properties
-    @State private var activeSheet: ActiveOdfMainViewSheet = .scannerView
+    @State private var activeSheet: ActiveOdfMainViewSheet? = nil
     @State private var activeAlertSheet: ActiveAlertSheet = .notice
     @State private var removeWatermark = false
     @State private var offsetVal: CGFloat = 0.0
@@ -158,22 +158,34 @@ struct EditPdfMainView: View {
                     Text("Save")
             })
         }
-            .alert(isPresented: $showAlert) {
-                    if self.activeAlertSheet == .notice {
-                       return Alert(title: Text("Notice"), message: Text(alertMessage), dismissButton: .cancel())
-                    } else {
-                       return Alert(title: Text("Alert"), message: Text("Are you sure you want to delete this document?"), primaryButton: .destructive(Text("Delete"), action: { self.presentationMode.wrappedValue.dismiss() }), secondaryButton: .cancel())
-                    }
-                }
-            .sheet(isPresented: $showScanner) {
-                if self.activeSheet == .scannerView {
-                    ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
-                } else if self.activeSheet == .pdfView {
-                    SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
-                } else if self.activeSheet == .photoLibrary {
-                    ImagePickerView(pages: self.$pages, pagesWithMark: self.$pagesWithMark)
+        .alert(isPresented: $showAlert) {
+                if self.activeAlertSheet == .notice {
+                   return Alert(title: Text("Notice"), message: Text(alertMessage), dismissButton: .cancel())
+                } else {
+                   return Alert(title: Text("Alert"), message: Text("Are you sure you want to delete this document?"), primaryButton: .destructive(Text("Delete"), action: { self.presentationMode.wrappedValue.dismiss() }), secondaryButton: .cancel())
                 }
             }
+        
+        .sheet(item: $activeSheet, onDismiss: { self.activeSheet = nil }) { item in
+            switch item {
+            case .scannerView:
+                ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
+            case .pdfView:
+                SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
+            case .photoLibrary:
+                ImagePickerView(pages: self.$pages, pagesWithMark: self.$pagesWithMark)
+            default:
+                EmptyView()
+            }
+        }
+        
+        .actionSheet(isPresented: $showingActionSheet) {
+            ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
+                .default(Text("Scan a document"), action: scanTapped),
+                .default(Text("Choose an image"), action: addImagesTapped),
+                .cancel()
+            ])
+        }
     }
     
     private func saveTapped() {
@@ -256,9 +268,6 @@ struct EditPdfMainView: View {
                 self.alertMessage = "Error renaming file :("
                 self.showAlert.toggle()
             }
-            
-            
-//            self.presentationMode.wrappedValue.dismiss()
         }
     }
     
@@ -268,17 +277,14 @@ struct EditPdfMainView: View {
     
     private func scanTapped() {
         self.activeSheet = .scannerView
-        self.showScanner.toggle()
     }
     
     private func addImagesTapped() {
         self.activeSheet = .photoLibrary
-        self.showScanner.toggle()
     }
     
     private func imageTapped() {
         self.activeSheet = .pdfView
-        self.showScanner.toggle()
     }
     
     private func deleteFile() {

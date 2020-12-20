@@ -12,7 +12,7 @@ struct SignaturePageView: View {
     
     @State var currentDrawing: Drawing = Drawing()
     @State var drawings: [Drawing] = [Drawing]()
-    @State private var color: Color = Color(hex: "#000000")
+    @State private var color: Color = .black
     @State private var lineWidth: CGFloat = 3.0
     @Environment(\.presentationMode) var presentationMode
     @Binding var image: UIImage?
@@ -48,6 +48,7 @@ struct SignaturePageView: View {
                     CustomHeaderView(title: "Signature", action: {
                         let image = self.captureLine(origin: geometry.frame(in: .global).origin, size: geometry.size, points: self.drawings, image: self.drawRectangle())
                         self.image = image
+                        
                         self.presentationMode.wrappedValue.dismiss()
                         
                         }).padding()
@@ -97,7 +98,7 @@ struct SignaturePageView: View {
         let context = UIGraphicsGetCurrentContext()
         let color = self.color
         context!.setLineWidth(self.lineWidth)
-        context!.setStrokeColor(color.uiColor().cgColor)
+        context!.setStrokeColor(UIColor.black.cgColor)
         
         for drawing in self.drawings {
             let points = drawing.points

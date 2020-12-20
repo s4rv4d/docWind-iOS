@@ -14,8 +14,7 @@ struct PDFToolBarView: View {
     @Binding var color: Color
     @Binding var lineWidth: CGFloat
     @Binding var options: DrawingTool
-    @Binding var openSignature: Bool
-    @Binding var activeContext: PDFDetailActiveView
+    @Binding var activeContext: PDFDetailActiveView?
     @Binding var canEdit: Bool
     @Binding var canEditSignature: Bool
     @Binding var imageThere: UIImage?
@@ -46,9 +45,9 @@ struct PDFToolBarView: View {
                         Spacer()
                     }
                     Button(action: {
-                        self.activeContext = .signature
                         self.presentationMode.wrappedValue.dismiss()
-                        self.openSignature.toggle()
+                        self.activeContext = .signature
+//                        self.openSignature.toggle()
                         self.canEditSignature.toggle()
                     }) {
                         HStack {

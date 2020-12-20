@@ -22,13 +22,13 @@ struct DetailPdfView: View, Equatable {
     @State private var alertMessage = ""
     @State private var showAlert = false
     @State private var activeAlertContext: ActiveAlertSheet = .error
-    @State private var activeContext: PDFDetailActiveView = .toolBox
-    @State private var isShown = false
-    @State private var options: DrawingTool = .none
-    @State private var canEdit = false
-    @State private var canEditSignature = false
-    @State private var color: Color = Color(hex: "#000000")
-    @State private var lineWidth: CGFloat = 3.0
+    @State var activeContext: PDFDetailActiveView? = nil
+    @State var isShown = false
+    @State var options: DrawingTool = .none
+    @State var canEdit = false
+    @State var canEditSignature = false
+    @State var color: Color = .black
+    @State var lineWidth: CGFloat = 3.0
     @State var image: UIImage? = nil
     @State private var saveButton = false
     @State var saveTapped = false
@@ -42,7 +42,6 @@ struct DetailPdfView: View, Equatable {
             VStack {
                 if self.url != "" {
                     PDFCustomView(fileURL: self.url, options: self.options, canEdit: self.canEdit, canEditSignature: self.canEditSignature, color: self.color, saveTapped: self.saveTapped, image: self.image, alreadyAdded: self.$alreadyAdded)
-                        .debugPrint("PRESENTED PDFCUSTOMVIEW 📄 \(self.url)")
                 }
                 Spacer()
                 HStack {
@@ -124,7 +123,7 @@ struct DetailPdfView: View, Equatable {
                     }
                         .onTapGesture {
                             FeedbackManager.mediumFeedback()
-                            if !AppSettings.shared.bougthNonConsumable {
+                            if AppSettings.shared.bougthNonConsumable {
                                 self.subViewed()
                             } else {
                                 self.toolsTapped()
@@ -134,26 +133,34 @@ struct DetailPdfView: View, Equatable {
                 .background(Color(.secondarySystemBackground))
             }
         }
-
-        .sheet(isPresented: $isShown) {
-            if self.activeContext == .shareSheet {
-                ShareSheetView(activityItems: [URL(string: self.url)!])
+        
+        .sheet(item: $activeContext, onDismiss: { self.activeContext = nil }) { item in
+            switch item {
+            case .shareSheet:
+                ShareSheetView(activityItems: [URL(fileURLWithPath: url)])
                     .onAppear{
                         self.isLoading.toggle()
                     }
-            } else if self.activeContext == .toolBox {
-                PDFToolBarView(color: self.$color, lineWidth: self.$lineWidth, options: self.$options, openSignature: self.$isShown, activeContext: self.$activeContext, canEdit: self.$canEdit, canEditSignature: self.$canEditSignature, imageThere: self.$image)
-            } else if self.activeContext == .signature {
+            case .toolBox:
+                PDFToolBarView(color: $color
+                               , lineWidth: $lineWidth
+                               , options: $options
+                               , activeContext: $activeContext
+                               , canEdit: $canEdit
+                               , canEditSignature: $canEditSignature
+                               , imageThere: $image)
+            case .signature:
                 SignaturePageView(image: self.$image)
-            } else if self.activeContext == .ocrPage {
+            case .ocrPage:
                 OCRTextView(recognizedText: "Scanning", imageToScan: self.images)
                     .onAppear {
                         self.isLoading.toggle()
                     }
-            } else if self.activeContext == .subView {
-                SubcriptionPageView()
+            default:
+                EmptyView()
             }
         }
+        
         .onAppear {
             self.getUrl()
         }
@@ -161,9 +168,9 @@ struct DetailPdfView: View, Equatable {
         .navigationBarItems(trailing: Button(action: sharePdf) {
             Image(systemName: "square.and.arrow.up").font(.system(size: 20))
         })
-            .toast(isShowing: $canEdit, text: Text("Edit: " + ((self.canEdit == true) ? "Enabled" : "Disabled")))
+        .toast(isShowing: $canEdit, text: Text("Edit: " + ((self.canEdit == true) ? "Enabled" : "Disabled")))
 
-            .alert(isPresented: $showAlert) {
+        .alert(isPresented: $showAlert) {
 
             if activeAlertContext == .error {
                 return Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel({
@@ -272,7 +279,7 @@ struct DetailPdfView: View, Equatable {
                 }
                 self.images = imgs
                 self.activeContext = .ocrPage
-                self.isShown.toggle()
+//                self.isShown.toggle()
             }
         }
     }
