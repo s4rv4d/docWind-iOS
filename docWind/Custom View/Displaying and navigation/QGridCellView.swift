@@ -14,7 +14,7 @@ import PDFKit
 struct QGridCellView: View {
     
     @ObservedObject var item: ItemModel
-    var iconNameString: [String: Color] = ["blue":.blue, "red":.red, "green":.green, "yellow":.yellow, "pink":.pink, "black": .black, "gray": .gray, "orange": .orange, "purple": .purple]
+    var iconNameString: [String: Color] = ["blue":.blue, "red":.red, "green":.green, "yellow":.yellow, "pink":.pink, "black": .primary, "gray": .gray, "orange": .orange, "purple": .purple]
     let masterFolder: String
     
     @State private var url = ""

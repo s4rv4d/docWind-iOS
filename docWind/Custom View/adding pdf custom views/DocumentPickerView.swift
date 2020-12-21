@@ -67,10 +67,17 @@ struct DocumentPickerView: UIViewControllerRepresentable {
                     selectedFile.stopAccessingSecurityScopedResource()
                 }
             }
-            let selectedFileName = String(selectedFile.absoluteString.split(separator: "/").last!)
             
+            // first replace " " with "_" after removing percent encoding i.e., %20 for space
+            var selectedFileName = selectedFile.absoluteString.removingPercentEncoding!.replacingOccurrences(of: " ", with: "_")
+            selectedFileName = String(selectedFileName.split(separator: "/").last!)
             print(selectedFile)
             print(selectedFileName)
+            
+            if !selectedFileName.contains(".pdf") {
+                selectedFileName += ".pdf"
+            }
+            
             
             processFile(fileUrl: selectedFile, fileName: selectedFileName)
         }
