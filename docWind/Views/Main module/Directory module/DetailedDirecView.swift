@@ -13,7 +13,7 @@ import QGrid
 struct DetailedDirecView: View {
     
     // MARK: - @State variables
-    @State var item: ItemModel
+    @ObservedObject var item: ItemModel
     @State private var tapped = false
     @State private var isShown = false
     @State var activeSheet: ActiveContentViewSheet = .intro
@@ -40,7 +40,7 @@ struct DetailedDirecView: View {
     init(dirName: String, pathName: String, item: ItemModel) {
         self._masterDirecName = State(initialValue: dirName)
         self._masterFolder = State(initialValue: pathName)
-        self._item = State(initialValue: item)
+        self.item = item
         
         self._items = FetchRequest(
             entity: DirecModel.entity(),
@@ -227,10 +227,25 @@ struct DetailedDirecView: View {
             }
         } else {
             
-            if DWFMAppSettings.shared.deleteSavedPdf(direcName: self.item.wrappedItemUrl, fileName: item.wrappedItemUrl) {
+            let ref = "\(item.wrappedItemUrl.split(separator: "/").reversed()[1])".trimBothSides()
+            
+            var fileName = item.wrappedItemName
+            
+            if fileName.contains(" ") {
+                fileName = fileName.replacingOccurrences(of: " ", with: "_")
+            }
+            
+            if !fileName.contains(".pdf") {
+                fileName += ".pdf"
+            }
+            
+            if DWFMAppSettings.shared.deleteSavedPdf(direcName: (ref == "DocWind") ? nil : ref, fileName: fileName) {
                 print("SUCCESSFULLY DELETED FROM iCloud container ✅")
                 
-                ItemModel.deleteObject(in: context, sub: item)
+                DispatchQueue.global(qos: .userInitiated).async {
+                    ItemModel.deleteObject(in: context, sub: item)
+                }
+                
             } else {
                 self.alertTitle = "Error"
                 self.alertMessage = "Couldnt delete file"

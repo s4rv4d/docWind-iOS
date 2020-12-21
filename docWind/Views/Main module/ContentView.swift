@@ -256,7 +256,20 @@ struct ContentView: View {
                 self.showAlert.toggle()
             }
         } else {
-            if DWFMAppSettings.shared.deleteSavedPdf(direcName: "\(DWFMAppSettings.shared.fileURL())", fileName: item.wrappedItemUrl) {
+            
+            let ref = "\(item.wrappedItemUrl.split(separator: "/").reversed()[1])".trimBothSides()
+            
+            var fileName = item.wrappedItemName
+            
+            if fileName.contains(" ") {
+                fileName = fileName.replacingOccurrences(of: " ", with: "_")
+            }
+            
+            if !fileName.contains(".pdf") {
+                fileName += ".pdf"
+            }
+            
+            if DWFMAppSettings.shared.deleteSavedPdf(direcName: (ref == "DocWind") ? nil : ref, fileName: fileName) {
                 print("SUCCESSFULLY DELETED FROM iCloud container ✅")
                 
                 ItemModel.deleteObject(in: context, sub: item)

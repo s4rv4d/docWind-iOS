@@ -53,7 +53,7 @@ struct SnapCarouselView: View {
                                 ) {
                                     Image(uiImage: item)
                                     .resizable()
-                                        .aspectRatio(contentMode: .fill)
+                                    .aspectRatio(contentMode: .fit)
 
                             }
                             .foregroundColor(Color.red)
@@ -64,8 +64,9 @@ struct SnapCarouselView: View {
                             .animation(.spring())
                             .environmentObject(self.UIState)
                         }
-                }.environmentObject(self.UIState)
-                    .padding()
+                }
+                .environmentObject(self.UIState)
+                .padding()
                 
                 HStack {
                     Button(action: deleteTapped){

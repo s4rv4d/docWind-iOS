@@ -62,8 +62,14 @@ struct NormalListRowView: View {
                         .foregroundColor(.secondary)
                         Spacer()
                         if self.itemArray.wrappedItemType == DWPDFFILE {
-                            if URL(fileURLWithPath: self.itemArray.wrappedItemUrl).fileSize != nil {
-                                Text(NSString(format: "%.2f", URL(fileURLWithPath: self.itemArray.wrappedItemUrl).fileSize!) as String + " MB")
+                            if URL(fileURLWithPath: url).fileSize != nil {
+                                Text(NSString(format: "%.2f", URL(fileURLWithPath: url).fileSize!) as String + " MB")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            } else {
+                                // TODO: - Need to migrate data model
+                                #warning("need to migrate data model")
+                                Text("N/A")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }

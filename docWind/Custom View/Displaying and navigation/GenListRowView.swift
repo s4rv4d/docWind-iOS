@@ -38,8 +38,10 @@ struct GenListRowView: View {
             VStack {
                     if self.itemArray.wrappedItemType == DWPDFFILE {
                         DetailPdfView(item: self.itemArray, master: self.masterFolder)
+                            .environment(\.managedObjectContext, context)
                     } else {
                         DetailedDirecView(dirName: self.itemArray.wrappedItemName, pathName: self.masterFolder, item: self.itemArray)
+                            .environment(\.managedObjectContext, context)
                     }
 
                 }
