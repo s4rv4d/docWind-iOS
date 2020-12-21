@@ -13,6 +13,8 @@ import PDFKit
 import Accelerate
 import Metal
 import AVFoundation
+import CoreGraphics
+import ImageIO
 
 // MARK: - View
 extension View {
@@ -127,81 +129,82 @@ extension View {
 // MARK: - UIImage
 extension UIImage {
     
+    // using accelerate
     func resizeImageUsingVImage(size:CGSize) -> UIImage? {
-            let cgImage = self.cgImage!
-            var format = vImage_CGImageFormat(bitsPerComponent: 8, bitsPerPixel: 32, colorSpace: nil, bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.first.rawValue), version: 0, decode: nil, renderingIntent: CGColorRenderingIntent.defaultIntent)
-            var sourceBuffer = vImage_Buffer()
-            defer {
-                  free(sourceBuffer.data)
-            }
-            var error = vImageBuffer_InitWithCGImage(&sourceBuffer, &format, nil, cgImage, numericCast(kvImageNoFlags))
-            guard error == kvImageNoError else { return nil }
-            // create a destination buffer
-            let scale = self.scale
-            let destWidth = Int(size.width)
-            let destHeight = Int(size.height)
-            let bytesPerPixel = self.cgImage!.bitsPerPixel/8
-            let destBytesPerRow = destWidth * bytesPerPixel
-            let destData = UnsafeMutablePointer<UInt8>.allocate(capacity: destHeight * destBytesPerRow)
-            defer {
-                destData.deallocate()
-            }
-            var destBuffer = vImage_Buffer(data: destData, height: vImagePixelCount(destHeight), width: vImagePixelCount(destWidth), rowBytes: destBytesPerRow)
-            // scale the image
-            error = vImageScale_ARGB8888(&sourceBuffer, &destBuffer, nil, numericCast(kvImageHighQualityResampling))
-            guard error == kvImageNoError else { return nil }
-            // create a CGImage from vImage_Buffer
-            var destCGImage = vImageCreateCGImageFromBuffer(&destBuffer, &format, nil, nil, numericCast(kvImageNoFlags), &error)?.takeRetainedValue()
-            guard error == kvImageNoError else { return nil }
-            // create a UIImage
-            let resizedImage = destCGImage.flatMap { UIImage(cgImage: $0, scale: 0.0, orientation: self.imageOrientation) }
-            destCGImage = nil
-            return resizedImage
+        let cgImage = self.cgImage!
+        var format = vImage_CGImageFormat(bitsPerComponent: 8, bitsPerPixel: 32, colorSpace: nil, bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.first.rawValue), version: 0, decode: nil, renderingIntent: CGColorRenderingIntent.defaultIntent)
+        var sourceBuffer = vImage_Buffer()
+        defer {
+              free(sourceBuffer.data)
+        }
+        var error = vImageBuffer_InitWithCGImage(&sourceBuffer, &format, nil, cgImage, numericCast(kvImageNoFlags))
+        guard error == kvImageNoError else { return nil }
+        // create a destination buffer
+        _ = self.scale
+        let destWidth = Int(size.width)
+        let destHeight = Int(size.height)
+        let bytesPerPixel = self.cgImage!.bitsPerPixel/8
+        let destBytesPerRow = destWidth * bytesPerPixel
+        let destData = UnsafeMutablePointer<UInt8>.allocate(capacity: destHeight * destBytesPerRow)
+        defer {
+            destData.deallocate()
+        }
+        var destBuffer = vImage_Buffer(data: destData, height: vImagePixelCount(destHeight), width: vImagePixelCount(destWidth), rowBytes: destBytesPerRow)
+        // scale the image
+        error = vImageScale_ARGB8888(&sourceBuffer, &destBuffer, nil, numericCast(kvImageHighQualityResampling))
+        guard error == kvImageNoError else { return nil }
+        // create a CGImage from vImage_Buffer
+        var destCGImage = vImageCreateCGImageFromBuffer(&destBuffer, &format, nil, nil, numericCast(kvImageNoFlags), &error)?.takeRetainedValue()
+        guard error == kvImageNoError else { return nil }
+        // create a UIImage
+        let resizedImage = destCGImage.flatMap { UIImage(cgImage: $0, scale: 0.0, orientation: self.imageOrientation) }
+        destCGImage = nil
+        return resizedImage
+    }
+    
+    // using coregraphics
+    func resizedImage(for size: CGSize) -> UIImage? {
+        guard let image = self.cgImage
+        else {
+            return nil
         }
 
-    class func imageWithWatermark(image1: UIImage, image2: UIImage) -> UIImage {
-        let rect = CGRect(x: 0, y: 0, width: image1.size.width, height: image1.size.height)
-        UIGraphicsBeginImageContextWithOptions(image1.size, false, UIScreen.main.scale)
-        let context = UIGraphicsGetCurrentContext()
-        context!.fill(rect)
-        
-        image1.draw(in: CGRect(x: 0.0, y: 0.0, width: image1.size.width, height: image1.size.height))
-        image2.draw(in: CGRect(x: 10, y: (image1.size.height/100) * 95, width: ((image1.size.width/100) * 40), height: ((image1.size.height/100) * 3)))
-        
-        let result = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return result!
+        let context = CGContext(data: nil,
+                                width: Int(size.width),
+                                height: Int(size.height),
+                                bitsPerComponent: image.bitsPerComponent,
+                                bytesPerRow: image.bytesPerRow,
+                                space: image.colorSpace ?? CGColorSpace(name: CGColorSpace.sRGB)!,
+                                bitmapInfo: image.bitmapInfo.rawValue)
+        context?.interpolationQuality = .high
+        context?.draw(image, in: CGRect(origin: .zero, size: size))
+
+        guard let scaledImage = context?.makeImage() else { return nil }
+
+        return UIImage(cgImage: scaledImage)
     }
     
-    func resize(toWidth width: CGFloat) -> UIImage? {
-        let canvas = CGSize(width: width, height: CGFloat(ceil(width/size.width * size.height)))
-        return UIGraphicsImageRenderer(size: canvas, format: imageRendererFormat).image {
-            _ in draw(in: CGRect(origin: .zero, size: canvas))
+    // using ImageIO
+    func resizedImageUsingImageIO(for size: CGSize) -> UIImage? {
+        let options: [CFString: Any] = [
+            kCGImageSourceCreateThumbnailFromImageIfAbsent: true,
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceShouldCacheImmediately: true,
+            kCGImageSourceThumbnailMaxPixelSize: max(size.width, size.height)
+        ]
+
+        guard let imageSource = CGImageSourceCreateWithData(self.pngData()! as CFData, options as CFDictionary),
+            let image = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary)
+        else {
+            return nil
         }
-    }
-    
-    class func resizeImageWithAspect(image: UIImage,scaledToMaxWidth width:CGFloat,maxHeight height :CGFloat)->UIImage? {
-        let oldWidth = image.size.width;
-        let oldHeight = image.size.height;
-        
-        let scaleFactor = (oldWidth > oldHeight) ? width / oldWidth : height / oldHeight;
-        
-        let newHeight = oldHeight * scaleFactor;
-        let newWidth = oldWidth * scaleFactor;
-        let newSize = CGSize(width: newWidth, height: newHeight)
-        
-        UIGraphicsBeginImageContextWithOptions(newSize,false,UIScreen.main.scale);
-        
-        image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height));
-        let newImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        return newImage
+
+        return UIImage(cgImage: image)
     }
     
     func outline() -> UIImage? {
 
         UIGraphicsBeginImageContext(size)
-//        let rect = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: 5)
         let rect = CGRect(x: 0, y: size.height, width: size.width, height:100)
         self.draw(in: rect, blendMode: .normal, alpha: 1.0)
         let context = UIGraphicsGetCurrentContext()

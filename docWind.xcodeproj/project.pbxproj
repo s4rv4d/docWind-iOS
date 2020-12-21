@@ -19,7 +19,6 @@
 		402C0B6C24B0ACD600A5A6C9 /* NormalListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */; };
 		402C0B6E24B0B0E800A5A6C9 /* DetailedDirecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6D24B0B0E800A5A6C9 /* DetailedDirecView.swift */; };
 		402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */; };
-		402C0B7224B0B0FF00A5A6C9 /* ScanPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */; };
 		402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */; };
 		40485D8A24B98C9F008A137A /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40485D8924B98C9F008A137A /* TextView.swift */; };
 		40485D8C24B995E7008A137A /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40485D8B24B995E7008A137A /* BlurView.swift */; };
@@ -105,7 +104,6 @@
 		40E387D924E66B0F001E23D2 /* ItunesAppInfoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E387D824E66B0F001E23D2 /* ItunesAppInfoResult.swift */; };
 		40E387DB24E66B40001E23D2 /* ItunesAppInfoItunes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E387DA24E66B40001E23D2 /* ItunesAppInfoItunes.swift */; };
 		40EF391C24BF5E82007BBAC0 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EF391B24BF5E82007BBAC0 /* ToastView.swift */; };
-		40EF462C24B4ADF700D07A06 /* ConfPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EF462B24B4ADF700D07A06 /* ConfPdfView.swift */; };
 		40FB481724B8AE900045CF13 /* OCRTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB481624B8AE900045CF13 /* OCRTextView.swift */; };
 		40FB481924B8B0600045CF13 /* NewStarterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB481824B8B0600045CF13 /* NewStarterView.swift */; };
 		40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FDE47B24AB964B006AAFD2 /* AppDelegate.swift */; };
@@ -147,7 +145,6 @@
 		402C0B6B24B0ACD600A5A6C9 /* NormalListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalListRowView.swift; sourceTree = "<group>"; };
 		402C0B6D24B0B0E800A5A6C9 /* DetailedDirecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedDirecView.swift; sourceTree = "<group>"; };
 		402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPdfView.swift; sourceTree = "<group>"; };
-		402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanPdfView.swift; sourceTree = "<group>"; };
 		402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDirecView.swift; sourceTree = "<group>"; };
 		40485D8924B98C9F008A137A /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		40485D8B24B995E7008A137A /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
@@ -232,7 +229,6 @@
 		40E387D824E66B0F001E23D2 /* ItunesAppInfoResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesAppInfoResult.swift; sourceTree = "<group>"; };
 		40E387DA24E66B40001E23D2 /* ItunesAppInfoItunes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesAppInfoItunes.swift; sourceTree = "<group>"; };
 		40EF391B24BF5E82007BBAC0 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
-		40EF462B24B4ADF700D07A06 /* ConfPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfPdfView.swift; sourceTree = "<group>"; };
 		40FB481624B8AE900045CF13 /* OCRTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTextView.swift; sourceTree = "<group>"; };
 		40FB481824B8B0600045CF13 /* NewStarterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStarterView.swift; sourceTree = "<group>"; };
 		40FDE47824AB964B006AAFD2 /* docWind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = docWind.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -281,8 +277,6 @@
 			isa = PBXGroup;
 			children = (
 				402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */,
-				402C0B7124B0B0FF00A5A6C9 /* ScanPdfView.swift */,
-				40EF462B24B4ADF700D07A06 /* ConfPdfView.swift */,
 				40FB481624B8AE900045CF13 /* OCRTextView.swift */,
 				406CAA4C24BECC2D00933F5D /* PDFToolBarView.swift */,
 				40DF994924B2F5A2001CEC67 /* AddPdfMainView.swift */,
@@ -785,13 +779,11 @@
 				406E9AFB24B617EE000FB8FD /* CustomHeaderView.swift in Sources */,
 				40FDE48324AB964B006AAFD2 /* ContentView.swift in Sources */,
 				40D1B12124DC4E7D00859F1A /* SecondaryButtonView.swift in Sources */,
-				40EF462C24B4ADF700D07A06 /* ConfPdfView.swift in Sources */,
 				40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */,
 				40FDE49C24AC4EC9006AAFD2 /* Helper+Struct.swift in Sources */,
 				405EFDC624BC9ED90070BE5F /* AppVersionRow.swift in Sources */,
 				4095AC77258BCB9A0008BD71 /* FilterShaderProvider.swift in Sources */,
 				404BFAFE24E7D59200A13230 /* DependecyPageView.swift in Sources */,
-				402C0B7224B0B0FF00A5A6C9 /* ScanPdfView.swift in Sources */,
 				40920EB024B744BE00E2293C /* DrawOnImageView.swift in Sources */,
 				40E387D924E66B0F001E23D2 /* ItunesAppInfoResult.swift in Sources */,
 				4095AC7E258BCB9A0008BD71 /* MediaProcessor.swift in Sources */,

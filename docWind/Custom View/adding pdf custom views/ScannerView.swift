@@ -92,7 +92,8 @@ struct ScannerView: UIViewControllerRepresentable {
                         
             for pageIndex in 0 ..< scan.pageCount {
                 autoreleasepool {
-                    let image = scan.imageOfPage(at: pageIndex).resizeImageUsingVImage(size: CGSize(width: 600, height: 900))!
+                    let image = scan.imageOfPage(at: pageIndex)
+                        .resizeImageUsingVImage(size: CGSize(width: 600, height: 900))!
                     
                     // watermark
                     let item = MediaItem(image: image)

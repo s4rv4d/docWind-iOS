@@ -290,21 +290,20 @@ struct GenListRowView: View {
                     // go url of pdf
                     
                     // now to extract imgs from pdf
-                    if let PDf = PDFDocument(url: URL(string: path)!) {
-                        let pageCount = PDf.pageCount
+                    if let pdf = CGPDFDocument(URL(string: path)! as CFURL) {
+                        let pageCount = pdf.numberOfPages
                         
                         for i in 0 ... pageCount {
                             autoreleasepool {
-                                guard let page = PDf.page(at: i) else { return }
-                                let pageRect = page.bounds(for: .mediaBox)
-                                print(page.annotations)
+                                guard let page = pdf.page(at: i) else { return }
+                                let pageRect = page.getBoxRect(.mediaBox)
                                 let renderer = UIGraphicsImageRenderer(size: pageRect.size)
                                 let img = renderer.image { ctx in
                                     UIColor.white.set()
                                     ctx.fill(pageRect)
                                     ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
                                     ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
-                                    ctx.cgContext.drawPDFPage(page.pageRef!)
+                                    ctx.cgContext.drawPDFPage(page)
                                 }
                                 imgs.append(img)
                             }
