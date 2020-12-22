@@ -325,12 +325,17 @@ struct EditPdfMainView: View {
                     // convert to pdf
                     let pdfDocument = PDFDocument()
                     for page in mainPages {
+                        print(page.jpegData(compressionQuality: 0)!)
+                        print(page.size)
                         let pdfPage = PDFPage(image: page)
                         let index = mainPages.firstIndex(of: page)!
 
                         // store in pdfDocument
                         pdfDocument.insert(pdfPage!, at: index)
                     }
+                    /// pdfdocument adds up alot of extra bytes
+                    #warning("need to fix this")
+                    print(pdfDocument.dataRepresentation())
                     pdfDocument.write(to: URL(fileURLWithPath: path))
                     
                     self.presentationMode.wrappedValue.dismiss()

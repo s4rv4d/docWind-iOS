@@ -62,16 +62,18 @@ struct NormalListRowView: View {
                         .foregroundColor(.secondary)
                         Spacer()
                         if self.itemArray.wrappedItemType == DWPDFFILE {
-                            if URL(fileURLWithPath: url).fileSize != nil {
-                                Text(NSString(format: "%.2f", URL(fileURLWithPath: url).fileSize!) as String + " MB")
+                            if URL(fileURLWithPath: itemArray.wrappedItemUrl).fileSize != nil {
+                                Text(NSString(format: "%.2f", URL(fileURLWithPath: itemArray.wrappedItemUrl).fileSize!) as String + " MB")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             } else {
                                 // TODO: - Need to migrate data model
                                 #warning("need to migrate data model")
-                                Text("N/A")
+                                #warning("change this")
+                                Text("")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
+                                    .debugPrint(url)
                             }
                         }
                     }
@@ -325,13 +327,19 @@ struct NormalListRowView: View {
                                 let img = renderer.image { ctx in
                                     UIColor.white.set()
                                     ctx.fill(pageRect)
+                                    
                                     ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
                                     ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
                                     ctx.cgContext.drawPDFPage(page)
                                 }
+//                                let edittedImage = img.resizeImageUsingVImage(size: CGSize(width: 596, height: 842))!
+//                                let editImageBytes = edittedImage.jpegData(compressionQuality: 0.8)!
+//                                imgs.append(UIImage(data: editImageBytes)!)
+                                print(img.jpegData(compressionQuality: 0))
                                 imgs.append(img)
                             }
                         }
+                        
                         
                         if pageCount == imgs.count {
                             DispatchQueue.main.async {

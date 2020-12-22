@@ -48,10 +48,17 @@ struct ImagePickerView: UIViewControllerRepresentable {
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-                let img = image.resizeImageUsingVImage(size: CGSize(width: 600, height: 900))!
+                let img = image.resizeImageUsingVImage(size: CGSize(width: 596, height: 842))!
+                
+                
+                let bytes = img.jpegData(compressionQuality: 0.8)!
+                
+                print("page dimensions \(image.size.width) by \(image.size.height) - JPEG size \(bytes.count)")
+                
+                let editImage = UIImage(data: bytes)!
                 
                 // watermark
-                let item = MediaItem(image: img)
+                let item = MediaItem(image: editImage)
                                                     
                 let testStr = "Scanned by DocWind"
                 let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15) ]
@@ -65,14 +72,17 @@ struct ImagePickerView: UIViewControllerRepresentable {
                 let mediaProcessor = MediaProcessor()
                 mediaProcessor.processElements(item: item) {  (result, error) in
                     
+                    let editableImage = result.image!
+                    let editBytes = editableImage.jpegData(compressionQuality: 0.8)!
+                    
                     DispatchQueue.main.async {
                         if self.uiImages.wrappedValue.count == 0 {
                             
-                            self.uiImages.wrappedValue = [img]
-                            self.uiImagesWithWatermarks.wrappedValue = [result.image!]
+                            self.uiImages.wrappedValue = [editImage]
+                            self.uiImagesWithWatermarks.wrappedValue = [UIImage(data: editBytes)!]
                         } else {
-                            self.uiImages.wrappedValue.append(img)
-                            self.uiImagesWithWatermarks.wrappedValue.append(result.image!)
+                            self.uiImages.wrappedValue.append(editImage)
+                            self.uiImagesWithWatermarks.wrappedValue.append(UIImage(data: editBytes)!)
                         }
                     }
 

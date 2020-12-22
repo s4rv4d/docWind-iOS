@@ -93,10 +93,16 @@ struct ScannerView: UIViewControllerRepresentable {
             for pageIndex in 0 ..< scan.pageCount {
                 autoreleasepool {
                     let image = scan.imageOfPage(at: pageIndex)
-                        .resizeImageUsingVImage(size: CGSize(width: 600, height: 900))!
+                        .resizeImageUsingVImage(size: CGSize(width: 596, height: 842))!
+                    
+                    let bytes = image.jpegData(compressionQuality: 0.8)!
+                    
+                    print("page dimensions \(image.size.width) by \(image.size.height) - JPEG size \(bytes.count)")
+                    
+                    let editImage = UIImage(data: bytes)!
                     
                     // watermark
-                    let item = MediaItem(image: image)
+                    let item = MediaItem(image: editImage)
                                                         
                     let testStr = "Scanned by DocWind"
                     let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15) ]
@@ -111,10 +117,12 @@ struct ScannerView: UIViewControllerRepresentable {
                     mediaProcessor.processElements(item: item) { [weak self] (result, error) in
                         // to remove warning
                         _ = self
-                        imgsWithWatermarks.append(result.image!)
+                        let editableImage = result.image!
+                        let editBytes = editableImage.jpegData(compressionQuality: 0.8)!
+                        imgsWithWatermarks.append(UIImage(data: editBytes)!)
                     }
                     
-                    imgs.append(image)
+                    imgs.append(editImage)
                 }
             }
             state.wrappedValue.toggle()
