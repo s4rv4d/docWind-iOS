@@ -332,6 +332,19 @@
 			path = "Settings module";
 			sourceTree = "<group>";
 		};
+		404DD59B25A4A014006EB2C0 /* custom camera v1 */ = {
+			isa = PBXGroup;
+			children = (
+				40F841B72591E57E00BE7E00 /* CustomCameraController.swift */,
+				40F841B82591E57E00BE7E00 /* CustomCameraPhotoView.swift */,
+				40F841B92591E57E00BE7E00 /* CustomImageStack.swift */,
+				40F841BA2591E57E00BE7E00 /* CustomCameraRepresentable.swift */,
+				40F841BB2591E57E00BE7E00 /* CaptureButtonView.swift */,
+				40F841BC2591E57E00BE7E00 /* CustomCameraView.swift */,
+			);
+			path = "custom camera v1";
+			sourceTree = "<group>";
+		};
 		405EE7A424B3398E005F525F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -536,12 +549,7 @@
 		40F841B62591E57E00BE7E00 /* Custom camera */ = {
 			isa = PBXGroup;
 			children = (
-				40F841B72591E57E00BE7E00 /* CustomCameraController.swift */,
-				40F841B82591E57E00BE7E00 /* CustomCameraPhotoView.swift */,
-				40F841B92591E57E00BE7E00 /* CustomImageStack.swift */,
-				40F841BA2591E57E00BE7E00 /* CustomCameraRepresentable.swift */,
-				40F841BB2591E57E00BE7E00 /* CaptureButtonView.swift */,
-				40F841BC2591E57E00BE7E00 /* CustomCameraView.swift */,
+				404DD59B25A4A014006EB2C0 /* custom camera v1 */,
 			);
 			path = "Custom camera";
 			sourceTree = "<group>";
@@ -1006,7 +1014,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.11;
+				MARKETING_VERSION = 1.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sarvadShetty.docWind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1030,7 +1038,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.11;
+				MARKETING_VERSION = 1.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sarvadShetty.docWind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
