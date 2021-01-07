@@ -117,11 +117,16 @@ extension PhotoCaptureProcessor: AVCapturePhotoCaptureDelegate {
             }
             return
         } else {
-            guard let _  = photoData else {
-                DispatchQueue.main.async {
-                    self.completionHandler(self)
-                }
-                return
+//            guard let data  = photoData else {
+//                DispatchQueue.main.async {
+//                    print("hhhh")
+//                    self.completionHandler(self)
+//                }
+//                return
+//            }
+            
+            DispatchQueue.main.async {
+                self.completionHandler(self)
             }
             
             // dont need to save in library

@@ -77,7 +77,7 @@ final class CameraModel: ObservableObject {
 
 @available(iOS 14.0, *)
 struct CameraView: View {
-    @ObservedObject var model = CameraModel()
+    @StateObject var model = CameraModel()
     
     @State var currentZoomFactor: CGFloat = 1.0
     
@@ -116,10 +116,10 @@ struct CameraView: View {
             }
         }
         
-//        .onChange(of: model.photo, perform: { _ in
-//            print("image status")
-//            print(model.photo)
-//        })
+        .onChange(of: model.photo, perform: { _ in
+            uiImages.append(model.photo.image!)
+            uiImagesWithWatermarks.append(model.photo.image!)
+        })
     }
     
     var flipCameraButton: some View {
