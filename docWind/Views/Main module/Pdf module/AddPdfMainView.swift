@@ -146,7 +146,13 @@ struct AddPdfMainView: View {
         .sheet(item: $activeSheet, onDismiss: { self.activeSheet = nil }) { item in
             switch item {
             case .scannerView:
-                ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
+//                ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
+                if #available(iOS 14.0, *) {
+                    CameraView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
+                } else {
+                    // Fallback on earlier versions
+                    ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
+                }
             case .pdfView:
                 SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
             case .photoLibrary:
