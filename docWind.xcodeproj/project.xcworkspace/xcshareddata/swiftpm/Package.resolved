@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "ConfettiSwiftUI",
+        "repositoryURL": "https://github.com/simibac/ConfettiSwiftUI",
+        "state": {
+          "branch": null,
+          "revision": "4aac70f5264e59dfed75d6f1c282bb147f101a49",
+          "version": "0.2.1"
+        }
+      },
+      {
         "package": "QGrid",
         "repositoryURL": "https://github.com/Q-Mobile/QGrid",
         "state": {

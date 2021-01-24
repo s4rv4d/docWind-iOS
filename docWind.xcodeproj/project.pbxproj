@@ -20,6 +20,9 @@
 		402C0B6E24B0B0E800A5A6C9 /* DetailedDirecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6D24B0B0E800A5A6C9 /* DetailedDirecView.swift */; };
 		402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */; };
 		402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */; };
+		402D507025BD9BC800D3529F /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402D506F25BD9BC800D3529F /* ConfettiView.swift */; };
+		402D507425BDA68500D3529F /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 402D507325BDA68500D3529F /* ConfettiSwiftUI */; };
+		402D507525BDA68500D3529F /* ConfettiSwiftUI in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 402D507325BDA68500D3529F /* ConfettiSwiftUI */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		40485D8A24B98C9F008A137A /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40485D8924B98C9F008A137A /* TextView.swift */; };
 		40485D8C24B995E7008A137A /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40485D8B24B995E7008A137A /* BlurView.swift */; };
 		404BFAFC24E7C57400A13230 /* Shiny in Frameworks */ = {isa = PBXBuildFile; productRef = 404BFAFB24E7C57400A13230 /* Shiny */; };
@@ -146,6 +149,20 @@
 		40FE66EF24CB21A800B6A064 /* blackRed@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40FE66E324CB21A800B6A064 /* blackRed@3x.png */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		402D507625BDA68600D3529F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				402D507525BDA68500D3529F /* ConfettiSwiftUI in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		4010734C24BAD971002AFDD2 /* AddPdfFileGenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPdfFileGenView.swift; sourceTree = "<group>"; };
 		4012033124BDD1F900167917 /* PinchToZoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchToZoom.swift; sourceTree = "<group>"; };
@@ -160,6 +177,7 @@
 		402C0B6D24B0B0E800A5A6C9 /* DetailedDirecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedDirecView.swift; sourceTree = "<group>"; };
 		402C0B6F24B0B0F200A5A6C9 /* DetailPdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPdfView.swift; sourceTree = "<group>"; };
 		402C0B9824B0C0A200A5A6C9 /* AddDirecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDirecView.swift; sourceTree = "<group>"; };
+		402D506F25BD9BC800D3529F /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
 		40485D8924B98C9F008A137A /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		40485D8B24B995E7008A137A /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		404BFAFD24E7D59200A13230 /* DependecyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependecyPageView.swift; sourceTree = "<group>"; };
@@ -294,6 +312,7 @@
 			files = (
 				40D678ED24E960C80006F74C /* QGrid in Frameworks */,
 				404BFAFC24E7C57400A13230 /* Shiny in Frameworks */,
+				402D507425BDA68500D3529F /* ConfettiSwiftUI in Frameworks */,
 				40CDC4D224AF91F800462277 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -514,6 +533,7 @@
 				40D994A124EA479200DFBAB2 /* QGridCellView.swift */,
 				406B425724EB9DAB00CA149A /* LoadingScreenView.swift */,
 				40F841C52591E7AA00BE7E00 /* CustomBackView.swift */,
+				402D506F25BD9BC800D3529F /* ConfettiView.swift */,
 			);
 			path = "Displaying and navigation";
 			sourceTree = "<group>";
@@ -703,6 +723,7 @@
 				40FDE47424AB964B006AAFD2 /* Sources */,
 				40FDE47524AB964B006AAFD2 /* Frameworks */,
 				40FDE47624AB964B006AAFD2 /* Resources */,
+				402D507625BDA68600D3529F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -712,6 +733,7 @@
 			packageProductDependencies = (
 				404BFAFB24E7C57400A13230 /* Shiny */,
 				40D678EC24E960C80006F74C /* QGrid */,
+				402D507325BDA68500D3529F /* ConfettiSwiftUI */,
 			);
 			productName = docWind;
 			productReference = 40FDE47824AB964B006AAFD2 /* docWind.app */;
@@ -744,6 +766,7 @@
 			packageReferences = (
 				404BFAFA24E7C57400A13230 /* XCRemoteSwiftPackageReference "shiny" */,
 				40D678EB24E960C80006F74C /* XCRemoteSwiftPackageReference "QGrid" */,
+				402D507225BDA68500D3529F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 			);
 			productRefGroup = 40FDE47924AB964B006AAFD2 /* Products */;
 			projectDirPath = "";
@@ -892,6 +915,7 @@
 				409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */,
 				405EE7AA24B33AB1005F525F /* TextRecognizer.swift in Sources */,
 				402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */,
+				402D507025BD9BC800D3529F /* ConfettiView.swift in Sources */,
 				4095AC78258BCB9A0008BD71 /* BlurFilter.swift in Sources */,
 				406CAA4D24BECC2E00933F5D /* PDFToolBarView.swift in Sources */,
 				40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */,
@@ -1040,17 +1064,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = docWind/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sarvadShetty.docWind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1064,17 +1088,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = docWind/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sarvadShetty.docWind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1106,6 +1130,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		402D507225BDA68500D3529F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.1;
+			};
+		};
 		404BFAFA24E7C57400A13230 /* XCRemoteSwiftPackageReference "shiny" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/maustinstar/shiny";
@@ -1125,6 +1157,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		402D507325BDA68500D3529F /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 402D507225BDA68500D3529F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
+		};
 		404BFAFB24E7C57400A13230 /* Shiny */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 404BFAFA24E7C57400A13230 /* XCRemoteSwiftPackageReference "shiny" */;

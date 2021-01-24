@@ -64,18 +64,35 @@ struct DetailedDirecView: View {
                                     Color.clear
                                 } else {
                                     if !self.isOffgrid {
-                                        List {
-                                            Section(header: Text("\(String(self.masterFolder.split(separator: "/").last!)) > \(self.item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
-                                                ForEach(self.items.first!.fileArray.filter {
-                                                    self.searchBar.text.isEmpty ||
-                                                        $0.wrappedItemName.localizedStandardContains(self.searchBar.text)
-                                                }, id: \.self){ item in
-                                                    GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
-                                                }.onDelete(perform: self.deleteRow(at:))
+                                        if #available(iOS 14.0, *) {
+                                            List {
+                                                Section(header: Text("\(String(self.masterFolder.split(separator: "/").last!)) > \(self.item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
+                                                    ForEach(self.items.first!.fileArray.filter {
+                                                        self.searchBar.text.isEmpty ||
+                                                            $0.wrappedItemName.localizedStandardContains(self.searchBar.text)
+                                                    }, id: \.self){ item in
+                                                        GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
+                                                    }.onDelete(perform: self.deleteRow(at:))
+                                                }
                                             }
+                                            .listStyle(InsetGroupedListStyle())
+                                            .add(self.searchBar)
+                                        } else {
+                                            // Fallback on earlier versions
+                                            List {
+                                                Section(header: Text("\(String(self.masterFolder.split(separator: "/").last!)) > \(self.item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
+                                                    ForEach(self.items.first!.fileArray.filter {
+                                                        self.searchBar.text.isEmpty ||
+                                                            $0.wrappedItemName.localizedStandardContains(self.searchBar.text)
+                                                    }, id: \.self){ item in
+                                                        GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
+                                                    }.onDelete(perform: self.deleteRow(at:))
+                                                }
+                                            }
+                                            .listStyle(GroupedListStyle())
+                                            .add(self.searchBar)
+
                                         }
-                                        .listStyle(GroupedListStyle())
-                                        .add(self.searchBar)
                                     } else {
                                         // replace this with grid view layout
                                         GeometryReader { geometry in

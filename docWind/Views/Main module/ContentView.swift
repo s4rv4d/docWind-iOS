@@ -57,7 +57,8 @@ struct ContentView: View {
                                         }.onDelete(perform: self.deleteRow(at:))
                                     }
                                 }
-                                .listStyle(GroupedListStyle())
+                                .listStyle(InsetGroupedListStyle())
+
                             } else {
                                 // replace this with grid view layout
                                 GeometryReader { geometry in
