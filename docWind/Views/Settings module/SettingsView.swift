@@ -28,62 +28,40 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView(.vertical) {
-                // ---- 1
-                VStack {
-                    SubHeadlineView(title: "Subscriptions")
-                    VStack {
-                        SettingsRow(imageName: "star.fill", title: "docWind Plus", imageColor: .yellow, action: dwPlusTapped)
-                    }.settingsBackground()
+            List {
+                Section(header: Text("Subscriptions")) {
+                    SettingsRow(imageName: "star.fill", title: "docWind Plus", imageColor: .yellow, action: dwPlusTapped)
                 }
-                // ---- 1
                 
-                // ---- 2
-                VStack {
-                    SubHeadlineView(title: "Options")
-                    VStack {
-                        if UIApplication.shared.supportsAlternateIcons {
-                            SettingsRow(imageName: "app.gift", title: "Change app icon", imageColor: (AppSettings.shared.bougthNonConsumable) ? .green : .yellow, action: changeAppIcon)
-                            Divider()
-                        }
-                        SettingsRowWithToggleAuth(imageName: "lock.shield", title: "Enable Lock", isOn: $isToggled, color: .red)
-                    }.settingsBackground()
+                Section(header: Text("Options")) {
+                    if UIApplication.shared.supportsAlternateIcons {
+                        SettingsRow(imageName: "app.gift", title: "Change app icon", imageColor: (AppSettings.shared.bougthNonConsumable) ? .green : .yellow, action: changeAppIcon)
+                    }
+                    SettingsRowWithToggleAuth(imageName: "lock.shield", title: "Enable Lock", isOn: $isToggled, color: .red)
                 }
-                // ---- 2
                 
-                // ---- 3
-                VStack {
-                    SubHeadlineView(title: "Support")
-                    VStack {
-                        SettingsRow(imageName: "square.and.pencil", title: "Write a review", imageColor: .blue, action: writeAReviewTapped)
-                        Divider()
-                        SettingsRow(imageName: "wand.and.stars.inverse", title: "Feature request", imageColor: .pink, action: featureRequestTapped)
-                        Divider()
-                        SettingsRow(imageName: "ant", title: "Report a bug", imageColor: .red, action: reportABugTapped)
-                    }.settingsBackground()
+                Section(header: Text("Support")) {
+                    SettingsRow(imageName: "square.and.pencil", title: "Write a review", imageColor: .blue, action: writeAReviewTapped)
+                    SettingsRow(imageName: "wand.and.stars.inverse", title: "Feature request", imageColor: .pink, action: featureRequestTapped)
+                    SettingsRow(imageName: "ant", title: "Report a bug", imageColor: .red, action: reportABugTapped)
                 }
-                // ---- 3
                 
-                // ---- 4
-                VStack {
-                    SubHeadlineView(title: "Other")
-                    VStack {
-                        AppVersionRow(imageName: "info.circle", title: "App version", version: appVersion, color: .orange)
-                        Divider()
-                        SettingsRow(imageName: "square.and.arrow.up", title: "Share app?", imageColor: .blue, action: shareAppTapped)
-                        Divider()
-                        SettingsRow(imageName: "exclamationmark.circle", title: "About developer", imageColor: .purple, action: aboutDevTapped)
-                        Divider()
-                        SettingsRow(imageName: "sparkles", title: "Dependencies used", imageColor: .green, action: dependencyTapped)
-                    }.settingsBackground()
-                }.padding(.bottom)
-                // ---- 4
-                VStack {
-                    Spacer()
-                    Text("Made with ❤️ by Sarvad👨🏾‍💻")
-                    .padding()
+                Section(header: Text("Others")
+                        , footer:
+                            HStack {
+                                Spacer()
+                                Text("Made with ❤️ by Sarvad👨🏾‍💻")
+                                .padding()
+                                Spacer()
+                            }
+                ) {
+                    AppVersionRow(imageName: "info.circle", title: "App version", version: appVersion, color: .orange)
+                    SettingsRow(imageName: "square.and.arrow.up", title: "Share app?", imageColor: .blue, action: shareAppTapped)
+                    SettingsRow(imageName: "exclamationmark.circle", title: "About developer", imageColor: .purple, action: aboutDevTapped)
+                    SettingsRow(imageName: "sparkles", title: "Dependencies used", imageColor: .green, action: dependencyTapped)
                 }
             }
+            .listStyle(InsetGroupedListStyle())
             .navigationBarTitle(Text("Settings"))
             .navigationBarItems(leading: Button(action:{
                 FeedbackManager.mediumFeedback()

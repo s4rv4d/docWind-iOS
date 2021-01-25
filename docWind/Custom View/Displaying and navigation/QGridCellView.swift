@@ -41,7 +41,7 @@ struct QGridCellView: View {
                 }
             }
         }()) {
-                VStack {
+            VStack {
                 Image(systemName: (self.item.wrappedItemType == DWPDFFILE) ? "doc.fill" : "folder.fill")
                     .font(.largeTitle)
                     .padding([.horizontal, .top], 7)
@@ -53,60 +53,61 @@ struct QGridCellView: View {
                         .padding(.top)
                 }
                 .font(.caption)
-                
-            }.buttonStyle(PlainButtonStyle())
-                .contextMenu {
-                if self.item.wrappedItemType == DWPDFFILE {
-                    Button(action: {
-                        DispatchQueue.main.async {
-                            self.selectedItem = self.item
-                            self.uiImages = self.getImages()
-                            self.activeSheet = .editSheet(images: self.uiImages, url: self.url, item: self.item)
-                        }
-                    }) {
-                        HStack {
-                            Image(systemName: "pencil")
-                            Text("Rename")
-                        }
+            
+            }
+            .buttonStyle(PlainButtonStyle())
+            .contextMenu {
+            if self.item.wrappedItemType == DWPDFFILE {
+                Button(action: {
+                    DispatchQueue.main.async {
+                        self.selectedItem = self.item
+                        self.uiImages = self.getImages()
+                        self.activeSheet = .editSheet(images: self.uiImages, url: self.url, item: self.item)
                     }
-                    
-                    Button(action: {
-                        DispatchQueue.main.async {
-                            self.selectedItem = self.item
-                            self.getUrl()
-                        }
-                    }) {
-                        HStack {
-                            Image(systemName: "square.and.arrow.up")
-                            Text("Share")
-                        }.foregroundColor(.yellow)
-                    }
-                    
-                    Button(action: {
-                        DispatchQueue.main.async {
-                            self.selectedItem = self.item
-                            self.uiImages = self.getImages()
-                            self.activeSheet = .editSheet(images: self.uiImages, url: self.url, item: self.item)
-                        }
-                    }) {
-                        HStack {
-                            Image(systemName: "pencil.circle")
-                            Text("Edit")
-                        }
+                }) {
+                    HStack {
+                        Image(systemName: "pencil")
+                        Text("Rename")
                     }
                 }
                 
                 Button(action: {
-                    self.isFile = self.item.wrappedItemType == DWPDFFILE ? true : false
-                    self.selectedItem = self.item
-                    self.deleteObject()
+                    DispatchQueue.main.async {
+                        self.selectedItem = self.item
+                        self.getUrl()
+                    }
                 }) {
                     HStack {
-                        Image(systemName: "trash")
-                        Text("Delete")
-                    }.foregroundColor(.red)
+                        Image(systemName: "square.and.arrow.up")
+                        Text("Share")
+                    }.foregroundColor(.yellow)
+                }
+                
+                Button(action: {
+                    DispatchQueue.main.async {
+                        self.selectedItem = self.item
+                        self.uiImages = self.getImages()
+                        self.activeSheet = .editSheet(images: self.uiImages, url: self.url, item: self.item)
+                    }
+                }) {
+                    HStack {
+                        Image(systemName: "pencil.circle")
+                        Text("Edit")
+                    }
                 }
             }
+            
+            Button(action: {
+                self.isFile = self.item.wrappedItemType == DWPDFFILE ? true : false
+                self.selectedItem = self.item
+                self.deleteObject()
+            }) {
+                HStack {
+                    Image(systemName: "trash")
+                    Text("Delete")
+                }.foregroundColor(.red)
+            }
+        }
         }
         
         .alert(isPresented: $showAlert) {
@@ -251,7 +252,7 @@ struct QGridCellView: View {
         }
     }
     
-    func getImages() -> [UIImage]{
+    func getImages() -> [UIImage] {
         var imgs = [UIImage]()
                 
         if selectedItem != nil {

@@ -95,7 +95,6 @@
 		40D170AF24ADA95700F51F77 /* CustomNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170AE24ADA95700F51F77 /* CustomNavBarView.swift */; };
 		40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D170B124ADA9DE00F51F77 /* DocWindFManager.swift */; };
 		40D1B12124DC4E7D00859F1A /* SecondaryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D1B12024DC4E7D00859F1A /* SecondaryButtonView.swift */; };
-		40D678ED24E960C80006F74C /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 40D678EC24E960C80006F74C /* QGrid */; };
 		40D994A224EA479200DFBAB2 /* QGridCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D994A124EA479200DFBAB2 /* QGridCellView.swift */; };
 		40DD4F7324C02CDC00D37EFA /* SignaturePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DD4F7224C02CDC00D37EFA /* SignaturePageView.swift */; };
 		40DD4F7524C02F3700D37EFA /* ImageAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DD4F7424C02F3700D37EFA /* ImageAnnotation.swift */; };
@@ -310,7 +309,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				40D678ED24E960C80006F74C /* QGrid in Frameworks */,
 				404BFAFC24E7C57400A13230 /* Shiny in Frameworks */,
 				402D507425BDA68500D3529F /* ConfettiSwiftUI in Frameworks */,
 				40CDC4D224AF91F800462277 /* CloudKit.framework in Frameworks */,
@@ -732,7 +730,6 @@
 			name = docWind;
 			packageProductDependencies = (
 				404BFAFB24E7C57400A13230 /* Shiny */,
-				40D678EC24E960C80006F74C /* QGrid */,
 				402D507325BDA68500D3529F /* ConfettiSwiftUI */,
 			);
 			productName = docWind;
@@ -765,7 +762,6 @@
 			mainGroup = 40FDE46F24AB964B006AAFD2;
 			packageReferences = (
 				404BFAFA24E7C57400A13230 /* XCRemoteSwiftPackageReference "shiny" */,
-				40D678EB24E960C80006F74C /* XCRemoteSwiftPackageReference "QGrid" */,
 				402D507225BDA68500D3529F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 			);
 			productRefGroup = 40FDE47924AB964B006AAFD2 /* Products */;
@@ -1146,14 +1142,6 @@
 				minimumVersion = 0.0.1;
 			};
 		};
-		40D678EB24E960C80006F74C /* XCRemoteSwiftPackageReference "QGrid" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Q-Mobile/QGrid";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.4;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1166,11 +1154,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 404BFAFA24E7C57400A13230 /* XCRemoteSwiftPackageReference "shiny" */;
 			productName = Shiny;
-		};
-		40D678EC24E960C80006F74C /* QGrid */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 40D678EB24E960C80006F74C /* XCRemoteSwiftPackageReference "QGrid" */;
-			productName = QGrid;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -8,72 +8,86 @@
 
 import SwiftUI
 import Shiny
+import ConfettiSwiftUI
 
 struct DependecyPageView: View {
     
     // MARK: - Environment object
     @Environment(\.presentationMode) var presentationMode
     
+    // MARK: - @State variables
+    @State private var counter = 0
+    
     var body: some View {
         NavigationView {
-            VStack {
-                 // --> 1
-                VStack(alignment: .leading, spacing: 5) {
-                    HStack {
-                        Text("Shiny")
-                            .font(.largeTitle)
-                            .fontWeight(.semibold)
-                            .shiny()
-                        Spacer()
-                        Image(systemName: "exclamationmark.circle")
-                            .foregroundColor(.blue)
+            ZStack {
+                VStack {
+                     // --> 1
+                    VStack(alignment: .leading, spacing: 5) {
+                        HStack {
+                            Text("Shiny")
+                                .font(.largeTitle)
+                                .fontWeight(.semibold)
+                                .shiny()
+                            Spacer()
+                            Image(systemName: "exclamationmark.circle")
+                                .foregroundColor(.blue)
+                                .onTapGesture {
+                                    FeedbackManager.mediumFeedback()
+                                    SettingsHelper.openUrl(url: "https://github.com/maustinstar/shiny")
+                                }
+                        }
+                        .padding([.bottom])
+                        Text("by Michal Vergas")
+                        Text("https://github.com/maustinstar/shiny")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        Text("MIT License")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.bottom)
+                        
                     }
-                    .padding([.bottom])
-                    Text("by Michal Vergas")
-                    Text("https://github.com/maustinstar/shiny")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    Text("MIT License")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .padding(.bottom)
-                    
-                }.onTapGesture {
-                    FeedbackManager.mediumFeedback()
-                    SettingsHelper.openUrl(url: "https://github.com/maustinstar/shiny")
-                }
-                .settingsBackground()
-                // --> 1
-                // --> 2
-                VStack(alignment: .leading, spacing: 5) {
-                    HStack {
-                        Text("QGrid")
-                            .font(.largeTitle)
-                            .fontWeight(.semibold)
-                        Spacer()
-                        Image(systemName: "exclamationmark.circle")
-                            .foregroundColor(.blue)
+                    .settingsBackground()
+                    // --> 1
+                    // --> 2
+                    VStack(alignment: .leading, spacing: 5) {
+                        HStack {
+                            Text("ConfettiSwiftUI")
+                                .font(.largeTitle)
+                                .fontWeight(.semibold)
+                            Spacer()
+                            Image(systemName: "exclamationmark.circle")
+                                .foregroundColor(.blue)
+                                .onTapGesture {
+                                    print("hi")
+                                    FeedbackManager.mediumFeedback()
+                                    SettingsHelper.openUrl(url: "https://github.com/simibac/ConfettiSwiftUI")
+                                }
+
+                        }
+                        .padding([.bottom])
+                        Text("by Simon Bachmann")
+                        Text("https://github.com/simibac/ConfettiSwiftUI")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        Text("MIT License")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.bottom)
+                        
                     }
-                    .padding([.bottom])
-                    Text("by Karol Kulesza")
-                    Text("https://github.com/Q-Mobile/QGrid")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    Text("MIT License")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .padding(.bottom)
+                    .onTapGesture {
+                        counter += 1
+                    }
+                    .settingsBackground()
+                    // --> 2
                     
-                }.onTapGesture {
-                    print("hi")
-                    FeedbackManager.mediumFeedback()
-                    SettingsHelper.openUrl(url: "https://github.com/Q-Mobile/QGrid")
+                    Spacer()
                 }
-                .settingsBackground()
-                // --> 2
-                
-                Spacer()
-            }.padding(.top)
+                    .padding(.top)
+                ConfettiCannon(counter: $counter)
+            }
             
         .navigationBarTitle(Text("Dependecies used"))
         .navigationBarItems(leading: Button(action:{

@@ -14,6 +14,8 @@ struct SubcriptionPageView: View {
     // MARK: - View Modifiers
     @State private var showAlert = false
     @State private var alertMessage = ""
+    @State private var startConfetti = false
+    @State private var counter = 0
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -52,8 +54,12 @@ struct SubcriptionPageView: View {
                         + Text(" user 🤩, you have access to:")
                             .font(.title)
                             .fontWeight(.regular)
-                    }.padding()
+                    }
+                        .padding()
                         .multilineTextAlignment(.center)
+                        .onAppear {
+                            self.counter += 1
+                        }
                 } else {
                     HStack{
                         Text("The docWind" )
@@ -129,6 +135,7 @@ struct SubcriptionPageView: View {
                                     self.showAlert.toggle()
                                 } else {
                                     IAPService.shared.purchaseProduct(product: .nonConsumable)
+                                    self.counter += 1
                                 }
                             }
                         }).padding()
@@ -153,8 +160,9 @@ struct SubcriptionPageView: View {
                     }
                             
                 }
+                ConfettiCannon(counter: $counter, confettis: [.text("💵"), .text("💶"), .text("💷"), .text("💴")], confettiSize: 30)
             }
-            
+
             .alert(isPresented: $showAlert) {
                 Alert(title: Text("Notice"), message: Text(self.alertMessage), dismissButton: .default(Text("Dismiss"), action: {
                     self.presentationMode.wrappedValue.dismiss()

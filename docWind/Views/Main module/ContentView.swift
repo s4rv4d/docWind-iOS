@@ -8,7 +8,6 @@
 
 import SwiftUI
 import CoreData
-import QGrid
 
 struct ContentView: View {
     
@@ -60,12 +59,13 @@ struct ContentView: View {
                                 .listStyle(InsetGroupedListStyle())
 
                             } else {
-                                // replace this with grid view layout
-                                GeometryReader { geometry in
-                                    ZStack {
-                                        self.gridView(geometry, items: self.items.first!.fileArray.filter { self.searchString.isEmpty || $0.wrappedItemName.localizedStandardContains(self.searchString)})
+                                LazyVGrid(columns: [GridItem(.adaptive(minimum: 40, maximum: 50), spacing: 16)], spacing: 8) {
+                                    ForEach(self.items.first!.fileArray.filter { self.searchString.isEmpty || $0.wrappedItemName.localizedStandardContains(self.searchString)}, id: \.self) { file in
+                                            QGridCellView(item: file, masterFolder: "\(DWFMAppSettings.shared.fileURL())")
+                                                .environment(\.managedObjectContext, self.context)
                                     }
-                                }
+                                }.padding(.horizontal)
+                                Spacer()
                             }
                         }
                     } else {
@@ -279,19 +279,6 @@ struct ContentView: View {
                 self.alertMessage = "Couldnt delete file"
                 self.showAlert.toggle()
             }
-        }
-    }
-    
-    private func gridView(_ geometry: GeometryProxy, items: [ItemModel]) -> some View {
-        QGrid(items,
-              columns: 4,
-              columnsInLandscape: 0,
-              vSpacing: 8,
-              hSpacing: 16,
-              vPadding: 0,
-              hPadding: 10) {
-                QGridCellView(item: $0, masterFolder: "\(DWFMAppSettings.shared.fileURL())")
-                    .environment(\.managedObjectContext, self.context)
         }
     }
 }
