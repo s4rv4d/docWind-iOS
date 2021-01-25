@@ -465,6 +465,8 @@ extension DocWindFManager {
         if direcName == nil {
             
             print(resourceURL.appendingPathComponent(fileName).path)
+            let contents = try! FileManager.default.contentsOfDirectory(at: resourceURL, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+            print(contents)
             
             if FileManager.default.fileExists(atPath: resourceURL.appendingPathComponent(fileName).path) {
                 print("here")

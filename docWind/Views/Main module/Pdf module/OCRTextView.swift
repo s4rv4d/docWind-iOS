@@ -25,12 +25,10 @@ struct OCRTextView: View {
     var body: some View {
         ZStack(alignment: .top) {
             VStack {
-                
                 HStack {
                     Button(action: {
                         FeedbackManager.mediumFeedback()
                         self.presentationMode.wrappedValue.dismiss()
-                        
                            }) {
                                Image(systemName: "multiply.circle.fill")
                                .foregroundColor(.blue)
@@ -71,7 +69,7 @@ struct OCRTextView: View {
                         }
                         
                         if self.matches.count == 0 {
-                            Text("Could not detect any addresses :(")
+                            Text("Could not detect any addresses :(, try again.")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                             .padding()
@@ -109,25 +107,27 @@ struct OCRTextView: View {
                                         }).settingsBackground()
                                 }
                             }
-//                            .settingsBackground()
                         }
                         Spacer()
                         Rectangle()
                             .foregroundColor(Color(.systemGray6))
-                    }.onAppear {
-                        self.detectedData(self.recognizedText)
                     }
                 }
             }
-            
             .keyboardSensible(self.$offsetVal)
             .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
             
-        }.background(BlurView().background(Color.white.opacity(0.6)))
+        }
+        .background(BlurView().background(Color.white.opacity(0.6)))
         .onAppear {
             let txtRecog = TextRecognizer(recognizedText: self.$recognizedText)
             let images = self.imageToScan.map { $0.cgImage! }
             txtRecog.recognizeText(from: images)
+        }
+        .onChange(of: recognizedText) { (value) in
+            if value != "Scanning" {
+                self.detectedData(self.recognizedText)
+            }
         }
     }
     

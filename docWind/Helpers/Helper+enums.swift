@@ -38,7 +38,7 @@ extension ActiveSheetForDetails: Identifiable {
 
 // Enum for activeSheetvar in PDFDetailView
 enum PDFDetailActiveView {
-    case shareSheet, toolBox, signature, ocrPage, editPage, subView
+    case shareSheet, toolBox, signature, ocrPage(images: [UIImage]), editPage, subView
 }
 
 extension PDFDetailActiveView: Identifiable {

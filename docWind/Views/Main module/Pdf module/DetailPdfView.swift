@@ -151,8 +151,8 @@ struct DetailPdfView: View, Equatable {
                                , imageThere: $image)
             case .signature:
                 SignaturePageView(image: self.$image)
-            case .ocrPage:
-                OCRTextView(recognizedText: "Scanning", imageToScan: self.images)
+            case .ocrPage(let images):
+                OCRTextView(recognizedText: "Scanning", imageToScan: images)
                     .onAppear {
                         self.isLoading.toggle()
                     }
@@ -280,7 +280,7 @@ struct DetailPdfView: View, Equatable {
                     }
                 }
                 self.images = imgs
-                self.activeContext = .ocrPage
+                self.activeContext = .ocrPage(images: imgs)
 //                self.isShown.toggle()
             }
         }
