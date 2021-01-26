@@ -10,7 +10,9 @@ import SwiftUI
 
 struct HeaderView: View {
     
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
     @Environment(\.presentationMode) var presentatioMode
+    
     let buttonTitle: String
     let title: String
     let secondButton: String
@@ -27,7 +29,7 @@ struct HeaderView: View {
                 FeedbackManager.mediumFeedback()
                 self.presentatioMode.wrappedValue.dismiss() }) {
                 Text(buttonTitle)
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color(tintColor))
             }
             Spacer()
             Text(title)
@@ -36,7 +38,7 @@ struct HeaderView: View {
                 FeedbackManager.mediumFeedback()
                 self.presentatioMode.wrappedValue.dismiss() }) {
                 Text(secondButton)
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color(tintColor))
             }
         }.padding([.leading, .top, .trailing])
     }

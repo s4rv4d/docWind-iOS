@@ -27,7 +27,7 @@ struct ContentView: View {
     @State private var showAlert = false
     @State private var isOffgrid = false
     
-    @AppStorage("mainAppColor") var tintColor: String = "blue"
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
     
     // MARK: - @Environment variables
     @Environment(\.managedObjectContext) var context
@@ -89,13 +89,13 @@ struct ContentView: View {
                             .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
                         }
                         .padding(24)
-                        .background(Color.blue)
+                        .background(Color(tintColor))
                         .mask(Circle())
                         .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
                         .zIndex(10)
                             .overlay(
                                 Circle()
-                                    .stroke(Color.blue, lineWidth: 1)
+                                    .stroke(Color(tintColor), lineWidth: 1)
                                     .scaleEffect(self.animationAmount)
                                     .opacity(Double(2 - self.animationAmount))
                                     .animation(
@@ -120,14 +120,13 @@ struct ContentView: View {
                 Button(action: self.settingsTapped) {
                     Image(systemName: "gear")
                     .font(.system(size: 20))
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color(tintColor))
                 }, trailing: Button(action: {
                     FeedbackManager.mediumFeedback()
-                    self.isOffgrid.toggle()
                 }){
                     Image(systemName: (self.isOffgrid == false ? "rectangle.3.offgrid" : "rectangle.grid.1x2"))
                         .font(.system(size: 20))
-                        .foregroundColor(.blue)
+                        .foregroundColor(Color(tintColor))
             })
         }
         .navigationViewStyle(StackNavigationViewStyle())

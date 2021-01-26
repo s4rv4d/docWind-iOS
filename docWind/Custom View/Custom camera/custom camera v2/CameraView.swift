@@ -77,6 +77,7 @@ final class CameraModel: ObservableObject {
 
 @available(iOS 14.0, *)
 struct CameraView: View {
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
     @StateObject var model = CameraModel()
     
     @State var currentZoomFactor: CGFloat = 1.0
@@ -89,7 +90,7 @@ struct CameraView: View {
             model.capturePhoto()
         }, label: {
             Circle()
-                .foregroundColor(.blue)
+                .foregroundColor(Color(tintColor))
                 .frame(width: 80, height: 80, alignment: .center)
                 .overlay(
                     Circle()

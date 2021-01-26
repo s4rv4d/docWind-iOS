@@ -11,16 +11,26 @@ import SwiftUI
 struct AppIconView: View {
     
     // MARK: - Properties
-    @State var appIcons = ["blackBlue", "blackGreen", "blackRed"]
-    @State var appIconName = ["Black and Blue", "Black and Green", "Black and Red"]
-    @State var selected = UIApplication.shared.alternateIconName
+    @State private var color: String = ""
+    @State private var appIcons = ["blackBlue", "blackGreen", "blackRed"]
+    @State private var appIconName = ["Black and Blue", "Black and Green", "Black and Red"]
+    @State private var selected = UIApplication.shared.alternateIconName
+    
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
+    
+    let colorColumns = [GridItem(.adaptive(minimum: 44))]
+    let colors = ["Pink", "Purple", "Red", "Gold", "Orange", "Green", "Teal", "Light Blue", "Dark Blue", "Midnight", "Dark Gray", "Gray"]
+    
+    init() {
+        self._color = State(wrappedValue: self.tintColor)
+    }
     
     var body: some View {
         VStack {
-            HeaderView(buttonTitle: "Cancel", title: "App Icons")
+            HeaderView(buttonTitle: "Cancel", title: "App UI")
             Divider()
             List {
-                Section(footer: Text("More to come soon :)")) {
+                Section(header: Text("App Icons"), footer: Text("More to come soon :)")) {
                     ForEach(appIcons.indices, id: \.self) { i in
                         Button(action: {
                             self.selected = self.appIcons[i]
@@ -57,7 +67,7 @@ struct AppIconView: View {
                         }
                     }) {
                         HStack{
-                            Text("Reset to default")
+                            Text("Default icon")
                             Spacer()
                             if self.selected == nil {
                                 Image(systemName: "checkmark.seal.fill").foregroundColor(.green)
@@ -65,7 +75,37 @@ struct AppIconView: View {
                         }
                     }
                 }
-            }.listStyle(GroupedListStyle())
+                Section(header: Text("App Tint")) {
+                    LazyVGrid(columns: colorColumns) {
+                        ForEach(colors, id: \.self) { item in
+                            ZStack {
+                                Color(item)
+                                    /// aspect ratio of 1 turns it into square
+                                    .aspectRatio(1, contentMode: .fit)
+                                    .cornerRadius(6)
+                                if item == color {
+                                    Image(systemName: "checkmark.circle")
+                                        .foregroundColor(.white)
+                                        .font(.largeTitle)
+                                }
+                            }
+                            .onTapGesture {
+                                self.color = item
+                                self.tintColor = item
+                            }
+                            .accessibilityElement(children: .ignore)
+                            .accessibilityAddTraits(
+                                item == color
+                                    ? [.isButton, .isSelected]
+                                    : .isButton
+                            )
+                            .accessibilityLabel(LocalizedStringKey(item))
+                        }
+                    }
+                }
+                .padding(.vertical)
+            }
+            .listStyle(InsetGroupedListStyle())
         }
     }
     

@@ -22,6 +22,8 @@ struct AddDirecView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.managedObjectContext) var context
     
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
+    
     // MARK: - Properties
     var iconColors: [Color] = [.blue, .red, .green, .yellow, .pink, .primary, .gray, .orange, .purple]
     var iconNameString: [Color: String] = [.blue:"blue", .red:"red", .green:"green", .yellow:"yellow", .pink:"pink", .primary : "black", .gray: "gray", .orange: "orange", .purple: "purple"]
@@ -67,8 +69,10 @@ struct AddDirecView: View {
                 self.presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Cancel")
+                    .foregroundColor(Color(tintColor))
                 }, trailing: Button(action:  saveTapped){
                     Text("Save")
+                        .foregroundColor(Color(tintColor))
             })
         }.alert(isPresented: $showAlert) {
             Alert(title: Text("Notice"), message: Text(alertMessage), primaryButton: .cancel(), secondaryButton: .default(Text("Retry")))

@@ -12,6 +12,8 @@ struct CustomHeaderView: View {
     
     // MARK: - @Environment variable
     @Environment(\.presentationMode) var presentationMode
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
+    
     let headerTitle: String
     let saveAction: () -> Void
     
@@ -28,7 +30,7 @@ struct CustomHeaderView: View {
                 self.presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Dismiss")
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color(tintColor))
             }
             Spacer()
             Text(headerTitle)
@@ -36,7 +38,7 @@ struct CustomHeaderView: View {
             Spacer()
             Button(action: saveAction) {
                 Text("Save")
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color(tintColor))
             }
         }.padding([.top, .horizontal])
 //            .background(Color.secondary)

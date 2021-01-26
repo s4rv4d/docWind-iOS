@@ -23,6 +23,8 @@ struct SettingsView: View {
     // MARK: - Environment object
     @Environment(\.presentationMode) var presentationMode
     
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
+    
     // MARK: - Properties
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     
@@ -35,7 +37,7 @@ struct SettingsView: View {
                 
                 Section(header: Text("Options")) {
                     if UIApplication.shared.supportsAlternateIcons {
-                        SettingsRow(imageName: "app.gift", title: "Change app icon", imageColor: (AppSettings.shared.bougthNonConsumable) ? .green : .yellow, action: changeAppIcon)
+                        SettingsRow(imageName: "app.gift", title: "Change app icon and tint", imageColor: (AppSettings.shared.bougthNonConsumable) ? .green : .yellow, action: changeAppIcon)
                     }
                     SettingsRowWithToggleAuth(imageName: "lock.shield", title: "Enable Lock", isOn: $isToggled, color: .red)
                 }
@@ -68,7 +70,7 @@ struct SettingsView: View {
                 self.presentationMode.wrappedValue.dismiss()
             }){
                 Image(systemName: "multiply.circle.fill")
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color(tintColor))
                     .font(.system(size: 25))
             })
                 

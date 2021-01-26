@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct NewStarterView: View {
+    
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
+    
     var body: some View {
         VStack(alignment: .leading) {
             Spacer()
@@ -19,7 +22,7 @@ struct NewStarterView: View {
                     .padding([.top, .leading, .trailing])
                 VStack {
                     Text("👆 on the ") +
-                    Text("PLUS").fontWeight(.bold).foregroundColor(.blue)
+                    Text("PLUS").fontWeight(.bold).foregroundColor(Color(tintColor))
                     + Text(" button below to get started 😄")
                 }.padding()
             }.settingsBackground()

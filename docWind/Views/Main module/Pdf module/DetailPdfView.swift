@@ -13,6 +13,7 @@ struct DetailPdfView: View, Equatable {
     
     // MARK: - @Environment buttons
     @Environment(\.presentationMode) var presentationMode
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
     
     // MARK: - @State variables
     var item: ItemModel
@@ -88,12 +89,12 @@ struct DetailPdfView: View, Equatable {
                             VStack{
                                 Image(systemName: "text.quote")
                                     .font(.system(size: 20))
-                                    .foregroundColor((AppSettings.shared.bougthNonConsumable) ? .blue : .yellow)
+                                    .foregroundColor((AppSettings.shared.bougthNonConsumable) ? Color(tintColor) : .yellow)
                                     .padding(.top, 5)
                                     .padding([.leading, .trailing])
                                 Text("OCR")
                                     .font(.caption)
-                                    .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
+                                    .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? Color(tintColor) : .yellow )
                                     .padding(.bottom, 2)
                             }
                             .onTapGesture {
@@ -114,11 +115,11 @@ struct DetailPdfView: View, Equatable {
                     VStack {
                         Image(systemName: "scribble")
                         .font(.system(size: 20))
-                        .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
+                        .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? Color(tintColor) : .yellow )
                             .padding(.top, 5)
                             .padding([.leading, .trailing])
                         Text("Draw").font(.caption)
-                            .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? .blue : .yellow )
+                            .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? Color(tintColor) : .yellow )
                             .padding(.bottom, 2)
                     }
                         .onTapGesture {
@@ -168,7 +169,9 @@ struct DetailPdfView: View, Equatable {
         }
         .navigationBarTitle(Text(item.wrappedItemName), displayMode: .inline)
         .navigationBarItems(trailing: Button(action: sharePdf) {
-            Image(systemName: "square.and.arrow.up").font(.system(size: 20))
+            Image(systemName: "square.and.arrow.up")
+                .font(.system(size: 20))
+                .foregroundColor(Color(tintColor))
         })
         .toast(isShowing: $canEdit, text: Text("Edit: " + ((self.canEdit == true) ? "Enabled" : "Disabled")))
 

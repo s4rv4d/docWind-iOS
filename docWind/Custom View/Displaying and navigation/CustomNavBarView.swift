@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct CustomNavBarView: View {
+    #warning("test this")
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
     
     // MARK: - Private properties
     private let action: () -> Void
@@ -31,7 +33,7 @@ struct CustomNavBarView: View {
             + Text("Wind")
                .font(.largeTitle)
                .fontWeight(.bold)
-               .foregroundColor(.blue)
+               .foregroundColor(Color(tintColor))
             Spacer()
             Button(action: action) {
                 HStack {

@@ -18,6 +18,7 @@ struct SubcriptionPageView: View {
     @State private var counter = 0
     
     @Environment(\.presentationMode) var presentationMode
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
     
     var body: some View {
         ScrollView(.vertical) {
@@ -35,7 +36,7 @@ struct SubcriptionPageView: View {
                             + Text("Wind")
                                .font(.largeTitle)
                                .fontWeight(.bold)
-                               .foregroundColor(.blue)
+                               .foregroundColor(Color(tintColor))
                             
                             Image(systemName: "plus")
                                 .foregroundColor(.yellow)

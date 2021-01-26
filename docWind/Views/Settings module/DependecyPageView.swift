@@ -14,6 +14,7 @@ struct DependecyPageView: View {
     
     // MARK: - Environment object
     @Environment(\.presentationMode) var presentationMode
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
     
     // MARK: - @State variables
     @State private var counter = 0
@@ -31,7 +32,7 @@ struct DependecyPageView: View {
                                 .shiny()
                             Spacer()
                             Image(systemName: "exclamationmark.circle")
-                                .foregroundColor(.blue)
+                                .foregroundColor(Color(tintColor))
                                 .onTapGesture {
                                     FeedbackManager.mediumFeedback()
                                     SettingsHelper.openUrl(url: "https://github.com/maustinstar/shiny")
@@ -58,7 +59,7 @@ struct DependecyPageView: View {
                                 .fontWeight(.semibold)
                             Spacer()
                             Image(systemName: "exclamationmark.circle")
-                                .foregroundColor(.blue)
+                                .foregroundColor(Color(tintColor))
                                 .onTapGesture {
                                     print("hi")
                                     FeedbackManager.mediumFeedback()
@@ -95,7 +96,7 @@ struct DependecyPageView: View {
             self.presentationMode.wrappedValue.dismiss()
         }){
             Image(systemName: "multiply.circle.fill")
-                .foregroundColor(.blue)
+                .foregroundColor(Color(tintColor))
                 .font(.system(size: 25))
         })
         }

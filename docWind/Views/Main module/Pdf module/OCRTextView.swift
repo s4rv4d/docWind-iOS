@@ -22,6 +22,8 @@ struct OCRTextView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
+    
     var body: some View {
         ZStack(alignment: .top) {
             VStack {
@@ -31,7 +33,7 @@ struct OCRTextView: View {
                         self.presentationMode.wrappedValue.dismiss()
                            }) {
                                Image(systemName: "multiply.circle.fill")
-                               .foregroundColor(.blue)
+                               .foregroundColor(Color(tintColor))
                                .font(.system(size: 30))
                            }
                            .padding()
@@ -46,7 +48,7 @@ struct OCRTextView: View {
                                Image(systemName: "textformat")
                                    .imageScale(.large)
                                    .frame(width: 40, height: 40)
-                                   .foregroundColor(.blue)
+                                   .foregroundColor(Color(tintColor))
                     
                            }
                            .padding()
@@ -77,7 +79,7 @@ struct OCRTextView: View {
                             VStack {
                                 ForEach(self.matches, id: \.text) { data in
                                     
-                                    SettingsRowForOCR(imageName: "circle.fill", title: "\(data.text)", imageColor: .blue, result: data, action: {
+                                    SettingsRowForOCR(imageName: "circle.fill", title: "\(data.text)", imageColor: Color(tintColor), result: data, action: {
                                         FeedbackManager.mediumFeedback()
                                         var str = ""
                                         

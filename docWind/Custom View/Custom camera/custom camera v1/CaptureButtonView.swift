@@ -12,11 +12,12 @@ struct CaptureButtonView: View {
     
     // MARK: - @State view modifiers
     @State private var animationAmount: CGFloat = 1
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
     
     var body: some View {
         Image(systemName: "camera").font(.body)
             .padding(25)
-            .background(Color.blue)
+            .background(Color(tintColor))
             .foregroundColor(.white)
             .clipShape(Circle())
             .overlay(

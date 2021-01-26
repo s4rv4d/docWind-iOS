@@ -14,6 +14,8 @@ struct SettingsRow: View {
     var imageColor: Color
     var action: (()->()) = {}
     
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
+    
 
     var body: some View {
         Button(action: {
@@ -30,7 +32,7 @@ struct SettingsRow: View {
                     .kerning(0)
                 Spacer()
                 Image(systemName: "chevron.right")
-                .foregroundColor(.blue)
+                .foregroundColor(Color(tintColor))
             }
             .padding(.vertical, 10)
             .foregroundColor(.primary)
@@ -46,7 +48,7 @@ struct SettingsRowForOCR: View {
     var action: (()->()) = {}
     
     @State private var imageName2 = "info.circle"
-    
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
 
     var body: some View {
         Button(action: {
@@ -64,7 +66,7 @@ struct SettingsRowForOCR: View {
                     .kerning(0)
                 Spacer()
                 Image(systemName: imageName2)
-                .foregroundColor(.blue)
+                .foregroundColor(Color(tintColor))
             }
             .padding(.vertical, 10)
             .foregroundColor(.primary)

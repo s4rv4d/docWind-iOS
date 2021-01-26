@@ -12,6 +12,7 @@ import CoreData
 struct DetailedDirecView: View {
     
     // MARK: - @State variables
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
     @ObservedObject var item: ItemModel
     @State private var tapped = false
     @State private var isShown = false
@@ -126,7 +127,7 @@ struct DetailedDirecView: View {
                                     .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
                                 }
                                 .padding(24)
-                                .background(Color.blue)
+                                .background(Color(tintColor))
                                 .mask(Circle())
                                 .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
                                 .zIndex(10)
@@ -145,7 +146,7 @@ struct DetailedDirecView: View {
             }){
                 Image(systemName: (self.isOffgrid == false ? "rectangle.3.offgrid" : "rectangle.grid.1x2"))
                     .font(.system(size: 20))
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color(tintColor))
         })
         
         .alert(isPresented: $showAlert) {

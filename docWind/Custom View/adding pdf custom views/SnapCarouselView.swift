@@ -13,6 +13,8 @@ struct SnapCarouselView: View {
     // MARK: - @State variables
     @State private var activeSheet: ActiveCarouselViewSheet = .shareView
     @State private var isShown = false
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
+    
     // use this to update/save to pdf format
     @State private var alertShown = false
     @State private var alertMessage = ""
@@ -79,7 +81,7 @@ struct SnapCarouselView: View {
                             .foregroundColor(.red)
                             
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
-                            .foregroundColor(.blue)
+                            .foregroundColor(Color(tintColor))
                             .background(Color(.secondarySystemBackground))
                         .cornerRadius(10)
                     }.buttonStyle(PlainButtonStyle())
