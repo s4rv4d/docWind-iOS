@@ -75,6 +75,7 @@
 		4095AC82258BCB9A0008BD71 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4095AC71258BCB9A0008BD71 /* Images.swift */; };
 		409B927F24E43E6300F30EFF /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B927E24E43E6300F30EFF /* ActivityIndicatorView.swift */; };
 		409B928124E43EDF00F30EFF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B928024E43EDF00F30EFF /* LoadingView.swift */; };
+		40A90D5525C048D700AD72B7 /* Tint.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40A90D5425C048D700AD72B7 /* Tint.xcassets */; };
 		40C408E624B9F2EF00876FAF /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C408E524B9F2EF00876FAF /* PDFView.swift */; };
 		40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */; };
 		40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140424AE14C000126ABA /* SearchBarView.swift */; };
@@ -228,6 +229,7 @@
 		4095AC71258BCB9A0008BD71 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		409B927E24E43E6300F30EFF /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
 		409B928024E43EDF00F30EFF /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		40A90D5425C048D700AD72B7 /* Tint.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Tint.xcassets; sourceTree = "<group>"; };
 		40C408E524B9F2EF00876FAF /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
 		40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWFMAppSettings.swift; sourceTree = "<group>"; };
 		40C5140424AE14C000126ABA /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
@@ -633,6 +635,7 @@
 				40FDE49824AC4C87006AAFD2 /* Settings */,
 				40FDE49D24AC4ECD006AAFD2 /* Helpers */,
 				40FDE48424AB964C006AAFD2 /* Assets.xcassets */,
+				40A90D5425C048D700AD72B7 /* Tint.xcassets */,
 				40FDE48924AB964C006AAFD2 /* LaunchScreen.storyboard */,
 				40FDE48C24AB964C006AAFD2 /* Info.plist */,
 				40FDE47F24AB964B006AAFD2 /* docWind.xcdatamodeld */,
@@ -786,6 +789,7 @@
 				40FE66E924CB21A800B6A064 /* blackGreen@3x.png in Resources */,
 				40FE66ED24CB21A800B6A064 /* blackGreen@2x.png in Resources */,
 				40FE66E824CB21A800B6A064 /* blackRed@2x.png in Resources */,
+				40A90D5525C048D700AD72B7 /* Tint.xcassets in Resources */,
 				40FE66EC24CB21A800B6A064 /* blackYellow.png in Resources */,
 				40FE66E624CB21A800B6A064 /* blackGreen.png in Resources */,
 				40FE66EE24CB21A800B6A064 /* blackYellow@2x.png in Resources */,

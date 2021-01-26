@@ -27,6 +27,8 @@ struct ContentView: View {
     @State private var showAlert = false
     @State private var isOffgrid = false
     
+    @AppStorage("mainAppColor") var tintColor: String = "blue"
+    
     // MARK: - @Environment variables
     @Environment(\.managedObjectContext) var context
     @FetchRequest(entity: DirecModel.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \DirecModel.created, ascending: true)], predicate: NSPredicate(format: "name == %@", "DocWind"), animation: .default) var items: FetchedResults<DirecModel>
