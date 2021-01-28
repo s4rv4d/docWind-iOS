@@ -12,13 +12,14 @@ import PDFKit
 struct PDFCustomView: UIViewRepresentable {
     
     // MARK: - Properties
-    var fileURL: String
-    var options: DrawingTool
-    var canEdit: Bool
-    var canEditSignature: Bool
-    var color: Color
-    var saveTapped: Bool
-    var image: UIImage?
+    #warning("test this first")
+    @Binding var fileURL: String
+    @Binding var options: DrawingTool
+    @Binding var canEdit: Bool
+    @Binding var canEditSignature: Bool
+    @Binding var color: Color
+    @Binding var saveTapped: Bool
+    @Binding var image: UIImage?
     @Binding var alreadyAdded: Bool
 
     let pdfDrawer = PDFDrawer()

@@ -42,7 +42,7 @@ struct DetailPdfView: View, Equatable {
         LoadingView(isShowing: $isLoading) {
             VStack {
                 if self.url != "" {
-                    PDFCustomView(fileURL: self.url, options: self.options, canEdit: self.canEdit, canEditSignature: self.canEditSignature, color: self.color, saveTapped: self.saveTapped, image: self.image, alreadyAdded: self.$alreadyAdded)
+                    PDFCustomView(fileURL: self.$url, options: self.$options, canEdit: self.$canEdit, canEditSignature: self.$canEditSignature, color: self.$color, saveTapped: self.$saveTapped, image: self.$image, alreadyAdded: self.$alreadyAdded)
                 }
                 Spacer()
                 HStack {
@@ -124,7 +124,7 @@ struct DetailPdfView: View, Equatable {
                     }
                         .onTapGesture {
                             FeedbackManager.mediumFeedback()
-                            if !AppSettings.shared.bougthNonConsumable {
+                            if AppSettings.shared.bougthNonConsumable {
                                 self.subViewed()
                             } else {
                                 self.toolsTapped()

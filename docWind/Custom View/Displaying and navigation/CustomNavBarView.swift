@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct CustomNavBarView: View {
-    #warning("test this")
     @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
     
     // MARK: - Private properties
