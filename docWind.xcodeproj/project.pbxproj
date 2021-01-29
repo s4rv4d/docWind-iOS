@@ -76,6 +76,8 @@
 		409B927F24E43E6300F30EFF /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B927E24E43E6300F30EFF /* ActivityIndicatorView.swift */; };
 		409B928124E43EDF00F30EFF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B928024E43EDF00F30EFF /* LoadingView.swift */; };
 		40A90D5525C048D700AD72B7 /* Tint.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40A90D5425C048D700AD72B7 /* Tint.xcassets */; };
+		40BA37BF25C4128600C43D93 /* EditImageview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BA37BE25C4128600C43D93 /* EditImageview.swift */; };
+		40BA37C225C46FE100C43D93 /* CropImageViewRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BA37C125C46FE100C43D93 /* CropImageViewRectangle.swift */; };
 		40C408E624B9F2EF00876FAF /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C408E524B9F2EF00876FAF /* PDFView.swift */; };
 		40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */; };
 		40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140424AE14C000126ABA /* SearchBarView.swift */; };
@@ -230,6 +232,8 @@
 		409B927E24E43E6300F30EFF /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
 		409B928024E43EDF00F30EFF /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		40A90D5425C048D700AD72B7 /* Tint.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Tint.xcassets; sourceTree = "<group>"; };
+		40BA37BE25C4128600C43D93 /* EditImageview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditImageview.swift; sourceTree = "<group>"; };
+		40BA37C125C46FE100C43D93 /* CropImageViewRectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropImageViewRectangle.swift; sourceTree = "<group>"; };
 		40C408E524B9F2EF00876FAF /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
 		40C5140224AE0D2900126ABA /* DWFMAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DWFMAppSettings.swift; sourceTree = "<group>"; };
 		40C5140424AE14C000126ABA /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
@@ -330,6 +334,7 @@
 				4010734C24BAD971002AFDD2 /* AddPdfFileGenView.swift */,
 				40DD4F7224C02CDC00D37EFA /* SignaturePageView.swift */,
 				40284BFC24D83745004EE44E /* EditPdfMainView.swift */,
+				40BA37BE25C4128600C43D93 /* EditImageview.swift */,
 			);
 			path = "Pdf module";
 			sourceTree = "<group>";
@@ -546,6 +551,7 @@
 				40FE66A624CB126D00B6A064 /* HeaderView.swift */,
 				405EE7A724B339DD005F525F /* ScannerView.swift */,
 				406E9AF324B5E773000FB8FD /* SnapCarouselView.swift */,
+				40BA37C125C46FE100C43D93 /* CropImageViewRectangle.swift */,
 			);
 			path = "adding pdf custom views";
 			sourceTree = "<group>";
@@ -869,6 +875,7 @@
 				40FDE48124AB964B006AAFD2 /* docWind.xcdatamodeld in Sources */,
 				40485D8C24B995E7008A137A /* BlurView.swift in Sources */,
 				402333EE24DA9248007FE8C6 /* ImagePickerView.swift in Sources */,
+				40BA37BF25C4128600C43D93 /* EditImageview.swift in Sources */,
 				402C0B6A24B0A37A00A5A6C9 /* Helper+enums.swift in Sources */,
 				406E9AF624B5E798000FB8FD /* CarouselCardModel.swift in Sources */,
 				40DFFEB725A71ABB003DD30A /* ImageResizer.swift in Sources */,
@@ -912,6 +919,7 @@
 				407567F424B1FC4A0071B575 /* GeneralDocViewModel.swift in Sources */,
 				4010734D24BAD971002AFDD2 /* AddPdfFileGenView.swift in Sources */,
 				40FB481924B8B0600045CF13 /* NewStarterView.swift in Sources */,
+				40BA37C225C46FE100C43D93 /* CropImageViewRectangle.swift in Sources */,
 				409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */,
 				405EE7AA24B33AB1005F525F /* TextRecognizer.swift in Sources */,
 				402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */,

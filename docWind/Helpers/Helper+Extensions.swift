@@ -277,8 +277,10 @@ extension Color {
         }
         return (r, g, b, a)
     }
+    
+    static let systemGroupedBackground = Color(UIColor.systemGroupedBackground)
+    static let secondarySystemGroupedBackground = Color(UIColor.secondarySystemGroupedBackground)
 }
-
 // MARK: - UIView
 extension UIView {
     var renderedImage: UIImage {
