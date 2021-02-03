@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "MetalPetal",
+        "repositoryURL": "https://github.com/MetalPetal/MetalPetal.git",
+        "state": {
+          "branch": null,
+          "revision": "d403162c4a09d21ed5a049a05fc1b9fb6a16f3f2",
+          "version": "1.15.0"
+        }
+      },
+      {
         "package": "Shiny",
         "repositoryURL": "https://github.com/maustinstar/shiny",
         "state": {

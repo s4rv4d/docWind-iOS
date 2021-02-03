@@ -32,6 +32,7 @@ struct EditImageview: View {
     @State private var newPositionBottomRight: CGPoint = .zero
     
     // edit action response
+    @State private var mainStage = true
     @State private var cropActive = false
     @State private var adjustActive = false
     @State private var filtersActive = false
@@ -75,9 +76,9 @@ struct EditImageview: View {
                         
                 }
                 .padding()
-                
+                Spacer()
                 VStack {
-                    // editing options
+                    // ---> 1 editing options (x and tick)
                     HStack {
                         Button(action: backTapped){
                             Image(systemName: "multiply.circle.fill")
@@ -101,17 +102,17 @@ struct EditImageview: View {
                     .padding(.horizontal)
                     // ---> 1
                     
-                    // ---> 2
+                    // ---> 2 first stage
+                    if mainStage {
                         HStack {
                             
                             Button(action: cropSelected) {
                                 VStack {
                                     Image(systemName: "crop")
-                                        .resizable()
                                         .padding()
-                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                         .background(Color.secondarySystemGroupedBackground
                                                         .cornerRadius(7)
+                                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                         )
                                     Text("Crop")
                                         .font(.caption)
@@ -120,14 +121,13 @@ struct EditImageview: View {
                             
                             Spacer()
                             
-                            Button(action: {}) {
+                            Button(action: adjustTapped) {
                                 VStack {
                                     Image(systemName: "slider.horizontal.3")
-                                        .resizable()
                                         .padding()
-                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                         .background(Color.secondarySystemGroupedBackground
                                                         .cornerRadius(7)
+                                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                         )
                                     Text("Adjust")
                                         .font(.caption)
@@ -136,14 +136,13 @@ struct EditImageview: View {
                             
                             Spacer()
                             
-                            Button(action: {}) {
+                            Button(action: filtersTapped) {
                                 VStack {
                                     Image(systemName: "camera.filters")
-                                        .resizable()
                                         .padding()
-                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                         .background(Color.secondarySystemGroupedBackground
                                                         .cornerRadius(7)
+                                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                         )
                                     Text("Filters")
                                         .font(.caption)
@@ -155,11 +154,10 @@ struct EditImageview: View {
                             Button(action: {}) {
                                 VStack {
                                     Image(systemName: "doc.append")
-                                        .resizable()
                                         .padding()
-                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                         .background(Color.secondarySystemGroupedBackground
                                                         .cornerRadius(7)
+                                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                         )
                                     Text("Watermark")
                                         .font(.caption)
@@ -167,12 +165,137 @@ struct EditImageview: View {
                             }
                         }
                         .padding([.horizontal, .top])
+                    }
                     // ---> 2
                     
+                    // ---> 3 crop
+                    if cropActive {
+                        HStack {
+                            Button(action: backTappedCrop) {
+                                VStack {
+                                    Image(systemName: "chevron.left")
+                                        .padding()
+                                        .background(Color.secondarySystemGroupedBackground
+                                                        .cornerRadius(7)
+                                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        )
+                                    Text("Done")
+                                        .font(.caption)
+                                }
+                            }
+                            
+                            Spacer()
+                            
+                            Button(action: rotateLeftTapped) {
+                                VStack {
+                                    Image(systemName: "rotate.left")
+                                        .padding()
+                                        .background(Color.secondarySystemGroupedBackground
+                                                        .cornerRadius(7)
+                                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        )
+                                    Text("Rotate left")
+                                        .font(.caption)
+                                }
+                            }
+                            
+                            Spacer()
+
+                            Button(action: rotateRightTapped) {
+                                VStack {
+                                    Image(systemName: "rotate.right")
+                                        .padding()
+                                        .background(Color.secondarySystemGroupedBackground
+                                                        .cornerRadius(7)
+                                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        )
+                                    Text("Rotate right")
+                                        .font(.caption)
+                                }
+                            }
+
+                        }
+                        .padding([.horizontal, .top])
+                    }
+                    // ---> 3 crop
+                    
+                    // ---> 4 adjust
+                    if adjustActive {
+                        HStack {
+                            Button(action: adjustBackTap) {
+                                VStack {
+                                    Image(systemName: "chevron.left")
+                                        .padding()
+                                        .background(Color.secondarySystemGroupedBackground
+                                                        .cornerRadius(7)
+                                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        )
+                                    Text("Done")
+                                        .font(.caption)
+                                }
+                            }
+                            
+//                            Spacer()
+                            
+                            /// sliders here
+                            
+                            VStack(alignment: .leading) {
+                                Text("Brightness")
+                                    .font(.caption)
+                                CustomSlider(value: $brigtnessValue, range: 0...1)
+                                    .frame(height: 30)
+                                
+                                Text("Contrast")
+                                    .font(.caption)
+                                CustomSlider(value: $contrastValue, range: 0...1)
+                                    .frame(height: 30)
+                                
+                                Text("Saturation")
+                                    .font(.caption)
+                                CustomSlider(value: $saturationValue, range: 0...1)
+                                    .frame(height: 30)
+                                
+                            }
+                            .padding(.leading, 10)
+                            
+                            Spacer()
+                        }
+                        .padding([.horizontal, .top])
+                    }
+                    // ---> 4 adjust
+                    
+                    // ---> 5 filters
+                    if filtersActive {
+                        HStack {
+                            Button(action: filterBackTapped) {
+                                VStack {
+                                    Image(systemName: "chevron.left")
+                                        .padding()
+                                        .background(Color.secondarySystemGroupedBackground
+                                                        .cornerRadius(7)
+                                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        )
+                                    Text("Done")
+                                        .font(.caption)
+                                }
+                            }
+                            
+                            CarouselFilterView(image: mainImages[currentIndex], filteredImage: $currentImage)
+                        }
+                        .padding([.horizontal, .top])
+                    }
+                    // ---> 5 filters
+                    
+                    // ---> 6 watemark
+                    if watermarkActive {
+                        HStack {
+                            Text("Watermark")
+                        }
+                        .padding([.horizontal, .top])
+                    }
+                    // ---> 6 watermark
+                    
                 }
-                
-                
-                
             }
         }
         
@@ -229,26 +352,103 @@ struct EditImageview: View {
             }
         }
     
+    /// crop
     private func cropSelected() {
-        self.cropActive.toggle()
+        mainStage = false
+        cropActive = true
+        adjustActive = false
+        filtersActive = false
+        watermarkActive = false
+    }
+    
+    private func backTappedCrop() {
+        print("here")
+        print(currentPositionBottomRight)
+        /// check if any change in coordinates
+        if currentPositionTopLeft != .zero || currentPositionTopRight != .zero || currentPositionBottomLeft != .zero || currentPositionBottomRight != .zero {
+            
+            /// if changes detected, crop image
+//            let _topRight = CGPoint(x: currentPositionBottomRight.x, y: currentPositionTopLeft.y)
+//            let _bottomLeft = CGPoint(x: currentPositionTopLeft.x, y: currentPositionBottomRight.y)
+            let _width = currentPositionTopLeft.distance(point: currentPositionTopRight)
+            let _height = currentPositionTopLeft.distance(point: currentPositionBottomLeft)
+            let cropArea = CGRect(origin: currentPositionTopLeft, size: CGSize(width: _width, height: _height))
+            /// need to crop image
+            let cgImage = currentImage.cgImage!
+            
+            let viewSize = currentImage.size
+            
+            let imageViewScaleWidth = CGFloat(viewSize.width)
+            let imageViewScaleHeight = CGFloat(viewSize.height)
+
+            let scale = 1 / min(imageViewScaleWidth, imageViewScaleHeight)
+            let scaleWidth = 1 / imageViewScaleWidth
+            let scaleHeight = 1 / imageViewScaleHeight
+
+
+            let newWidth = cropArea.height * scale
+            let newHeight = cropArea.width * scale
+            let newXCord = (currentPositionTopLeft.x * scale) + newHeight
+            let newYCord = (currentPositionTopLeft.y * scale)
+
+
+            let newCropArea = CGRect(origin: CGPoint(x: newXCord,
+                                                     y: newYCord),
+                                     size: CGSize(width: newHeight,
+                                                  height: newWidth))
+            
+            guard let croppedSourceImage = cgImage.cropping(to: cropArea) else {
+                return
+            }
+            
+            currentImage = UIImage(cgImage: croppedSourceImage)
+        }
+        
+        mainStage = true
+        cropActive = false
+        adjustActive = false
+        filtersActive = false
+        watermarkActive = false
+    }
+    
+    private func rotateRightTapped() {
+        currentImage = currentImage.rotate(radians: -.pi/2)!
+    }
+    
+    private func rotateLeftTapped() {
+        currentImage = currentImage.rotate(radians: .pi/2)!
     }
     
     private func nextTapped() {
         
         FeedbackManager.mediumFeedback()
         
-        /// update image array with updated image
-        mainImages = mainImagesCopy
+        /// brightness, contrast and etc changes current image update
+        var updatedImage = currentImage.withSaturationAdjustment(byVal: saturationValue)
+        updatedImage = updatedImage.withContrastAdjustment(byVal: contrastValue)
+        updatedImage = updatedImage.withBrightnessAdjustment(byVal: brigtnessValue)
+        
+        currentImage = updatedImage
+        
+        /// update the currentImage into array copy
+        mainImagesCopy[currentIndex] = currentImage
         
         /// final
         if currentIndex != (imageCount - 1) {
             currentIndex += 1
+            
+            /// bring up next image
+            currentImage = mainImagesCopy[currentIndex]
             
             if currentIndex == (imageCount - 1) {
                 stateName = "checkmark.circle.fill"
             }
         } else {
             /// exit
+
+            /// update image array with updated image
+            mainImages = mainImagesCopy
+            
             presentationMode.wrappedValue.dismiss()
         }
     }
@@ -257,11 +457,69 @@ struct EditImageview: View {
         FeedbackManager.mediumFeedback()
         self.presentationMode.wrappedValue.dismiss()
     }
+    
+    private func adjustTapped() {
+        mainStage = false
+        cropActive = false
+        adjustActive = true
+        filtersActive = false
+        watermarkActive = false
+    }
+    
+    private func adjustBackTap() {
+        
+        defer {
+            mainStage = true
+            cropActive = false
+            adjustActive = false
+            filtersActive = false
+            watermarkActive = false
+        }
+        
+        /// do something before
+        print("do something")
+        
+    }
+    
+    private func filtersTapped() {
+        mainStage = false
+        cropActive = false
+        adjustActive = false
+        filtersActive = true
+        watermarkActive = false
+    }
+    
+    private func filterBackTapped() {
+        defer {
+            mainStage = true
+            cropActive = false
+            adjustActive = false
+            filtersActive = false
+            watermarkActive = false
+        }
+        
+        /// do something before
+        print("do something")
+    }
+    
+    private func watermarkTapped() {
+        
+    }
+    
+    
+    func getDimension(w:CGFloat,h:CGFloat) -> CGFloat{
+        if h > w {
+            return w
+        } else {
+            return h
+        }
+        
+    }
 }
 
 struct EditImageview_Previews: PreviewProvider {
     static var previews: some View {
-        EditImageview(mainImages: .constant([]), mainImagesCopy: [], currentImage: UIImage(named: "server")!)
+        EditImageview(mainImages: .constant([UIImage(named: "server")!]), mainImagesCopy: [UIImage(named: "server")!], currentImage: UIImage(named: "server")!)
             .preferredColorScheme(.dark)
             
     }

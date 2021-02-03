@@ -129,6 +129,10 @@ extension View {
         let offset = CGFloat(total - position)
         return self.offset(CGSize(width: 0, height: -offset * 2))
     }
+    
+    public func foreground<Overlay: View>(_ overlay: Overlay) -> some View {
+      self.overlay(overlay).mask(self)
+    }
 }
 
 // MARK: - UIImage
@@ -228,6 +232,58 @@ extension UIImage {
         let imageView = UIImageView(image: self)
         return imageView.addBorder(toSide: side, withColor: color, andThickness: thickness)!
     }
+    
+    func rotate(radians: Float) -> UIImage? {
+        var newSize = CGRect(origin: CGPoint.zero, size: self.size).applying(CGAffineTransform(rotationAngle: CGFloat(radians))).size
+        // Trim off the extremely small float value to prevent core graphics from rounding it up
+        newSize.width = floor(newSize.width)
+        newSize.height = floor(newSize.height)
+
+        UIGraphicsBeginImageContextWithOptions(newSize, false, self.scale)
+        let context = UIGraphicsGetCurrentContext()!
+
+        // Move origin to middle
+        context.translateBy(x: newSize.width/2, y: newSize.height/2)
+        // Rotate around middle
+        context.rotate(by: CGFloat(radians))
+        // Draw the image at its center
+        self.draw(in: CGRect(x: -self.size.width/2, y: -self.size.height/2, width: self.size.width, height: self.size.height))
+
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage
+    }
+    
+    func withSaturationAdjustment(byVal: CGFloat) -> UIImage {
+            guard let cgImage = self.cgImage else { return self }
+            guard let filter = CIFilter(name: "CIColorControls") else { return self }
+            filter.setValue(CIImage(cgImage: cgImage), forKey: kCIInputImageKey)
+            filter.setValue(byVal, forKey: kCIInputSaturationKey)
+            guard let result = filter.value(forKey: kCIOutputImageKey) as? CIImage else { return self }
+            guard let newCgImage = CIContext(options: nil).createCGImage(result, from: result.extent) else { return self }
+            return UIImage(cgImage: newCgImage, scale: UIScreen.main.scale, orientation: imageOrientation)
+        }
+        
+        func withContrastAdjustment(byVal: CGFloat) -> UIImage {
+            guard let cgImage = self.cgImage else { return self }
+            guard let filter = CIFilter(name: "CIColorControls") else { return self }
+            filter.setValue(CIImage(cgImage: cgImage), forKey: kCIInputImageKey)
+            filter.setValue(byVal, forKey: kCIInputContrastKey)
+            guard let result = filter.value(forKey: kCIOutputImageKey) as? CIImage else { return self }
+            guard let newCgImage = CIContext(options: nil).createCGImage(result, from: result.extent) else { return self }
+            return UIImage(cgImage: newCgImage, scale: UIScreen.main.scale, orientation: imageOrientation)
+        }
+        
+        func withBrightnessAdjustment(byVal: CGFloat) -> UIImage {
+            guard let cgImage = self.cgImage else { return self }
+            guard let filter = CIFilter(name: "CIColorControls") else { return self }
+            filter.setValue(CIImage(cgImage: cgImage), forKey: kCIInputImageKey)
+            filter.setValue(byVal, forKey: kCIInputBrightnessKey)
+            guard let result = filter.value(forKey: kCIOutputImageKey) as? CIImage else { return self }
+            guard let newCgImage = CIContext(options: nil).createCGImage(result, from: result.extent) else { return self }
+            return UIImage(cgImage: newCgImage, scale: UIScreen.main.scale, orientation: imageOrientation)
+        }
 }
 
 // MARK: - Color
@@ -466,6 +522,21 @@ extension CGPoint{
     func vector(to p1:CGPoint) -> CGVector{
         return CGVector(dx: p1.x-self.x, dy: p1.y-self.y)
     }
+    
+    /// Distance between two points.
+    ///
+    /// - Parameter point: A `CGPoint` instance.
+    public func distance(point p: CGPoint) -> CGFloat {
+        return sqrt(pow((p.x - x), 2) + pow((p.y - y), 2))
+    }
+}
+
+// MARK: - CGFloat
+extension CGFloat {
+    func map(from: ClosedRange<CGFloat>, to: ClosedRange<CGFloat>) -> CGFloat {
+        let result = ((self - from.lowerBound) / (from.upperBound - from.lowerBound)) * (to.upperBound - to.lowerBound) + to.lowerBound
+        return result
+    }
 }
 
 // MARK: - UIBezierPath
@@ -644,5 +715,47 @@ extension URL {
         } else {
             return nil
         }
+    }
+}
+
+// MARK: - CPImage
+extension CPImage {
+    var coreImage: CIImage? {
+            #if os(iOS)
+            guard let cgImage = self.cgImage else {
+                return nil
+            }
+            return CIImage(cgImage: cgImage)
+            #elseif os(OSX)
+            guard
+                let tiffData = tiffRepresentation,
+                let ciImage = CIImage(data: tiffData)
+                else {
+                    return nil
+            }
+            return ciImage
+            #endif
+        }
+}
+
+// MARK: - CGImage
+extension CGImage {
+    var cpImage: CPImage {
+        #if os(iOS)
+        return UIImage(cgImage: self)
+        #elseif os(OSX)
+        return NSImage(cgImage: self, size: .init(width: width, height: height))
+        #endif
+    }
+}
+
+// MARK: - Image
+extension Image {
+    init(cpImage: CPImage) {
+        #if os(iOS)
+        self.init(uiImage: cpImage)
+        #elseif os(OSX)
+        self.init(nsImage: cpImage)
+        #endif
     }
 }

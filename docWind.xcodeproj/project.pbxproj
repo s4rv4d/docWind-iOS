@@ -76,6 +76,12 @@
 		409B927F24E43E6300F30EFF /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B927E24E43E6300F30EFF /* ActivityIndicatorView.swift */; };
 		409B928124E43EDF00F30EFF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B928024E43EDF00F30EFF /* LoadingView.swift */; };
 		40A90D5525C048D700AD72B7 /* Tint.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40A90D5425C048D700AD72B7 /* Tint.xcassets */; };
+		40ABC03225CB33EC00F32067 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40ABC03125CB33EC00F32067 /* CustomSlider.swift */; };
+		40ABC04025CB3B6800F32067 /* ImageFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40ABC03F25CB3B6800F32067 /* ImageFilter.swift */; };
+		40ABC04325CB3C5100F32067 /* MetalPetal in Frameworks */ = {isa = PBXBuildFile; productRef = 40ABC04225CB3C5100F32067 /* MetalPetal */; };
+		40ABC04525CB3CB000F32067 /* CPImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40ABC04425CB3CB000F32067 /* CPImage.swift */; };
+		40ABC04725CB3E0400F32067 /* CarouselFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40ABC04625CB3E0400F32067 /* CarouselFilterView.swift */; };
+		40ABC04925CB3E9900F32067 /* ImageFilterObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40ABC04825CB3E9900F32067 /* ImageFilterObservable.swift */; };
 		40BA37BF25C4128600C43D93 /* EditImageview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BA37BE25C4128600C43D93 /* EditImageview.swift */; };
 		40BA37C225C46FE100C43D93 /* CropImageViewRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BA37C125C46FE100C43D93 /* CropImageViewRectangle.swift */; };
 		40C408E624B9F2EF00876FAF /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C408E524B9F2EF00876FAF /* PDFView.swift */; };
@@ -232,6 +238,11 @@
 		409B927E24E43E6300F30EFF /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
 		409B928024E43EDF00F30EFF /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		40A90D5425C048D700AD72B7 /* Tint.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Tint.xcassets; sourceTree = "<group>"; };
+		40ABC03125CB33EC00F32067 /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
+		40ABC03F25CB3B6800F32067 /* ImageFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilter.swift; sourceTree = "<group>"; };
+		40ABC04425CB3CB000F32067 /* CPImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPImage.swift; sourceTree = "<group>"; };
+		40ABC04625CB3E0400F32067 /* CarouselFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselFilterView.swift; sourceTree = "<group>"; };
+		40ABC04825CB3E9900F32067 /* ImageFilterObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilterObservable.swift; sourceTree = "<group>"; };
 		40BA37BE25C4128600C43D93 /* EditImageview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditImageview.swift; sourceTree = "<group>"; };
 		40BA37C125C46FE100C43D93 /* CropImageViewRectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropImageViewRectangle.swift; sourceTree = "<group>"; };
 		40C408E524B9F2EF00876FAF /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
@@ -318,6 +329,7 @@
 				404BFAFC24E7C57400A13230 /* Shiny in Frameworks */,
 				402D507425BDA68500D3529F /* ConfettiSwiftUI in Frameworks */,
 				40CDC4D224AF91F800462277 /* CloudKit.framework in Frameworks */,
+				40ABC04325CB3C5100F32067 /* MetalPetal in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +414,9 @@
 				40E387D624E66A6C001E23D2 /* AppstoreUpdate.swift */,
 				40E387D824E66B0F001E23D2 /* ItunesAppInfoResult.swift */,
 				40E387DA24E66B40001E23D2 /* ItunesAppInfoItunes.swift */,
+				40ABC03F25CB3B6800F32067 /* ImageFilter.swift */,
+				40ABC04425CB3CB000F32067 /* CPImage.swift */,
+				40ABC04825CB3E9900F32067 /* ImageFilterObservable.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -552,6 +567,8 @@
 				405EE7A724B339DD005F525F /* ScannerView.swift */,
 				406E9AF324B5E773000FB8FD /* SnapCarouselView.swift */,
 				40BA37C125C46FE100C43D93 /* CropImageViewRectangle.swift */,
+				40ABC03125CB33EC00F32067 /* CustomSlider.swift */,
+				40ABC04625CB3E0400F32067 /* CarouselFilterView.swift */,
 			);
 			path = "adding pdf custom views";
 			sourceTree = "<group>";
@@ -740,6 +757,7 @@
 			packageProductDependencies = (
 				404BFAFB24E7C57400A13230 /* Shiny */,
 				402D507325BDA68500D3529F /* ConfettiSwiftUI */,
+				40ABC04225CB3C5100F32067 /* MetalPetal */,
 			);
 			productName = docWind;
 			productReference = 40FDE47824AB964B006AAFD2 /* docWind.app */;
@@ -772,6 +790,7 @@
 			packageReferences = (
 				404BFAFA24E7C57400A13230 /* XCRemoteSwiftPackageReference "shiny" */,
 				402D507225BDA68500D3529F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+				40ABC04125CB3C5100F32067 /* XCRemoteSwiftPackageReference "MetalPetal" */,
 			);
 			productRefGroup = 40FDE47924AB964B006AAFD2 /* Products */;
 			projectDirPath = "";
@@ -830,9 +849,11 @@
 				4012033C24BDE0D700167917 /* NonSelectableView.swift in Sources */,
 				405EFDC824BCA11A0070BE5F /* AppIconView.swift in Sources */,
 				402C0B6C24B0ACD600A5A6C9 /* NormalListRowView.swift in Sources */,
+				40ABC04525CB3CB000F32067 /* CPImage.swift in Sources */,
 				40DD4F7724C087AE00D37EFA /* ImagePanGestureRecognizer.swift in Sources */,
 				40CDC4C824AF72CD00462277 /* ItemModel+CoreDataProperties.swift in Sources */,
 				40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */,
+				40ABC04925CB3E9900F32067 /* ImageFilterObservable.swift in Sources */,
 				4069EF9F24D69AAF003083C6 /* ViewControllerResolver.swift in Sources */,
 				40DFFEB325A71ABB003DD30A /* CameraService.swift in Sources */,
 				40CFB05124D9B1E500955957 /* ErrorView.swift in Sources */,
@@ -883,6 +904,7 @@
 				406E9AFB24B617EE000FB8FD /* CustomHeaderView.swift in Sources */,
 				40FDE48324AB964B006AAFD2 /* ContentView.swift in Sources */,
 				40D1B12124DC4E7D00859F1A /* SecondaryButtonView.swift in Sources */,
+				40ABC03225CB33EC00F32067 /* CustomSlider.swift in Sources */,
 				40F841C12591E57E00BE7E00 /* CaptureButtonView.swift in Sources */,
 				40D170B224ADA9DE00F51F77 /* DocWindFManager.swift in Sources */,
 				40FDE49C24AC4EC9006AAFD2 /* Helper+Struct.swift in Sources */,
@@ -911,6 +933,7 @@
 				40FDE47E24AB964B006AAFD2 /* SceneDelegate.swift in Sources */,
 				4095AC74258BCB9A0008BD71 /* MediaFilter.swift in Sources */,
 				40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */,
+				40ABC04725CB3E0400F32067 /* CarouselFilterView.swift in Sources */,
 				40F841C02591E57E00BE7E00 /* CustomCameraRepresentable.swift in Sources */,
 				4095AC7D258BCB9A0008BD71 /* MediaItem.swift in Sources */,
 				40DFFEB625A71ABB003DD30A /* CameraService+Extensions.swift in Sources */,
@@ -921,6 +944,7 @@
 				40FB481924B8B0600045CF13 /* NewStarterView.swift in Sources */,
 				40BA37C225C46FE100C43D93 /* CropImageViewRectangle.swift in Sources */,
 				409244BE24B19D640013BF8F /* Helper+Extensions.swift in Sources */,
+				40ABC04025CB3B6800F32067 /* ImageFilter.swift in Sources */,
 				405EE7AA24B33AB1005F525F /* TextRecognizer.swift in Sources */,
 				402C0B9924B0C0A200A5A6C9 /* AddDirecView.swift in Sources */,
 				402D507025BD9BC800D3529F /* ConfettiView.swift in Sources */,
@@ -1154,6 +1178,14 @@
 				minimumVersion = 0.0.1;
 			};
 		};
+		40ABC04125CB3C5100F32067 /* XCRemoteSwiftPackageReference "MetalPetal" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MetalPetal/MetalPetal.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.15.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1166,6 +1198,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 404BFAFA24E7C57400A13230 /* XCRemoteSwiftPackageReference "shiny" */;
 			productName = Shiny;
+		};
+		40ABC04225CB3C5100F32067 /* MetalPetal */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 40ABC04125CB3C5100F32067 /* XCRemoteSwiftPackageReference "MetalPetal" */;
+			productName = MetalPetal;
 		};
 /* End XCSwiftPackageProductDependency section */
 
