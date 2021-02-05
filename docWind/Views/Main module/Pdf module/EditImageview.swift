@@ -73,6 +73,7 @@ struct EditImageview: View {
                             }
                         )
                         .padding()
+                        .onAppear(perform: addWatermark)
                         
                 }
                 .padding()
@@ -151,7 +152,7 @@ struct EditImageview: View {
                             
                             Spacer()
                             
-                            Button(action: {}) {
+                            Button(action: watermarkTapped) {
                                 VStack {
                                     Image(systemName: "doc.append")
                                         .padding()
@@ -289,7 +290,37 @@ struct EditImageview: View {
                     // ---> 6 watemark
                     if watermarkActive {
                         HStack {
-                            Text("Watermark")
+                            
+                            Spacer()
+                            Button(action: watermarkBackTapped) {
+                                VStack {
+                                    Image(systemName: "chevron.left")
+                                        .padding()
+                                        .background(Color.secondarySystemGroupedBackground
+                                                        .cornerRadius(7)
+                                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        )
+                                    Text("Done")
+                                        .font(.caption)
+                                }
+                            }
+                            
+                            Spacer()
+                            
+                            Button(action: clearWaterMark) {
+                                VStack {
+                                    Image(systemName: "x.circle")
+                                        .padding()
+                                        .background(Color.secondarySystemGroupedBackground
+                                                        .cornerRadius(7)
+                                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        )
+                                    Text("Clear")
+                                        .font(.caption)
+                                }
+                            }
+                            
+                            Spacer()
                         }
                         .padding([.horizontal, .top])
                     }
@@ -298,7 +329,6 @@ struct EditImageview: View {
                 }
             }
         }
-        
         .buttonStyle(PlainButtonStyle())
     }
     
@@ -503,7 +533,46 @@ struct EditImageview: View {
     }
     
     private func watermarkTapped() {
+        mainStage = false
+        cropActive = false
+        adjustActive = false
+        filtersActive = false
+        watermarkActive = true
+    }
+    
+    private func watermarkBackTapped() {
+        mainStage = true
+        cropActive = false
+        adjustActive = false
+        filtersActive = false
+        watermarkActive = false
+    }
+    
+    private func addWatermark() {
+        let mediaItem = MediaItem(image: currentImage)
         
+        /// text
+        let testStr = "Scanned by DocWind"
+        let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15) ]
+        let attrStr = NSAttributedString(string: testStr, attributes: attributes)
+        
+        let secondElement = MediaElement(text: attrStr)
+        secondElement.frame = CGRect(x: 10, y: mediaItem.size.height - 50, width: mediaItem.size.width, height: mediaItem.size.height)
+        
+        mediaItem.add(elements: [secondElement])
+        
+        let mediaProcessor = MediaProcessor()
+        mediaProcessor.processElements(item: mediaItem) { [self] (result, error) in
+            currentImage = result.image!
+        }
+    }
+    
+    private func clearWaterMark() {
+        if AppSettings.shared.bougthNonConsumable {
+            currentImage = mainImagesCopy[currentIndex]
+        } else {
+            // alert
+        }
     }
     
     
