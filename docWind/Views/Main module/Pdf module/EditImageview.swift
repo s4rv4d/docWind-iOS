@@ -15,6 +15,7 @@ struct EditImageview: View {
     @State var mainImagesCopy: [UIImage]
     
     @State var currentImage: UIImage
+    @State var currentImageCopy: UIImage
     @State var currentIndex: Int = 0
     @State var imageCount: Int = 0
     
@@ -280,8 +281,10 @@ struct EditImageview: View {
                                         .font(.caption)
                                 }
                             }
+                            .padding(.trailing)
                             
-                            CarouselFilterView(image: mainImages[currentIndex], filteredImage: $currentImage)
+                            CarouselFilterView(image: currentImageCopy, filteredImage: $currentImage)
+                            
                         }
                         .padding([.horizontal, .top])
                     }
@@ -588,7 +591,7 @@ struct EditImageview: View {
 
 struct EditImageview_Previews: PreviewProvider {
     static var previews: some View {
-        EditImageview(mainImages: .constant([UIImage(named: "server")!]), mainImagesCopy: [UIImage(named: "server")!], currentImage: UIImage(named: "server")!)
+        EditImageview(mainImages: .constant([UIImage(named: "server")!]), mainImagesCopy: [UIImage(named: "server")!], currentImage: UIImage(named: "server")!, currentImageCopy: UIImage(named: "server")!)
             .preferredColorScheme(.dark)
             
     }

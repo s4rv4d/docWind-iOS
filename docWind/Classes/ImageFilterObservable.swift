@@ -6,13 +6,13 @@
 //  Copyright © 2021 Sarvad shetty. All rights reserved.
 //
 
-import Combine
+import SwiftUI
 
 class ImageFilterObservable: ObservableObject {
     
-    @Published var filteredImage: CPImage? = nil
+    @Published var filteredImage: UIImage? = nil
 
-    let image: CPImage
+    let image: UIImage
     let filter: ImageFilter
     
     init(image: CPImage, filter: ImageFilter) {
@@ -20,9 +20,29 @@ class ImageFilterObservable: ObservableObject {
         self.filter = filter
     }
     
-    func filterImage() {
-        self.filter.performFilter(with: self.image) {
-            self.filteredImage = $0
+    func filterImage(filterImage: UIImage?) {
+        self.filter.performFilter(with: self.image) { fillImage in
+            DispatchQueue.main.async {
+                self.filteredImage = fillImage
+            }
         }
+    }
+    
+    func giveFilterImage(completion:@escaping (UIImage) -> ()) {
+        self.filter.performFilter(with: self.image) { fillImage in
+            DispatchQueue.main.async {
+                self.filteredImage = fillImage
+                completion(fillImage)
+            }
+        }
+    }
+    
+    func giveImage2() -> UIImage? {
+        var image:UIImage?
+        self.filter.performFilter(with: self.image) { fillImage in
+            image = fillImage
+        }
+        
+        return image 
     }
 }

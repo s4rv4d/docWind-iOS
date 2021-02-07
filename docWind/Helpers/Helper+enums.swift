@@ -49,7 +49,7 @@ extension PDFDetailActiveView: Identifiable {
 
 // enum for active sheet #1&2
 enum ActiveOdfMainViewSheet {
-    case scannerView, pdfView, photoLibrary, subView
+    case scannerView, pdfView, photoLibrary, subView, imageEdit
 }
 
 extension ActiveOdfMainViewSheet: Identifiable {

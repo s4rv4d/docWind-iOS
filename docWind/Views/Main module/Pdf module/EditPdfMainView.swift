@@ -185,7 +185,7 @@ struct EditPdfMainView: View {
             case .pdfView:
                 SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
             case .photoLibrary:
-                ImagePickerView(pages: self.$pages, pagesWithMark: self.$pagesWithMark)
+                ImagePickerView(pages: self.$pages, pagesWithMark: self.$pagesWithMark, sheetState: self.$activeSheet)
             default:
                 EmptyView()
             }

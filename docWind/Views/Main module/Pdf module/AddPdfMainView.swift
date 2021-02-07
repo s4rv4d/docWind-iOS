@@ -24,7 +24,7 @@ struct AddPdfMainView: View {
     @State var pages: [UIImage] = [UIImage]()
     @State var pagesWithMark: [UIImage] = [UIImage]()
         
-    @State private var activeSheet: ActiveOdfMainViewSheet? = .scannerView
+    @State private var activeSheet: ActiveOdfMainViewSheet? = nil
     @State private var activeAlertSheet: ActiveAlertSheet = .notice
     @State private var removeWatermark = false
     @State private var offsetVal: CGFloat = 0.0
@@ -159,9 +159,11 @@ struct AddPdfMainView: View {
             case .pdfView:
                 SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
             case .photoLibrary:
-                ImagePickerView(pages: self.$pages, pagesWithMark: self.$pagesWithMark)
+                ImagePickerView(pages: self.$pages, pagesWithMark: self.$pagesWithMark, sheetState: $activeSheet)
             case .subView:
                 SubcriptionPageView()
+            case .imageEdit:
+                EditImageview(mainImages: self.$pages, mainImagesCopy: self.pages, currentImage: self.pages.first!, currentImageCopy: self.pages.first!)
             }
         }
         

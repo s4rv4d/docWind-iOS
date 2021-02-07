@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-fileprivate struct CarouselImageFilter: Identifiable {
+struct CarouselImageFilter: Identifiable {
     
     var id: String {
         filter.rawValue + String(image.hashValue)
@@ -20,33 +20,63 @@ fileprivate struct CarouselImageFilter: Identifiable {
 
 struct CarouselFilterView: View {
     
-    let image: CPImage?
+    let image: UIImage?
     @Binding var filteredImage: CPImage
     
     fileprivate var imageFilters: [CarouselImageFilter] {
+        print("called")
+
         guard let image = self.image else { return [] }
+        
         return ImageFilter.allCases.map { CarouselImageFilter(filter: $0, image: image) }
     }
-    
+    #warning("need to fix this")
     var body: some View {
         VStack {
             if image != nil {
-                Text("Select Filter")
-                    .font(.headline)
                 
                 ScrollView(.horizontal, showsIndicators: true) {
                     HStack(alignment: .top, spacing: 0) {
                         ForEach(imageFilters) { imageFilter in
-                            ImageFilterView(observableImageFilter: ImageFilterObservable(image: imageFilter.image, filter: imageFilter.filter), filteredImage: self.$filteredImage)
+                            ImageFilterView(observableImageFilter: ImageFilterObservable(image: imageFilter.image, filter: imageFilter.filter), filteredImage: $filteredImage)
                                 .padding(.leading, 16)
                                 .padding(.trailing, self.imageFilters.last!.filter == imageFilter.filter ? 16 : 0)
+//                                .onTapGesture {
+//                                    let fil = ImageFilterObservable(image: imageFilter.image, filter: imageFilter.filter)
+//                                    fil.giveFilterImage { (image) in
+//                                        self.filteredImage = image
+//                                    }
+//                                }
                         }
-        
                     }
                     .frame(height: 140)
+                    .debugPrint("here")
                 }
             }
         }
+    }
+    
+    func filterView( observableImageFilter: ImageFilterObservable) -> some View {
+        
+        let image = observableImageFilter.giveImage2()
+        
+        return VStack {
+                ZStack {
+                    Image(cpImage: image!)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 100)
+                        .cornerRadius(8)
+                        
+                    
+//                    if observableImageFilter.filteredImage == nil {
+//                        ProgressView()
+//                    }
+                }
+                
+                Text(observableImageFilter.filter.rawValue)
+                    .font(.subheadline)
+            }
     }
 }
 
@@ -71,6 +101,7 @@ struct ImageFilterView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 100)
                     .cornerRadius(8)
+                    
                 
                 if observableImageFilter.filteredImage == nil {
                     ProgressView()
@@ -80,10 +111,11 @@ struct ImageFilterView: View {
             Text(observableImageFilter.filter.rawValue)
                 .font(.subheadline)
         }
-        .onAppear(perform: self.observableImageFilter.filterImage)
+        .onReceive(observableImageFilter.$filteredImage, perform: observableImageFilter.filterImage)
+//        .onAppear(perform: self.observableImageFilter.filterImage)
         .onTapGesture(perform: handleOnTap)
     }
-    
+    #warning("test on testflight")
     private func handleOnTap() {
         guard let filteredImage = observableImageFilter.filteredImage else {
             return
@@ -91,3 +123,5 @@ struct ImageFilterView: View {
         self.filteredImage = filteredImage
     }
 }
+
+//.onReceive(observableImageFilter.$filteredImage, perform: observableImageFilter.filterImage)

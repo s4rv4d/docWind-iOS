@@ -98,10 +98,6 @@ enum ImageFilter: String, Identifiable, Hashable, CaseIterable {
                     return filter.outputImage
                 }
                 
-                
-                
-   
-                
             }
             
             DispatchQueue.main.async {
@@ -109,6 +105,8 @@ enum ImageFilter: String, Identifiable, Hashable, CaseIterable {
             }
         }
     }
+    
+    
     
     private func processFilterWithMetal(image: CPImage, filterHandler: (MTIImage) -> MTIImage?) -> CPImage {
         guard let ciImage = image.coreImage else {

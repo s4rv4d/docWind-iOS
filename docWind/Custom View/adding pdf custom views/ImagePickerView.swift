@@ -13,13 +13,14 @@ struct ImagePickerView: UIViewControllerRepresentable {
     // MARK: - @Binding variables
     @Binding var pages: [UIImage]
     @Binding var pagesWithMark: [UIImage]
+    @Binding var sheetState: ActiveOdfMainViewSheet?
     
     // MARK: - Environment object
     @Environment(\.presentationMode) var presentationMode
     
     // MARK: - UIViewControllerRepresentable protocol functions
     func makeCoordinator() -> Coordinator {
-        return Coordinator(parent: self, uiImages: $pages, uiImagesWithWatermarks: $pagesWithMark)
+        return Coordinator(parent: self, uiImages: $pages, uiImagesWithWatermarks: $pagesWithMark, sheetState: $sheetState)
     }
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePickerView>) -> UIImagePickerController {
@@ -38,12 +39,14 @@ struct ImagePickerView: UIViewControllerRepresentable {
         var parent: ImagePickerView
         var uiImages: Binding<[UIImage]>
         var uiImagesWithWatermarks: Binding<[UIImage]>
+        var sheetState: Binding<ActiveOdfMainViewSheet?>
         
         // MARK: - Init
-        init(parent: ImagePickerView, uiImages: Binding<[UIImage]>, uiImagesWithWatermarks: Binding<[UIImage]>) {
+        init(parent: ImagePickerView, uiImages: Binding<[UIImage]>, uiImagesWithWatermarks: Binding<[UIImage]>, sheetState: Binding<ActiveOdfMainViewSheet?>) {
             self.parent = parent
             self.uiImages = uiImages
             self.uiImagesWithWatermarks = uiImagesWithWatermarks
+            self.sheetState = sheetState
         }
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -91,6 +94,7 @@ struct ImagePickerView: UIViewControllerRepresentable {
             
             DispatchQueue.main.async {
                 self.parent.presentationMode.wrappedValue.dismiss()
+                self.sheetState.wrappedValue = .imageEdit
             }
         }
     }
