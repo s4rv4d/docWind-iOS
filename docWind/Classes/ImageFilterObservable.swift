@@ -20,7 +20,7 @@ class ImageFilterObservable: ObservableObject {
         self.filter = filter
     }
     
-    func filterImage(filterImage: UIImage?) {
+    func filterImage() {
         self.filter.performFilter(with: self.image) { fillImage in
             DispatchQueue.main.async {
                 self.filteredImage = fillImage

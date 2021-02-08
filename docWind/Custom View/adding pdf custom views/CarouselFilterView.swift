@@ -16,67 +16,74 @@ struct CarouselImageFilter: Identifiable {
     
     var filter: ImageFilter
     var image: CPImage
+    
+    var filteredImage: CPImage {
+        return filter.performFilter2(with: image)
+    }
 }
 
 struct CarouselFilterView: View {
     
-    let image: UIImage?
+    let image: UIImage
     @Binding var filteredImage: CPImage
     
     fileprivate var imageFilters: [CarouselImageFilter] {
-        print("called")
-
-        guard let image = self.image else { return [] }
-        
         return ImageFilter.allCases.map { CarouselImageFilter(filter: $0, image: image) }
     }
-    #warning("need to fix this")
+
     var body: some View {
         VStack {
-            if image != nil {
-                
-                ScrollView(.horizontal, showsIndicators: true) {
-                    HStack(alignment: .top, spacing: 0) {
-                        ForEach(imageFilters) { imageFilter in
-                            ImageFilterView(observableImageFilter: ImageFilterObservable(image: imageFilter.image, filter: imageFilter.filter), filteredImage: $filteredImage)
-                                .padding(.leading, 16)
-                                .padding(.trailing, self.imageFilters.last!.filter == imageFilter.filter ? 16 : 0)
-//                                .onTapGesture {
-//                                    let fil = ImageFilterObservable(image: imageFilter.image, filter: imageFilter.filter)
-//                                    fil.giveFilterImage { (image) in
-//                                        self.filteredImage = image
-//                                    }
-//                                }
-                        }
+            ScrollView(.horizontal, showsIndicators: true) {
+                HStack(alignment: .top, spacing: 0) {
+                    ForEach(imageFilters) { imageFilter in
+                        VStack {
+                                ZStack {
+                                    Image(cpImage: imageFilter.filteredImage)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 100)
+                                        .cornerRadius(8)
+                                }
+                                
+                                Text(imageFilter.filter.rawValue)
+                                    .font(.subheadline)
+                            }
+
+                            .padding(.leading, 16)
+                            .padding(.trailing, self.imageFilters.last!.filter == imageFilter.filter ? 16 : 0)
+                            .onTapGesture {
+                                DispatchQueue.main.async {
+                                    let fil = ImageFilterObservable(image: imageFilter.image, filter: imageFilter.filter)
+                                    fil.giveFilterImage { (image) in
+                                        self.filteredImage = image
+                                    }
+
+                                }
+                            }
                     }
-                    .frame(height: 140)
-                    .debugPrint("here")
                 }
+                .frame(height: 140)
             }
         }
     }
-    
-    func filterView( observableImageFilter: ImageFilterObservable) -> some View {
+
+    private func addWatermark() {
+        let mediaItem = MediaItem(image: filteredImage)
         
-        let image = observableImageFilter.giveImage2()
+        /// text
+        let testStr = "Scanned by DocWind"
+        let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15) ]
+        let attrStr = NSAttributedString(string: testStr, attributes: attributes)
         
-        return VStack {
-                ZStack {
-                    Image(cpImage: image!)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 100)
-                        .cornerRadius(8)
-                        
-                    
-//                    if observableImageFilter.filteredImage == nil {
-//                        ProgressView()
-//                    }
-                }
-                
-                Text(observableImageFilter.filter.rawValue)
-                    .font(.subheadline)
-            }
+        let secondElement = MediaElement(text: attrStr)
+        secondElement.frame = CGRect(x: 10, y: mediaItem.size.height - 50, width: mediaItem.size.width, height: mediaItem.size.height)
+        
+        mediaItem.add(elements: [secondElement])
+        
+        let mediaProcessor = MediaProcessor()
+        mediaProcessor.processElements(item: mediaItem) { [self] (result, error) in
+            filteredImage = result.image!
+        }
     }
 }
 
@@ -91,7 +98,6 @@ extension CarouselFilterView: Equatable {
 struct ImageFilterView: View {
     
     @ObservedObject var observableImageFilter: ImageFilterObservable
-    @Binding var filteredImage: CPImage
     
     var body: some View {
         VStack {
@@ -111,17 +117,7 @@ struct ImageFilterView: View {
             Text(observableImageFilter.filter.rawValue)
                 .font(.subheadline)
         }
-        .onReceive(observableImageFilter.$filteredImage, perform: observableImageFilter.filterImage)
-//        .onAppear(perform: self.observableImageFilter.filterImage)
-        .onTapGesture(perform: handleOnTap)
-    }
-    #warning("test on testflight")
-    private func handleOnTap() {
-        guard let filteredImage = observableImageFilter.filteredImage else {
-            return
-        }
-        self.filteredImage = filteredImage
+        .onAppear(perform: self.observableImageFilter.filterImage)
     }
 }
 
-//.onReceive(observableImageFilter.$filteredImage, perform: observableImageFilter.filterImage)

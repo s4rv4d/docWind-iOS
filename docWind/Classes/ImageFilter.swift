@@ -25,6 +25,92 @@ enum ImageFilter: String, Identifiable, Hashable, CaseIterable {
     case skinSmoothing = "Skin Smoothing"
     case colorHalfTone = "Halftone"
     
+    func performFilter2(with image: CPImage) -> CPImage {
+        
+//        DispatchQueue.global(qos: .userInitiated).async {
+            var outputImage: CPImage = image
+            
+            switch self {
+            case .default:
+                outputImage = image
+                
+            case .pixellate:
+                outputImage = self.processFilterWithMetal(image: image) { (inputImage) -> MTIImage? in
+                    let filter = MTIPixellateFilter()
+                    filter.inputImage = inputImage
+                    return filter.outputImage
+                }
+                return outputImage
+                
+            case .saturation:
+                outputImage = self.processFilterWithMetal(image: image) { (inputImage) -> MTIImage? in
+                    let filter = MTISaturationFilter()
+                    filter.saturation = 0
+                    filter.inputImage = inputImage
+                    return filter.outputImage
+                }
+                return outputImage
+                
+            case .dotScreen:
+                outputImage = self.processFilterWithMetal(image: image) { (inputImage) -> MTIImage? in
+                    let filter = MTIDotScreenFilter()
+                    filter.inputImage = inputImage
+                    return filter.outputImage
+                }
+                return outputImage
+                
+            case .inverted:
+                outputImage = self.processFilterWithMetal(image: image) { (inputImage) -> MTIImage? in
+                    let filter = MTIColorInvertFilter()
+                    filter.inputImage = inputImage
+                    return filter.outputImage
+                }
+                return outputImage
+                
+            case .vibrance:
+                outputImage = self.processFilterWithMetal(image: image) { (inputImage) -> MTIImage? in
+                    let filter = MTIVibranceFilter()
+                    filter.amount = 0.5
+                    filter.inputImage = inputImage
+                    return filter.outputImage
+                }
+                return outputImage
+                
+            case .skinSmoothing:
+                outputImage = self.processFilterWithMetal(image: image) { (inputImage) -> MTIImage? in
+                    let filter = MTIHighPassSkinSmoothingFilter()
+                    filter.amount = 1
+                    filter.radius = 5
+                    
+                    filter.inputImage = inputImage
+                    return filter.outputImage
+                }
+                return outputImage
+                
+            case .contrast:
+                outputImage = self.processFilterWithMetal(image: image) { (inputImage) -> MTIImage? in
+                    let filter = MTIContrastFilter()
+                    filter.contrast = 1.5
+                    filter.inputImage = inputImage
+                    return filter.outputImage
+                }
+                return outputImage
+                
+            case .colorHalfTone:
+                outputImage = self.processFilterWithMetal(image: image) { (inputImage) -> MTIImage? in
+                    let filter = MTIColorHalftoneFilter()
+                    filter.scale = 2
+                    
+                    filter.inputImage = inputImage
+                    return filter.outputImage
+                }
+                return outputImage
+                
+            }
+//        }
+        return outputImage
+    }
+    
     func performFilter(with image: CPImage, queue: DispatchQueue = serialQueue, completion: @escaping(CPImage) -> ()) {
         
         DispatchQueue.global(qos: .userInitiated).async {

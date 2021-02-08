@@ -284,7 +284,10 @@ struct EditImageview: View {
                             .padding(.trailing)
                             
                             CarouselFilterView(image: currentImageCopy, filteredImage: $currentImage)
-                            
+                                .onDisappear(perform: {
+                                    mainImagesCopy[currentIndex] = currentImage
+                                    addWatermark()
+                                })
                         }
                         .padding([.horizontal, .top])
                     }
@@ -395,53 +398,61 @@ struct EditImageview: View {
     }
     
     private func backTappedCrop() {
-        print("here")
-        print(currentPositionBottomRight)
+        
+        defer {
+            mainStage = true
+            cropActive = false
+            adjustActive = false
+            filtersActive = false
+            watermarkActive = false
+            
+            /// changes
+            mainImagesCopy[currentIndex] = currentImage
+            addWatermark()
+        }
+        
         /// check if any change in coordinates
         if currentPositionTopLeft != .zero || currentPositionTopRight != .zero || currentPositionBottomLeft != .zero || currentPositionBottomRight != .zero {
             
             /// if changes detected, crop image
-//            let _topRight = CGPoint(x: currentPositionBottomRight.x, y: currentPositionTopLeft.y)
-//            let _bottomLeft = CGPoint(x: currentPositionTopLeft.x, y: currentPositionBottomRight.y)
             let _width = currentPositionTopLeft.distance(point: currentPositionTopRight)
             let _height = currentPositionTopLeft.distance(point: currentPositionBottomLeft)
-            let cropArea = CGRect(origin: currentPositionTopLeft, size: CGSize(width: _width, height: _height))
-            /// need to crop image
-            let cgImage = currentImage.cgImage!
             
-            let viewSize = currentImage.size
-            
-            let imageViewScaleWidth = CGFloat(viewSize.width)
-            let imageViewScaleHeight = CGFloat(viewSize.height)
+            let contextImage: UIImage = UIImage(cgImage: currentImage.cgImage!)
 
-            let scale = 1 / min(imageViewScaleWidth, imageViewScaleHeight)
-            let scaleWidth = 1 / imageViewScaleWidth
-            let scaleHeight = 1 / imageViewScaleHeight
+            let contextSize: CGSize = contextImage.size
+            var cropX: CGFloat = 0.0
+            var cropY: CGFloat = 0.0
+            let cropRatio: CGFloat = CGFloat(_width/_height)
+            let originalRatio: CGFloat = contextSize.width/contextSize.height
+            var scaledCropHeight: CGFloat = 0.0
+            var scaledCropWidth: CGFloat = 0.0
 
+            // See what size is longer and set crop rect parameters
+            if originalRatio > cropRatio {
 
-            let newWidth = cropArea.height * scale
-            let newHeight = cropArea.width * scale
-            let newXCord = (currentPositionTopLeft.x * scale) + newHeight
-            let newYCord = (currentPositionTopLeft.y * scale)
+                scaledCropHeight = contextSize.height
+                scaledCropWidth = (contextSize.height/_height) * _width
+                cropX = (contextSize.width - scaledCropWidth) / 2
+                cropY = 0
 
-
-            let newCropArea = CGRect(origin: CGPoint(x: newXCord,
-                                                     y: newYCord),
-                                     size: CGSize(width: newHeight,
-                                                  height: newWidth))
-            
-            guard let croppedSourceImage = cgImage.cropping(to: cropArea) else {
-                return
+            } else {
+                scaledCropWidth = contextSize.width
+                scaledCropHeight = (contextSize.width/_width) * _height
+                cropY = (contextSize.height / scaledCropHeight) / 2
+                cropX = 0
             }
-            
-            currentImage = UIImage(cgImage: croppedSourceImage)
+
+            let rect: CGRect = CGRect(x: cropX, y: cropY, width: scaledCropWidth, height: scaledCropHeight)
+
+            // Create bitmap image from context using the rect
+            let imageRef: CGImage = contextImage.cgImage!.cropping(to: rect)!
+
+            // Create a new image based on the imageRef and rotate back to the original orientation
+
+            let croppedImage: UIImage = UIImage(cgImage: imageRef, scale: currentImage.scale, orientation: currentImage.imageOrientation)
+            currentImage = croppedImage
         }
-        
-        mainStage = true
-        cropActive = false
-        adjustActive = false
-        filtersActive = false
-        watermarkActive = false
     }
     
     private func rotateRightTapped() {
@@ -500,18 +511,11 @@ struct EditImageview: View {
     }
     
     private func adjustBackTap() {
-        
-        defer {
-            mainStage = true
-            cropActive = false
-            adjustActive = false
-            filtersActive = false
-            watermarkActive = false
-        }
-        
-        /// do something before
-        print("do something")
-        
+        mainStage = true
+        cropActive = false
+        adjustActive = false
+        filtersActive = false
+        watermarkActive = false
     }
     
     private func filtersTapped() {
@@ -523,16 +527,11 @@ struct EditImageview: View {
     }
     
     private func filterBackTapped() {
-        defer {
-            mainStage = true
-            cropActive = false
-            adjustActive = false
-            filtersActive = false
-            watermarkActive = false
-        }
-        
-        /// do something before
-        print("do something")
+        mainStage = true
+        cropActive = false
+        adjustActive = false
+        filtersActive = false
+        watermarkActive = false
     }
     
     private func watermarkTapped() {
@@ -556,7 +555,7 @@ struct EditImageview: View {
         
         /// text
         let testStr = "Scanned by DocWind"
-        let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15) ]
+        let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15) ]
         let attrStr = NSAttributedString(string: testStr, attributes: attributes)
         
         let secondElement = MediaElement(text: attrStr)
