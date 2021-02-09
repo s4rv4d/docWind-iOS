@@ -89,7 +89,7 @@ struct SettingsView: View {
                 case .mailFeature:
                     MailView(isShowing: self.$showSheet, result: self.$result, subject: "Feature request", message: "Hi, I have an idea that i would like to suggest ")
                 case .shareSheet:
-                    ShareSheetView(activityItems: ["Try out docWind!! (We do not steal your data) \n\(SettingsHelper.appURL)"])
+                    ShareSheetView(activityItems: ["Try out docWind! \n\(SettingsHelper.appURL)"])
                 case .dependency:
                     DependecyPageView()
                 }

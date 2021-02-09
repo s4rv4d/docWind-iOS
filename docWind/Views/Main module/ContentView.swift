@@ -140,7 +140,7 @@ struct ContentView: View {
             
         // sheet code
         // make sure to conform to identifiable
-        .sheet(item: $activeSheet, onDismiss: {
+        .fullScreenCover(item: $activeSheet, onDismiss: {
             self.activeSheet = nil
         }) { item in
             

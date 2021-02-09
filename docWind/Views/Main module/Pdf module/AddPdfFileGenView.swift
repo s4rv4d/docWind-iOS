@@ -147,14 +147,14 @@ struct AddPdfFileGenView: View {
             }
         }
         
-        .sheet(item: $activeSheet, onDismiss: { self.activeSheet = nil }) { item in
+        .fullScreenCover(item: $activeSheet, onDismiss: { self.activeSheet = nil }) { item in
             switch item {
             case .scannerView:
-                ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
+                ScannerView(uiImages: self.$pages, sheetState: $activeSheet)
             case .pdfView:
-                SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
+                SnapCarouselView(imagesState: self.$pages, mainImages: self.$pages, title: self.pdfName)
             case .photoLibrary:
-                ImagePickerView(pages: self.$pages, pagesWithMark: self.$pagesWithMark, sheetState: self.$activeSheet)
+                ImagePickerView(pages: self.$pages, sheetState: self.$activeSheet)
             case .subView:
                 SubcriptionPageView()
             case .imageEdit:

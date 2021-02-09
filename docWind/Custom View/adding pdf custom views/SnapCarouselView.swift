@@ -21,7 +21,6 @@ struct SnapCarouselView: View {
     
     // MARK: - @Binding variables
     @Binding var imagesState: [UIImage]
-    @Binding var imageWithWaterMark: [UIImage]
     @Binding var mainImages: [UIImage]
     
     // MARK: - Environment variables
@@ -106,9 +105,5 @@ struct SnapCarouselView: View {
         UIState.activeCard = 0
         self.mainImages.remove(at: currentPhotoIndex)
         self.imagesState.remove(at: currentPhotoIndex)
-    }
-    
-    private func addFilters() {
-        
     }
 }

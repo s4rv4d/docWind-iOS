@@ -22,7 +22,6 @@ struct AddPdfMainView: View {
     
     @State var mainPages: [UIImage] = [UIImage]()
     @State var pages: [UIImage] = [UIImage]()
-    @State var pagesWithMark: [UIImage] = [UIImage]()
         
     @State private var activeSheet: ActiveOdfMainViewSheet? = nil
     @State private var activeAlertSheet: ActiveAlertSheet = .notice
@@ -82,8 +81,8 @@ struct AddPdfMainView: View {
                     } else {
                         ScrollView(.horizontal) {
                             HStack {
-                                ForEach(0..<((self.removeWatermark == true) ? self.pages.count : self.pagesWithMark.count), id: \.self){ index in
-                                    Image(uiImage: ((self.removeWatermark == true) ? self.pages[index] : self.pagesWithMark[index]))
+                                ForEach(0 ..< pages.count, id: \.self){ index in
+                                    Image(uiImage: (self.pages[index]))
                                     .resizable()
                                     .frame(width: 150, height: 200)
                                     .cornerRadius(8)
@@ -126,7 +125,6 @@ struct AddPdfMainView: View {
                     }
                 }
             }
-//                .keyboardSensible(self.$offsetVal)
             .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
                 
             .navigationBarTitle(Text(self.pdfName))
@@ -146,20 +144,16 @@ struct AddPdfMainView: View {
                return Alert(title: Text("Alert"), message: Text("Are you sure you want to delete this document?"), primaryButton: .destructive(Text("Delete"), action: { self.presentationMode.wrappedValue.dismiss() }), secondaryButton: .cancel())
             }
         }
-        .sheet(item: $activeSheet, onDismiss: { self.activeSheet = nil }) { item in
+        
+        
+        .fullScreenCover(item: $activeSheet, onDismiss: { self.activeSheet = nil }) { item in
             switch item {
             case .scannerView:
-//                ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
-                if #available(iOS 14.0, *) {
-                    CameraView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
-                } else {
-                    // Fallback on earlier versions
-                    ScannerView(uiImages: self.$pages, uiImagesWithWatermarks: self.$pagesWithMark)
-                }
+                ScannerView(uiImages: self.$pages, sheetState: $activeSheet)
             case .pdfView:
-                SnapCarouselView(imagesState: self.$pages, imageWithWaterMark: self.$pagesWithMark, mainImages: (self.removeWatermark == true) ? self.$pages : self.$pagesWithMark, title: self.pdfName)
+                SnapCarouselView(imagesState: self.$pages, mainImages: self.$pages, title: self.pdfName)
             case .photoLibrary:
-                ImagePickerView(pages: self.$pages, pagesWithMark: self.$pagesWithMark, sheetState: $activeSheet)
+                ImagePickerView(pages: self.$pages, sheetState: $activeSheet)
             case .subView:
                 SubcriptionPageView()
             case .imageEdit:
@@ -181,12 +175,12 @@ struct AddPdfMainView: View {
     private func saveTapped() {
         FeedbackManager.mediumFeedback()
         
-        if (self.pages.count == 0 || self.pagesWithMark.count == 0) {
+        if (self.pages.count == 0) {
             self.activeAlertSheet = .notice
             self.alertMessage = "Make sure you have scan atleast one document"
             self.showAlert.toggle()
         } else {
-            let mainPages = (self.removeWatermark == true) ? self.pages : self.pagesWithMark
+            let mainPages = self.pages
             
             // convert to pdf
             let pdfDocument = PDFDocument()

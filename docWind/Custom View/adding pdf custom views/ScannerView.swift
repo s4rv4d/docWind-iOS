@@ -15,14 +15,14 @@ struct ScannerView: UIViewControllerRepresentable {
     
     // MARK: - @Binding vars
     @Binding var uiImages:[UIImage]
-    @Binding var uiImagesWithWatermarks: [UIImage]
+    @Binding var sheetState: ActiveOdfMainViewSheet?
     @State var ac = false
     
     // MARK: - Properties
     typealias UIViewControllerType = VNDocumentCameraViewController
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(uiImages: $uiImages, uiImagesWithWatermarks: $uiImagesWithWatermarks, state: $ac)
+        return Coordinator(uiImages: $uiImages, state: $ac, sheetState: $sheetState)
     }
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<ScannerView>) -> VNDocumentCameraViewController {
@@ -76,71 +76,52 @@ struct ScannerView: UIViewControllerRepresentable {
     class Coordinator: NSObject, VNDocumentCameraViewControllerDelegate {
         
         var uiImages: Binding<[UIImage]>
-        var uiImagesWithWatermarks: Binding<[UIImage]>
         var state: Binding<Bool>
+        var sheetState: Binding<ActiveOdfMainViewSheet?>
         
-        init(uiImages: Binding<[UIImage]>, uiImagesWithWatermarks: Binding<[UIImage]>, state: Binding<Bool>) {
+        init(uiImages: Binding<[UIImage]>, state: Binding<Bool>, sheetState: Binding<ActiveOdfMainViewSheet?>) {
             self.uiImages = uiImages
-            self.uiImagesWithWatermarks = uiImagesWithWatermarks
             self.state = state
+            self.sheetState = sheetState
         }
                 
         public func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
             print("Save TAPPED")
             var imgs = [UIImage]()
-            var imgsWithWatermarks = [UIImage]()
                         
             for pageIndex in 0 ..< scan.pageCount {
                 autoreleasepool {
                     let image = scan.imageOfPage(at: pageIndex)
                         .resizeImageUsingVImage(size: CGSize(width: 596, height: 842))!
                     
+                    // compression part
                     let bytes = image.jpegData(compressionQuality: 0.8)!
                     
                     print("page dimensions \(image.size.width) by \(image.size.height) - JPEG size \(bytes.count)")
                     
                     let editImage = UIImage(data: bytes)!
-                    
-                    // watermark
-                    let item = MediaItem(image: editImage)
-                                                        
-                    let testStr = "Scanned by DocWind"
-                    let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15) ]
-                    let attrStr = NSAttributedString(string: testStr, attributes: attributes)
-                            
-                    let secondElement = MediaElement(text: attrStr)
-                    secondElement.frame = CGRect(x: 10, y: item.size.height - 50, width: item.size.width, height: item.size.height)
-                            
-                    item.add(elements: [secondElement])
-                            
-                    let mediaProcessor = MediaProcessor()
-                    mediaProcessor.processElements(item: item) { [weak self] (result, error) in
-                        // to remove warning
-                        _ = self
-                        let editableImage = result.image!
-                        let editBytes = editableImage.jpegData(compressionQuality: 0.8)!
-                        imgsWithWatermarks.append(UIImage(data: editBytes)!)
-                    }
-                    
-                    imgs.append(editImage)
+                    self.uiImages.wrappedValue.append(editImage)
                 }
             }
             state.wrappedValue.toggle()
             
-            // appending images based on image counts
-            DispatchQueue.main.async {
-                if self.uiImages.wrappedValue.count == 0 {
-                    self.uiImages.wrappedValue = imgs
-                    self.uiImagesWithWatermarks.wrappedValue = imgsWithWatermarks
-                } else {
-                    self.uiImages.wrappedValue +=  imgs
-                    self.uiImagesWithWatermarks.wrappedValue += imgsWithWatermarks
-                }
-            }
+//            self.uiImages.wrappedValue +=  imgs
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                controller.dismiss(animated: true, completion: nil)
-            }
+//            // appending images based on image counts
+//            if self.uiImages.wrappedValue.count == 0 {
+//                self.uiImages.wrappedValue = imgs
+//            } else {
+//                self.uiImages.wrappedValue +=  imgs
+//            }
+            
+            controller.dismiss(animated: true, completion: {
+                if imgs.count != 0 {
+                    self.sheetState.wrappedValue = .imageEdit
+                } else {
+                    self.sheetState.wrappedValue = nil
+                }
+            })
+            
         }
         
         private func compressedImage(_ originalImage: UIImage) -> UIImage {
