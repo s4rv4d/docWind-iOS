@@ -28,6 +28,11 @@ struct AddPdfMainView: View {
     @State private var removeWatermark = false
     @State private var offsetVal: CGFloat = 0.0
     
+    // for compression
+    @State private var compressionIndex = 3
+    private let compressionTypes = ["0%", "25%", "50%", "75%", "100%"]
+    private let compressionValues: [CGFloat] = [1, 0.75, 0.50, 0.25, 0]
+    
     // MARK: - @Environment variables
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.managedObjectContext) var context
@@ -84,10 +89,10 @@ struct AddPdfMainView: View {
                                 ForEach(0 ..< pages.count, id: \.self){ index in
                                     Image(uiImage: (self.pages[index]))
                                     .resizable()
+                                    .aspectRatio(contentMode: .fit)
                                     .frame(width: 150, height: 200)
                                     .cornerRadius(8)
-                                        .aspectRatio(contentMode: .fill)
-                                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary))
+                                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary))
                                     .padding()
                                         .onTapGesture {
                                             self.imageTapped()
@@ -107,22 +112,31 @@ struct AddPdfMainView: View {
                         }
                     }
                 }
+//
+//                Section(header: Text("Options")){
+//                    Toggle(isOn: $removeWatermark.didSet(execute: { (status) in
+//                        if status {
+//                            if !AppSettings.shared.bougthNonConsumable {
+//                                self.showSubView()
+//                            }
+//                        }
+//                    })) {
+//                        HStack {
+//                            Text("Remove watermark")
+//                            Image(systemName: "star.fill")
+//                                .foregroundColor(.yellow)
+//                            Spacer()
+//                        }
+//                    }
+//                }
                 
-                Section(header: Text("Options")){
-                    Toggle(isOn: $removeWatermark.didSet(execute: { (status) in
-                        if status {
-                            if !AppSettings.shared.bougthNonConsumable {
-                                self.showSubView()
-                            }
-                        }
-                    })) {
-                        HStack {
-                            Text("Remove watermark")
-                            Image(systemName: "star.fill")
-                                .foregroundColor(.yellow)
-                            Spacer()
+                Section(header: Text("Compression percentage"), footer: Text("Approximate file size: \(approximateFileSize()) \n high resolution images can increase file size.")) {
+                    Picker(selection: $compressionIndex, label: Text("")) {
+                        ForEach(0 ..< compressionTypes.count) {
+                            Text(compressionTypes[$0])
                         }
                     }
+                    .pickerStyle(SegmentedPickerStyle())
                 }
             }
             .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
@@ -172,6 +186,22 @@ struct AddPdfMainView: View {
     }
     
     // MARK: - Functions
+    private func approximateFileSize() -> String {
+        if self.pages.count != 0 {
+            var totalSize = 0
+            
+            for image in pages {
+                let bytes = image.jpegData(compressionQuality: compressionValues[compressionIndex])!
+                totalSize += bytes.count
+            }
+            let floatBytes = Float(totalSize) * 0.000001
+            print(floatBytes)
+            return String(format: "%.2f", floatBytes) + "MB"
+        } else {
+            return "0 MB"
+        }
+    }
+    
     private func saveTapped() {
         FeedbackManager.mediumFeedback()
         
@@ -185,7 +215,12 @@ struct AddPdfMainView: View {
             // convert to pdf
             let pdfDocument = PDFDocument()
             for page in mainPages {
-                let pdfPage = PDFPage(image: page)
+                
+                // compression part here
+                guard let bytes = page.jpegData(compressionQuality: compressionValues[compressionIndex]) else { fatalError("failed to convert image into Data")}
+                guard let image = UIImage(data: bytes) else { fatalError("failed to get image from data") }
+                
+                let pdfPage = PDFPage(image: image)
                 let index = mainPages.firstIndex(of: page)!
                 
                 // store in pdfDocument
@@ -294,5 +329,13 @@ struct AddPdfMainView: View {
         } catch {
             print("❌ ERROR RETRIEVING DATA FOR DOCWIND DIRECTORY")
         }
+    }
+}
+
+struct AddPdfMainView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddPdfMainView()
+            .preferredColorScheme(.dark)
+            
     }
 }

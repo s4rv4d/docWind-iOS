@@ -190,7 +190,6 @@ struct EditPdfMainView: View {
                 EmptyView()
             }
         }
-        
         .actionSheet(isPresented: $showingActionSheet) {
             ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
                 .default(Text("Scan a document"), action: scanTapped),
@@ -199,6 +198,8 @@ struct EditPdfMainView: View {
             ])
         }
     }
+    
+    #warning("need to add image edit")
     
     private func saveTapped() {
         FeedbackManager.mediumFeedback()
@@ -339,6 +340,7 @@ struct EditPdfMainView: View {
                     }
                     /// pdfdocument adds up alot of extra bytes
                     #warning("need to fix this")
+                    #warning("don resize in image edit view while renaming, to prevent size increase")
                     print(pdfDocument.dataRepresentation())
                     pdfDocument.write(to: URL(fileURLWithPath: path))
                     

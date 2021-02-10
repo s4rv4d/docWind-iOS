@@ -48,13 +48,25 @@ struct ImagePickerView: UIViewControllerRepresentable {
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-                let img = image.resizeImageUsingVImage(size: CGSize(width: 596, height: 842))!
+//                let img = image.resizeImageUsingVImage(size: image.size)!
                 
-                let bytes = img.jpegData(compressionQuality: 0.8)!
+                let bytes100 = image.jpegData(compressionQuality: 1)!
+                let bytes75 = image.jpegData(compressionQuality: 0.75)!
+                let bytes50 = image.jpegData(compressionQuality: 0.50)!
+                let bytes25 = image.jpegData(compressionQuality: 0.25)!
+                let noCompression = image.jpegData(compressionQuality: 0)!
                 
-                print("page dimensions \(image.size.width) by \(image.size.height) - JPEG size \(bytes.count)")
+                print("100% compression: \(bytes100.count)")
+                print("75% compression: \(bytes75.count)")
+                print("50% compression: \(bytes50.count)")
+                print("25% compression: \(bytes25.count)")
+                print("original, no compression: \(noCompression.count)")
                 
-                let editImage = UIImage(data: bytes)!
+                
+                print("page dimensions \(image.size.width) by \(image.size.height) - JPEG size \(bytes100.count)")
+                
+                /// sticking with 0.25 compression quality as default
+                let editImage = UIImage(data: bytes100)!
                 
                 DispatchQueue.main.async {
                     if self.uiImages.wrappedValue.count == 0 {

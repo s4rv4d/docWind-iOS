@@ -81,27 +81,31 @@ struct EditImageview: View {
                 Spacer()
                 VStack {
                     // ---> 1 editing options (x and tick)
-                    HStack {
-                        Button(action: backTapped){
-                            Image(systemName: "multiply.circle.fill")
-                                .foregroundColor(Color(tintColor))
-                                .font(.system(size: 25))
+                    VStack {
+
+                        
+                        HStack {
+                            Button(action: backTapped){
+                                Image(systemName: "multiply.circle.fill")
+                                    .foregroundColor(Color(tintColor))
+                                    .font(.system(size: 25))
+                            }
+                            
+                            Spacer()
+                            
+                            Text("Edit Photo")
+                                .font(.title2)
+                            
+                            Spacer()
+                            
+                            Button(action: nextTapped) {
+                                Image(systemName: stateName)
+                                    .foregroundColor(Color(tintColor))
+                                    .font(.system(size: 25))
+                            }
                         }
-                        
-                        Spacer()
-                        
-                        Text("Edit Photo")
-                            .font(.title2)
-                        
-                        Spacer()
-                        
-                        Button(action: nextTapped) {
-                            Image(systemName: stateName)
-                                .foregroundColor(Color(tintColor))
-                                .font(.system(size: 25))
-                        }
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
                     // ---> 1
                     
                     // ---> 2 first stage
