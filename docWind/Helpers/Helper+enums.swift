@@ -141,4 +141,5 @@ enum EditType {
     case rename
     case iconColor
     case newImagesAdded
+    case compress
 }

@@ -20,7 +20,6 @@ struct SnapCarouselView: View {
     @State private var alertMessage = ""
     
     // MARK: - @Binding variables
-    @Binding var imagesState: [UIImage]
     @Binding var mainImages: [UIImage]
     
     // MARK: - Environment variables
@@ -104,6 +103,5 @@ struct SnapCarouselView: View {
         let currentPhotoIndex = UIState.activeCard
         UIState.activeCard = 0
         self.mainImages.remove(at: currentPhotoIndex)
-        self.imagesState.remove(at: currentPhotoIndex)
     }
 }

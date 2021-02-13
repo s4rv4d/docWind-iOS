@@ -28,13 +28,17 @@ struct EditPdfMainView: View {
     // for images
     @State var mainPages: [UIImage] = [UIImage]()
     @State var pages: [UIImage] = [UIImage]()
-    @State var pagesWithMark: [UIImage] = [UIImage]()
     
     // addtional properties
     @State private var activeSheet: ActiveOdfMainViewSheet? = nil
     @State private var activeAlertSheet: ActiveAlertSheet = .notice
     @State private var removeWatermark = false
     @State private var offsetVal: CGFloat = 0.0
+    
+    // for compression
+    @State private var compressionIndex = 3
+    private let compressionTypes = ["0%", "25%", "50%", "75%", "100%"]
+    private let compressionValues: [CGFloat] = [1, 0.75, 0.50, 0.25, 0]
     
     // MARK: - @Environment variables
     @Environment(\.presentationMode) var presentationMode
@@ -52,7 +56,6 @@ struct EditPdfMainView: View {
         self._selectedIconName = State(initialValue: selectedIconName)
         self._mainPages = State(initialValue: mainPages)
         self._pages = State(initialValue: mainPages)
-        self._pagesWithMark = State(initialValue: mainPages)
         self._url = State(initialValue: url)
         self.item = item
         
@@ -103,13 +106,12 @@ struct EditPdfMainView: View {
                     } else {
                         ScrollView(.horizontal) {
                             HStack {
-                                ForEach(0..<((self.removeWatermark == true) ? self.pages.count : self.pagesWithMark.count), id: \.self){ index in
-                                    Image(uiImage: ((self.removeWatermark == true) ? self.pages[index] : self.pagesWithMark[index]))
+                                ForEach(0 ..< self.pages.count, id: \.self){ index in
+                                    Image(uiImage: self.pages[index])
                                     .resizable()
+                                    .aspectRatio(contentMode: .fit)
                                     .frame(width: 150, height: 200)
-                                    .cornerRadius(8)
-                                        .aspectRatio(contentMode: .fill)
-                                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary))
+                                    .cornerRadius(8)                                        
                                     .padding()
                                         .onTapGesture {
                                             self.imageTapped()
@@ -130,33 +132,16 @@ struct EditPdfMainView: View {
                     }
                 }
                 
-               Section(header: Text("Options")){
-                    Toggle(isOn: $removeWatermark.didSet(execute: { (status) in
-                        if status {
-                            if !AppSettings.shared.bougthNonConsumable {
-                                self.removeWatermark.toggle()
-                                self.activeAlertSheet = .notice
-                                self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
-                                self.showAlert.toggle()
-                            }
-                        }
-                    })) {
-                        HStack {
-                            Text("Remove watermark")
-                            Image(systemName: "star.fill")
-                                .foregroundColor(.yellow)
-                            Spacer()
+                /// compress
+                Section(header: Text("Compression percentage"), footer: Text("Approximate file size: \(approximateFileSize()) \n high resolution images can increase file size.")) {
+                    Picker(selection: $compressionIndex, label: Text("")) {
+                        ForEach(0 ..< compressionTypes.count) {
+                            Text(compressionTypes[$0])
                         }
                     }
-                    .onTapGesture {
-                        if !AppSettings.shared.bougthNonConsumable {
-                          print("You need to buy")
-                            self.activeAlertSheet = .notice
-                            self.alertMessage = "You need to be docWind Plus user to access this feature, head over to settings to find out more :)"
-                            self.showAlert.toggle()
-                        }
-                    }
+                    .pickerStyle(SegmentedPickerStyle())
                 }
+
                 
             }
             .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
@@ -183,11 +168,11 @@ struct EditPdfMainView: View {
             case .scannerView:
                 ScannerView(uiImages: self.$pages, sheetState: $activeSheet)
             case .pdfView:
-                SnapCarouselView(imagesState: self.$pages, mainImages: self.$pages, title: self.pdfName)
+                SnapCarouselView(mainImages: self.$pages, title: self.pdfName)
             case .photoLibrary:
                 ImagePickerView(pages: self.$pages, sheetState: self.$activeSheet)
             default:
-                EmptyView()
+                EditImageview(mainImages: self.$pages, mainImagesCopy: self.pages, currentImage: self.pages.first!, currentImageCopy: self.pages.first!)
             }
         }
         .actionSheet(isPresented: $showingActionSheet) {
@@ -199,12 +184,27 @@ struct EditPdfMainView: View {
         }
     }
     
-    #warning("need to add image edit")
+    
+    private func approximateFileSize() -> String {
+        if self.pages.count != 0 {
+            var totalSize = 0
+            
+            for image in pages {
+                let bytes = image.jpegData(compressionQuality: compressionValues[compressionIndex])!
+                totalSize += bytes.count
+            }
+            let floatBytes = Float(totalSize) * 0.000001
+            print(floatBytes)
+            return String(format: "%.2f", floatBytes) + "MB"
+        } else {
+            return "0 MB"
+        }
+    }
     
     private func saveTapped() {
         FeedbackManager.mediumFeedback()
         
-        if (self.pages.count == 0 || self.pagesWithMark.count == 0) {
+        if (self.pages.count == 0) {
             self.activeAlertSheet = .notice
             self.alertMessage = "Make sure you have scan atleast one document"
             self.showAlert.toggle()
@@ -223,7 +223,7 @@ struct EditPdfMainView: View {
                     saveFinal()
                 } else {
                     // same icon, now check if new images added
-                    let mainPages = (self.removeWatermark == true) ? self.pages : self.pagesWithMark
+                    let mainPages = self.pages
                     
                     if mainPages.count != oldPageCount {
                         // pages updated, need to update file path and save
@@ -237,7 +237,7 @@ struct EditPdfMainView: View {
                 }
                 
                 // second check regardless
-                let mainPages = (self.removeWatermark == true) ? self.pages : self.pagesWithMark
+                let mainPages = self.pages
                 
                 if mainPages.count != oldPageCount {
                     // pages updated, need to update file path and save
@@ -270,7 +270,6 @@ struct EditPdfMainView: View {
     }
     
     private func deleteFile() {
-        FeedbackManager.mediumFeedback()
         self.presentationMode.wrappedValue.dismiss()
     }
     
@@ -279,7 +278,10 @@ struct EditPdfMainView: View {
         case .rename:
             // different pdf name
             print("renaming file name")
-            let mainPages = (self.removeWatermark == true) ? self.pages : self.pagesWithMark
+            let mainPages = self.pages.map { UIImage(data: $0.pngData()!)! }
+            
+            print(self.pages.first!.pngData()!.count)
+            print(self.pages.first!.jpegData(compressionQuality: 1)!.count)
             
             // name adjustment
             
@@ -330,18 +332,20 @@ struct EditPdfMainView: View {
                     // convert to pdf
                     let pdfDocument = PDFDocument()
                     for page in mainPages {
-                        print(page.jpegData(compressionQuality: 0)!)
-                        print(page.size)
-                        let pdfPage = PDFPage(image: page)
+                        
+                        // compression part here
+                        guard let bytes = page.jpegData(compressionQuality: compressionValues[compressionIndex]) else { fatalError("failed to convert image into Data")}
+                        guard let image = UIImage(data: bytes) else { fatalError("failed to get image from data") }
+                        
+                        let pdfPage = PDFPage(image: image)
+                        print(page.pngData()!.count)
+                        
                         let index = mainPages.firstIndex(of: page)!
 
                         // store in pdfDocument
                         pdfDocument.insert(pdfPage!, at: index)
                     }
-                    /// pdfdocument adds up alot of extra bytes
-                    #warning("need to fix this")
-                    #warning("don resize in image edit view while renaming, to prevent size increase")
-                    print(pdfDocument.dataRepresentation())
+
                     pdfDocument.write(to: URL(fileURLWithPath: path))
                     
                     self.presentationMode.wrappedValue.dismiss()
@@ -364,11 +368,15 @@ struct EditPdfMainView: View {
             ItemModel.updateObject(in: self.context)
             
             self.presentationMode.wrappedValue.dismiss()
+        
+        case .compress:
+            print("doing something")
+        
         case .newImagesAdded:
             print("new images added")
             
             // actual updated pages
-            let mainPages = (self.removeWatermark == true) ? self.pages : self.pagesWithMark
+            let mainPages =  self.pages
             // directory ref
             let ref = "\(String(self.item.wrappedItemUrl.split(separator: "/").reversed()[1]).trimBothSides())"
             
@@ -386,10 +394,22 @@ struct EditPdfMainView: View {
             // create PDFDocument instance
             let pdfDocument = PDFDocument()
             
+            
+            
             // converting images to pages
             for page in mainPages {
-                guard let pdfPage = PDFPage(image: page) else { fatalError("couldnt convert into PDFPage") }
+                var image = page
+                
                 guard let index = mainPages.firstIndex(of: page) else { fatalError("couldnt find index of page") }
+                
+                if index >= oldPageCount {
+                    print("here")
+                    /// compress newly added images
+                    let bytes = image.jpegData(compressionQuality: compressionValues[compressionIndex])!
+                    image = UIImage(data: bytes)!
+                }
+                
+                guard let pdfPage = PDFPage(image: image) else { fatalError("couldnt convert into PDFPage") }
                 
                 // store in pdfDocument
                 pdfDocument.insert(pdfPage, at: index)

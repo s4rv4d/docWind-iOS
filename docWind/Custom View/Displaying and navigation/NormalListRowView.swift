@@ -324,18 +324,18 @@ struct NormalListRowView: View {
                                 guard let page = pdf.page(at: i) else { return }
                                 let pageRect = page.getBoxRect(.mediaBox)
                                 let renderer = UIGraphicsImageRenderer(size: pageRect.size)
-                                let img = renderer.image { ctx in
+                                let image = renderer.image { ctx in
                                     UIColor.white.set()
-                                    ctx.fill(pageRect)
-                                    
                                     ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
                                     ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
+                                    ctx.fill(pageRect)
                                     ctx.cgContext.drawPDFPage(page)
                                 }
 //                                let edittedImage = img.resizeImageUsingVImage(size: CGSize(width: 596, height: 842))!
 //                                let editImageBytes = edittedImage.jpegData(compressionQuality: 0.8)!
 //                                imgs.append(UIImage(data: editImageBytes)!)
-                                print(img.jpegData(compressionQuality: 0))
+                                let data = image.jpegData(compressionQuality: 0.75)!
+                                let img = UIImage(data: data)!
                                 imgs.append(img)
                             }
                         }

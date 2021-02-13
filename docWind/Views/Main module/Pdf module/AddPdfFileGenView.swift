@@ -13,7 +13,7 @@ import CoreData
 struct AddPdfFileGenView: View {
     
     // MARK: - @State properties
-    @State private var pdfName = "Document"
+    @State private var pdfName = "docWind\(Date())"
     @State private var selectedIconName = "blue"
     @State private var alertMessage = ""
     @State private var showAlert = false
@@ -22,19 +22,24 @@ struct AddPdfFileGenView: View {
     
     @State var mainPages: [UIImage] = [UIImage]()
     @State var pages: [UIImage] = [UIImage]()
-    @State var pagesWithMark: [UIImage] = [UIImage]()
         
-    @State private var activeSheet: ActiveOdfMainViewSheet? = .scannerView
+    @State private var activeSheet: ActiveOdfMainViewSheet? = nil
     @State private var activeAlertSheet: ActiveAlertSheet = .notice
-    @State private var removeWatermark = false
     @State var deleteDoc = false
     @State private var offsetVal: CGFloat = 0.0
     @State var headPath: String
     @State var headName: String
     
+    // for compression
+    @State private var compressionIndex = 3
+    private let compressionTypes = ["0%", "25%", "50%", "75%", "100%"]
+    private let compressionValues: [CGFloat] = [1, 0.75, 0.50, 0.25, 0]
+    
     // MARK: - @Environment variables
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.managedObjectContext) var context
+    
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
     
     // MARK: - Properties
     var iconColors: [Color] = [.blue, .red, .green, .yellow, .pink, .primary, .gray, .orange, .purple]
@@ -83,13 +88,14 @@ struct AddPdfFileGenView: View {
                     } else {
                         ScrollView(.horizontal) {
                             HStack {
-                                ForEach(0..<((self.removeWatermark == true) ? self.pages.count : self.pagesWithMark.count), id: \.self){ index in
-                                    Image(uiImage: ((self.removeWatermark == true) ? self.pages[index] : self.pagesWithMark[index]))
+                                ForEach(0 ..< self.pages.count, id: \.self){ index in
+                                    Image(uiImage: self.pages[index])
                                     .resizable()
+                                    .aspectRatio(contentMode: .fit)
                                     .frame(width: 150, height: 200)
                                     .cornerRadius(8)
-                                        .aspectRatio(contentMode: .fill)
-                                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white))
+                                        
+//                                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white))
                                     .padding()
                                         .onTapGesture {
                                             self.imageTapped()
@@ -110,22 +116,32 @@ struct AddPdfFileGenView: View {
                     }
                 }
                 
-                Section(header: Text("Options")){
-                    Toggle(isOn: $removeWatermark.didSet(execute: { (status) in
-                        if status {
-                            if !AppSettings.shared.bougthNonConsumable {
-                                self.showSubView()
-                            }
-                        }
-                    })) {
-                        HStack {
-                            Text("Remove watermark")
-                            Image(systemName: "star.fill")
-                                .foregroundColor(.yellow)
-                            Spacer()
+//                Section(header: Text("Options")){
+//                    Toggle(isOn: $removeWatermark.didSet(execute: { (status) in
+//                        if status {
+//                            if !AppSettings.shared.bougthNonConsumable {
+//                                self.showSubView()
+//                            }
+//                        }
+//                    })) {
+//                        HStack {
+//                            Text("Remove watermark")
+//                            Image(systemName: "star.fill")
+//                                .foregroundColor(.yellow)
+//                            Spacer()
+//                        }
+//                    }
+//                }
+                
+                Section(header: Text("Compression percentage"), footer: Text("Approximate file size: \(approximateFileSize()) \n high resolution images can increase file size.")) {
+                    Picker(selection: $compressionIndex, label: Text("")) {
+                        ForEach(0 ..< compressionTypes.count) {
+                            Text(compressionTypes[$0])
                         }
                     }
+                    .pickerStyle(SegmentedPickerStyle())
                 }
+                
             }
 //            .keyboardSensible(self.$offsetVal)
             .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
@@ -136,6 +152,7 @@ struct AddPdfFileGenView: View {
                     .foregroundColor(.red)
                 }, trailing: Button(action:  saveTapped){
                     Text("Save")
+                        .foregroundColor(Color(tintColor))
             })
         }
         
@@ -152,13 +169,13 @@ struct AddPdfFileGenView: View {
             case .scannerView:
                 ScannerView(uiImages: self.$pages, sheetState: $activeSheet)
             case .pdfView:
-                SnapCarouselView(imagesState: self.$pages, mainImages: self.$pages, title: self.pdfName)
+                SnapCarouselView(mainImages: self.$pages, title: self.pdfName)
             case .photoLibrary:
                 ImagePickerView(pages: self.$pages, sheetState: self.$activeSheet)
             case .subView:
                 SubcriptionPageView()
             case .imageEdit:
-                EmptyView()
+                EditImageview(mainImages: self.$pages, mainImagesCopy: self.pages, currentImage: self.pages.first!, currentImageCopy: self.pages.first!)
             }
         }
         
@@ -174,6 +191,22 @@ struct AddPdfFileGenView: View {
     }
     
     // MARK: - Functions
+    private func approximateFileSize() -> String {
+        if self.pages.count != 0 {
+            var totalSize = 0
+            
+            for image in pages {
+                let bytes = image.jpegData(compressionQuality: compressionValues[compressionIndex])!
+                totalSize += bytes.count
+            }
+            let floatBytes = Float(totalSize) * 0.000001
+            print(floatBytes)
+            return String(format: "%.2f", floatBytes) + "MB"
+        } else {
+            return "0 MB"
+        }
+    }
+    
     private func addPagesTapped() {
         self.showingActionSheet.toggle()
     }
@@ -197,23 +230,27 @@ struct AddPdfFileGenView: View {
     }
     
     private func showSubView() {
-        self.removeWatermark = false
         self.activeSheet = .subView
     }
     
     private func saveTapped() {
         FeedbackManager.mediumFeedback()
-        if (self.pages.count == 0 || self.pagesWithMark.count == 0) {
+        if (self.pages.count == 0) {
             self.activeAlertSheet = .notice
             self.alertMessage = "Make sure you have scan atleast one document"
             self.showAlert.toggle()
         } else {
-            let mainPages = (self.removeWatermark == true) ? self.pages : self.pagesWithMark
+            let mainPages = self.pages
             
             // convert to pdf
             let pdfDocument = PDFDocument()
             for page in mainPages {
-                let pdfPage = PDFPage(image: page)
+                
+                // compression part here
+                guard let bytes = page.jpegData(compressionQuality: compressionValues[compressionIndex]) else { fatalError("failed to convert image into Data")}
+                guard let image = UIImage(data: bytes) else { fatalError("failed to get image from data") }
+                
+                let pdfPage = PDFPage(image: image)
                 let index = mainPages.firstIndex(of: page)!
                 
                 // store in pdfDocument

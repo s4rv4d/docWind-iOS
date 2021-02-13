@@ -13,7 +13,7 @@ import CoreData
 struct AddPdfMainView: View {
     
     // MARK: - @State properties
-    @State private var pdfName = "Document"
+    @State private var pdfName = "docWind\(Date())"
     @State private var selectedIconName = "blue"
     @State private var alertMessage = ""
     @State private var showAlert = false
@@ -92,7 +92,7 @@ struct AddPdfMainView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 150, height: 200)
                                     .cornerRadius(8)
-                                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary))
+//                                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary))
                                     .padding()
                                         .onTapGesture {
                                             self.imageTapped()
@@ -130,6 +130,7 @@ struct AddPdfMainView: View {
 //                    }
 //                }
                 
+                #warning("need to copy this over to the other file")
                 Section(header: Text("Compression percentage"), footer: Text("Approximate file size: \(approximateFileSize()) \n high resolution images can increase file size.")) {
                     Picker(selection: $compressionIndex, label: Text("")) {
                         ForEach(0 ..< compressionTypes.count) {
@@ -165,13 +166,13 @@ struct AddPdfMainView: View {
             case .scannerView:
                 ScannerView(uiImages: self.$pages, sheetState: $activeSheet)
             case .pdfView:
-                SnapCarouselView(imagesState: self.$pages, mainImages: self.$pages, title: self.pdfName)
+                SnapCarouselView(mainImages: self.$pages, title: self.pdfName)
             case .photoLibrary:
                 ImagePickerView(pages: self.$pages, sheetState: $activeSheet)
             case .subView:
                 SubcriptionPageView()
             case .imageEdit:
-                EditImageview(mainImages: self.$pages, mainImagesCopy: self.pages, currentImage: self.pages.first!, currentImageCopy: self.pages.first!)
+                EditImageview(mainImages: self.$pages, mainImagesCopy: self.pages, currentImage: self.pages.first!, currentImageCopy: self.pages.first!, imageCount: self.pages.count)
             }
         }
         

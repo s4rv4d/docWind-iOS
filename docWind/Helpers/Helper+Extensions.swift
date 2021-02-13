@@ -759,3 +759,4 @@ extension Image {
         #endif
     }
 }
+

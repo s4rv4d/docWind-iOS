@@ -87,7 +87,7 @@ struct ScannerView: UIViewControllerRepresentable {
                 
         public func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
             print("Save TAPPED")
-            var imgs = [UIImage]()
+//            var imgs = [UIImage]()
                         
             for pageIndex in 0 ..< scan.pageCount {
                 autoreleasepool {
@@ -95,7 +95,7 @@ struct ScannerView: UIViewControllerRepresentable {
                         .resizeImageUsingVImage(size: CGSize(width: 596, height: 842))!
                     
                     // compression part
-                    let bytes = image.jpegData(compressionQuality: 0.8)!
+                    let bytes = image.jpegData(compressionQuality: 1)!
                     
                     print("page dimensions \(image.size.width) by \(image.size.height) - JPEG size \(bytes.count)")
                     
@@ -115,7 +115,7 @@ struct ScannerView: UIViewControllerRepresentable {
 //            }
             
             controller.dismiss(animated: true, completion: {
-                if imgs.count != 0 {
+                if self.uiImages.wrappedValue.count != 0 {
                     self.sheetState.wrappedValue = .imageEdit
                 } else {
                     self.sheetState.wrappedValue = nil

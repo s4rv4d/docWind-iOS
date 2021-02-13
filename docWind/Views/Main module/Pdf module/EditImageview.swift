@@ -50,6 +50,9 @@ struct EditImageview: View {
     ///checkmark.circle.fill
     @State private var stateName = "chevron.right.circle.fill"
     
+    // alert
+    @State private var alertState: ActiveOdfMainViewSheet? = nil
+    
     @Environment(\.presentationMode) var presentationMode
     @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
     
@@ -65,7 +68,7 @@ struct EditImageview: View {
                         .contrast(Double(contrastValue))
                         .brightness(Double(brigtnessValue * 0.2))
                         .aspectRatio(contentMode: .fit)
-                        .cornerRadius(10)
+//                        .cornerRadius(10)
                         .overlay(
                             Group {
                                 if cropActive {
@@ -339,8 +342,11 @@ struct EditImageview: View {
                 }
             }
         }
+        .sheet(item: $alertState, onDismiss: { self.alertState = nil }) {_ in
+            SubcriptionPageView()
+        }
         .buttonStyle(PlainButtonStyle())
-    }
+        }
     
     // MARK: - Functions
     private func getCorners() -> some View {
@@ -556,14 +562,10 @@ struct EditImageview: View {
     
     private func addWatermark() {
         let mediaItem = MediaItem(image: currentImage)
+
         
-        /// text
-        let testStr = "Scanned by DocWind"
-        let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15) ]
-        let attrStr = NSAttributedString(string: testStr, attributes: attributes)
-        
-        let secondElement = MediaElement(text: attrStr)
-        secondElement.frame = CGRect(x: 10, y: mediaItem.size.height - 50, width: mediaItem.size.width, height: mediaItem.size.height)
+        let secondElement = MediaElement(image: UIImage(named: "waterMarkNew")!)
+        secondElement.frame = CGRect(x: 20, y: mediaItem.size.height - 71, width: 220, height: 70)
         
         mediaItem.add(elements: [secondElement])
         
@@ -578,6 +580,7 @@ struct EditImageview: View {
             currentImage = mainImagesCopy[currentIndex]
         } else {
             // alert
+            self.alertState = .subView
         }
     }
     
