@@ -78,7 +78,7 @@ struct SettingsView: View {
                 Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .default(Text("Dismiss")))
             }
             
-            .sheet(item: $activeSheet, onDismiss: { self.activeSheet = nil }) { item in
+            .fullScreenCover(item: $activeSheet, onDismiss: { self.activeSheet = nil }) { item in
                 switch item {
                 case .docSub:
                     SubcriptionPageView()
@@ -184,5 +184,13 @@ struct SettingsView: View {
     func dependencyTapped() {
         self.showSheet.toggle()
         self.activeSheet = .dependency
+    }
+}
+
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView()
+            .preferredColorScheme(.dark)
+            
     }
 }

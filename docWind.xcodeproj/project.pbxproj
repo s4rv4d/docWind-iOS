@@ -25,7 +25,6 @@
 		402D507525BDA68500D3529F /* ConfettiSwiftUI in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 402D507325BDA68500D3529F /* ConfettiSwiftUI */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		40485D8A24B98C9F008A137A /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40485D8924B98C9F008A137A /* TextView.swift */; };
 		40485D8C24B995E7008A137A /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40485D8B24B995E7008A137A /* BlurView.swift */; };
-		404BFAFC24E7C57400A13230 /* Shiny in Frameworks */ = {isa = PBXBuildFile; productRef = 404BFAFB24E7C57400A13230 /* Shiny */; };
 		404BFAFE24E7D59200A13230 /* DependecyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404BFAFD24E7D59200A13230 /* DependecyPageView.swift */; };
 		404D7F9A24B6ED3B002F53F0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404D7F9924B6ED3B002F53F0 /* SettingsView.swift */; };
 		405EE7A624B339B4005F525F /* RecognizedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EE7A524B339B4005F525F /* RecognizedText.swift */; };
@@ -39,6 +38,7 @@
 		405EFDC824BCA11A0070BE5F /* AppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EFDC724BCA11A0070BE5F /* AppIconView.swift */; };
 		405EFDCA24BCA12A0070BE5F /* SubcriptionPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EFDC924BCA12A0070BE5F /* SubcriptionPageView.swift */; };
 		405EFDCC24BCB3E30070BE5F /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405EFDCB24BCB3E30070BE5F /* MailView.swift */; };
+		406003A925DAF11500A1EBD1 /* docWindProButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406003A825DAF11500A1EBD1 /* docWindProButton.swift */; };
 		4069EF9F24D69AAF003083C6 /* ViewControllerResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4069EF9E24D69AAF003083C6 /* ViewControllerResolver.swift */; };
 		4069EFA124D69D4C003083C6 /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4069EFA024D69D4C003083C6 /* CustomSearchBar.swift */; };
 		406B425824EB9DAB00CA149A /* LoadingScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406B425724EB9DAB00CA149A /* LoadingScreenView.swift */; };
@@ -201,6 +201,7 @@
 		405EFDC724BCA11A0070BE5F /* AppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconView.swift; sourceTree = "<group>"; };
 		405EFDC924BCA12A0070BE5F /* SubcriptionPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcriptionPageView.swift; sourceTree = "<group>"; };
 		405EFDCB24BCB3E30070BE5F /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
+		406003A825DAF11500A1EBD1 /* docWindProButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = docWindProButton.swift; sourceTree = "<group>"; };
 		4069EF9E24D69AAF003083C6 /* ViewControllerResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerResolver.swift; sourceTree = "<group>"; };
 		4069EFA024D69D4C003083C6 /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		406B425724EB9DAB00CA149A /* LoadingScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreenView.swift; sourceTree = "<group>"; };
@@ -326,7 +327,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				404BFAFC24E7C57400A13230 /* Shiny in Frameworks */,
 				402D507425BDA68500D3529F /* ConfettiSwiftUI in Frameworks */,
 				40CDC4D224AF91F800462277 /* CloudKit.framework in Frameworks */,
 				40ABC04325CB3C5100F32067 /* MetalPetal in Frameworks */,
@@ -599,6 +599,7 @@
 				405EFDC324BC8C180070BE5F /* SubHeadlineView.swift */,
 				405EFDC524BC9ED90070BE5F /* AppVersionRow.swift */,
 				405EFDCB24BCB3E30070BE5F /* MailView.swift */,
+				406003A825DAF11500A1EBD1 /* docWindProButton.swift */,
 			);
 			path = "Settings view custom views";
 			sourceTree = "<group>";
@@ -755,7 +756,6 @@
 			);
 			name = docWind;
 			packageProductDependencies = (
-				404BFAFB24E7C57400A13230 /* Shiny */,
 				402D507325BDA68500D3529F /* ConfettiSwiftUI */,
 				40ABC04225CB3C5100F32067 /* MetalPetal */,
 			);
@@ -788,7 +788,6 @@
 			);
 			mainGroup = 40FDE46F24AB964B006AAFD2;
 			packageReferences = (
-				404BFAFA24E7C57400A13230 /* XCRemoteSwiftPackageReference "shiny" */,
 				402D507225BDA68500D3529F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 				40ABC04125CB3C5100F32067 /* XCRemoteSwiftPackageReference "MetalPetal" */,
 			);
@@ -934,6 +933,7 @@
 				4095AC74258BCB9A0008BD71 /* MediaFilter.swift in Sources */,
 				40D170AC24ADA93000F51F77 /* MainDocViewModel.swift in Sources */,
 				40ABC04725CB3E0400F32067 /* CarouselFilterView.swift in Sources */,
+				406003A925DAF11500A1EBD1 /* docWindProButton.swift in Sources */,
 				40F841C02591E57E00BE7E00 /* CustomCameraRepresentable.swift in Sources */,
 				4095AC7D258BCB9A0008BD71 /* MediaItem.swift in Sources */,
 				40DFFEB625A71ABB003DD30A /* CameraService+Extensions.swift in Sources */,
@@ -1170,14 +1170,6 @@
 				minimumVersion = 0.2.1;
 			};
 		};
-		404BFAFA24E7C57400A13230 /* XCRemoteSwiftPackageReference "shiny" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/maustinstar/shiny";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.1;
-			};
-		};
 		40ABC04125CB3C5100F32067 /* XCRemoteSwiftPackageReference "MetalPetal" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MetalPetal/MetalPetal.git";
@@ -1193,11 +1185,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 402D507225BDA68500D3529F /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
 			productName = ConfettiSwiftUI;
-		};
-		404BFAFB24E7C57400A13230 /* Shiny */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 404BFAFA24E7C57400A13230 /* XCRemoteSwiftPackageReference "shiny" */;
-			productName = Shiny;
 		};
 		40ABC04225CB3C5100F32067 /* MetalPetal */ = {
 			isa = XCSwiftPackageProductDependency;

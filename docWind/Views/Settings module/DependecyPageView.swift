@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import Shiny
 import ConfettiSwiftUI
 
 struct DependecyPageView: View {
@@ -23,35 +22,7 @@ struct DependecyPageView: View {
         NavigationView {
             ZStack {
                 VStack {
-                     // --> 1
-                    VStack(alignment: .leading, spacing: 5) {
-                        HStack {
-                            Text("Shiny")
-                                .font(.largeTitle)
-                                .fontWeight(.semibold)
-                                .shiny()
-                            Spacer()
-                            Image(systemName: "exclamationmark.circle")
-                                .foregroundColor(Color(tintColor))
-                                .onTapGesture {
-                                    FeedbackManager.mediumFeedback()
-                                    SettingsHelper.openUrl(url: "https://github.com/maustinstar/shiny")
-                                }
-                        }
-                        .padding([.bottom])
-                        Text("by Michal Vergas")
-                        Text("https://github.com/maustinstar/shiny")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        Text("MIT License")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                            .padding(.bottom)
-                        
-                    }
-                    .settingsBackground()
                     // --> 1
-                    // --> 2
                     VStack(alignment: .leading, spacing: 5) {
                         HStack {
                             Text("ConfettiSwiftUI")
@@ -61,8 +32,6 @@ struct DependecyPageView: View {
                             Image(systemName: "exclamationmark.circle")
                                 .foregroundColor(Color(tintColor))
                                 .onTapGesture {
-                                    print("hi")
-                                    FeedbackManager.mediumFeedback()
                                     SettingsHelper.openUrl(url: "https://github.com/simibac/ConfettiSwiftUI")
                                 }
 
@@ -78,27 +47,28 @@ struct DependecyPageView: View {
                             .padding(.bottom)
                         
                     }
+                    .settingsBackground()
                     .onTapGesture {
                         counter += 1
                     }
-                    .settingsBackground()
-                    // --> 2
+                    // --> 1
                     
                     Spacer()
                 }
-                    .padding(.top)
+                .padding(.top)
                 ConfettiCannon(counter: $counter)
             }
             
-        .navigationBarTitle(Text("Dependecies used"))
-        .navigationBarItems(leading: Button(action:{
-            FeedbackManager.mediumFeedback()
-            self.presentationMode.wrappedValue.dismiss()
-        }){
-            Image(systemName: "multiply.circle.fill")
-                .foregroundColor(Color(tintColor))
-                .font(.system(size: 25))
-        })
+        .navigationBarTitle(Text("Dependencies used"))
+        .navigationBarItems(trailing:
+                                Button(action:{
+                                    self.presentationMode.wrappedValue.dismiss()
+                                }){
+                                    Image(systemName: "multiply.circle.fill")
+                                        .foregroundColor(Color(tintColor))
+                                        .font(.system(size: 25))
+                                }
+                            )
         }
     }
 }

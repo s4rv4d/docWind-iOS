@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import SwiftUI
 import CoreGraphics
-import Shiny
 
 // MARK: - Helper struct
 ///use throughout the whole app
@@ -244,11 +243,11 @@ struct ShinyButton: View {
     //describing buttons
     //MARK: - Properties
     private let text: String
-    private let background: UIColor
+    private let background: Color
     private let action: () -> Void
     
     //MARK: - Dependency injection
-    init(text:String, background:UIColor = .red, action:@escaping() -> Void) {
+    init(text:String, background:Color = .red, action:@escaping() -> Void) {
         self.text = text
         self.background = background
         self.action = action
@@ -261,13 +260,13 @@ struct ShinyButton: View {
                 Text(text)
                     .font(.title)
                     .fontWeight(.semibold)
-//                    .foregroundColor(.black)
-                    .shiny(.hyperGlossy(.black))
+                    .foregroundColor(.primary)
                 Spacer()
                 }.padding()
                 .background(
                 RoundedRectangle(cornerRadius: 10)
-                    .shiny(.hyperGlossy(background)))
+                    .foregroundColor(background)
+                )
             .cornerRadius(10)
         }
     }

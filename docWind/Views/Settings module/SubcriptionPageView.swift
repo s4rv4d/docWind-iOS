@@ -41,6 +41,16 @@ struct SubcriptionPageView: View {
                             Image(systemName: "plus")
                                 .foregroundColor(.yellow)
                             Spacer()
+                            
+                            Button(action:{
+                                self.presentationMode.wrappedValue.dismiss()
+                            }){
+                                Image(systemName: "multiply.circle.fill")
+                                    .foregroundColor(Color(tintColor))
+                                    .font(.system(size: 25))
+                            }
+                            .padding(.trailing)
+
                         }
                     }
                     
@@ -144,7 +154,7 @@ struct SubcriptionPageView: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                         
-                        ShinyButton(text: "Restore purchase", background: .systemBlue, action: {
+                        ShinyButton(text: "Restore purchase", background: .blue, action: {
                             FeedbackManager.mediumFeedback()
                             
                             checkConnection { (status, statusCode) in
@@ -170,5 +180,13 @@ struct SubcriptionPageView: View {
                 }))
             }
         }
+    }
+}
+
+struct SubcriptionPageView_Previews: PreviewProvider {
+    static var previews: some View {
+        SubcriptionPageView()
+            .preferredColorScheme(.dark)
+            
     }
 }

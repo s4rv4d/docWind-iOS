@@ -68,7 +68,6 @@ struct EditImageview: View {
                         .contrast(Double(contrastValue))
                         .brightness(Double(brigtnessValue * 0.2))
                         .aspectRatio(contentMode: .fit)
-//                        .cornerRadius(10)
                         .overlay(
                             Group {
                                 if cropActive {
@@ -391,7 +390,6 @@ struct EditImageview: View {
                             )
                         }
                     }
-
                     Spacer()
                 }
                 Spacer()
@@ -400,6 +398,9 @@ struct EditImageview: View {
     
     /// crop
     private func cropSelected() {
+        
+        currentImage = currentImageCopy
+        
         mainStage = false
         cropActive = true
         adjustActive = false
@@ -493,6 +494,10 @@ struct EditImageview: View {
             
             /// bring up next image
             currentImage = mainImagesCopy[currentIndex]
+            currentImageCopy = mainImagesCopy[currentIndex]
+            
+            // add watermark
+            addWatermark()
             
             if currentIndex == (imageCount - 1) {
                 stateName = "checkmark.circle.fill"
