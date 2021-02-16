@@ -37,6 +37,12 @@ extension DirecModel {
         }
     }
     
+    public var filesName: [String] {
+        let set = files as? Set<ItemModel> ?? []
+        let fileNames = set.map { $0.wrappedItemName }
+        return fileNames
+    }
+    
     static func deleteObject(in managedObjectContext: NSManagedObjectContext, sub: DirecModel) {
         managedObjectContext.delete(sub)
         ///SAVE TO CONTEXT

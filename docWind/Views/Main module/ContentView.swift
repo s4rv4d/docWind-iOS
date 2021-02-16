@@ -31,7 +31,7 @@ struct ContentView: View {
     
     // MARK: - @Environment variables
     @Environment(\.managedObjectContext) var context
-    @FetchRequest(entity: DirecModel.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \DirecModel.created, ascending: true)], predicate: NSPredicate(format: "name == %@", "DocWind"), animation: .default) var items: FetchedResults<DirecModel>
+    @FetchRequest(entity: DirecModel.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \DirecModel.created, ascending: true)], predicate: NSPredicate(format: "name == %@", "DocWind"), animation: .default) var docWindItems: FetchedResults<DirecModel>
     
     // MARK: - ObservedObjects
     @ObservedObject var searchBar: SearchBar = SearchBar()
@@ -42,9 +42,9 @@ struct ContentView: View {
             ZStack {
                 VStack(alignment: .leading) {
                     //check if contents isnt empty
-                    if self.items.first != nil {
+                    if self.docWindItems.first != nil {
                         // display contents of file
-                        if (self.items.first!.fileArray.count == 0) {
+                        if (self.docWindItems.first!.fileArray.count == 0) {
                             NewStarterView()
                             EmptyView()
                             Color.clear
@@ -52,7 +52,7 @@ struct ContentView: View {
                             if !self.isOffgrid {
                                 List {
                                     Section(header: Text("DocWind >").font(.caption), footer: Text("Tap and hold on a cell for more options").font(.caption)) {
-                                        ForEach(self.items.first!.fileArray.filter { self.searchString.isEmpty || $0.wrappedItemName.localizedStandardContains(self.searchString)}, id: \.self) { item in
+                                        ForEach(self.docWindItems.first!.fileArray.filter { self.searchString.isEmpty || $0.wrappedItemName.localizedStandardContains(self.searchString)}, id: \.self) { item in
                                             NormalListRowView(itemArray: item, masterFolder: "\(DWFMAppSettings.shared.fileURL())")
                                                 .environment(\.managedObjectContext, self.context)
                                         }.onDelete(perform: self.deleteRow(at:))
@@ -62,7 +62,7 @@ struct ContentView: View {
 
                             } else {
                                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 40, maximum: 50), spacing: 16)], spacing: 8) {
-                                    ForEach(self.items.first!.fileArray.filter { self.searchString.isEmpty || $0.wrappedItemName.localizedStandardContains(self.searchString)}, id: \.self) { file in
+                                    ForEach(self.docWindItems.first!.fileArray.filter { self.searchString.isEmpty || $0.wrappedItemName.localizedStandardContains(self.searchString)}, id: \.self) { file in
                                             QGridCellView(item: file, masterFolder: "\(DWFMAppSettings.shared.fileURL())")
                                                 .environment(\.managedObjectContext, self.context)
                                     }
@@ -134,6 +134,11 @@ struct ContentView: View {
                 
         // On appear code
         .onAppear {
+            
+            if let _ = docWindItems.first {
+                _ = DWFMAppSettings.shared.syncUpLocalFilesWithApp(direcName: nil, directory: docWindItems.first!, context: self.context)
+            }
+            
             IAPService.shared.getProducts()
             self.check()
         }
@@ -219,7 +224,7 @@ struct ContentView: View {
     
     private func deleteRow(at indexSet: IndexSet) {
         guard let indexToDelete = indexSet.first else { return }
-        let item = self.items.first!.fileArray[indexToDelete]
+        let item = self.docWindItems.first!.fileArray[indexToDelete]
         
         
         if item.itemType == DWDIRECTORY {

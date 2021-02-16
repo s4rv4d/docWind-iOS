@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 // MARK: - Main protocol
 protocol DocWindFManager {
@@ -15,19 +16,17 @@ protocol DocWindFManager {
     func reset()
     func savePdf(urlString: String, direcName: String?, fileName: String) -> Bool
     func showSavedPdf(direcName: String?, fileName: String) -> (Bool, String)
-//    func pdfFileAlreadySaved(direcName: String?, fileName:String) -> Bool
     func pdfAlreadySaved(directory url: String?, fileName: String, fileurl urlString: String?) -> Bool
     func creatingDirectory(direcName: String) -> Bool
     func createSubDirectory(direcName: String) -> (Bool, String)
-//    func createSubSubDirectory(headName: URL, newDirecName: String) -> (Bool, String)
     func renameFile(direcName: String?, oldFileName: String, newFileName: String) -> (Bool, String)
-//    func savePdfWithDataContent(pdfData: Data, pdfName: String, direcName: String?) -> (Bool, String)
     func saveFileWithPDFContent(pdfData: Data, pdfName: String, directoryRef: String?) -> (Bool, String)
     func savePdfWithSubFolder(pdfData: Data, pdfName: String, subDir: String) -> (Bool, String)
     func deleteSavedPdf(direcName: String?, fileName: String) -> Bool
     func deleteSavedFolder(folderName: String) -> Bool
     func createPDF(images:[UIImage], maxSize:Int, quality:Int, pdfPathUrl: URL?) -> NSData?
     func updateFileWithPDFContent(pdfData: Data, pdfName: String, directoryRef: String?) -> (Bool, String)
+    func syncUpLocalFilesWithApp(direcName: String?, directory: DirecModel, context: NSManagedObjectContext) -> (Bool, [ItemModel])
 }
 
 //MARK: - Extension
@@ -53,14 +52,14 @@ extension DocWindFManager {
     }
     
     func savePdfWithSubFolder(pdfData: Data, pdfName: String, subDir: String) -> (Bool, String) {
-        var status = false
-        var path = ""
+        let status = false
+        let path = ""
         
         let direcPath = URL(string: subDir)!
         print("File Manager Path: ------> \(direcPath)")
         let pdfName = "\(pdfName)"
         print("Pdf name to save: -------> \(pdfName)")
-        let pdfData = pdfData
+        _ = pdfData
         
         
         let actualSavingFilePath = direcPath.appendingPathComponent((pdfName.removingPercentEncoding != nil) ? pdfName.removingPercentEncoding! : pdfName, isDirectory: false)
@@ -266,7 +265,7 @@ extension DocWindFManager {
                 // getting direc pathName
                 let direcPath = direcName!
                 // converting contents of pdf into Data type
-                if let pdfdata = try? Data.init(contentsOf: url!) {
+                if let _ = try? Data.init(contentsOf: url!) {
                     
                     let resourcePath = self.containerUrl!
                     print("File Manager Path: ------> \(resourcePath)")
@@ -275,7 +274,7 @@ extension DocWindFManager {
                     
                     //saving part...
                     let actualSavingDirec = resourcePath.appendingPathComponent("\(direcPath)", isDirectory: true)
-                    let actualSavingPath = actualSavingDirec.appendingPathComponent(pdfName, isDirectory: false)
+                    _ = actualSavingDirec.appendingPathComponent(pdfName, isDirectory: false)
                     
                     // before saving check if file already exists
 //                    if self.pdfFileAlreadySaved(direcName: direcName, fileName: fileName) {
@@ -309,7 +308,7 @@ extension DocWindFManager {
                 let url = URL(string: urlString)
 
                 // converting contents of pdf into Data type
-                if let pdfdata = try? Data.init(contentsOf: url!) {
+                if let _ = try? Data.init(contentsOf: url!) {
                     
                     let resourcePath = self.containerUrl!
                     print("File Manager Path: ------> \(resourcePath)")
@@ -317,7 +316,7 @@ extension DocWindFManager {
                     print("Pdf name to save: -------> \(pdfName)")
                     
                     //saving part...
-                    let actualSavingPath = resourcePath.appendingPathComponent("\(pdfName)", isDirectory: false)
+                    _ = resourcePath.appendingPathComponent("\(pdfName)", isDirectory: false)
                     
                     // before saving check if file already exists
 //                    if self.pdfFileAlreadySaved(direcName: direcName, fileName: fileName) {
@@ -459,7 +458,7 @@ extension DocWindFManager {
         
         // getting the main directory file URL
         guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
-        print(direcName)
+        print((direcName ?? "failing so default value") as String)
         print("name",fileName)
         
         if direcName == nil {
@@ -472,6 +471,7 @@ extension DocWindFManager {
                 print("here")
             } else {
                 print("not here")
+                status = false
             }
             
             // do a file check
@@ -526,8 +526,8 @@ extension DocWindFManager {
     
     func pdfAlreadySaved(directory url: String?, fileName: String, fileurl urlString: String?) -> Bool {
             var status = false
-            print("urlString: ",urlString)
-            print("url: ",url)
+            print("urlString: ",urlString ?? "")
+            print("url: ",url ?? "")
             
             if url != nil {
                 // directory name specified
@@ -831,6 +831,94 @@ extension DocWindFManager {
         }
         
         return (status, path)
+    }
+    
+    func syncUpLocalFilesWithApp(direcName: String?, directory: DirecModel, context: NSManagedObjectContext) -> (Bool, [ItemModel]) {
+        var status = false
+        
+        // getting the main directory file URL
+        guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
+        print(direcName)
+        
+        if FileManager.default.fileExists(atPath: resourceURL.path) {
+            print("Exists")
+        } else {
+            print("Doesnt exist")
+            status = false
+        }
+        
+        if direcName == nil {
+            // not under a direc
+            
+            /// go through all the contents first
+            let contents = try! FileManager.default.contentsOfDirectory(at: resourceURL, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+            print("contents: ", contents)
+            
+            do {
+                let contents = try FileManager.default.contentsOfDirectory(at: resourceURL, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+                print(contents)
+                
+                /// going through all the files one by one
+                for url in contents {
+                    
+                    print(directory.filesName)
+                    print(url.path.replacingOccurrences(of: "_", with: " "))
+                    
+                    let lastParts = url.path.split(separator: "/")
+                    let lastName = String(lastParts.last!)
+                    print(String(lastParts.last!))
+                    
+                    let lastNameNew = lastName.replacingOccurrences(of: " ", with: "_")
+                    print(lastName.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: ""))
+                    print(lastNameNew)
+                    
+                    
+                    if !directory.filesName.contains(lastName.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: "")) {
+                        print("doesnt exist")
+                        
+                        let stat = renameFile(direcName: direcName, oldFileName: lastName, newFileName: lastNameNew)
+                        if stat.0 {
+                            // add it too items
+                            let item = ItemModel(context: context)
+                            item.itemName = lastNameNew.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: "")
+                            item.itemType = DWPDFFILE
+                            item.itemURL = stat.1
+                            item.iconName = "blue"
+                            item.locked = NSNumber(booleanLiteral: false)
+                            item.itemCreated = Date()
+                            item.origin = directory
+
+                            do {
+                               try context.save()
+                               print("✅ created and saved \(lastNameNew.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: " ")) to coredata")
+                           } catch {
+                               print("❌ FAILED TO UPDATE COREDATA")
+                           }
+                        }
+                        
+                    } else {
+                        print("already exists")
+                    }
+                    
+//                    if url.description.contains(fileName) {
+//                        status = true
+//                        path = url.description
+//                        print("✅ FOUND PDF SUCCESSFULLY, ALREADY SAVED")
+//                    }
+
+                }
+            } catch {
+                print("❌ Directory COULD'NT BE FOUND ")
+                print("////reason: \(error.localizedDescription)")
+                status = false
+            }
+            
+            
+        } else {
+            // under a direc
+        }
+        
+        return (status, [])
     }
     
     /// END OF EXTENSION
