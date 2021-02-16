@@ -23,15 +23,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6341DACA-4F68-4548-9E1A-DB12BCB59D8B"
+            uuid = "B37FB5DA-2A90-4540-B9CF-AED4982AF59C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "docWind/Settings/DocWindFManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "875"
-            endingLineNumber = "875"
+            startingLineNumber = "935"
+            endingLineNumber = "935"
             landmarkName = "syncUpLocalFilesWithApp(direcName:directory:context:)"
             landmarkType = "7">
          </BreakpointContent>

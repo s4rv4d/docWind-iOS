@@ -77,6 +77,7 @@ struct AddDirecView: View {
         }.alert(isPresented: $showAlert) {
             Alert(title: Text("Notice"), message: Text(alertMessage), primaryButton: .cancel(), secondaryButton: .default(Text("Retry")))
         }
+        
     }
     
     // MARK: - Functions

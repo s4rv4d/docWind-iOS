@@ -90,7 +90,7 @@ extension DocWindFManager {
         return (status, path)
     }
     
-    /// renaming a file
+    /// renaming a file/folder
     /// - Parameters:
     ///   - direcName: directory where the file is present
     ///   - oldFileName: old file name
@@ -868,44 +868,72 @@ extension DocWindFManager {
                     let lastName = String(lastParts.last!)
                     print(String(lastParts.last!))
                     
-                    let lastNameNew = lastName.replacingOccurrences(of: " ", with: "_")
-                    print(lastName.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: ""))
-                    print(lastNameNew)
-                    
-                    
-                    if !directory.filesName.contains(lastName.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: "")) {
-                        print("doesnt exist")
+                    if lastName.contains(".pdf") {
                         
+                        let lastNameNew = lastName.replacingOccurrences(of: " ", with: "_")
+                        print(lastName.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: ""))
+                        print(lastNameNew)
+                        
+                        if !directory.filesName.contains(lastName.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: "")) {
+                            print("doesnt exist")
+                            
+                            let stat = renameFile(direcName: direcName, oldFileName: lastName, newFileName: lastNameNew)
+                            if stat.0 {
+                                // add it too items
+                                let item = ItemModel(context: context)
+                                item.itemName = lastNameNew.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: "")
+                                item.itemType = DWPDFFILE
+                                item.itemURL = stat.1
+                                item.iconName = "blue"
+                                item.locked = NSNumber(booleanLiteral: false)
+                                item.itemCreated = Date()
+                                item.origin = directory
+
+                                do {
+                                   try context.save()
+                                   print("✅ created and saved \(lastNameNew.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: " ")) to coredata")
+                               } catch {
+                                   print("❌ FAILED TO UPDATE COREDATA")
+                               }
+                            }
+                            
+                        } else {
+                            print("already exists")
+                        }
+                    } else {
+                        // its a directory
+                        print("directory")
+                        let lastNameNew = lastName.replacingOccurrences(of: " ", with: "_")
+                        print(lastName.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: ""))
+                        print(lastNameNew)
+                        
+                        /// renaming folder
                         let stat = renameFile(direcName: direcName, oldFileName: lastName, newFileName: lastNameNew)
                         if stat.0 {
-                            // add it too items
+                            
+                            /// add to items
                             let item = ItemModel(context: context)
-                            item.itemName = lastNameNew.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: "")
-                            item.itemType = DWPDFFILE
+                            item.itemName = lastNameNew.replacingOccurrences(of: "_", with: " ")
+                            item.itemType = DWDIRECTORY
                             item.itemURL = stat.1
                             item.iconName = "blue"
                             item.locked = NSNumber(booleanLiteral: false)
                             item.itemCreated = Date()
                             item.origin = directory
-
+                                    
+                            let newDirec = DirecModel(context: context)
+                            newDirec.name = lastNameNew.replacingOccurrences(of: "_", with: " ")
+                            newDirec.created = Date()
+                            
                             do {
                                try context.save()
-                               print("✅ created and saved \(lastNameNew.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: " ")) to coredata")
+                               print("✅ created and saved \(lastNameNew.replacingOccurrences(of: "_", with: " ")) to coredata")
                            } catch {
                                print("❌ FAILED TO UPDATE COREDATA")
                            }
                         }
                         
-                    } else {
-                        print("already exists")
                     }
-                    
-//                    if url.description.contains(fileName) {
-//                        status = true
-//                        path = url.description
-//                        print("✅ FOUND PDF SUCCESSFULLY, ALREADY SAVED")
-//                    }
-
                 }
             } catch {
                 print("❌ Directory COULD'NT BE FOUND ")
