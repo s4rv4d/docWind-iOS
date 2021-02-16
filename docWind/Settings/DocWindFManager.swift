@@ -26,7 +26,7 @@ protocol DocWindFManager {
     func deleteSavedFolder(folderName: String) -> Bool
     func createPDF(images:[UIImage], maxSize:Int, quality:Int, pdfPathUrl: URL?) -> NSData?
     func updateFileWithPDFContent(pdfData: Data, pdfName: String, directoryRef: String?) -> (Bool, String)
-    func syncUpLocalFilesWithApp(direcName: String?, directory: DirecModel, context: NSManagedObjectContext) -> (Bool, [ItemModel])
+    func syncUpLocalFilesWithApp(direcName: String?, directory: DirecModel, context: NSManagedObjectContext)
 }
 
 //MARK: - Extension
@@ -833,18 +833,15 @@ extension DocWindFManager {
         return (status, path)
     }
     
-    func syncUpLocalFilesWithApp(direcName: String?, directory: DirecModel, context: NSManagedObjectContext) -> (Bool, [ItemModel]) {
-        var status = false
+    func syncUpLocalFilesWithApp(direcName: String?, directory: DirecModel, context: NSManagedObjectContext) {
         
         // getting the main directory file URL
         guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
-        print(direcName)
         
         if FileManager.default.fileExists(atPath: resourceURL.path) {
             print("Exists")
         } else {
             print("Doesnt exist")
-            status = false
         }
         
         if direcName == nil {
@@ -907,46 +904,108 @@ extension DocWindFManager {
                         print(lastName.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: ""))
                         print(lastNameNew)
                         
-                        /// renaming folder
-                        let stat = renameFile(direcName: direcName, oldFileName: lastName, newFileName: lastNameNew)
-                        if stat.0 {
-                            
-                            /// add to items
-                            let item = ItemModel(context: context)
-                            item.itemName = lastNameNew.replacingOccurrences(of: "_", with: " ")
-                            item.itemType = DWDIRECTORY
-                            item.itemURL = stat.1
-                            item.iconName = "blue"
-                            item.locked = NSNumber(booleanLiteral: false)
-                            item.itemCreated = Date()
-                            item.origin = directory
-                                    
-                            let newDirec = DirecModel(context: context)
-                            newDirec.name = lastNameNew.replacingOccurrences(of: "_", with: " ")
-                            newDirec.created = Date()
-                            
-                            do {
-                               try context.save()
-                               print("✅ created and saved \(lastNameNew.replacingOccurrences(of: "_", with: " ")) to coredata")
-                           } catch {
-                               print("❌ FAILED TO UPDATE COREDATA")
-                           }
+                        if !directory.filesName.contains(lastName.replacingOccurrences(of: "_", with: " ")) {
+                            /// renaming folder
+                            let stat = renameFile(direcName: direcName, oldFileName: lastName, newFileName: lastNameNew)
+                            if stat.0 {
+                                
+                                /// add to items
+                                let item = ItemModel(context: context)
+                                item.itemName = lastNameNew.replacingOccurrences(of: "_", with: " ")
+                                item.itemType = DWDIRECTORY
+                                item.itemURL = stat.1
+                                item.iconName = "blue"
+                                item.locked = NSNumber(booleanLiteral: false)
+                                item.itemCreated = Date()
+                                item.origin = directory
+                                        
+                                let newDirec = DirecModel(context: context)
+                                newDirec.name = lastNameNew.replacingOccurrences(of: "_", with: " ")
+                                newDirec.created = Date()
+                                
+                                do {
+                                   try context.save()
+                                   print("✅ created and saved \(lastNameNew.replacingOccurrences(of: "_", with: " ")) to coredata")
+                               } catch {
+                                   print("❌ FAILED TO UPDATE COREDATA")
+                               }
+                            }
+                        } else {
+                            print("already exists")
                         }
-                        
                     }
                 }
             } catch {
                 print("❌ Directory COULD'NT BE FOUND ")
                 print("////reason: \(error.localizedDescription)")
-                status = false
             }
             
             
         } else {
             // under a direc
+            print(direcName)
+            
+            /// get directory name
+            let ref = direcName!.replacingOccurrences(of: " ", with: "_").trimBothSides()
+            let relativeFilePath = resourceURL.appendingPathComponent(ref, isDirectory: true)
+            print("RELATIVE PATH: \(relativeFilePath)")
+            
+            /// go through all the contents first
+            do {
+                let contents = try FileManager.default.contentsOfDirectory(at: relativeFilePath, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+                print(contents)
+                
+                /// going through all the files one by one
+                for url in contents {
+                    
+                    print(directory.filesName)
+                    print(url.path.replacingOccurrences(of: "_", with: " "))
+                    
+                    let lastParts = url.path.split(separator: "/")
+                    let lastName = String(lastParts.last!)
+                    print(String(lastParts.last!))
+                    
+                    if lastName.contains(".pdf") {
+                        
+                        let lastNameNew = lastName.replacingOccurrences(of: " ", with: "_")
+                        print(lastName.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: ""))
+                        print(lastNameNew)
+                        
+                        if !directory.filesName.contains(lastName.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: "")) {
+                            print("doesnt exist")
+                            
+                            let stat = renameFile(direcName: ref, oldFileName: lastName, newFileName: lastNameNew)
+                            if stat.0 {
+                                // add it too items
+                                let item = ItemModel(context: context)
+                                item.itemName = lastNameNew.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: "")
+                                item.itemType = DWPDFFILE
+                                item.itemURL = stat.1
+                                item.iconName = "blue"
+                                item.locked = NSNumber(booleanLiteral: false)
+                                item.itemCreated = Date()
+                                item.origin = directory
+
+                                do {
+                                   try context.save()
+                                   print("✅ created and saved \(lastNameNew.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: " ")) to coredata")
+                               } catch {
+                                   print("❌ FAILED TO UPDATE COREDATA")
+                               }
+                            }
+                            
+                        } else {
+                            print("already exists")
+                        }
+                    }
+                    // no sub directory creation allowed
+                }
+            } catch {
+                print("❌ Directory COULD'NT BE FOUND ")
+                print("////reason: \(error.localizedDescription)")
+            }
         }
         
-        return (status, [])
     }
     
     /// END OF EXTENSION

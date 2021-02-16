@@ -345,7 +345,12 @@ struct EditImageview: View {
             SubcriptionPageView()
         }
         .buttonStyle(PlainButtonStyle())
+        .onAppear {
+            if currentIndex == (imageCount - 1) {
+                stateName = "checkmark.circle.fill"
+            }
         }
+    }
     
     // MARK: - Functions
     private func getCorners() -> some View {

@@ -172,7 +172,7 @@ struct EditPdfMainView: View {
             case .photoLibrary:
                 ImagePickerView(pages: self.$pages, sheetState: self.$activeSheet)
             default:
-                EditImageview(mainImages: self.$pages, mainImagesCopy: self.pages, currentImage: self.pages.first!, currentImageCopy: self.pages.first!)
+                EditImageview(mainImages: self.$pages, mainImagesCopy: self.pages, currentImage: self.pages.first!, currentImageCopy: self.pages.first!, imageCount: self.pages.count)
             }
         }
         .actionSheet(isPresented: $showingActionSheet) {

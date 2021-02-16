@@ -29,7 +29,7 @@ struct DetailedDirecView: View {
     @State private var isOffgrid = false
     
     // MARK: - Objects
-    @FetchRequest var items: FetchedResults<DirecModel>
+    @FetchRequest var directory: FetchedResults<DirecModel>
     
     // MARK: - @Environment variables
     @Environment(\.managedObjectContext) var context
@@ -42,7 +42,7 @@ struct DetailedDirecView: View {
         self._masterFolder = State(initialValue: pathName)
         self.item = item
         
-        self._items = FetchRequest(
+        self._directory = FetchRequest(
             entity: DirecModel.entity(),
             sortDescriptors: [],
             predicate: NSPredicate(format: "name == %@", "\(dirName)"), animation: .default)
@@ -50,94 +50,100 @@ struct DetailedDirecView: View {
     
     // MARK: - Properties
     var body: some View {
-            ZStack(alignment: .top) {
-                        VStack(alignment: .leading) {
-                            //check if contents isnt empty
-                            if self.items.first != nil {
-                                // display contents of file
-                                if (self.items.first?.fileArray.count == 0) {
-                                    Text("Looks empty here, scan a new document or create a new directory using the '+' button above.")
-                                    .font(.caption)
-                                    .foregroundColor(.gray)
-                                    .multilineTextAlignment(.center)
-                                        .padding([.leading, .trailing, .top])
-                                    Color.clear
-                                } else {
-                                    if !self.isOffgrid {
-                                        if #available(iOS 14.0, *) {
-                                            List {
-                                                Section(header: Text("\(String(self.masterFolder.split(separator: "/").last!)) > \(self.item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
-                                                    ForEach(self.items.first!.fileArray.filter {
-                                                        self.searchBar.text.isEmpty ||
-                                                            $0.wrappedItemName.localizedStandardContains(self.searchBar.text)
-                                                    }, id: \.self){ item in
-                                                        GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
-                                                    }.onDelete(perform: self.deleteRow(at:))
-                                                }
-                                            }
-                                            .listStyle(InsetGroupedListStyle())
-                                            .add(self.searchBar)
-                                        } else {
-                                            // Fallback on earlier versions
-                                            List {
-                                                Section(header: Text("\(String(self.masterFolder.split(separator: "/").last!)) > \(self.item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
-                                                    ForEach(self.items.first!.fileArray.filter {
-                                                        self.searchBar.text.isEmpty ||
-                                                            $0.wrappedItemName.localizedStandardContains(self.searchBar.text)
-                                                    }, id: \.self){ item in
-                                                        GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
-                                                    }.onDelete(perform: self.deleteRow(at:))
-                                                }
-                                            }
-                                            .listStyle(GroupedListStyle())
-                                            .add(self.searchBar)
-
-                                        }
-                                    } else {
-                                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 40, maximum: 50), spacing: 16)], spacing: 8) {
-                                            ForEach(self.items.first!.fileArray.filter { self.searchBar.text.isEmpty || $0.wrappedItemName.localizedStandardContains(self.searchBar.text)}, id: \.self) { file in
-                                                QGridCellView(item: file, masterFolder: self.item.wrappedItemUrl)
-                                                .environment(\.managedObjectContext, self.context)
-                                            }
-                                        }.padding(.horizontal)
-                                        Spacer()
-                                    }
-                                }
-                            } else {
-                                Text("Looks empty here, scan a new document using the '+' button above.")
+        ZStack(alignment: .top) {
+                    VStack(alignment: .leading) {
+                        //check if contents isnt empty
+                        if self.directory.first != nil {
+                            // display contents of file
+                            if (self.directory.first?.fileArray.count == 0) {
+                                Text("Looks empty here, scan a new document or create a new directory using the '+' button above.")
                                 .font(.caption)
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.center)
                                     .padding([.leading, .trailing, .top])
                                 Color.clear
-                            }
-                        }
-                        
-                        // button
-                        ZStack(alignment: .bottom) {
-                            Rectangle()
-                            .foregroundColor(.clear)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            
-                            Button(action: self.showOptions) {
-                                Image(systemName: "plus")
-                                    .rotationEffect(.degrees(self.tapped ? 45 : 0))
-                                    .foregroundColor(.white)
-                                    .font(.title)
-                                    .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
+                            } else {
+                                if !self.isOffgrid {
+                                    if #available(iOS 14.0, *) {
+                                        List {
+                                            Section(header: Text("\(String(self.masterFolder.split(separator: "/").last!)) > \(self.item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
+                                                ForEach(self.directory.first!.fileArray.filter {
+                                                    self.searchBar.text.isEmpty ||
+                                                        $0.wrappedItemName.localizedStandardContains(self.searchBar.text)
+                                                }, id: \.self){ item in
+                                                    GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
+                                                }.onDelete(perform: self.deleteRow(at:))
+                                            }
+                                        }
+                                        .listStyle(InsetGroupedListStyle())
+                                        .add(self.searchBar)
+                                    } else {
+                                        // Fallback on earlier versions
+                                        List {
+                                            Section(header: Text("\(String(self.masterFolder.split(separator: "/").last!)) > \(self.item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
+                                                ForEach(self.directory.first!.fileArray.filter {
+                                                    self.searchBar.text.isEmpty ||
+                                                        $0.wrappedItemName.localizedStandardContains(self.searchBar.text)
+                                                }, id: \.self){ item in
+                                                    GenListRowView(itemArray: item, masterFolder: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
+                                                }.onDelete(perform: self.deleteRow(at:))
+                                            }
+                                        }
+                                        .listStyle(GroupedListStyle())
+                                        .add(self.searchBar)
+
+                                    }
+                                } else {
+                                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 40, maximum: 50), spacing: 16)], spacing: 8) {
+                                        ForEach(self.directory.first!.fileArray.filter { self.searchBar.text.isEmpty || $0.wrappedItemName.localizedStandardContains(self.searchBar.text)}, id: \.self) { file in
+                                            QGridCellView(item: file, masterFolder: self.item.wrappedItemUrl)
+                                            .environment(\.managedObjectContext, self.context)
+                                        }
+                                    }.padding(.horizontal)
+                                    Spacer()
                                 }
-                                .padding(24)
-                                .background(Color(tintColor))
-                                .mask(Circle())
-                                .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
-                                .zIndex(10)
-                                .padding()
-                            // secondary buttons
-                            SecondaryButtonView(tapped: self.$tapped, icon: "camera.fill", color: .pink, offsetX: 45, offsetY: -90, delay: 0.2, action: self.createFile).padding()
-                            SecondaryButtonView(tapped: self.$tapped, icon: "arrow.up.doc.fill", color: .orange, offsetX: -45, offsetY: -90, delay: 0.4, action: self.importTapped).padding()
+                            }
+                        } else {
+                            Text("Looks empty here, scan a new document using the '+' button above.")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                            .multilineTextAlignment(.center)
+                                .padding([.leading, .trailing, .top])
+                            Color.clear
                         }
                     }
-                    // sheet code
+                    
+                    // button
+                    ZStack(alignment: .bottom) {
+                        Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        
+                        Button(action: self.showOptions) {
+                            Image(systemName: "plus")
+                                .rotationEffect(.degrees(self.tapped ? 45 : 0))
+                                .foregroundColor(.white)
+                                .font(.title)
+                                .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
+                            }
+                            .padding(24)
+                            .background(Color(tintColor))
+                            .mask(Circle())
+                            .animation(.spring(response: 0.2, dampingFraction: 0.4, blendDuration: 0))
+                            .zIndex(10)
+                            .padding()
+                        // secondary buttons
+                        SecondaryButtonView(tapped: self.$tapped, icon: "camera.fill", color: .pink, offsetX: 45, offsetY: -90, delay: 0.2, action: self.createFile).padding()
+                        SecondaryButtonView(tapped: self.$tapped, icon: "arrow.up.doc.fill", color: .orange, offsetX: -45, offsetY: -90, delay: 0.4, action: self.importTapped).padding()
+                    }
+                }
+        .onAppear {
+            
+            if let _ = directory.first {
+                DWFMAppSettings.shared.syncUpLocalFilesWithApp(direcName: masterDirecName, directory: directory.first!, context: self.context)
+            }
+        }
+        // sheet code
         .navigationBarTitle(Text(self.item.wrappedItemName), displayMode: .inline)
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarItems(trailing: Button(action: {
@@ -207,7 +213,7 @@ struct DetailedDirecView: View {
     
     private func deleteRow(at indexSet: IndexSet) {
         guard let indexToDelete = indexSet.first else { return }
-        let item = self.items.first!.fileArray[indexToDelete]
+        let item = self.directory.first!.fileArray[indexToDelete]
         print(item.wrappedItemUrl)
         if item.itemType == DWDIRECTORY {
             

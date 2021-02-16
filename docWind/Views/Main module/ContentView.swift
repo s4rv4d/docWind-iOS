@@ -136,7 +136,7 @@ struct ContentView: View {
         .onAppear {
             
             if let _ = docWindItems.first {
-                _ = DWFMAppSettings.shared.syncUpLocalFilesWithApp(direcName: nil, directory: docWindItems.first!, context: self.context)
+                DWFMAppSettings.shared.syncUpLocalFilesWithApp(direcName: nil, directory: docWindItems.first!, context: self.context)
             }
             
             IAPService.shared.getProducts()

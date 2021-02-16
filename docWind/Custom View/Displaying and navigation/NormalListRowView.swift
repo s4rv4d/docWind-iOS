@@ -121,18 +121,6 @@ struct NormalListRowView: View {
                             Text("Edit")
                         }
                     }
-                    
-//                    Button(action: {
-//                        self.selectedItem = self.itemArray
-//                        self.uiImages = self.getImages()
-//                        self.activeSheet = .compressView
-//                        self.showSheet.toggle()
-//                    }) {
-//                        HStack {
-//                            Image(systemName: "square.stack.3d.up")
-//                            Text("Compress file")
-//                        }
-//                    }
                 }
                 
                 Button(action: {
