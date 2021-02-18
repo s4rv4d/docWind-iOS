@@ -59,7 +59,6 @@ struct ContentView: View {
                                     }
                                 }
                                 .listStyle(InsetGroupedListStyle())
-
                             } else {
                                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 40, maximum: 50), spacing: 16)], spacing: 8) {
                                     ForEach(self.docWindItems.first!.fileArray.filter { self.searchString.isEmpty || $0.wrappedItemName.localizedStandardContains(self.searchString)}, id: \.self) { file in
@@ -123,6 +122,7 @@ struct ContentView: View {
                     .foregroundColor(Color(tintColor))
                 }, trailing: Button(action: {
                     FeedbackManager.mediumFeedback()
+                    self.isOffgrid.toggle()
                 }){
                     Image(systemName: (self.isOffgrid == false ? "rectangle.3.offgrid" : "rectangle.grid.1x2"))
                         .font(.system(size: 20))
