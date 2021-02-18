@@ -15,7 +15,8 @@ struct CaptureButtonView: View {
     @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
     
     var body: some View {
-        Image(systemName: "camera").font(.body)
+        SFSymbol.camera
+            .font(.body)
             .padding(25)
             .background(Color(tintColor))
             .foregroundColor(.white)
@@ -23,11 +24,6 @@ struct CaptureButtonView: View {
             .overlay(
                 Circle()
                     .stroke(Color.primary, lineWidth: 3)
-//                    .scaleEffect(animationAmount)
-//                    .opacity(Double(2 - animationAmount))
-//                    .animation(Animation.easeOut(duration: 1)
-//                        .repeatForever(autoreverses: false))
-
         )
         .onAppear
             {

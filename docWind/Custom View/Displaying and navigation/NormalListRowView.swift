@@ -47,10 +47,13 @@ struct NormalListRowView: View {
             }
         }()) {
             HStack {
-                Image(systemName: (self.itemArray.wrappedItemType == DWPDFFILE) ? "doc.fill" : "folder.fill")
-                    .foregroundColor(self.iconNameString[self.itemArray.wrappedIconName])
-                    .font(.body)
+//                Image(systemName: (self.itemArray.wrappedItemType == DWPDFFILE) ? "doc.fill" : "folder.fill")
                     
+                Group {
+                    self.itemArray.wrappedItemType == DWPDFFILE ? SFSymbol.docFill : SFSymbol.folderFill
+                }
+                .foregroundColor(self.iconNameString[self.itemArray.wrappedIconName])
+                .font(.body)
                 
                 VStack(alignment: .leading, spacing: 8) {
                     Text(self.itemArray.wrappedItemName)
@@ -91,7 +94,8 @@ struct NormalListRowView: View {
                         }
                     }) {
                         HStack {
-                            Image(systemName: "pencil")
+//                            Image(systemName: "pencil")
+                            SFSymbol.pencil
                             Text("Rename")
                         }
                     }
@@ -103,7 +107,8 @@ struct NormalListRowView: View {
                         }
                     }) {
                         HStack {
-                            Image(systemName: "square.and.arrow.up")
+//                            Image(systemName: "square.and.arrow.up")
+                            SFSymbol.share
                             Text("Share")
                         }.foregroundColor(.yellow)
                     }
@@ -117,7 +122,8 @@ struct NormalListRowView: View {
                         
                     }) {
                         HStack {
-                            Image(systemName: "pencil.circle")
+//                            Image(systemName: "pencil.circle")
+                            SFSymbol.pencilCircle
                             Text("Edit")
                         }
                     }
@@ -129,7 +135,8 @@ struct NormalListRowView: View {
                     self.deleteObject()
                 }) {
                     HStack {
-                        Image(systemName: "trash")
+//                        Image(systemName: "trash")
+                        SFSymbol.trash
                         Text("Delete")
                     }.foregroundColor(.red)
                 }

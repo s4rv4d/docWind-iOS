@@ -24,7 +24,8 @@ struct SearchBarView: View {
                 .cornerRadius(8)
                 .overlay(
                     HStack {
-                        Image(systemName: "magnifyingglass")
+//                        Image(systemName: "magnifyingglass")
+                        SFSymbol.magnifyingGlass
                             .foregroundColor(.gray)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 8)
@@ -35,7 +36,8 @@ struct SearchBarView: View {
                                 self.isEditing = false
                                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                             }) {
-                                Image(systemName: "multiply.circle.fill")
+//                                Image(systemName: "multiply.circle.fill")
+                                SFSymbol.multiplyCircleFill
                                     .foregroundColor(.gray)
                                     .padding(.trailing, 8)
                             }

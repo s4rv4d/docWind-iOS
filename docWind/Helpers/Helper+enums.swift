@@ -143,3 +143,46 @@ enum EditType {
     case newImagesAdded
     case compress
 }
+
+
+// enum to handle SF symbols
+enum SFSymbol: String, View {
+    case close = "xmark"
+    case share = "square.and.arrow.up"
+    case camera = "camera"
+    case cameraRotateFill = "camera.rotate.fill"
+    case magnifyingGlass = "magnifyingglass"
+    case multiplyCircleFill = "multiply.circle.fill"
+    case docFill = "doc.fill"
+    case folderFill = "folder.fill"
+    case pencil = "pencil"
+    case pencilCircle = "pencil.circle"
+    case trash = "trash"
+    case chevronRight = "chevron.right"
+    case plus = "plus"
+    case gear = "gear"
+    case rec3Offgrid = "rectangle.3.offgrid"
+    case recGrid1x2 = "rectangle.grid.1x2"
+    case textQuote = "text.quote"
+    case scribble = "scribble"
+    case textFormat = "textformat"
+    case signature = "signature"
+    case starFill = "star.fill"
+    case crop = "crop"
+    case sliderHorizontal3 = "slider.horizontal.3"
+    case cameraFilters = "camera.filters"
+    case docAppend = "doc.append"
+    case chevronLeft = "chevron.left"
+    case rotateLeft = "rotate.left"
+    case rotateRight = "rotate.right"
+    case xCircle = "x.circle"
+    case checkmarkSealFill = "checkmark.seal.fill"
+    case checkmarkCircle = "checkmark.circle"
+    case exclamationMarkCircle = "exclamationmark.circle"
+    case boltFill = "bolt.fill"
+    case boltSlashFill = "bolt.slash.fill"
+    
+    var body: some View {
+        Image(systemName: rawValue)
+    }
+}
