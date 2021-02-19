@@ -83,12 +83,10 @@ struct EditImageview: View {
                 Spacer()
                 VStack {
                     // ---> 1 editing options (x and tick)
-                    VStack {
-
-                        
+                    VStack {                        
                         HStack {
                             Button(action: backTapped){
-                                Image(systemName: "multiply.circle.fill")
+                                SFSymbol.multiplyCircleFill
                                     .foregroundColor(Color(tintColor))
                                     .font(.system(size: 25))
                             }
@@ -116,7 +114,7 @@ struct EditImageview: View {
                             
                             Button(action: cropSelected) {
                                 VStack {
-                                    Image(systemName: "crop")
+                                    SFSymbol.crop
                                         .padding()
                                         .background(Color.secondarySystemGroupedBackground
                                                         .cornerRadius(7)
@@ -131,7 +129,7 @@ struct EditImageview: View {
                             
                             Button(action: adjustTapped) {
                                 VStack {
-                                    Image(systemName: "slider.horizontal.3")
+                                    SFSymbol.sliderHorizontal3
                                         .padding()
                                         .background(Color.secondarySystemGroupedBackground
                                                         .cornerRadius(7)
@@ -146,7 +144,7 @@ struct EditImageview: View {
                             
                             Button(action: filtersTapped) {
                                 VStack {
-                                    Image(systemName: "camera.filters")
+                                    SFSymbol.cameraFilters
                                         .padding()
                                         .background(Color.secondarySystemGroupedBackground
                                                         .cornerRadius(7)
@@ -161,7 +159,7 @@ struct EditImageview: View {
                             
                             Button(action: watermarkTapped) {
                                 VStack {
-                                    Image(systemName: "doc.append")
+                                    SFSymbol.docAppend
                                         .padding()
                                         .background(Color.secondarySystemGroupedBackground
                                                         .cornerRadius(7)
@@ -181,7 +179,7 @@ struct EditImageview: View {
                         HStack {
                             Button(action: backTappedCrop) {
                                 VStack {
-                                    Image(systemName: "chevron.left")
+                                    SFSymbol.chevronLeft
                                         .padding()
                                         .background(Color.secondarySystemGroupedBackground
                                                         .cornerRadius(7)
@@ -196,7 +194,7 @@ struct EditImageview: View {
                             
                             Button(action: rotateLeftTapped) {
                                 VStack {
-                                    Image(systemName: "rotate.left")
+                                    SFSymbol.rotateLeft
                                         .padding()
                                         .background(Color.secondarySystemGroupedBackground
                                                         .cornerRadius(7)
@@ -211,7 +209,7 @@ struct EditImageview: View {
 
                             Button(action: rotateRightTapped) {
                                 VStack {
-                                    Image(systemName: "rotate.right")
+                                    SFSymbol.rotateRight
                                         .padding()
                                         .background(Color.secondarySystemGroupedBackground
                                                         .cornerRadius(7)
@@ -232,7 +230,7 @@ struct EditImageview: View {
                         HStack {
                             Button(action: adjustBackTap) {
                                 VStack {
-                                    Image(systemName: "chevron.left")
+                                    SFSymbol.chevronLeft
                                         .padding()
                                         .background(Color.secondarySystemGroupedBackground
                                                         .cornerRadius(7)
@@ -242,9 +240,7 @@ struct EditImageview: View {
                                         .font(.caption)
                                 }
                             }
-                            
-//                            Spacer()
-                            
+                                                        
                             /// sliders here
                             
                             VStack(alignment: .leading) {
@@ -277,7 +273,7 @@ struct EditImageview: View {
                         HStack {
                             Button(action: filterBackTapped) {
                                 VStack {
-                                    Image(systemName: "chevron.left")
+                                    SFSymbol.chevronLeft
                                         .padding()
                                         .background(Color.secondarySystemGroupedBackground
                                                         .cornerRadius(7)
@@ -306,7 +302,7 @@ struct EditImageview: View {
                             Spacer()
                             Button(action: watermarkBackTapped) {
                                 VStack {
-                                    Image(systemName: "chevron.left")
+                                    SFSymbol.chevronLeft
                                         .padding()
                                         .background(Color.secondarySystemGroupedBackground
                                                         .cornerRadius(7)
@@ -321,7 +317,7 @@ struct EditImageview: View {
                             
                             Button(action: clearWaterMark) {
                                 VStack {
-                                    Image(systemName: "x.circle")
+                                    SFSymbol.xCircle
                                         .padding()
                                         .background(Color.secondarySystemGroupedBackground
                                                         .cornerRadius(7)

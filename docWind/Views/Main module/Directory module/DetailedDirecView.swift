@@ -120,7 +120,7 @@ struct DetailedDirecView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         
                         Button(action: self.showOptions) {
-                            Image(systemName: "plus")
+                            SFSymbol.plus
                                 .rotationEffect(.degrees(self.tapped ? 45 : 0))
                                 .foregroundColor(.white)
                                 .font(.title)
@@ -150,7 +150,9 @@ struct DetailedDirecView: View {
             FeedbackManager.mediumFeedback()
                 self.isOffgrid.toggle()
             }){
-                Image(systemName: (self.isOffgrid == false ? "rectangle.3.offgrid" : "rectangle.grid.1x2"))
+            Group {
+                self.isOffgrid == false ? SFSymbol.rec3Offgrid : SFSymbol.recGrid1x2
+            }
                     .font(.system(size: 20))
                     .foregroundColor(Color(tintColor))
         })

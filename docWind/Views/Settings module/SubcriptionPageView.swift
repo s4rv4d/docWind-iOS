@@ -38,14 +38,14 @@ struct SubcriptionPageView: View {
                                .fontWeight(.bold)
                                .foregroundColor(Color(tintColor))
                             
-                            Image(systemName: "plus")
+                            SFSymbol.plus
                                 .foregroundColor(.yellow)
                             Spacer()
                             
                             Button(action:{
                                 self.presentationMode.wrappedValue.dismiss()
                             }){
-                                Image(systemName: "multiply.circle.fill")
+                                SFSymbol.multiplyCircleFill
                                     .foregroundColor(Color(tintColor))
                                     .font(.system(size: 25))
                             }

@@ -81,7 +81,7 @@ struct ContentView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     
                     Button(action: self.showOptions) {
-                        Image(systemName: "plus")
+                        SFSymbol.plus
                             .rotationEffect(.degrees(self.tapped ? 45 : 0))
                             .foregroundColor(.white)
                             .font(.title)
@@ -117,20 +117,21 @@ struct ContentView: View {
             .navigationViewStyle(StackNavigationViewStyle())
             .navigationBarItems(leading:
                 Button(action: self.settingsTapped) {
-                    Image(systemName: "gear")
+                    SFSymbol.gear
                     .font(.system(size: 20))
                     .foregroundColor(Color(tintColor))
                 }, trailing: Button(action: {
                     FeedbackManager.mediumFeedback()
                     self.isOffgrid.toggle()
                 }){
-                    Image(systemName: (self.isOffgrid == false ? "rectangle.3.offgrid" : "rectangle.grid.1x2"))
+                    Group {
+                        self.isOffgrid ==  false ? SFSymbol.rec3Offgrid : SFSymbol.recGrid1x2
+                    }
                         .font(.system(size: 20))
                         .foregroundColor(Color(tintColor))
             })
         }
         .navigationViewStyle(StackNavigationViewStyle())
-            
                 
         // On appear code
         .onAppear {

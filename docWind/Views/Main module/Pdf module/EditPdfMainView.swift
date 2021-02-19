@@ -77,7 +77,7 @@ struct EditPdfMainView: View {
                         HStack {
                             ForEach(0..<iconColors.count) { index in
                                 VStack {
-                                    Image(systemName: "doc.fill")
+                                    SFSymbol.docFill
                                         .foregroundColor(self.iconColors[index])
                                         .font(.body)
                                         .padding(.bottom)

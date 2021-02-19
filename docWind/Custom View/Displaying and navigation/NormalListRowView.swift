@@ -47,8 +47,6 @@ struct NormalListRowView: View {
             }
         }()) {
             HStack {
-//                Image(systemName: (self.itemArray.wrappedItemType == DWPDFFILE) ? "doc.fill" : "folder.fill")
-                    
                 Group {
                     self.itemArray.wrappedItemType == DWPDFFILE ? SFSymbol.docFill : SFSymbol.folderFill
                 }
@@ -71,8 +69,6 @@ struct NormalListRowView: View {
                                     .foregroundColor(.secondary)
                             } else {
                                 // TODO: - Need to migrate data model
-                                #warning("need to migrate data model")
-                                #warning("change this")
                                 Text("")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
@@ -94,7 +90,6 @@ struct NormalListRowView: View {
                         }
                     }) {
                         HStack {
-//                            Image(systemName: "pencil")
                             SFSymbol.pencil
                             Text("Rename")
                         }
@@ -107,7 +102,6 @@ struct NormalListRowView: View {
                         }
                     }) {
                         HStack {
-//                            Image(systemName: "square.and.arrow.up")
                             SFSymbol.share
                             Text("Share")
                         }.foregroundColor(.yellow)
@@ -122,7 +116,6 @@ struct NormalListRowView: View {
                         
                     }) {
                         HStack {
-//                            Image(systemName: "pencil.circle")
                             SFSymbol.pencilCircle
                             Text("Edit")
                         }
@@ -135,7 +128,6 @@ struct NormalListRowView: View {
                     self.deleteObject()
                 }) {
                     HStack {
-//                        Image(systemName: "trash")
                         SFSymbol.trash
                         Text("Delete")
                     }.foregroundColor(.red)
@@ -148,7 +140,6 @@ struct NormalListRowView: View {
             if alertContext == .notice {
                 return Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), primaryButton: .default(Text("Dismiss")), secondaryButton: .destructive(Text("Delete"), action: {
                     self.deleteObject()
-                    
                 }))
             } else {
                 return Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel(Text("Dismiss"), action: {
@@ -169,9 +160,7 @@ struct NormalListRowView: View {
 
                     }
             case .editSheet(let images, let url, let item):
-//                if self.uiImages.count != 0 && self.url != "" {
                     EditPdfMainView(pdfName: self.itemArray.wrappedItemName, selectedIconName: self.itemArray.wrappedIconName, mainPages: images, url: url, item: item).environment(\.managedObjectContext, self.context)
-//                }
             case .compressView:
                 LoadingScreenView(item: self.itemArray, uiImages: self.uiImages)
             }

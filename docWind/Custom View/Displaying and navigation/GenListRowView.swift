@@ -47,9 +47,11 @@ struct GenListRowView: View {
                 }
         }()) {
             HStack {
-                Image(systemName: (self.itemArray.wrappedItemType == DWPDFFILE) ? "doc.fill" : "folder.fill")
-                    .foregroundColor(self.iconNameString[self.itemArray.wrappedIconName])
-                    .font(.body)
+                Group {
+                    self.itemArray.wrappedItemType == DWPDFFILE ? SFSymbol.docFill : SFSymbol.folderFill
+                }
+                .foregroundColor(self.iconNameString[self.itemArray.wrappedIconName])
+                .font(.body)
                 
                 VStack(alignment: .leading, spacing: 8) {
                     Text(self.itemArray.wrappedItemName)
@@ -80,7 +82,7 @@ struct GenListRowView: View {
                         }
                     }) {
                         HStack {
-                            Image(systemName: "pencil")
+                            SFSymbol.pencil
                             Text("Rename")
                         }
                     }
@@ -92,7 +94,7 @@ struct GenListRowView: View {
                         }
                     }) {
                         HStack {
-                            Image(systemName: "square.and.arrow.up")
+                            SFSymbol.share
                             Text("Share")
                         }.foregroundColor(.yellow)
                     }
@@ -105,7 +107,7 @@ struct GenListRowView: View {
                         }
                     }) {
                         HStack {
-                            Image(systemName: "pencil.circle")
+                            SFSymbol.pencilCircle
                             Text("Edit")
                         }
                     }
@@ -117,7 +119,7 @@ struct GenListRowView: View {
                     self.deleteObject()
                 }) {
                     HStack {
-                        Image(systemName: "trash")
+                        SFSymbol.trash
                         Text("Delete")
                     }.foregroundColor(.red)
                 }
@@ -149,9 +151,7 @@ struct GenListRowView: View {
 
                     }
             case .editSheet(let images, let url, let item):
-//                if self.uiImages.count != 0 && self.url != "" {
                     EditPdfMainView(pdfName: self.itemArray.wrappedItemName, selectedIconName: self.itemArray.wrappedIconName, mainPages: images, url: url, item: item).environment(\.managedObjectContext, self.context)
-//                }
             case .compressView:
                 LoadingScreenView(item: self.itemArray, uiImages: self.uiImages)
             }

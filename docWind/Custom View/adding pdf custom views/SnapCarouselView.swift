@@ -72,7 +72,7 @@ struct SnapCarouselView: View {
                     Button(action: deleteTapped){
                         HStack {
                             Spacer()
-                            Image(systemName: "trash")
+                            SFSymbol.trash
                             Text("Delete")
                                 Spacer()
                             }.padding()

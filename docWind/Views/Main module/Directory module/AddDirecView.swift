@@ -40,7 +40,7 @@ struct AddDirecView: View {
                         HStack {
                             ForEach(0..<iconColors.count) { index in
                                 VStack {
-                                    Image(systemName: "folder.fill")
+                                    SFSymbol.folderFill
                                         .foregroundColor(self.iconColors[index])
                                         .font(.body)
                                         .padding(.bottom)

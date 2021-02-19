@@ -131,7 +131,6 @@ struct CameraView: View {
                 .foregroundColor(Color.gray.opacity(0.2))
                 .frame(width: 45, height: 45, alignment: .center)
                 .overlay(
-//                    Image(systemName: "camera.rotate.fill")
                     SFSymbol.cameraRotateFill
                         .foregroundColor(.white))
         })
@@ -146,7 +145,6 @@ struct CameraView: View {
                     Button(action: {
                         model.switchFlash()
                     }, label: {
-//                        Image(systemName: model.isFlashOn ? "bolt.fill" : "bolt.slash.fill")
                         Group {
                             model.isFlashOn ? SFSymbol.boltFill : SFSymbol.boltSlashFill
                         }

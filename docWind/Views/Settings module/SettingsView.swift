@@ -69,7 +69,7 @@ struct SettingsView: View {
                 FeedbackManager.mediumFeedback()
                 self.presentationMode.wrappedValue.dismiss()
             }){
-                Image(systemName: "multiply.circle.fill")
+                SFSymbol.multiplyCircleFill
                     .foregroundColor(Color(tintColor))
                     .font(.system(size: 25))
             })

@@ -59,7 +59,7 @@ struct AddPdfFileGenView: View {
                         HStack {
                             ForEach(0..<iconColors.count) { index in
                                 VStack {
-                                    Image(systemName: "doc.fill")
+                                    SFSymbol.docFill
                                         .foregroundColor(self.iconColors[index])
                                         .font(.body)
                                         .padding(.bottom)
@@ -115,23 +115,6 @@ struct AddPdfFileGenView: View {
                         }
                     }
                 }
-                
-//                Section(header: Text("Options")){
-//                    Toggle(isOn: $removeWatermark.didSet(execute: { (status) in
-//                        if status {
-//                            if !AppSettings.shared.bougthNonConsumable {
-//                                self.showSubView()
-//                            }
-//                        }
-//                    })) {
-//                        HStack {
-//                            Text("Remove watermark")
-//                            Image(systemName: "star.fill")
-//                                .foregroundColor(.yellow)
-//                            Spacer()
-//                        }
-//                    }
-//                }
                 
                 Section(header: Text("Compression percentage"), footer: Text("Approximate file size: \(approximateFileSize()) \n high resolution images can increase file size.")) {
                     Picker(selection: $compressionIndex, label: Text("")) {

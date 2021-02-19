@@ -32,7 +32,7 @@ struct OCRTextView: View {
                         FeedbackManager.mediumFeedback()
                         self.presentationMode.wrappedValue.dismiss()
                            }) {
-                               Image(systemName: "multiply.circle.fill")
+                        SFSymbol.multiplyCircleFill
                                .foregroundColor(Color(tintColor))
                                .font(.system(size: 30))
                            }
@@ -45,10 +45,10 @@ struct OCRTextView: View {
                         FeedbackManager.mediumFeedback()
                                self.textStyle = (self.textStyle == .body) ? .title1 : .body
                            }) {
-                               Image(systemName: "textformat")
-                                   .imageScale(.large)
-                                   .frame(width: 40, height: 40)
-                                   .foregroundColor(Color(tintColor))
+                        SFSymbol.textFormat
+                           .imageScale(.large)
+                           .frame(width: 40, height: 40)
+                           .foregroundColor(Color(tintColor))
                     
                            }
                            .padding()

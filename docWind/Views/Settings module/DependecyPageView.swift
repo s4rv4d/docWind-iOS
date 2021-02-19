@@ -29,7 +29,7 @@ struct DependecyPageView: View {
                                 .font(.largeTitle)
                                 .fontWeight(.semibold)
                             Spacer()
-                            Image(systemName: "exclamationmark.circle")
+                            SFSymbol.exclamationMarkCircle
                                 .foregroundColor(Color(tintColor))
                                 .onTapGesture {
                                     SettingsHelper.openUrl(url: "https://github.com/simibac/ConfettiSwiftUI")
@@ -64,7 +64,7 @@ struct DependecyPageView: View {
                                 Button(action:{
                                     self.presentationMode.wrappedValue.dismiss()
                                 }){
-                                    Image(systemName: "multiply.circle.fill")
+                                    SFSymbol.multiplyCircleFill
                                         .foregroundColor(Color(tintColor))
                                         .font(.system(size: 25))
                                 }

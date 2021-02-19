@@ -50,7 +50,8 @@ struct AppIconView: View {
                                 Spacer()
                                 
                                 if self.selected == self.appIcons[i] {
-                                    Image(systemName: "checkmark.seal.fill").foregroundColor(.green)
+                                    SFSymbol.checkmarkSealFill
+                                        .foregroundColor(.green)
                                 }
                             }.contentShape(Rectangle())
                             
@@ -70,7 +71,8 @@ struct AppIconView: View {
                             Text("Default icon")
                             Spacer()
                             if self.selected == nil {
-                                Image(systemName: "checkmark.seal.fill").foregroundColor(.green)
+                                SFSymbol.checkmarkSealFill
+                                    .foregroundColor(.green)
                             }
                         }
                     }
@@ -84,7 +86,7 @@ struct AppIconView: View {
                                     .aspectRatio(1, contentMode: .fit)
                                     .cornerRadius(6)
                                 if item == color {
-                                    Image(systemName: "checkmark.circle")
+                                    SFSymbol.checkmarkCircle
                                         .foregroundColor(.white)
                                         .font(.largeTitle)
                                 }

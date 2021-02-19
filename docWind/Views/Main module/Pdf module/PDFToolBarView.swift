@@ -51,7 +51,7 @@ struct PDFToolBarView: View {
                         self.canEditSignature.toggle()
                     }) {
                         HStack {
-                            Image(systemName: "signature")
+                            SFSymbol.signature
                             Text("Add signature")
                             Spacer()
                         }.padding()

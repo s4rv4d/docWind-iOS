@@ -31,7 +31,7 @@ struct SettingsRow: View {
                 Text(title)
                     .kerning(0)
                 Spacer()
-                Image(systemName: "chevron.right")
+                SFSymbol.chevronRight
                 .foregroundColor(Color(tintColor))
             }
             .padding(.vertical, 10)

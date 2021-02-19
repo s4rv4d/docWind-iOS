@@ -87,7 +87,7 @@ struct DetailPdfView: View, Equatable {
                     } else {
                         if !self.canEdit && !self.canEditSignature {
                             VStack{
-                                Image(systemName: "text.quote")
+                                SFSymbol.textQuote
                                     .font(.system(size: 20))
                                     .foregroundColor((AppSettings.shared.bougthNonConsumable) ? Color(tintColor) : .yellow)
                                     .padding(.top, 5)
@@ -113,7 +113,7 @@ struct DetailPdfView: View, Equatable {
 
                     Spacer()
                     VStack {
-                        Image(systemName: "scribble")
+                        SFSymbol.scribble
                         .font(.system(size: 20))
                         .foregroundColor( (AppSettings.shared.bougthNonConsumable) ? Color(tintColor) : .yellow )
                             .padding(.top, 5)
@@ -169,7 +169,7 @@ struct DetailPdfView: View, Equatable {
         }
         .navigationBarTitle(Text(item.wrappedItemName), displayMode: .inline)
         .navigationBarItems(trailing: Button(action: sharePdf) {
-            Image(systemName: "square.and.arrow.up")
+            SFSymbol.share
                 .font(.system(size: 20))
                 .foregroundColor(Color(tintColor))
         })
