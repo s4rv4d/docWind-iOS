@@ -13,20 +13,21 @@ import CoreData
 struct AddPdfMainView: View {
     
     // MARK: - @State properties
+    
+    
     @State private var pdfName = "docWind\(Date())"
     @State private var selectedIconName = "blue"
     @State private var alertMessage = ""
     @State private var showAlert = false
     @State private var showScanner = false
     @State private var showingActionSheet = false
-    
-    @State var mainPages: [UIImage] = [UIImage]()
-    @State var pages: [UIImage] = [UIImage]()
-        
     @State private var activeSheet: ActiveOdfMainViewSheet? = nil
     @State private var activeAlertSheet: ActiveAlertSheet = .notice
     @State private var removeWatermark = false
     @State private var offsetVal: CGFloat = 0.0
+    
+    @State var pagesCopy: [UIImage] = [UIImage]()
+    @State var pages: [UIImage] = [UIImage]()
     
     // for compression
     @State private var compressionIndex = 3
@@ -146,15 +147,20 @@ struct AddPdfMainView: View {
         .fullScreenCover(item: $activeSheet, onDismiss: { self.activeSheet = nil }) { item in
             switch item {
             case .scannerView:
-                ScannerView(uiImages: self.$pages, sheetState: $activeSheet)
+                ScannerView(uiImages: self.$pagesCopy, sheetState: $activeSheet)
             case .pdfView:
+                
                 SnapCarouselView(mainImages: self.$pages, title: self.pdfName)
             case .photoLibrary:
-                ImagePickerView(pages: self.$pages, sheetState: $activeSheet)
+                ImagePickerView(pages: self.$pagesCopy, sheetState: $activeSheet)
+                    .onAppear {
+                        print(pagesCopy)
+                    }
+                
             case .subView:
                 SubcriptionPageView()
             case .imageEdit:
-                EditImageview(mainImages: self.$pages, mainImagesCopy: self.pages, currentImage: self.pages.first!, currentImageCopy: self.pages.first!, imageCount: self.pages.count)
+                EditImageview(mainImages: self.$pages, mainImagesCopy: self.pagesCopy, currentImage: self.pagesCopy.first!, currentImageCopy: self.pagesCopy.first!, imageCount: self.pagesCopy.count)
             }
         }
         

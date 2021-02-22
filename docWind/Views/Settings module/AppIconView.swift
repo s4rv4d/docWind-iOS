@@ -77,35 +77,7 @@ struct AppIconView: View {
                         }
                     }
                 }
-                Section(header: Text("App Tint")) {
-                    LazyVGrid(columns: colorColumns) {
-                        ForEach(colors, id: \.self) { item in
-                            ZStack {
-                                Color(item)
-                                    /// aspect ratio of 1 turns it into square
-                                    .aspectRatio(1, contentMode: .fit)
-                                    .cornerRadius(6)
-                                if item == color {
-                                    SFSymbol.checkmarkCircle
-                                        .foregroundColor(.white)
-                                        .font(.largeTitle)
-                                }
-                            }
-                            .onTapGesture {
-                                self.color = item
-                                self.tintColor = item
-                            }
-                            .accessibilityElement(children: .ignore)
-                            .accessibilityAddTraits(
-                                item == color
-                                    ? [.isButton, .isSelected]
-                                    : .isButton
-                            )
-                            .accessibilityLabel(LocalizedStringKey(item))
-                        }
-                    }
-                }
-                .padding(.vertical)
+                
             }
             .listStyle(InsetGroupedListStyle())
         }

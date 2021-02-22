@@ -124,7 +124,7 @@ struct DetailPdfView: View, Equatable {
                     }
                         .onTapGesture {
                             FeedbackManager.mediumFeedback()
-                            if AppSettings.shared.bougthNonConsumable {
+                            if !AppSettings.shared.bougthNonConsumable {
                                 self.subViewed()
                             } else {
                                 self.toolsTapped()

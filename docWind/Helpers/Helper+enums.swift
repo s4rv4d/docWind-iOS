@@ -123,7 +123,7 @@ enum IAPProduct: String {
 // active sheet for settings
 
 enum SettingActiveSheet {
-    case appIcon, docSub, mailFeature, mailBug, shareSheet, dependency
+    case appIcon, docSub, mailFeature, mailBug, shareSheet, dependency, UIUpdate
 }
 
 extension SettingActiveSheet: Identifiable {

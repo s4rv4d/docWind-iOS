@@ -25,9 +25,9 @@ struct ContentView: View {
     @State private var alertTitle = "Error"
     @State private var alertContext: ActiveAlertSheet = .error
     @State private var showAlert = false
-    @State private var isOffgrid = false
     
     @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
+    @AppStorage("isOffgridStyle") var isOffgrid: Bool = false
     
     // MARK: - @Environment variables
     @Environment(\.managedObjectContext) var context
@@ -120,16 +120,7 @@ struct ContentView: View {
                     SFSymbol.gear
                     .font(.system(size: 20))
                     .foregroundColor(Color(tintColor))
-                }, trailing: Button(action: {
-                    FeedbackManager.mediumFeedback()
-                    self.isOffgrid.toggle()
-                }){
-                    Group {
-                        self.isOffgrid ==  false ? SFSymbol.rec3Offgrid : SFSymbol.recGrid1x2
-                    }
-                        .font(.system(size: 20))
-                        .foregroundColor(Color(tintColor))
-            })
+                })
         }
         .navigationViewStyle(StackNavigationViewStyle())
                 

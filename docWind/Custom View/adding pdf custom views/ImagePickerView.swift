@@ -36,7 +36,7 @@ struct ImagePickerView: UIViewControllerRepresentable {
     final class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         // MARK: - Properties
         var parent: ImagePickerView
-        var uiImages: Binding<[UIImage]>
+        @Published var uiImages: Binding<[UIImage]>
         var sheetState: Binding<ActiveOdfMainViewSheet?>
         
         // MARK: - Init
@@ -67,20 +67,21 @@ struct ImagePickerView: UIViewControllerRepresentable {
                 
                 /// sticking with 0.25 compression quality as default
                 let editImage = UIImage(data: bytes100)!
+                self.uiImages.wrappedValue.append(editImage)
+                print(uiImages.wrappedValue)
+//                DispatchQueue.main.async {
+//                if self.uiImages.wrappedValue.count == 0 {
+//                    self.uiImages.wrappedValue += [editImage]
+//
+//                } else {
+//                    self.uiImages.wrappedValue.append(editImage)
+//                }
+                picker.dismiss(animated: true, completion: {
+                    self.sheetState.wrappedValue = .imageEdit
+                })
+//                self.parent.presentationMode.wrappedValue.dismiss()
                 
-                DispatchQueue.main.async {
-                    if self.uiImages.wrappedValue.count == 0 {
-                        
-                        self.uiImages.wrappedValue = [editImage]
-                    } else {
-                        self.uiImages.wrappedValue.append(editImage)
-                    }
-                }
-            }
-            
-            DispatchQueue.main.async {
-                self.parent.presentationMode.wrappedValue.dismiss()
-                self.sheetState.wrappedValue = .imageEdit
+//                }
             }
         }
     }

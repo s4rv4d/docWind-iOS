@@ -83,28 +83,30 @@ struct EditImageview: View {
                 Spacer()
                 VStack {
                     // ---> 1 editing options (x and tick)
-                    VStack {                        
-                        HStack {
-                            Button(action: backTapped){
-                                SFSymbol.multiplyCircleFill
-                                    .foregroundColor(Color(tintColor))
-                                    .font(.system(size: 25))
+                    if mainStage {
+                        VStack {
+                            HStack {
+                                Button(action: backTapped){
+                                    SFSymbol.multiplyCircleFill
+                                        .foregroundColor(Color(tintColor))
+                                        .font(.system(size: 25))
+                                }
+                                
+                                Spacer()
+                                
+                                Text("Edit Photo")
+                                    .font(.title2)
+                                
+                                Spacer()
+                                
+                                Button(action: nextTapped) {
+                                    Image(systemName: stateName)
+                                        .foregroundColor(Color(tintColor))
+                                        .font(.system(size: 25))
+                                }
                             }
-                            
-                            Spacer()
-                            
-                            Text("Edit Photo")
-                                .font(.title2)
-                            
-                            Spacer()
-                            
-                            Button(action: nextTapped) {
-                                Image(systemName: stateName)
-                                    .foregroundColor(Color(tintColor))
-                                    .font(.system(size: 25))
-                            }
+                            .padding(.horizontal)
                         }
-                        .padding(.horizontal)
                     }
                     // ---> 1
                     
@@ -507,7 +509,7 @@ struct EditImageview: View {
             /// exit
 
             /// update image array with updated image
-            mainImages = mainImagesCopy
+            mainImages += mainImagesCopy
             
             presentationMode.wrappedValue.dismiss()
         }
@@ -515,6 +517,10 @@ struct EditImageview: View {
     
     private func backTapped() {
         FeedbackManager.mediumFeedback()
+        
+        /// clear everything
+        mainImages = []
+        mainImagesCopy = []
         self.presentationMode.wrappedValue.dismiss()
     }
     

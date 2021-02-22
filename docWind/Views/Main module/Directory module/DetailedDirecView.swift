@@ -13,6 +13,7 @@ struct DetailedDirecView: View {
     
     // MARK: - @State variables
     @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
+    @AppStorage("isOffgridStyle") var isOffgrid: Bool = false
     @ObservedObject var item: ItemModel
     @State private var tapped = false
     @State private var isShown = false
@@ -26,8 +27,6 @@ struct DetailedDirecView: View {
     @State private var alertTitle = ""
     @State private var alertContext: ActiveAlertSheet = .error
     @State private var showAlert = false
-    @State private var isOffgrid = false
-    
     // MARK: - Objects
     @FetchRequest var directory: FetchedResults<DirecModel>
     
@@ -146,16 +145,16 @@ struct DetailedDirecView: View {
         // sheet code
         .navigationBarTitle(Text(self.item.wrappedItemName), displayMode: .inline)
         .navigationViewStyle(StackNavigationViewStyle())
-        .navigationBarItems(trailing: Button(action: {
-            FeedbackManager.mediumFeedback()
-                self.isOffgrid.toggle()
-            }){
-            Group {
-                self.isOffgrid == false ? SFSymbol.rec3Offgrid : SFSymbol.recGrid1x2
-            }
-                    .font(.system(size: 20))
-                    .foregroundColor(Color(tintColor))
-        })
+//        .navigationBarItems(trailing: Button(action: {
+//            FeedbackManager.mediumFeedback()
+//                self.isOffgrid.toggle()
+//            }){
+//            Group {
+//                self.isOffgrid == false ? SFSymbol.rec3Offgrid : SFSymbol.recGrid1x2
+//            }
+//                    .font(.system(size: 20))
+//                    .foregroundColor(Color(tintColor))
+//        })
         
         .alert(isPresented: $showAlert) {
              Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel(Text("Dismiss"), action: {

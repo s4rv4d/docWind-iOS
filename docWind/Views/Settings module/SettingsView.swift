@@ -27,6 +27,7 @@ struct SettingsView: View {
     
     // MARK: - Properties
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+    let bundlerNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
     
     var body: some View {
         NavigationView {
@@ -37,8 +38,9 @@ struct SettingsView: View {
                 
                 Section(header: Text("Options")) {
                     if UIApplication.shared.supportsAlternateIcons {
-                        SettingsRow(imageName: "app.gift", title: "Change app icon and tint", imageColor: (AppSettings.shared.bougthNonConsumable) ? .green : .yellow, action: changeAppIcon)
+                        SettingsRow(imageName: "gift.fill", title: "Change app icon", imageColor: (AppSettings.shared.bougthNonConsumable) ? .green : .yellow, action: changeAppIcon)
                     }
+                    SettingsRow(imageName: "sparkle", title: "Update UI", imageColor: .pink, action: uiUpdateTapped)
                     SettingsRowWithToggleAuth(imageName: "lock.shield", title: "Enable Lock", isOn: $isToggled, color: .red)
                 }
                 
@@ -57,7 +59,7 @@ struct SettingsView: View {
                                 Spacer()
                             }
                 ) {
-                    AppVersionRow(imageName: "info.circle", title: "App version", version: appVersion, color: .orange)
+                    AppVersionRow(imageName: "info.circle", title: "App version", version: appVersion + "(" + bundlerNumber + ")", color: .orange)
                     SettingsRow(imageName: "square.and.arrow.up", title: "Share app?", imageColor: .blue, action: shareAppTapped)
                     SettingsRow(imageName: "exclamationmark.circle", title: "About developer", imageColor: .purple, action: aboutDevTapped)
                     SettingsRow(imageName: "sparkles", title: "Dependencies used", imageColor: .green, action: dependencyTapped)
@@ -92,6 +94,8 @@ struct SettingsView: View {
                     ShareSheetView(activityItems: ["Try out docWind! \n\(SettingsHelper.appURL)"])
                 case .dependency:
                     DependecyPageView()
+                case .UIUpdate:
+                    UpdateUIView()
                 }
             }
         }
@@ -101,7 +105,11 @@ struct SettingsView: View {
     func dwPlusTapped() {
         print("present subscription page")
         self.activeSheet = .docSub
-        self.showSheet.toggle()
+    }
+    
+    func uiUpdateTapped() {
+        print("present ui update view")
+        self.activeSheet = .UIUpdate
     }
 
     func changeAppIcon() {
@@ -109,7 +117,6 @@ struct SettingsView: View {
         if AppSettings.shared.bougthNonConsumable {
             print("change app icon tapped")
             self.activeSheet = .appIcon
-            self.showSheet.toggle()
         } else {
             self.alertTitle = "Notice"
             self.alertMessage = "You need to be docWind Plus user to access this feature"
@@ -145,7 +152,6 @@ struct SettingsView: View {
     func featureRequestTapped() {
         print("feature tapped")
         if MFMailComposeViewController.canSendMail() {
-            self.showSheet.toggle()
             self.activeSheet = .mailFeature
         } else if let emailUrl = SettingsHelper.createEmailUrl(to: SettingsHelper.email, subject: "Feature request!", body: "Hi, I have an idea that i would like to suggest ") {
             UIApplication.shared.open(emailUrl)
@@ -159,7 +165,6 @@ struct SettingsView: View {
     func reportABugTapped() {
         print("report a bug tapped")
         if MFMailComposeViewController.canSendMail() {
-            self.showSheet.toggle()
             self.activeSheet = .mailBug
         } else if let emailUrl = SettingsHelper.createEmailUrl(to: SettingsHelper.email, subject: "Bug report!", body: "Hi, I found a bug that i would like to report ") {
             UIApplication.shared.open(emailUrl)
@@ -172,7 +177,6 @@ struct SettingsView: View {
     
     func shareAppTapped() {
         print("share app tapped")
-        self.showSheet.toggle()
         self.activeSheet = .shareSheet
     }
     
@@ -182,7 +186,6 @@ struct SettingsView: View {
     }
     
     func dependencyTapped() {
-        self.showSheet.toggle()
         self.activeSheet = .dependency
     }
 }

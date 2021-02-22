@@ -13,6 +13,7 @@
 		4012033824BDE06B00167917 /* DrawingGestureRecogniser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033724BDE06B00167917 /* DrawingGestureRecogniser.swift */; };
 		4012033A24BDE09C00167917 /* DrawingAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033924BDE09C00167917 /* DrawingAnnotation.swift */; };
 		4012033C24BDE0D700167917 /* NonSelectableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033B24BDE0D700167917 /* NonSelectableView.swift */; };
+		402094CC25E3BDE600F06925 /* UpdateUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402094CB25E3BDE600F06925 /* UpdateUIView.swift */; };
 		402333EE24DA9248007FE8C6 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402333ED24DA9247007FE8C6 /* ImagePickerView.swift */; };
 		40284BFD24D83745004EE44E /* EditPdfMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40284BFC24D83745004EE44E /* EditPdfMainView.swift */; };
 		402C0B6A24B0A37A00A5A6C9 /* Helper+enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */; };
@@ -178,6 +179,7 @@
 		4012033724BDE06B00167917 /* DrawingGestureRecogniser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingGestureRecogniser.swift; sourceTree = "<group>"; };
 		4012033924BDE09C00167917 /* DrawingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingAnnotation.swift; sourceTree = "<group>"; };
 		4012033B24BDE0D700167917 /* NonSelectableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonSelectableView.swift; sourceTree = "<group>"; };
+		402094CB25E3BDE600F06925 /* UpdateUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUIView.swift; sourceTree = "<group>"; };
 		402333ED24DA9247007FE8C6 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		40284BFC24D83745004EE44E /* EditPdfMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPdfMainView.swift; sourceTree = "<group>"; };
 		402C0B6924B0A37A00A5A6C9 /* Helper+enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+enums.swift"; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 				405EFDC724BCA11A0070BE5F /* AppIconView.swift */,
 				405EFDC924BCA12A0070BE5F /* SubcriptionPageView.swift */,
 				404BFAFD24E7D59200A13230 /* DependecyPageView.swift */,
+				402094CB25E3BDE600F06925 /* UpdateUIView.swift */,
 			);
 			path = "Settings module";
 			sourceTree = "<group>";
@@ -956,6 +959,7 @@
 				40CDC4CE24AF80DF00462277 /* MainDocListViewModel.swift in Sources */,
 				40CDC49F24AF691900462277 /* Helper+Variables.swift in Sources */,
 				4095AC79258BCB9A0008BD71 /* SobelFilter.swift in Sources */,
+				402094CC25E3BDE600F06925 /* UpdateUIView.swift in Sources */,
 				407567F624B1FC620071B575 /* GeneralDocListViewModel.swift in Sources */,
 				4095AC80258BCB9A0008BD71 /* MediaVideoProcessor.swift in Sources */,
 				4095AC72258BCB9A0008BD71 /* GraphicContext.swift in Sources */,
@@ -1096,7 +1100,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
@@ -1120,7 +1124,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = docWind/docWind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"docWind/Preview Content\"";
 				DEVELOPMENT_TEAM = N4FDL334LZ;
 				ENABLE_PREVIEWS = YES;
