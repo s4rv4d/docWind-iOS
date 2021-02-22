@@ -152,7 +152,7 @@ struct AddPdfMainView: View {
                 
                 SnapCarouselView(mainImages: self.$pages, title: self.pdfName)
             case .photoLibrary:
-                ImagePickerView(pages: self.$pagesCopy, sheetState: $activeSheet)
+                ImagePickerView(pages: self.$pages, sheetState: $activeSheet)
                     .onAppear {
                         print(pagesCopy)
                     }
@@ -160,7 +160,7 @@ struct AddPdfMainView: View {
             case .subView:
                 SubcriptionPageView()
             case .imageEdit:
-                EditImageview(mainImages: self.$pages, mainImagesCopy: self.pagesCopy, currentImage: self.pagesCopy.first!, currentImageCopy: self.pagesCopy.first!, imageCount: self.pagesCopy.count)
+                EditImageview(mainImages: self.$pages, mainImagesCopy: self.pages, currentImage: self.pages.first!, currentImageCopy: self.pages.first!, imageCount: self.pagesCopy.count)
             }
         }
         

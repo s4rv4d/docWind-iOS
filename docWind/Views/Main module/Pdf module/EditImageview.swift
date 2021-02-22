@@ -574,13 +574,16 @@ struct EditImageview: View {
     
     private func addWatermark() {
         let mediaItem = MediaItem(image: currentImage)
-
         
-        let secondElement = MediaElement(image: UIImage(named: "waterMarkNew")!)
+        /// setting opacity to 0.2
+        let image = UIImage(named: "waterMarkNew")!.withAlphaComponent(0.2)
+        let secondElement = MediaElement(image: image!)
         secondElement.frame = CGRect(x: 20, y: mediaItem.size.height - 71, width: 220, height: 70)
         
+        /// adding to array
         mediaItem.add(elements: [secondElement])
         
+        /// final image processing
         let mediaProcessor = MediaProcessor()
         mediaProcessor.processElements(item: mediaItem) { [self] (result, error) in
             currentImage = result.image!

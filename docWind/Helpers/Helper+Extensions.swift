@@ -284,6 +284,14 @@ extension UIImage {
             guard let newCgImage = CIContext(options: nil).createCGImage(result, from: result.extent) else { return self }
             return UIImage(cgImage: newCgImage, scale: UIScreen.main.scale, orientation: imageOrientation)
         }
+    
+        func withAlphaComponent(_ alpha: CGFloat) -> UIImage? {
+            UIGraphicsBeginImageContextWithOptions(size, false, scale)
+            defer { UIGraphicsEndImageContext() }
+
+            draw(at: .zero, blendMode: .normal, alpha: alpha)
+            return UIGraphicsGetImageFromCurrentImageContext()
+        }
 }
 
 // MARK: - Color
