@@ -119,7 +119,7 @@ struct PDFCustomView: UIViewRepresentable {
                     
                     if !pdfDrawer.calledOnce {
                         let page = uiView.currentPage!
-                        let pageBounds = page.bounds(for: .cropBox)
+//                        let pageBounds = page.bounds(for: .cropBox) /// not being used
                         let imageBounds = CGRect(x: 100, y: 100, width: 300, height: 300)
                         let imageStamp = ImageStampAnnotation(with: image, forBounds: imageBounds, withProperties: nil)
 
@@ -168,7 +168,7 @@ struct PDFCustomView: UIViewRepresentable {
             if alreadyAdded {
                 let page = uiView.currentPage!
                 page.removeAnnotation(page.annotations.last!)
-                let pageBounds = page.bounds(for: .cropBox)
+//                let pageBounds = page.bounds(for: .cropBox)
                 let imageBounds = CGRect(x: 100, y: 100, width: 300, height: 300)
                 let imageStamp = ImageStampAnnotation(with: image, forBounds: imageBounds, withProperties: nil)
                 page.addAnnotation(imageStamp)

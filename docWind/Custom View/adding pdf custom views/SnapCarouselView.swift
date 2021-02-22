@@ -20,7 +20,8 @@ struct SnapCarouselView: View {
     @State private var alertMessage = ""
     
     // MARK: - @Binding variables
-    @Binding var mainImages: [UIImage]
+    @State var mainImages: [UIImage]
+    @Binding var mI: [UIImage]
     
     // MARK: - Environment variables
     @Environment(\.presentationMode) var presentationMode
@@ -56,10 +57,8 @@ struct SnapCarouselView: View {
                                     .aspectRatio(contentMode: .fit)
 
                             }
-                            .foregroundColor(Color.red)
-                            .background(Color.black)
+//                            .background(Color.black)
                             .cornerRadius(8)
-                            .shadow(color: .secondary, radius: 3, x: 0, y: 4)
                             .transition(AnyTransition.slide)
                             .animation(.spring())
                             .environmentObject(self.UIState)
@@ -67,7 +66,7 @@ struct SnapCarouselView: View {
                 }
                 .environmentObject(self.UIState)
                 .padding()
-                
+                Spacer()
                 HStack {
                     Button(action: deleteTapped){
                         HStack {
@@ -77,14 +76,13 @@ struct SnapCarouselView: View {
                                 Spacer()
                             }.padding()
                             .foregroundColor(.red)
-                            
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.secondarySystemBackground), lineWidth: 1))
                             .foregroundColor(Color(tintColor))
                             .background(Color(.secondarySystemBackground))
                         .cornerRadius(10)
                     }.buttonStyle(PlainButtonStyle())
                 }.padding([.top, .bottom, .leading, .trailing])
-                Spacer()
+//                Spacer()
             }
         }
     }
@@ -92,8 +90,7 @@ struct SnapCarouselView: View {
     // MARK: - Functions
     private func saveTapped() {
         print("saving... ")
-        // check number of images
-        // get vm and store in filemanager and make ref to coredata
+        mI = mainImages
         self.presentationMode.wrappedValue.dismiss()
     }
     
@@ -101,7 +98,12 @@ struct SnapCarouselView: View {
         print("delete tapped")
         // get current photo using UIState and remove from all arrays
         let currentPhotoIndex = UIState.activeCard
-        UIState.activeCard = 0
+        print(currentPhotoIndex)
+        print(currentPhotoIndex - 1)
+        
+        UIState.activeCard = (currentPhotoIndex - 1 <= 0) ? 0 : currentPhotoIndex - 1
+        print(UIState.activeCard)
+        
         self.mainImages.remove(at: currentPhotoIndex)
     }
 }

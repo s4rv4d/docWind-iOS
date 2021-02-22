@@ -36,7 +36,7 @@ struct ImagePickerView: UIViewControllerRepresentable {
     final class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         // MARK: - Properties
         var parent: ImagePickerView
-        @Published var uiImages: Binding<[UIImage]>
+        var uiImages: Binding<[UIImage]>
         var sheetState: Binding<ActiveOdfMainViewSheet?>
         
         // MARK: - Init

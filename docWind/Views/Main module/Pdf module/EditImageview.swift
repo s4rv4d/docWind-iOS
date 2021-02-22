@@ -11,7 +11,7 @@ import SwiftUI
 struct EditImageview: View {
     
     @Binding var mainImages: [UIImage]
-    
+    @Binding var mICopy: [UIImage]
     @State var mainImagesCopy: [UIImage]
     
     @State var currentImage: UIImage
@@ -61,6 +61,7 @@ struct EditImageview: View {
         ZStack {
             Color.systemGroupedBackground
             VStack {
+                Spacer()
                 VStack {
                     Image(uiImage: currentImage)
                         .resizable()
@@ -510,7 +511,8 @@ struct EditImageview: View {
 
             /// update image array with updated image
             mainImages += mainImagesCopy
-            
+            mainImagesCopy = []
+            mICopy = []
             presentationMode.wrappedValue.dismiss()
         }
     }
@@ -521,6 +523,7 @@ struct EditImageview: View {
         /// clear everything
         mainImages = []
         mainImagesCopy = []
+        mICopy = []
         self.presentationMode.wrappedValue.dismiss()
     }
     
@@ -612,7 +615,7 @@ struct EditImageview: View {
 
 struct EditImageview_Previews: PreviewProvider {
     static var previews: some View {
-        EditImageview(mainImages: .constant([UIImage(named: "server")!]), mainImagesCopy: [UIImage(named: "server")!], currentImage: UIImage(named: "server")!, currentImageCopy: UIImage(named: "server")!)
+        EditImageview(mainImages: .constant([UIImage(named: "server")!]), mICopy: .constant([UIImage(named: "server")!]), mainImagesCopy: [UIImage(named: "server")!], currentImage: UIImage(named: "server")!, currentImageCopy: UIImage(named: "server")!)
             .preferredColorScheme(.dark)
             
     }

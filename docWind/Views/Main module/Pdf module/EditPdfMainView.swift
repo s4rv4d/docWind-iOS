@@ -28,6 +28,7 @@ struct EditPdfMainView: View {
     // for images
     @State var mainPages: [UIImage] = [UIImage]()
     @State var pages: [UIImage] = [UIImage]()
+    @State var pagesCopy: [UIImage] = [UIImage]()
     
     // addtional properties
     @State private var activeSheet: ActiveOdfMainViewSheet? = nil
@@ -67,6 +68,14 @@ struct EditPdfMainView: View {
     
     var body: some View {
         NavigationView {
+            
+            /// this is never gonna execute, the reason we do this is so that the pagesCopy value updates, when view updates, weird need to look for better solutions
+            Group {
+                if pagesCopy.count == Int.max {
+                    Image(uiImage: pagesCopy.first!)
+                }
+            }
+            
             Form {
                 Section(header: Text("File name")) {
                     TextField("Enter a name", text: $pdfName)
@@ -166,13 +175,15 @@ struct EditPdfMainView: View {
         .fullScreenCover(item: $activeSheet, onDismiss: { self.activeSheet = nil }) { item in
             switch item {
             case .scannerView:
-                ScannerView(uiImages: self.$pages, sheetState: $activeSheet)
+                ScannerView(uiImages: self.$pagesCopy, sheetState: $activeSheet)
             case .pdfView:
-                SnapCarouselView(mainImages: self.$pages, title: self.pdfName)
+                SnapCarouselView(mainImages: self.pages, mI: self.$pages, title: self.pdfName)
             case .photoLibrary:
-                ImagePickerView(pages: self.$pages, sheetState: self.$activeSheet)
-            default:
-                EditImageview(mainImages: self.$pages, mainImagesCopy: self.pages, currentImage: self.pages.first!, currentImageCopy: self.pages.first!, imageCount: self.pages.count)
+                ImagePickerView(pages: self.$pagesCopy, sheetState: self.$activeSheet)
+            case .imageEdit:
+                EditImageview(mainImages: self.$pages, mICopy: self.$pagesCopy, mainImagesCopy: self.pagesCopy, currentImage: self.pagesCopy.first!, currentImageCopy: self.pagesCopy.first!, imageCount: self.pagesCopy.count)
+            case .subView:
+                SubcriptionPageView()
             }
         }
         .actionSheet(isPresented: $showingActionSheet) {

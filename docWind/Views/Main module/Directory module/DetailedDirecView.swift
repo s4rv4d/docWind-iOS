@@ -166,7 +166,7 @@ struct DetailedDirecView: View {
                 }))
         }
         
-        .sheet(isPresented: $isShown) {
+        .fullScreenCover(isPresented: $isShown) {
             if self.activeSheet == .createdDirec {
                 AddDocGeneView(path: self.masterDirecName, headName: self.item.wrappedItemUrl).environment(\.managedObjectContext, self.context)
             } else if self.activeSheet == .createPdf {

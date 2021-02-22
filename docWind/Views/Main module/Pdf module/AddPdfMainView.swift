@@ -47,7 +47,14 @@ struct AddPdfMainView: View {
     var body: some View {
         NavigationView {
             
-            // contents
+            /// this is never gonna execute, the reason we do this is so that the pagesCopy value updates, when view updates, weird need to look for better solutions
+            Group {
+                if pagesCopy.count == Int.max {
+                    Image(uiImage: pagesCopy.first!)
+                }
+            }
+            
+            // Main contents
             Form {
                 Section(header: Text("File name")) {
                     TextField("Enter a name", text: $pdfName)
@@ -93,7 +100,6 @@ struct AddPdfMainView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 150, height: 200)
                                     .cornerRadius(8)
-//                                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary))
                                     .padding()
                                         .onTapGesture {
                                             self.imageTapped()
@@ -123,6 +129,7 @@ struct AddPdfMainView: View {
                     .pickerStyle(SegmentedPickerStyle())
                 }
             }
+            
             .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
                 
             .navigationBarTitle(Text(self.pdfName))
@@ -133,6 +140,7 @@ struct AddPdfMainView: View {
                     Text("Save")
                         .foregroundColor(Color(tintColor))
             })
+            
         }
         
         .alert(isPresented: $showAlert) {
@@ -149,18 +157,13 @@ struct AddPdfMainView: View {
             case .scannerView:
                 ScannerView(uiImages: self.$pagesCopy, sheetState: $activeSheet)
             case .pdfView:
-                
-                SnapCarouselView(mainImages: self.$pages, title: self.pdfName)
+                SnapCarouselView(mainImages: self.pages, mI: self.$pages, title: self.pdfName)
             case .photoLibrary:
-                ImagePickerView(pages: self.$pages, sheetState: $activeSheet)
-                    .onAppear {
-                        print(pagesCopy)
-                    }
-                
+                ImagePickerView(pages: self.$pagesCopy, sheetState: $activeSheet)
             case .subView:
                 SubcriptionPageView()
             case .imageEdit:
-                EditImageview(mainImages: self.$pages, mainImagesCopy: self.pages, currentImage: self.pages.first!, currentImageCopy: self.pages.first!, imageCount: self.pagesCopy.count)
+                EditImageview(mainImages: self.$pages, mICopy: self.$pagesCopy, mainImagesCopy: self.pagesCopy, currentImage: self.pagesCopy.first!, currentImageCopy: self.pagesCopy.first!, imageCount: self.pagesCopy.count)
             }
         }
         

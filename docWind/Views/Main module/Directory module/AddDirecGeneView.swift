@@ -86,7 +86,7 @@ struct AddDocGeneView: View {
         let fullNameArr = headName.split{$0 == "/"}.map(String.init)
         print(fullNameArr)
         
-        let index = fullNameArr.index(of: "DocWind")! + 1
+        let index = fullNameArr.firstIndex(of: "DocWind")! + 1
         
         let newArray = fullNameArr[index...]
         print(direcName)

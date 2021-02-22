@@ -22,6 +22,7 @@ struct AddPdfFileGenView: View {
     
     @State var mainPages: [UIImage] = [UIImage]()
     @State var pages: [UIImage] = [UIImage]()
+    @State var pagesCopy: [UIImage] = [UIImage]()
         
     @State private var activeSheet: ActiveOdfMainViewSheet? = nil
     @State private var activeAlertSheet: ActiveAlertSheet = .notice
@@ -47,6 +48,13 @@ struct AddPdfFileGenView: View {
     
     var body: some View {
         NavigationView {
+            
+            /// this is never gonna execute, the reason we do this is so that the pagesCopy value updates, when view updates, weird need to look for better solutions
+            Group {
+                if pagesCopy.count == Int.max {
+                    Image(uiImage: pagesCopy.first!)
+                }
+            }
             
             // contents
             Form {
@@ -150,15 +158,15 @@ struct AddPdfFileGenView: View {
         .fullScreenCover(item: $activeSheet, onDismiss: { self.activeSheet = nil }) { item in
             switch item {
             case .scannerView:
-                ScannerView(uiImages: self.$pages, sheetState: $activeSheet)
+                ScannerView(uiImages: self.$pagesCopy, sheetState: $activeSheet)
             case .pdfView:
-                SnapCarouselView(mainImages: self.$pages, title: self.pdfName)
+                SnapCarouselView(mainImages: self.pages, mI: self.$pages, title: self.pdfName)
             case .photoLibrary:
-                ImagePickerView(pages: self.$pages, sheetState: self.$activeSheet)
+                ImagePickerView(pages: self.$pagesCopy, sheetState: self.$activeSheet)
             case .subView:
                 SubcriptionPageView()
             case .imageEdit:
-                EditImageview(mainImages: self.$pages, mainImagesCopy: self.pages, currentImage: self.pages.first!, currentImageCopy: self.pages.first!, imageCount: self.pages.count)
+                EditImageview(mainImages: self.$pages, mICopy: self.$pagesCopy, mainImagesCopy: self.pagesCopy, currentImage: self.pagesCopy.first!, currentImageCopy: self.pagesCopy.first!, imageCount: self.pagesCopy.count)
             }
         }
         

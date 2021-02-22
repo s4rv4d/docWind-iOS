@@ -305,7 +305,8 @@ extension CustomCameraController: MTKViewDelegate {
         let heightOfDrawable = view.drawableSize.height
         let yOffsetFromBottom = (heightOfDrawable - heightOfciImage)
         
-        let destRect = view.bounds.applying(CGAffineTransform(scaleX: UIScreen.main.scale, y: UIScreen.main.scale))
+        /// not being used
+//        let destRect = view.bounds.applying(CGAffineTransform(scaleX: UIScreen.main.scale, y: UIScreen.main.scale))
         /// render into metal texture
         self.ciContext?.render(ciImage, to: currentDrawable.texture, commandBuffer: commandBuffer, bounds: CGRect(origin: CGPoint(x: 0, y: -yOffsetFromBottom), size: CGSize(width: .max, height: .max)), colorSpace: CGColorSpaceCreateDeviceRGB())
         
@@ -349,7 +350,7 @@ extension CustomCameraController: AVCaptureVideoDataOutputSampleBufferDelegate {
         guard let cgImage = context.createCGImage(self.currentCIImage!, from: currentCIImage!.extent) else { return }
         
          //get uiimage image out of ciimage
-        let uiimage = UIImage(cgImage: cgImage)
+//        let uiimage = UIImage(cgImage: cgImage) --> not being used
 
         //let uiimage = UIImage(ciImage: ciimage)
         

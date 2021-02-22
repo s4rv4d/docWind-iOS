@@ -96,7 +96,7 @@ struct SignaturePageView: View {
 //        image.draw(in: CGRect(origin: origin, size: size))
         
         let context = UIGraphicsGetCurrentContext()
-        let color = self.color
+//        let color = self.color --> not being used
         context!.setLineWidth(self.lineWidth)
         context!.setStrokeColor(UIColor.black.cgColor)
         
