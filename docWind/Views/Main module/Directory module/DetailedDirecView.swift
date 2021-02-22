@@ -139,22 +139,26 @@ struct DetailedDirecView: View {
         .onAppear {
             
             if let _ = directory.first {
-                DWFMAppSettings.shared.syncUpLocalFilesWithApp(direcName: masterDirecName, directory: directory.first!, context: self.context)
+                _ = DWFMAppSettings.shared.syncUpLocalFilesWithApp(direcName: masterDirecName, directory: directory.first!, context: self.context)
             }
         }
         // sheet code
         .navigationBarTitle(Text(self.item.wrappedItemName), displayMode: .inline)
         .navigationViewStyle(StackNavigationViewStyle())
-//        .navigationBarItems(trailing: Button(action: {
-//            FeedbackManager.mediumFeedback()
-//                self.isOffgrid.toggle()
-//            }){
-//            Group {
-//                self.isOffgrid == false ? SFSymbol.rec3Offgrid : SFSymbol.recGrid1x2
-//            }
-//                    .font(.system(size: 20))
-//                    .foregroundColor(Color(tintColor))
-//        })
+        .navigationBarItems(trailing: Button(action: {
+            if let _ = directory.first {
+                if !DWFMAppSettings.shared.syncUpLocalFilesWithApp(direcName: masterDirecName, directory: directory.first!, context: self.context) {
+                    print("bring up alert")
+                    self.alertTitle = "Notice"
+                    self.alertMessage = "All local files from Files App(under docWind/\(masterDirecName) directory) have been synced up."
+                    self.showAlert.toggle()
+                }
+            }
+        }) {
+            SFSymbol.goForward
+            .font(.system(size: 20))
+            .foregroundColor(Color(tintColor))
+        })
         
         .alert(isPresented: $showAlert) {
              Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .cancel(Text("Dismiss"), action: {

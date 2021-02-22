@@ -26,7 +26,7 @@ protocol DocWindFManager {
     func deleteSavedFolder(folderName: String) -> Bool
     func createPDF(images:[UIImage], maxSize:Int, quality:Int, pdfPathUrl: URL?) -> NSData?
     func updateFileWithPDFContent(pdfData: Data, pdfName: String, directoryRef: String?) -> (Bool, String)
-    func syncUpLocalFilesWithApp(direcName: String?, directory: DirecModel, context: NSManagedObjectContext)
+    func syncUpLocalFilesWithApp(direcName: String?, directory: DirecModel, context: NSManagedObjectContext) -> Bool
 }
 
 //MARK: - Extension
@@ -833,7 +833,9 @@ extension DocWindFManager {
         return (status, path)
     }
     
-    func syncUpLocalFilesWithApp(direcName: String?, directory: DirecModel, context: NSManagedObjectContext) {
+    func syncUpLocalFilesWithApp(direcName: String?, directory: DirecModel, context: NSManagedObjectContext) -> Bool {
+        
+        var status = false
         
         // getting the main directory file URL
         guard let resourceURL = containerUrl else { fatalError("error getting container URL") }
@@ -889,6 +891,7 @@ extension DocWindFManager {
                                 do {
                                    try context.save()
                                    print("✅ created and saved \(lastNameNew.replacingOccurrences(of: "_", with: " ").replacingOccurrences(of: ".pdf", with: " ")) to coredata")
+                                    status = true
                                } catch {
                                    print("❌ FAILED TO UPDATE COREDATA")
                                }
@@ -896,6 +899,9 @@ extension DocWindFManager {
                             
                         } else {
                             print("already exists")
+                            
+                            /// no new files to add
+                            status = false
                         }
                     } else {
                         // its a directory
@@ -926,12 +932,14 @@ extension DocWindFManager {
                                 do {
                                    try context.save()
                                    print("✅ created and saved \(lastNameNew.replacingOccurrences(of: "_", with: " ")) to coredata")
+                                    status = true
                                } catch {
                                    print("❌ FAILED TO UPDATE COREDATA")
                                }
                             }
                         } else {
                             print("already exists")
+                            status = false
                         }
                     }
                 }
@@ -942,9 +950,7 @@ extension DocWindFManager {
             
             
         } else {
-            // under a direc
-            print(direcName)
-            
+            // under a direc            
             /// get directory name
             let ref = direcName!.replacingOccurrences(of: " ", with: "_").trimBothSides()
             let relativeFilePath = resourceURL.appendingPathComponent(ref, isDirectory: true)
@@ -1005,6 +1011,8 @@ extension DocWindFManager {
                 print("////reason: \(error.localizedDescription)")
             }
         }
+        
+        return status
         
     }
     

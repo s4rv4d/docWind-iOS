@@ -120,7 +120,21 @@ struct ContentView: View {
                     SFSymbol.gear
                     .font(.system(size: 20))
                     .foregroundColor(Color(tintColor))
-                })
+                }, trailing: Button(action: {
+                    if let _ = docWindItems.first {
+                        if !DWFMAppSettings.shared.syncUpLocalFilesWithApp(direcName: nil, directory: docWindItems.first!, context: self.context) {
+                            print("bring up alert")
+                            self.alertTitle = "Notice"
+                            self.alertMessage = "All local files from Files App(under docWind directory) have been synced up."
+                            self.showAlert.toggle()
+                        }
+                    }
+                }) {
+                    SFSymbol.goForward
+                    .font(.system(size: 20))
+                    .foregroundColor(Color(tintColor))
+                }
+            )
         }
         .navigationViewStyle(StackNavigationViewStyle())
                 
@@ -128,7 +142,7 @@ struct ContentView: View {
         .onAppear {
             
             if let _ = docWindItems.first {
-                DWFMAppSettings.shared.syncUpLocalFilesWithApp(direcName: nil, directory: docWindItems.first!, context: self.context)
+                _ = DWFMAppSettings.shared.syncUpLocalFilesWithApp(direcName: nil, directory: docWindItems.first!, context: self.context)
             }
             
             IAPService.shared.getProducts()

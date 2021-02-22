@@ -181,6 +181,7 @@ enum SFSymbol: String, View {
     case exclamationMarkCircle = "exclamationmark.circle"
     case boltFill = "bolt.fill"
     case boltSlashFill = "bolt.slash.fill"
+    case goForward = "goforward"
     
     var body: some View {
         Image(systemName: rawValue)
