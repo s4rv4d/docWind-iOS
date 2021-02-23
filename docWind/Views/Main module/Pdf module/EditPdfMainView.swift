@@ -23,6 +23,7 @@ struct EditPdfMainView: View {
     @State private var url = ""
     @State private var showingActionSheet = false
     @State private var editType: EditType = .rename
+    @State private var imagesEditted = false
     @ObservedObject var item: ItemModel
     
     // for images
@@ -181,7 +182,9 @@ struct EditPdfMainView: View {
             case .photoLibrary:
                 ImagePickerView(pages: self.$pagesCopy, sheetState: self.$activeSheet)
             case .imageEdit:
-                EditImageview(mainImages: self.$pages, mICopy: self.$pagesCopy, mainImagesCopy: self.pagesCopy, currentImage: self.pagesCopy.first!, currentImageCopy: self.pagesCopy.first!, imageCount: self.pagesCopy.count)
+                EditImageview(mainImages: self.$pages.onChange {
+                    self.imagesEditted = true
+                }, mICopy: self.$pagesCopy, mainImagesCopy: self.pagesCopy, currentImage: self.pagesCopy.first!, currentImageCopy: self.pagesCopy.first!, imageCount: self.pagesCopy.count)
             case .subView:
                 SubcriptionPageView()
             }
@@ -250,14 +253,20 @@ struct EditPdfMainView: View {
                 // second check regardless
                 let mainPages = self.pages
                 
-                if mainPages.count != oldPageCount {
+                if !imagesEditted {
+                    if mainPages.count != oldPageCount {
+                        // pages updated, need to update file path and save
+                        editType = .newImagesAdded
+                        saveFinal()
+                    } else {
+                        // nothing to change, dismiss
+                        print("nothing to change")
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                } else {
                     // pages updated, need to update file path and save
                     editType = .newImagesAdded
                     saveFinal()
-                } else {
-                    // nothing to change, dismiss
-                    print("nothing to change")
-                    presentationMode.wrappedValue.dismiss()
                 }
                 
             }

@@ -520,8 +520,7 @@ struct EditImageview: View {
     private func backTapped() {
         FeedbackManager.mediumFeedback()
         
-        /// clear everything
-        mainImages = []
+        /// clear everything except mainImages
         mainImagesCopy = []
         mICopy = []
         self.presentationMode.wrappedValue.dismiss()
