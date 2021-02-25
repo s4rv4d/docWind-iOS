@@ -60,12 +60,28 @@ struct GenListRowView: View {
                         Text(DWDateFormatter.shared.getStringFromDate(date: self.itemArray.wrappedItemCreated))
                         .font(.caption)
                         .foregroundColor(.secondary)
+//                        Spacer()
+//                        if self.itemArray.wrappedItemType == DWPDFFILE {
+//                            if URL(fileURLWithPath: self.itemArray.wrappedItemUrl).fileSize != nil {
+//                                Text(NSString(format: "%.2f", URL(fileURLWithPath: self.itemArray.wrappedItemUrl).fileSize!) as String + " MB")
+//                                    .font(.caption)
+//                                    .foregroundColor(.secondary)
+//                            }
+//                        }
+                        
                         Spacer()
                         if self.itemArray.wrappedItemType == DWPDFFILE {
-                            if URL(fileURLWithPath: self.itemArray.wrappedItemUrl).fileSize != nil {
-                                Text(NSString(format: "%.2f", URL(fileURLWithPath: self.itemArray.wrappedItemUrl).fileSize!) as String + " MB")
+                            if URL(fileURLWithPath: itemArray.wrappedItemUrl).fileSize != nil {
+                                Text(NSString(format: "%.2f", URL(fileURLWithPath: itemArray.wrappedItemUrl).fileSize!) as String + " MB")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
+                            } else {
+                                // TODO: - Need to migrate data model
+                                Text(approximateFileSize())
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                    .debugPrint(itemArray.wrappedItemUrl)
+                                
                             }
                         }
                     }
@@ -160,6 +176,17 @@ struct GenListRowView: View {
     }
     
     // MARK: - Functions
+    private func approximateFileSize() -> String {
+        let filePath = String(itemArray.wrappedItemUrl.split(separator: "/").reversed().first!)
+        let folderPath = String(itemArray.wrappedItemUrl.split(separator: "/").reversed()[1])
+        
+        guard let final = DWFMAppSettings.shared.containerUrl?.appendingPathComponent(folderPath).appendingPathComponent(filePath) else { return "0 MB" }
+        print(final)
+        
+        guard let fileSize = final.fileSize else { return "0 MB" }
+        return String(NSString(format: "%.2f", fileSize) as String + " MB")
+    }
+    
     func getUrl() {
         if selectedItem != nil {
             print(masterFolder)
@@ -307,7 +334,7 @@ struct GenListRowView: View {
                                     ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
                                     ctx.cgContext.drawPDFPage(page)
                                 }
-                                imgs.append(img)
+                                imgs.append(img.downSampleImage())
                             }
                         }
                         

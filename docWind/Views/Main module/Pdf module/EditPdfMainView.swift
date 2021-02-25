@@ -144,7 +144,9 @@ struct EditPdfMainView: View {
                 
                 /// compress
                 Section(header: Text("Compression percentage"), footer: Text("Approximate file size: \(approximateFileSize()) \n high resolution images can increase file size.")) {
-                    Picker(selection: $compressionIndex, label: Text("")) {
+                    Picker(selection: $compressionIndex.onChange {
+                        self.imagesEditted = true
+                    }, label: Text("")) {
                         ForEach(0 ..< compressionTypes.count) {
                             Text(compressionTypes[$0])
                         }
@@ -205,10 +207,14 @@ struct EditPdfMainView: View {
             
             for image in pages {
                 let bytes = image.jpegData(compressionQuality: compressionValues[compressionIndex])!
+                
+                /// just to test theory
+                print("bytes without downsampling check: ", image.pngData()!.count)
+                print("bytes with downsampling check: ", image.downSampleImage().pngData()!.count)
+                print("bytes with jpeg compression: ", image.jpegData(compressionQuality: 1)!.count)
                 totalSize += bytes.count
             }
             let floatBytes = Float(totalSize) * 0.000001
-            print(floatBytes)
             return String(format: "%.2f", floatBytes) + "MB"
         } else {
             return "0 MB"
@@ -298,11 +304,7 @@ struct EditPdfMainView: View {
         case .rename:
             // different pdf name
             print("renaming file name")
-            let mainPages = self.pages.map { UIImage(data: $0.pngData()!)! }
-            
-            print(self.pages.first!.pngData()!.count)
-            print(self.pages.first!.jpegData(compressionQuality: 1)!.count)
-            
+            let mainPages = self.pages
             // name adjustment
             
             // new name
@@ -354,7 +356,7 @@ struct EditPdfMainView: View {
                     for page in mainPages {
                         
                         // compression part here
-                        guard let bytes = page.jpegData(compressionQuality: compressionValues[compressionIndex]) else { fatalError("failed to convert image into Data")}
+                        guard let bytes = page.downSampleImage().jpegData(compressionQuality: compressionValues[compressionIndex]) else { fatalError("failed to convert image into Data")}
                         guard let image = UIImage(data: bytes) else { fatalError("failed to get image from data") }
                         
                         let pdfPage = PDFPage(image: image)
@@ -414,21 +416,14 @@ struct EditPdfMainView: View {
             // create PDFDocument instance
             let pdfDocument = PDFDocument()
             
-            
-            
             // converting images to pages
             for page in mainPages {
                 var image = page
                 
                 guard let index = mainPages.firstIndex(of: page) else { fatalError("couldnt find index of page") }
-                
-                if index >= oldPageCount {
-                    print("here")
-                    /// compress newly added images
-                    let bytes = image.jpegData(compressionQuality: compressionValues[compressionIndex])!
-                    image = UIImage(data: bytes)!
-                }
-                
+
+                let bytes = image.downSampleImage().jpegData(compressionQuality: compressionValues[compressionIndex])!
+                image = UIImage(data: bytes)!
                 guard let pdfPage = PDFPage(image: image) else { fatalError("couldnt convert into PDFPage") }
                 
                 // store in pdfDocument

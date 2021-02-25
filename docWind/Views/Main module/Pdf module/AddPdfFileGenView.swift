@@ -238,7 +238,7 @@ struct AddPdfFileGenView: View {
             for page in mainPages {
                 
                 // compression part here
-                guard let bytes = page.jpegData(compressionQuality: compressionValues[compressionIndex]) else { fatalError("failed to convert image into Data")}
+                guard let bytes = page.downSampleImage().jpegData(compressionQuality: compressionValues[compressionIndex]) else { fatalError("failed to convert image into Data")}
                 guard let image = UIImage(data: bytes) else { fatalError("failed to get image from data") }
                 
                 let pdfPage = PDFPage(image: image)

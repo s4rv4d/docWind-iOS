@@ -138,6 +138,22 @@ extension View {
 // MARK: - UIImage
 extension UIImage {
     
+    // downSampling image
+    func downSampleImage() -> UIImage {
+        let image = self
+        let sourceOptions = [kCGImageSourceShouldCache:false] as CFDictionary
+        guard let imageData = image.pngData() else { fatalError("Couldnt convert to CFData") }
+        guard let source = CGImageSourceCreateWithData(imageData as CFData, sourceOptions) else { fatalError("couldnt get source image") }
+        let downsampleOptions = [kCGImageSourceCreateThumbnailFromImageAlways:true,
+                                     kCGImageSourceThumbnailMaxPixelSize:1000,
+                                     kCGImageSourceShouldCacheImmediately:true,
+                                     kCGImageSourceCreateThumbnailWithTransform:true,
+                                     ] as CFDictionary
+        let downsampledImage = CGImageSourceCreateThumbnailAtIndex(source, 0, downsampleOptions)!
+        let actualDownsampledImage = UIImage(cgImage: downsampledImage)
+        return actualDownsampledImage
+    }
+    
     // using accelerate
     func resizeImageUsingVImage(size:CGSize) -> UIImage? {
         let cgImage = self.cgImage!

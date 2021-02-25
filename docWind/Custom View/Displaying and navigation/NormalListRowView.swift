@@ -69,10 +69,11 @@ struct NormalListRowView: View {
                                     .foregroundColor(.secondary)
                             } else {
                                 // TODO: - Need to migrate data model
-                                Text("")
+                                Text(approximateFileSize())
                                     .font(.caption)
                                     .foregroundColor(.secondary)
-                                    .debugPrint(url)
+                                    .debugPrint(itemArray.wrappedItemUrl)
+                                
                             }
                         }
                     }
@@ -85,7 +86,7 @@ struct NormalListRowView: View {
                     Button(action: {
                         DispatchQueue.main.async {
                             self.selectedItem = self.itemArray
-                            self.uiImages = self.getImages()
+                            self.uiImages = self.getImagesAndPath()
                             self.activeSheet = .editSheet(images: self.uiImages, url: self.url, item: self.itemArray)
                         }
                     }) {
@@ -110,7 +111,7 @@ struct NormalListRowView: View {
                     Button(action: {
                         DispatchQueue.main.async {
                             self.selectedItem = self.itemArray
-                            self.uiImages = self.getImages()
+                            self.uiImages = self.getImagesAndPath()
                             self.activeSheet = .editSheet(images: self.uiImages, url: self.url, item: self.itemArray)
                         }
                         
@@ -277,7 +278,14 @@ struct NormalListRowView: View {
         }
     }
     
-    func getImages() -> [UIImage]{
+    private func approximateFileSize() -> String {
+        let path = String(itemArray.wrappedItemUrl.split(separator: "/").reversed().first!)
+        guard let final = DWFMAppSettings.shared.containerUrl?.appendingPathComponent((path)) else { return "0 MB" }
+        guard let fileSize = final.fileSize else { return "0 MB" }
+        return String(NSString(format: "%.2f", fileSize) as String + " MB")
+    }
+    
+    func getImagesAndPath() -> [UIImage]{
         var imgs = [UIImage]()
                 
         if selectedItem != nil {
@@ -315,20 +323,19 @@ struct NormalListRowView: View {
                                     ctx.fill(pageRect)
                                     ctx.cgContext.drawPDFPage(page)
                                 }
-//                                let edittedImage = img.resizeImageUsingVImage(size: CGSize(width: 596, height: 842))!
-//                                let editImageBytes = edittedImage.jpegData(compressionQuality: 0.8)!
-//                                imgs.append(UIImage(data: editImageBytes)!)
-                                let data = image.jpegData(compressionQuality: 0.75)!
-                                let img = UIImage(data: data)!
-                                imgs.append(img)
+                                
+                                /// just to test theory
+                                print("bytes without downsampling: ",image.pngData()!.count)
+                                print("bytes with downsampling: ",image.downSampleImage().pngData()!.count)
+                                print("bytes with jpeg compression: ", image.downSampleImage().jpegData(compressionQuality: 1)!.count)
+                                
+                                imgs.append(image.downSampleImage())
                             }
                         }
-                        
                         
                         if pageCount == imgs.count {
                             DispatchQueue.main.async {
                                 self.url = path
-                                
                             }
                             return imgs
                         }
