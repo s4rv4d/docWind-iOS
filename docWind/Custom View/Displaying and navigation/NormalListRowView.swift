@@ -37,15 +37,14 @@ struct NormalListRowView: View {
     var body: some View {
         
         NavigationLink(destination: {
-            VStack {
+            Group {
                     if self.itemArray.wrappedItemType == DWPDFFILE {                        
                         DetailPdfView(item: self.itemArray, master: self.masterFolder)
                     } else {
                         DetailedDirecView(dirName: self.itemArray.wrappedItemName, pathName: self.masterFolder, item: self.itemArray).environment(\.managedObjectContext, self.context)
                     }
-
             }
-        }()) {
+        }(), isActive: $isDisabled) {
             HStack {
                 Group {
                     self.itemArray.wrappedItemType == DWPDFFILE ? SFSymbol.docFill : SFSymbol.folderFill
@@ -54,9 +53,11 @@ struct NormalListRowView: View {
                 .font(.body)
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(self.itemArray.wrappedItemName)
-                        .font(.body)
-                        .lineLimit(1)
+                    HStack {
+                        Text(self.itemArray.wrappedItemName)
+                            .font(.body)
+                            .lineLimit(1)
+                    }
                     HStack {
                         Text(DWDateFormatter.shared.getStringFromDate(date: self.itemArray.wrappedItemCreated))
                         .font(.caption)
@@ -80,7 +81,18 @@ struct NormalListRowView: View {
                 }
                 .padding()
                 
+                /// add lock icon
+                if self.itemArray.wrappedItemType == DWDIRECTORY {
+                    if self.itemArray.wrappedLocked {
+                        Spacer()
+                        SFSymbol.lockRectangleStackFill
+                            .foregroundColor(self.iconNameString[self.itemArray.wrappedIconName])
+                    }
+                }
+                
             }
+            .contentShape(Rectangle())
+            .onTapGesture(perform: checkForLock)
             .contextMenu {
                 if self.itemArray.wrappedItemType == DWPDFFILE {
                     Button(action: {
@@ -168,7 +180,32 @@ struct NormalListRowView: View {
         }
     }
     
+    
     // MARK: - Functions
+    func checkForLock() {
+        print(self.itemArray.wrappedLocked)
+        
+        if itemArray.wrappedItemType == DWPDFFILE {
+            isDisabled = true
+        } else {
+            if self.itemArray.wrappedLocked {
+                isDisabled = false
+                
+                authenticateViewGlobalHelper { (status, message) in
+                    if status {
+                        self.isDisabled = true
+
+                    } else {
+                        // bring up alert
+                        self.alertContext = .error
+                        self.alertTitle = "Error"
+                        self.alertMessage = message
+                        self.showAlert.toggle()
+                    }
+                }
+            }
+        }
+    }
     func getUrl() {
         if selectedItem != nil {
             print(masterFolder)

@@ -182,6 +182,7 @@ enum SFSymbol: String, View {
     case boltFill = "bolt.fill"
     case boltSlashFill = "bolt.slash.fill"
     case goForward = "goforward"
+    case lockRectangleStackFill = "lock.rectangle.stack.fill"
     
     var body: some View {
         Image(systemName: rawValue)

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import LocalAuthentication
 
 
 func textToImage(drawText: NSString, inImage: UIImage, atPoint: CGPoint) -> UIImage? {
@@ -44,4 +45,25 @@ func textToImage(drawText: NSString, inImage: UIImage, atPoint: CGPoint) -> UIIm
     //Pass the image back up to the caller
     return newImage
 
+}
+
+func authenticateViewGlobalHelper(completionHandler: @escaping(Bool, String) -> ()) {
+    let context = LAContext()
+    var error: NSError?
+
+    if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+        let reason = "Unlock app"
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { (success, authError) in
+            DispatchQueue.main.async {
+                if success {
+                    completionHandler(true, "Successfully authenticated! 🥳")
+                } else {
+                    completionHandler(false, "Failed to recognize user 🤐")
+                }
+            }
+        }
+    } else {
+        //show error
+        completionHandler(false, "No biometrics available 🤔, try creating a new folder")
+    }
 }

@@ -61,6 +61,11 @@ struct AddDirecView: View {
                         }
                     }
                 }
+                
+                // add lock option
+                Section(header: Text("Options")) {
+                    Toggle("Lock folder?", isOn: $isLocked)
+                }
 
             }
         .navigationBarTitle(Text("Add a new directory"))
