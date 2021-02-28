@@ -18,6 +18,15 @@
           "revision": "d403162c4a09d21ed5a049a05fc1b9fb6a16f3f2",
           "version": "1.15.0"
         }
+      },
+      {
+        "package": "Throttler",
+        "repositoryURL": "https://github.com/boraseoksoon/Throttler.git",
+        "state": {
+          "branch": null,
+          "revision": "6a78307c49317abe1bb7525b774c275b2000526a",
+          "version": "1.0.2"
+        }
       }
     ]
   },

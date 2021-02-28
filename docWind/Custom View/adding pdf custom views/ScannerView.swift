@@ -10,6 +10,7 @@ import SwiftUI
 import UIKit
 import VisionKit
 import Combine
+import Throttler
 
 struct ScannerView: UIViewControllerRepresentable {
     
@@ -89,38 +90,40 @@ struct ScannerView: UIViewControllerRepresentable {
             print("Save TAPPED")
 //            var imgs = [UIImage]()
                         
-            for pageIndex in 0 ..< scan.pageCount {
-                autoreleasepool {
-                    let image = scan.imageOfPage(at: pageIndex)
-                        .resizeImageUsingVImage(size: CGSize(width: 596, height: 842))!
-                    
-                    // compression part
-                    let bytes = image.jpegData(compressionQuality: 1)!
-                    
-                    print("page dimensions \(image.size.width) by \(image.size.height) - JPEG size \(bytes.count)")
-                    
-                    let editImage = UIImage(data: bytes)!
-                    self.uiImages.wrappedValue.append(editImage)
+            Throttler.go {
+                for pageIndex in 0 ..< scan.pageCount {
+                    autoreleasepool {
+                        let image = scan.imageOfPage(at: pageIndex)
+                            .resizeImageUsingVImage(size: CGSize(width: 596, height: 842))!
+                        
+                        // compression part
+                        let bytes = image.jpegData(compressionQuality: 1)!
+                        
+                        print("page dimensions \(image.size.width) by \(image.size.height) - JPEG size \(bytes.count)")
+                        
+                        let editImage = UIImage(data: bytes)!
+                        self.uiImages.wrappedValue.append(editImage)
+                    }
                 }
+                self.state.wrappedValue.toggle()
+                
+    //            self.uiImages.wrappedValue +=  imgs
+                
+    //            // appending images based on image counts
+    //            if self.uiImages.wrappedValue.count == 0 {
+    //                self.uiImages.wrappedValue = imgs
+    //            } else {
+    //                self.uiImages.wrappedValue +=  imgs
+    //            }
+                
+                controller.dismiss(animated: true, completion: {
+                    if self.uiImages.wrappedValue.count != 0 {
+                        self.sheetState.wrappedValue = .imageEdit
+                    } else {
+                        self.sheetState.wrappedValue = nil
+                    }
+                })
             }
-            state.wrappedValue.toggle()
-            
-//            self.uiImages.wrappedValue +=  imgs
-            
-//            // appending images based on image counts
-//            if self.uiImages.wrappedValue.count == 0 {
-//                self.uiImages.wrappedValue = imgs
-//            } else {
-//                self.uiImages.wrappedValue +=  imgs
-//            }
-            
-            controller.dismiss(animated: true, completion: {
-                if self.uiImages.wrappedValue.count != 0 {
-                    self.sheetState.wrappedValue = .imageEdit
-                } else {
-                    self.sheetState.wrappedValue = nil
-                }
-            })
             
         }
         
