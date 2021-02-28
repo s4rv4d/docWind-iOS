@@ -22,12 +22,23 @@ struct PDFToolBarView: View {
     // MARK: - @Environment variables
     @Environment(\.presentationMode) var presentationMode
     
+    @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
+    
     // MARK: - Properties
     var body: some View {
         ScrollView(.vertical) {
             VStack {
-                    Handle()
-                        .padding(.top)
+                    HStack {
+                            Spacer()
+                            Button(action:{
+                                self.presentationMode.wrappedValue.dismiss()
+                            }){
+                                SFSymbol.multiplyCircleFill
+                                    .foregroundColor(Color(tintColor))
+                                    .font(.system(size: 25))
+                                    .padding()
+                            }
+                    }
                     HStack {
                         Text("Options")
                             .padding()
@@ -47,7 +58,6 @@ struct PDFToolBarView: View {
                     Button(action: {
                         self.presentationMode.wrappedValue.dismiss()
                         self.activeContext = .signature
-//                        self.openSignature.toggle()
                         self.canEditSignature.toggle()
                     }) {
                         HStack {

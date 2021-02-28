@@ -102,7 +102,7 @@ struct AddDirecView: View {
                     self.addANewItem(itemName: direcName, iconName: selectedIconName, itemType: DWDIRECTORY, locked: isLocked, filePath: path)
                     self.presentationMode.wrappedValue.dismiss()
                 } else {
-                    self.alertMessage = "Error creating sub directory :("
+                    self.alertMessage = "Error creating directory :("
                     self.showAlert.toggle()
                 }
                 

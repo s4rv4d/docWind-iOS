@@ -93,12 +93,13 @@ struct DetailedDirecView: View {
 
                                     }
                                 } else {
-                                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 40, maximum: 50), spacing: 16)], spacing: 8) {
+                                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 35) {
                                         ForEach(self.directory.first!.fileArray.filter { self.searchBar.text.isEmpty || $0.wrappedItemName.localizedStandardContains(self.searchBar.text)}, id: \.self) { file in
                                             QGridCellView(item: file, masterFolder: self.item.wrappedItemUrl)
                                             .environment(\.managedObjectContext, self.context)
                                         }
-                                    }.padding(.horizontal)
+                                    }
+                                    .padding(.top, 10)
                                     Spacer()
                                 }
                             }

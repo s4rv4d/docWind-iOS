@@ -16,6 +16,7 @@ struct QGridCellView: View {
     var iconNameString: [String: Color] = ["blue":.blue, "red":.red, "green":.green, "yellow":.yellow, "pink":.pink, "black": .primary, "gray": .gray, "orange": .orange, "purple": .purple]
     let masterFolder: String
     
+    @State private var isDisabled = false
     @State private var url = ""
     @State private var uiImages = [UIImage]()
     @State private var showAlert = false
@@ -39,30 +40,76 @@ struct QGridCellView: View {
                     DetailedDirecView(dirName: self.item.wrappedItemName, pathName: self.masterFolder, item: self.item).environment(\.managedObjectContext, self.context)
                 }
             }
-        }()) {
-            VStack {
-                Group {
-                    self.item.wrappedItemType == DWPDFFILE ? SFSymbol.docFill : SFSymbol.folderFill
-                }
-                    .font(.largeTitle)
-                    .padding([.horizontal, .top], 7)
-                    .foregroundColor(self.iconNameString[self.item.wrappedIconName])
-                
+        }(), isActive: $isDisabled) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.secondarySystemGroupedBackground)
+                    .frame(width: 146, height: 146)
+
                 VStack {
-                    Text(self.item.wrappedItemName).lineLimit(1)
-                        .foregroundColor(.primary)
-                        .padding(.top)
-                }
-                .font(.caption)
-            
+                    HStack {
+                        
+                        Group {
+                            self.item.wrappedItemType == DWPDFFILE ? SFSymbol.docFill : SFSymbol.folderFill
+                        }
+                        .font(.largeTitle)
+                        .padding([.top, .leading])
+                        .shadow(radius: 0.5)
+                        .foregroundColor(self.iconNameString[self.item.wrappedIconName])
+                        Spacer()
+
+                        Group {
+                            if self.item.wrappedItemType == DWDIRECTORY {
+                                if self.item.wrappedLocked {
+                                    SFSymbol.lockRectangleStackFill
+                                        .foregroundColor(self.iconNameString[self.item.wrappedIconName])
+                                        .padding(.trailing)
+                                }
+                            }
+                        }
+                    }
+                    Spacer()
+                    HStack {
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text(self.item.wrappedItemName)
+                                .lineLimit(1)
+                                .foregroundColor(.primary)
+
+                            HStack {
+                                
+                                Text(DWDateFormatter.shared.getStringFromDate(date: self.item.wrappedItemCreated))
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                                
+                                Spacer()
+                                
+                                if self.item.wrappedItemType == DWPDFFILE {
+                                    if URL(fileURLWithPath: item.wrappedItemUrl).fileSize != nil {
+                                        Text(NSString(format: "%.2f", URL(fileURLWithPath: item.wrappedItemUrl).fileSize!) as String + " MB")
+                                            .font(.caption2)
+                                            .foregroundColor(.secondary)
+                                    } else {
+                                        // TODO: - Need to migrate data model
+                                        Text(approximateFileSize())
+                                            .font(.caption2)
+                                            .foregroundColor(.secondary)
+                                            .padding(.trailing, 5)
+                                        
+                                    }
+                                }
+                            }
+                        }.padding([.bottom, .horizontal])
+                        
+                    }
+                }.frame(width: 146, height: 146)
             }
-            .buttonStyle(PlainButtonStyle())
+            .onTapGesture(perform: checkForLock)
             .contextMenu {
             if self.item.wrappedItemType == DWPDFFILE {
                 Button(action: {
                     DispatchQueue.main.async {
                         self.selectedItem = self.item
-                        self.uiImages = self.getImages()
+                        self.uiImages = self.getImagesAndPath()
                         self.activeSheet = .editSheet(images: self.uiImages, url: self.url, item: self.item)
                     }
                 }) {
@@ -87,7 +134,7 @@ struct QGridCellView: View {
                 Button(action: {
                     DispatchQueue.main.async {
                         self.selectedItem = self.item
-                        self.uiImages = self.getImages()
+                        self.uiImages = self.getImagesAndPath()
                         self.activeSheet = .editSheet(images: self.uiImages, url: self.url, item: self.item)
                     }
                 }) {
@@ -144,6 +191,33 @@ struct QGridCellView: View {
     }
     
     // MARK: - Functions
+    func checkForLock() {
+        print(self.item.wrappedLocked)
+        
+        if item.wrappedItemType == DWPDFFILE {
+            isDisabled = true
+        } else {
+            if self.item.wrappedLocked {
+                isDisabled = false
+                
+                authenticateViewGlobalHelper { (status, message) in
+                    if status {
+                        self.isDisabled = true
+
+                    } else {
+                        // bring up alert
+                        self.alertContext = .error
+                        self.alertTitle = "Error"
+                        self.alertMessage = message
+                        self.showAlert.toggle()
+                    }
+                }
+            } else {
+                isDisabled = true
+            }
+        }
+    }
+    
     func getUrl() {
         if selectedItem != nil {
             print(masterFolder)
@@ -253,7 +327,23 @@ struct QGridCellView: View {
         }
     }
     
-    func getImages() -> [UIImage] {
+    private func approximateFileSize() -> String {
+        let folderPath = String(masterFolder.split(separator: "/").reversed().first!)
+        let path = String(item.wrappedItemUrl.split(separator: "/").reversed().first!)
+        
+        var final: URL?
+        
+        if folderPath == "DocWind" {
+            final = DWFMAppSettings.shared.containerUrl?.appendingPathComponent(path)
+        } else {
+            final = DWFMAppSettings.shared.containerUrl?.appendingPathComponent(folderPath).appendingPathComponent(path)
+        }
+        guard let f = final else { return "0 MB" }
+        guard let fileSize = f.fileSize else { return "0 MB" }
+        return String(NSString(format: "%.2f", fileSize) as String + " MB")
+    }
+    
+    func getImagesAndPath() -> [UIImage] {
         var imgs = [UIImage]()
                 
         if selectedItem != nil {
@@ -292,7 +382,7 @@ struct QGridCellView: View {
                                     ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
                                     ctx.cgContext.drawPDFPage(page.pageRef!)
                                 }
-                                imgs.append(img)
+                                imgs.append(img.downSampleImage())
                             }
                         }
                         

@@ -203,9 +203,12 @@ struct NormalListRowView: View {
                         self.showAlert.toggle()
                     }
                 }
+            } else {
+                isDisabled = true
             }
         }
     }
+    
     func getUrl() {
         if selectedItem != nil {
             print(masterFolder)

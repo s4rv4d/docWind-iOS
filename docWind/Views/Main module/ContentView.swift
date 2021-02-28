@@ -38,8 +38,9 @@ struct ContentView: View {
     
     // MARK: - Properties
     var body: some View {
-        SearchNavigation(text: $searchString, largeDisplay: true) {
+        SearchNavigation(text: $searchString, largeDisplay: false) {
             ZStack {
+                Color.systemGroupedBackground
                 VStack(alignment: .leading) {
                     //check if contents isnt empty
                     if self.docWindItems.first != nil {
@@ -60,12 +61,13 @@ struct ContentView: View {
                                 }
                                 .listStyle(InsetGroupedListStyle())
                             } else {
-                                LazyVGrid(columns: [GridItem(.adaptive(minimum: 40, maximum: 50), spacing: 16)], spacing: 8) {
+                                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 35) {
                                     ForEach(self.docWindItems.first!.fileArray.filter { self.searchString.isEmpty || $0.wrappedItemName.localizedStandardContains(self.searchString)}, id: \.self) { file in
                                             QGridCellView(item: file, masterFolder: "\(DWFMAppSettings.shared.fileURL())")
                                                 .environment(\.managedObjectContext, self.context)
                                     }
-                                }.padding(.horizontal)
+                                }
+                                .padding(.top, 10)
                                 Spacer()
                             }
                         }

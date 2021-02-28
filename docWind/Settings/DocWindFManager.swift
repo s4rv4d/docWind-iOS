@@ -576,7 +576,7 @@ extension DocWindFManager {
                         if url.description.contains(fileName) {
                             status = true
                             print("✅ FOUND PDF SUCCESSFULLY, ALREADY SAVED")
-                        }
+                        } 
                     }
                     
                 } catch {
@@ -646,8 +646,7 @@ extension DocWindFManager {
                 status = false
                 print("ERROR: file/folder already saved")
             }
-            
-            status = true
+//            status = true
         } else {
             print("ERROR: nope we cant go ahead")
             status = false

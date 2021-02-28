@@ -39,7 +39,7 @@ extension ItemModel: Identifiable {
     }
     
     public var wrappedLocked: Bool {
-        locked as! Bool
+        Bool(truncating: locked ?? 0)
     }
     
     public var wrappedItemCreated: Date {

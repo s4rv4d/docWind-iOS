@@ -52,7 +52,7 @@ struct SignaturePageView: View {
                         self.presentationMode.wrappedValue.dismiss()
                         
                         }).padding()
-                        .background(Color.black)
+//                        .background(Color.pr)
                     Spacer()
                 }
             }

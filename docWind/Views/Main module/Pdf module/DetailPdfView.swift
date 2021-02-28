@@ -135,7 +135,7 @@ struct DetailPdfView: View, Equatable {
             }
         }
         
-        .sheet(item: $activeContext, onDismiss: { self.activeContext = nil }) { item in
+        .fullScreenCover(item: $activeContext, onDismiss: { self.activeContext = nil }) { item in
             switch item {
             case .shareSheet:
                 ShareSheetView(activityItems: [URL(fileURLWithPath: url)])
@@ -278,13 +278,11 @@ struct DetailPdfView: View, Equatable {
 
                             ctx.cgContext.drawPDFPage(page)
                         }
-                        imgs.append(img)
-                        print(imgs)
+                        imgs.append(img.downSampleImage())
                     }
                 }
                 self.images = imgs
                 self.activeContext = .ocrPage(images: imgs)
-//                self.isShown.toggle()
             }
         }
     }
@@ -307,7 +305,7 @@ struct DetailPdfView: View, Equatable {
 
                     ctx.cgContext.drawPDFPage(page)
                 }
-                images.append(img)
+                images.append(img.downSampleImage())
             }
             
             if pageCount == images.count {

@@ -20,7 +20,15 @@ struct SearchNavigation<Content: View>: UIViewControllerRepresentable {
     // MARK: - Main methods
     func makeUIViewController(context: Context) -> UINavigationController {
         let navigationController = UINavigationController(rootViewController: context.coordinator.rootViewController)
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.backgroundColor = .systemGroupedBackground
+        
         navigationController.navigationBar.prefersLargeTitles = largeDisplay
+        navigationController.navigationBar.standardAppearance = appearance
+        navigationController.navigationBar.scrollEdgeAppearance = appearance
+        
         context.coordinator.searchController.searchBar.delegate = context.coordinator
         return navigationController
     }
