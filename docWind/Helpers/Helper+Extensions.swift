@@ -28,7 +28,7 @@ extension View {
             .padding(.horizontal)
             .padding(.vertical, 8)
             .background(RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(Color(.secondarySystemBackground)))
+                            .fill(Color.secondarySystemGroupedBackground))
             .padding(.bottom, 6)
             .padding(.horizontal)
     }

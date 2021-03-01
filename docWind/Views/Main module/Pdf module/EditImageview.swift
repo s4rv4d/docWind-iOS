@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct EditImageview: View {
     
@@ -115,20 +116,20 @@ struct EditImageview: View {
                     if mainStage {
                         HStack {
                             
-                            Button(action: cropSelected) {
-                                VStack {
-                                    SFSymbol.crop
-                                        .padding()
-                                        .background(Color.secondarySystemGroupedBackground
-                                                        .cornerRadius(7)
-                                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                        )
-                                    Text("Crop")
-                                        .font(.caption)
-                                }
-                            }
-                            
-                            Spacer()
+//                            Button(action: cropSelected) {
+//                                VStack {
+//                                    SFSymbol.crop
+//                                        .padding()
+//                                        .background(Color.secondarySystemGroupedBackground
+//                                                        .cornerRadius(7)
+//                                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+//                                        )
+//                                    Text("Crop")
+//                                        .font(.caption)
+//                                }
+//                            }
+//                            
+//                            Spacer()
                             
                             Button(action: adjustTapped) {
                                 VStack {
@@ -445,7 +446,6 @@ struct EditImageview: View {
 
             // See what size is longer and set crop rect parameters
             if originalRatio > cropRatio {
-
                 scaledCropHeight = contextSize.height
                 scaledCropWidth = (contextSize.height/_height) * _width
                 cropX = (contextSize.width - scaledCropWidth) / 2
@@ -464,7 +464,6 @@ struct EditImageview: View {
             let imageRef: CGImage = contextImage.cgImage!.cropping(to: rect)!
 
             // Create a new image based on the imageRef and rotate back to the original orientation
-
             let croppedImage: UIImage = UIImage(cgImage: imageRef, scale: currentImage.scale, orientation: currentImage.imageOrientation)
             currentImage = croppedImage
         }
