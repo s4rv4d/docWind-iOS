@@ -14,8 +14,6 @@ import CoreData
 struct AddPdfMainView: View {
     
     // MARK: - @State properties
-    
-    
     @State private var pdfName = "docWind\(Date())"
     @State private var selectedIconName = "blue"
     @State private var alertMessage = ""
@@ -26,6 +24,7 @@ struct AddPdfMainView: View {
     @State private var activeAlertSheet: ActiveAlertSheet = .notice
     @State private var removeWatermark = false
     @State private var offsetVal: CGFloat = 0.0
+    @State var codeScannerDismiss: Bool = false
     
     @State var pagesCopy: [UIImage] = [UIImage]()
     @State var pages: [UIImage] = [UIImage]()
@@ -166,8 +165,7 @@ struct AddPdfMainView: View {
             case .imageEdit:
                 EditImageview(mainImages: self.$pages, mICopy: self.$pagesCopy, mainImagesCopy: self.pagesCopy, currentImage: self.pagesCopy.first!, currentImageCopy: self.pagesCopy.first!, imageCount: self.pagesCopy.count)
             case .scanQR:
-//                EmptyView()
-                CodeScannerView(codeTypes: [.qr], scanMode: .once, simulatedData: "", completion: self.handleScan)
+                CustomCodeScanner(handler: self.handleScan, dismiss: $codeScannerDismiss)
             }
         }
         
@@ -184,23 +182,31 @@ struct AddPdfMainView: View {
     
     // MARK: - Functions
     private func handleScan(result: Result<String, CodeScannerView.ScanError>) {
-        print(result)
-        
         switch result {
         case .success(let urlString):
             scannedData(string: urlString)
         case .failure(let errorEnum) :
             print(errorEnum.localizedDescription)
-            
-        default:
-            self.activeAlertSheet = .notice
-            self.alertMessage = "Scanned QR Code didnt contain a valid URL to download PDF from"
-            self.showAlert.toggle()
+            codeScannerDismiss.toggle()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.activeAlertSheet = .notice
+                self.alertMessage = "Scanned QR Code didn't contain a valid URL to download a PDF from"
+                self.showAlert.toggle()
+            }
         }
     }
     
     private func scannedData(string: String) {
-        guard let downloadURL = URL(string: "https://www.tutorialspoint.com/swift/swift_tutorial.pdf") else { fatalError("failed to initialize URL from string.") }
+        guard string.contains(".pdf") else {
+            codeScannerDismiss.toggle()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.activeAlertSheet = .notice
+                self.alertMessage = "Scanned QR Code didn't contain a valid URL to download a PDF from"
+                self.showAlert.toggle()
+            }
+            return
+        }
+        guard let downloadURL = URL(string: string) else { fatalError("failed to initialize URL from string.") }
         let cgpdfURL = downloadURL as CFURL
         guard let pdfDocument = CGPDFDocument(cgpdfURL) else { fatalError("failed to initialize PDFDocument") }
         
@@ -222,12 +228,13 @@ struct AddPdfMainView: View {
                 pages.append(image.downSampleImage())
             }
         }
+        // to dismiss scanner
+        codeScannerDismiss.toggle()
     }
     
     private func approximateFileSize() -> String {
         if self.pages.count != 0 {
             var totalSize = 0
-            
             for image in pages {
                 let bytes = image.jpegData(compressionQuality: compressionValues[compressionIndex])!
                 totalSize += bytes.count
@@ -245,7 +252,7 @@ struct AddPdfMainView: View {
         
         if (self.pages.count == 0) {
             self.activeAlertSheet = .notice
-            self.alertMessage = "Make sure you have scan atleast one document"
+            self.alertMessage = "Make sure you have scan at least one document"
             self.showAlert.toggle()
         } else {
             let mainPages = self.pages

@@ -9,6 +9,7 @@
 import SwiftUI
 import PDFKit
 import CoreData
+import CodeScanner
 
 struct AddPdfFileGenView: View {
     
@@ -30,6 +31,7 @@ struct AddPdfFileGenView: View {
     @State private var offsetVal: CGFloat = 0.0
     @State var headPath: String
     @State var headName: String
+    @State var codeScannerDismiss: Bool = false
     
     // for compression
     @State private var compressionIndex = 3
@@ -102,8 +104,6 @@ struct AddPdfFileGenView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 150, height: 200)
                                     .cornerRadius(8)
-                                        
-//                                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.white))
                                     .padding()
                                         .onTapGesture {
                                             self.imageTapped()
@@ -149,7 +149,7 @@ struct AddPdfFileGenView: View {
         
         .alert(isPresented: $showAlert) {
             if self.activeAlertSheet == .notice {
-               return Alert(title: Text("Notice"), message: Text(alertMessage), primaryButton: .cancel(), secondaryButton: .default(Text("Retry")))
+               return Alert(title: Text("Notice"), message: Text(alertMessage), dismissButton: .cancel())
             } else {
                return Alert(title: Text("Alert"), message: Text("Are you sure you want to delete this document?"), primaryButton: .destructive(Text("Delete"), action: { self.presentationMode.wrappedValue.dismiss() }), secondaryButton: .cancel())
             }
@@ -168,14 +168,14 @@ struct AddPdfFileGenView: View {
             case .imageEdit:
                 EditImageview(mainImages: self.$pages, mICopy: self.$pagesCopy, mainImagesCopy: self.pagesCopy, currentImage: self.pagesCopy.first!, currentImageCopy: self.pagesCopy.first!, imageCount: self.pagesCopy.count)
             case .scanQR:
-                EmptyView()
+                CustomCodeScanner(handler: self.handleScan, dismiss: $codeScannerDismiss)
             }
         }
-        
         
         .actionSheet(isPresented: $showingActionSheet) {
             ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
                 .default(Text("Scan a document"), action: scanTapped),
+                .default(Text("Scan QR/Barcode code"), action: scanQRTapped),
                 .default(Text("Choose an image"), action: addImagesTapped),
                 .cancel()
             ])
@@ -184,6 +184,59 @@ struct AddPdfFileGenView: View {
     }
     
     // MARK: - Functions
+    private func handleScan(result: Result<String, CodeScannerView.ScanError>) {
+        print(result)
+
+        switch result {
+        case .success(let urlString):
+            scannedData(string: urlString)
+        case .failure(let errorEnum) :
+            print(errorEnum.localizedDescription)
+            codeScannerDismiss.toggle()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.activeAlertSheet = .notice
+                self.alertMessage = "Scanned QR Code didn't contain a valid URL to download a PDF from"
+                self.showAlert.toggle()
+            }
+        }
+    }
+    
+    private func scannedData(string: String) {
+        guard string.contains(".pdf") else {
+            codeScannerDismiss.toggle()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.activeAlertSheet = .notice
+                self.alertMessage = "Scanned QR Code didn't contain a valid URL to download a PDF from"
+                self.showAlert.toggle()
+            }
+            return
+        }
+        guard let downloadURL = URL(string: string) else { fatalError("failed to initialize URL from string.") }
+        let cgpdfURL = downloadURL as CFURL
+        guard let pdfDocument = CGPDFDocument(cgpdfURL) else { fatalError("failed to initialize PDFDocument") }
+        
+        let pageCount = pdfDocument.numberOfPages
+        
+        for i in 0 ... pageCount {
+            autoreleasepool {
+                guard let page = pdfDocument.page(at: i) else { return }
+                let pageRect = page.getBoxRect(.mediaBox)
+                let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+                let image = renderer.image { ctx in
+                    UIColor.white.set()
+                    ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
+                    ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
+                    ctx.fill(pageRect)
+                    ctx.cgContext.drawPDFPage(page)
+                }
+                
+                pages.append(image.downSampleImage())
+            }
+        }
+        // to dismiss scanner
+        codeScannerDismiss.toggle()
+    }
+    
     private func approximateFileSize() -> String {
         if self.pages.count != 0 {
             var totalSize = 0
@@ -202,6 +255,10 @@ struct AddPdfFileGenView: View {
     
     private func addPagesTapped() {
         self.showingActionSheet.toggle()
+    }
+    
+    private func scanQRTapped() {
+        self.activeSheet = .scanQR
     }
     
     private func scanTapped() {

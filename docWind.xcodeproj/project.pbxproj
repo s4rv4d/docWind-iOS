@@ -13,6 +13,7 @@
 		4012033824BDE06B00167917 /* DrawingGestureRecogniser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033724BDE06B00167917 /* DrawingGestureRecogniser.swift */; };
 		4012033A24BDE09C00167917 /* DrawingAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033924BDE09C00167917 /* DrawingAnnotation.swift */; };
 		4012033C24BDE0D700167917 /* NonSelectableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012033B24BDE0D700167917 /* NonSelectableView.swift */; };
+		4012E58F25F53DD2004A5D2E /* CustomCodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012E58E25F53DD2004A5D2E /* CustomCodeScanner.swift */; };
 		402094CC25E3BDE600F06925 /* UpdateUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402094CB25E3BDE600F06925 /* UpdateUIView.swift */; };
 		402333EE24DA9248007FE8C6 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402333ED24DA9247007FE8C6 /* ImagePickerView.swift */; };
 		40284BFD24D83745004EE44E /* EditPdfMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40284BFC24D83745004EE44E /* EditPdfMainView.swift */; };
@@ -181,6 +182,7 @@
 		4012033724BDE06B00167917 /* DrawingGestureRecogniser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingGestureRecogniser.swift; sourceTree = "<group>"; };
 		4012033924BDE09C00167917 /* DrawingAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingAnnotation.swift; sourceTree = "<group>"; };
 		4012033B24BDE0D700167917 /* NonSelectableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonSelectableView.swift; sourceTree = "<group>"; };
+		4012E58E25F53DD2004A5D2E /* CustomCodeScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCodeScanner.swift; sourceTree = "<group>"; };
 		402094CB25E3BDE600F06925 /* UpdateUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUIView.swift; sourceTree = "<group>"; };
 		402333ED24DA9247007FE8C6 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		40284BFC24D83745004EE44E /* EditPdfMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPdfMainView.swift; sourceTree = "<group>"; };
@@ -576,6 +578,7 @@
 				40BA37C125C46FE100C43D93 /* CropImageViewRectangle.swift */,
 				40ABC03125CB33EC00F32067 /* CustomSlider.swift */,
 				40ABC04625CB3E0400F32067 /* CarouselFilterView.swift */,
+				4012E58E25F53DD2004A5D2E /* CustomCodeScanner.swift */,
 			);
 			path = "adding pdf custom views";
 			sourceTree = "<group>";
@@ -870,6 +873,7 @@
 				40E387D724E66A6C001E23D2 /* AppstoreUpdate.swift in Sources */,
 				40485D8A24B98C9F008A137A /* TextView.swift in Sources */,
 				40DD4F7324C02CDC00D37EFA /* SignaturePageView.swift in Sources */,
+				4012E58F25F53DD2004A5D2E /* CustomCodeScanner.swift in Sources */,
 				4095AC73258BCB9A0008BD71 /* FilterProcessor.swift in Sources */,
 				40CFB04D24D9794100955957 /* DocumentPickerView.swift in Sources */,
 				405EE7A824B339DD005F525F /* ScannerView.swift in Sources */,
