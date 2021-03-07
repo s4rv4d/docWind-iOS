@@ -27,7 +27,7 @@ extension SettingsManageable where Self: Codable {
     func settingsURL() -> URL? {
 //        guard let cacheDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
 //        return cacheDirectory.appendingPathComponent("DocWind").appendingPathComponent("\(Self.self).plist")
-        let container =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let container =  FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
         return container.appendingPathComponent("\(Self.self).plist")
     }
     

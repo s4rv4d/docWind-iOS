@@ -167,6 +167,8 @@ struct AddPdfFileGenView: View {
                 SubcriptionPageView()
             case .imageEdit:
                 EditImageview(mainImages: self.$pages, mICopy: self.$pagesCopy, mainImagesCopy: self.pagesCopy, currentImage: self.pagesCopy.first!, currentImageCopy: self.pagesCopy.first!, imageCount: self.pagesCopy.count)
+            case .scanQR:
+                EmptyView()
             }
         }
         

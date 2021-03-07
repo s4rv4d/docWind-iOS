@@ -189,6 +189,8 @@ struct EditPdfMainView: View {
                 }, mICopy: self.$pagesCopy, mainImagesCopy: self.pagesCopy, currentImage: self.pagesCopy.first!, currentImageCopy: self.pagesCopy.first!, imageCount: self.pagesCopy.count)
             case .subView:
                 SubcriptionPageView()
+            case .scanQR:
+                EmptyView()
             }
         }
         .actionSheet(isPresented: $showingActionSheet) {

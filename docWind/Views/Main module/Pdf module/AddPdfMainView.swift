@@ -8,6 +8,7 @@
 
 import SwiftUI
 import PDFKit
+import CodeScanner
 import CoreData
 
 struct AddPdfMainView: View {
@@ -164,6 +165,10 @@ struct AddPdfMainView: View {
                 SubcriptionPageView()
             case .imageEdit:
                 EditImageview(mainImages: self.$pages, mICopy: self.$pagesCopy, mainImagesCopy: self.pagesCopy, currentImage: self.pagesCopy.first!, currentImageCopy: self.pagesCopy.first!, imageCount: self.pagesCopy.count)
+            case .scanQR:
+//                EmptyView()
+//                CodeScanner(codeTypes: [.qr], simulatedData: "", completion: self.handleScan)
+                CodeScannerView(codeTypes: [.qr], scanMode: .oncePerCode, simulatedData: "", completion: self.handleScan)
             }
         }
         
@@ -178,6 +183,10 @@ struct AddPdfMainView: View {
     }
     
     // MARK: - Functions
+    private func handleScan(result: Result<String, CodeScannerView.ScanError>) {
+        
+    }
+    
     private func approximateFileSize() -> String {
         if self.pages.count != 0 {
             var totalSize = 0

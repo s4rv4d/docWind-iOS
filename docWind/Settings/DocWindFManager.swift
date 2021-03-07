@@ -847,10 +847,30 @@ extension DocWindFManager {
         
         if direcName == nil {
             // not under a direc
+
+            /// only for deleting  the AppSettings file
+            let container =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             
-            /// go through all the contents first
-            let contents = try! FileManager.default.contentsOfDirectory(at: resourceURL, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
+            /// go through all the contents first for CONTAINER not under docWind
+            let contents = try! FileManager.default.contentsOfDirectory(at: container, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
             print("contents: ", contents)
+            
+            // delete AppSettings
+            do {
+                for url in contents {
+                    let lastParts = url.path.split(separator: "/")
+                    let lastName = String(lastParts.last!)
+                                        
+                    if lastName.contains(".plist") {
+                        // delete
+                        try FileManager.default.removeItem(at: url)
+                        print("SUCCESSFULLY DELETED APP-SETTINGS FILE ✅")
+                    }
+                }
+            } catch {
+                print("❌ APP-SETTINGS COULD'NT BE FOUND ")
+                print("////reason: \(error.localizedDescription)")
+            }
             
             do {
                 let contents = try FileManager.default.contentsOfDirectory(at: resourceURL, includingPropertiesForKeys: [.fileResourceTypeKey], options: .skipsHiddenFiles)
