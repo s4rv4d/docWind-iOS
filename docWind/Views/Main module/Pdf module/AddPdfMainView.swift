@@ -167,14 +167,14 @@ struct AddPdfMainView: View {
                 EditImageview(mainImages: self.$pages, mICopy: self.$pagesCopy, mainImagesCopy: self.pagesCopy, currentImage: self.pagesCopy.first!, currentImageCopy: self.pagesCopy.first!, imageCount: self.pagesCopy.count)
             case .scanQR:
 //                EmptyView()
-//                CodeScanner(codeTypes: [.qr], simulatedData: "", completion: self.handleScan)
-                CodeScannerView(codeTypes: [.qr], scanMode: .oncePerCode, simulatedData: "", completion: self.handleScan)
+                CodeScannerView(codeTypes: [.qr], scanMode: .once, simulatedData: "", completion: self.handleScan)
             }
         }
         
         .actionSheet(isPresented: $showingActionSheet) {
             ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
                 .default(Text("Scan a document"), action: scanTapped),
+                .default(Text("Scan QR/Barcode code"), action: scanQRTapped),
                 .default(Text("Choose an image"), action: addImagesTapped),
                 .cancel()
             ])
@@ -184,7 +184,44 @@ struct AddPdfMainView: View {
     
     // MARK: - Functions
     private func handleScan(result: Result<String, CodeScannerView.ScanError>) {
+        print(result)
         
+        switch result {
+        case .success(let urlString):
+            scannedData(string: urlString)
+        case .failure(let errorEnum) :
+            print(errorEnum.localizedDescription)
+            
+        default:
+            self.activeAlertSheet = .notice
+            self.alertMessage = "Scanned QR Code didnt contain a valid URL to download PDF from"
+            self.showAlert.toggle()
+        }
+    }
+    
+    private func scannedData(string: String) {
+        guard let downloadURL = URL(string: "https://www.tutorialspoint.com/swift/swift_tutorial.pdf") else { fatalError("failed to initialize URL from string.") }
+        let cgpdfURL = downloadURL as CFURL
+        guard let pdfDocument = CGPDFDocument(cgpdfURL) else { fatalError("failed to initialize PDFDocument") }
+        
+        let pageCount = pdfDocument.numberOfPages
+        
+        for i in 0 ... pageCount {
+            autoreleasepool {
+                guard let page = pdfDocument.page(at: i) else { return }
+                let pageRect = page.getBoxRect(.mediaBox)
+                let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+                let image = renderer.image { ctx in
+                    UIColor.white.set()
+                    ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
+                    ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
+                    ctx.fill(pageRect)
+                    ctx.cgContext.drawPDFPage(page)
+                }
+                
+                pages.append(image.downSampleImage())
+            }
+        }
     }
     
     private func approximateFileSize() -> String {
@@ -268,6 +305,10 @@ struct AddPdfMainView: View {
     
     private func addPagesTapped() {
         self.showingActionSheet.toggle()
+    }
+    
+    private func scanQRTapped() {
+        self.activeSheet = .scanQR
     }
     
     private func showSubView() {
