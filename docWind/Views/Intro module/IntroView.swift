@@ -30,7 +30,7 @@ struct IntroView: View {
                     .padding([.leading, .trailing, .top])
                 
                 VStack {
-                    InfoView(imageName: "doc.fill", title: "Scan", subTitle: "Scan all documents whether its single page, multi page, or even ID cards.")
+                    InfoView(imageName: "doc.fill", title: "Scan", subTitle: "Scan all documents whether it's single page, multi page, or even ID cards.")
                         .padding([.top, .trailing, .leading])
                     
                     InfoView(imageName: "lock.fill", title: "Protect documents", subTitle: "Protect your sensitive documents using TouchID or FaceID.")

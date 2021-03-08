@@ -16,7 +16,7 @@ struct AddPdfMainView: View {
     // MARK: - @State properties
     @State private var pdfName = "docWind\(Date())"
     @State private var selectedIconName = "blue"
-    @State private var alertMessage = ""
+    @State private var alertMessage: LocalizedStringKey = ""
     @State private var showAlert = false
     @State private var showScanner = false
     @State private var showingActionSheet = false

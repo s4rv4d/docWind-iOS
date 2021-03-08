@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SettingsRow: View {
     var imageName: String
-    var title: String
+    var title: LocalizedStringKey
     var imageColor: Color
     var action: (()->()) = {}
     
@@ -88,7 +88,7 @@ struct SettingsRowForOCR: View {
 
 struct SettingsRowWithToggleAuth: View {
     var imageName: String
-    var title: String
+    var title: LocalizedStringKey
     @Binding var isOn: Bool
     @State var color: Color
     

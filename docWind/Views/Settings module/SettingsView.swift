@@ -16,8 +16,8 @@ struct SettingsView: View {
     @State private var showSheet = false
     @State private var result: Result<MFMailComposeResult, Error>? = nil
     @State private var showAlert = false
-    @State private var alertMessage = ""
-    @State private var alertTitle = ""
+    @State private var alertMessage: LocalizedStringKey = ""
+    @State private var alertTitle: LocalizedStringKey = ""
     @State private var activeSheet: SettingActiveSheet? = nil
     
     // MARK: - Environment object

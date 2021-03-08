@@ -14,6 +14,7 @@ struct UpdateUIView: View {
     
     @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
     @AppStorage("isOffgridStyle") var isOffgrid: Bool = false
+    @AppStorage("lang") var lang: String = "en"
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -22,6 +23,7 @@ struct UpdateUIView: View {
     
     init() {
         self._color = State(wrappedValue: self.tintColor)
+        
     }
     
     var body: some View {
@@ -85,10 +87,41 @@ struct UpdateUIView: View {
                         }
                     }
                     .padding(.vertical)
+                    
+                    Section(header: Text("Languages")) {
+                        HStack {
+                            SFSymbol.personFill
+                                .foregroundColor(.blue)
+                                .padding(.trailing, 9)
+                            Text("English")
+                            Spacer()
+                            SFSymbol.checkmarkSealFill
+                                .foregroundColor(.green)
+                                .isHidden(!(lang == "en"))
+                        }
+                        .contentShape(Rectangle())
+                        .onTapGesture(perform: {
+                            langSet(lg: "en")
+                        })
+                        
+                        HStack {
+                            SFSymbol.personFill
+                                .foregroundColor(.blue)
+                                .padding(.trailing, 5)
+                            Text("Hindi")
+                            Spacer()
+                            SFSymbol.checkmarkSealFill
+                                .foregroundColor(.green)
+                                .isHidden(!(lang == "hi"))
+                        }
+                        .contentShape(Rectangle())
+                        .onTapGesture(perform: {
+                            langSet(lg: "hi")
+                        })
+                    }
                 }
                 .listStyle(InsetGroupedListStyle())
             }
-            
             .navigationTitle(Text("Update UI"))
             .navigationBarItems(trailing:
                                     Button(action:{
@@ -110,6 +143,12 @@ struct UpdateUIView: View {
     func tappedGridView() {
         isOffgrid = true
     }
+    
+    func langSet(lg: String) {
+        lang = lg
+        UserDefaults.standard.set([lg], forKey: "AppleLanguages")
+        UserDefaults.standard.synchronize() // required on real device
+    }
 }
 
 struct UpdateUIView_Previews: PreviewProvider {
@@ -117,6 +156,3 @@ struct UpdateUIView_Previews: PreviewProvider {
         UpdateUIView()
     }
 }
-
-
-//SFSymbol.rec3Offgrid : SFSymbol.recGrid1x2

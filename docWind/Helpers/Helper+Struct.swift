@@ -44,8 +44,8 @@ struct TitleView: View {
 struct InfoView: View {
     
     @State var imageName: String
-    @State var title: String
-    @State var subTitle: String
+    @State var title: LocalizedStringKey
+    @State var subTitle: LocalizedStringKey
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -211,12 +211,12 @@ struct SettingsHelper {
 struct DWButton: View {
     //describing buttons
     //MARK: - Properties
-    private let text: String
+    private let text: LocalizedStringKey
     private let background: Color
     private let action: () -> Void
     
     //MARK: - Dependency injection
-    init(text:String, background:Color = .red, action:@escaping() -> Void) {
+    init(text:LocalizedStringKey, background:Color = .red, action:@escaping() -> Void) {
         self.text = text
         self.background = background
         self.action = action
@@ -242,12 +242,12 @@ struct DWButton: View {
 struct ShinyButton: View {
     //describing buttons
     //MARK: - Properties
-    private let text: String
+    private let text: LocalizedStringKey
     private let background: Color
     private let action: () -> Void
     
     //MARK: - Dependency injection
-    init(text:String, background:Color = .red, action:@escaping() -> Void) {
+    init(text:LocalizedStringKey, background:Color = .red, action:@escaping() -> Void) {
         self.text = text
         self.background = background
         self.action = action

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AppVersionRow: View {
     var imageName: String
-    var title: String
+    var title: LocalizedStringKey
     var version: String
     @State var color: Color
     var body: some View {

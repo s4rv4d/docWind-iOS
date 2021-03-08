@@ -52,7 +52,7 @@ struct ContentView: View {
                         } else {
                             if !self.isOffgrid {
                                 List {
-                                    Section(header: Text("DocWind >").font(.caption), footer: Text("Tap and hold on a item for more options").font(.caption)) {
+                                    Section(header: Text("DocWind >").font(.caption), footer: Text("Tap and hold on an item for more options").font(.caption)) {
                                         ForEach(self.docWindItems.first!.fileArray.filter { self.searchString.isEmpty || $0.wrappedItemName.localizedStandardContains(self.searchString)}, id: \.self) { item in
                                             NormalListRowView(itemArray: item, masterFolder: "\(DWFMAppSettings.shared.fileURL())")
                                                 .environment(\.managedObjectContext, self.context)
