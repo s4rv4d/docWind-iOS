@@ -294,6 +294,8 @@
 		40E3B05325F6285500E21A94 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		40E3B05525F628B300E21A94 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		40E3B05725F628B600E21A94 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		40E3B05825F62BD700E21A94 /* ml */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ml; path = ml.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		40E3B05925F62BD700E21A94 /* ml */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ml; path = ml.lproj/Localizable.strings; sourceTree = "<group>"; };
 		40EF391B24BF5E82007BBAC0 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		40F841B72591E57E00BE7E00 /* CustomCameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraController.swift; sourceTree = "<group>"; };
 		40F841B82591E57E00BE7E00 /* CustomCameraPhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraPhotoView.swift; sourceTree = "<group>"; };
@@ -803,6 +805,7 @@
 				en,
 				Base,
 				hi,
+				ml,
 			);
 			mainGroup = 40FDE46F24AB964B006AAFD2;
 			packageReferences = (
@@ -993,6 +996,7 @@
 			children = (
 				40E3B05525F628B300E21A94 /* en */,
 				40E3B05725F628B600E21A94 /* hi */,
+				40E3B05925F62BD700E21A94 /* ml */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1002,6 +1006,7 @@
 			children = (
 				40FDE48A24AB964C006AAFD2 /* Base */,
 				40E3B05325F6285500E21A94 /* hi */,
+				40E3B05825F62BD700E21A94 /* ml */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
