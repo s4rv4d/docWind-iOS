@@ -65,7 +65,7 @@ struct DetailedDirecView: View {
                                 if !self.isOffgrid {
                                     if #available(iOS 14.0, *) {
                                         List {
-                                            Section(header: Text("\(String(self.masterFolder.split(separator: "/").last!)) > \(self.item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
+                                            Section(header: Text("DocWind > \(self.item.wrappedItemName)").font(.caption), footer: Text("Tap and hold on cell for more options").font(.caption)) {
                                                 ForEach(self.directory.first!.fileArray.filter {
                                                     self.searchBar.text.isEmpty ||
                                                         $0.wrappedItemName.localizedStandardContains(self.searchBar.text)

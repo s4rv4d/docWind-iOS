@@ -125,6 +125,7 @@
 		40E387D724E66A6C001E23D2 /* AppstoreUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E387D624E66A6C001E23D2 /* AppstoreUpdate.swift */; };
 		40E387D924E66B0F001E23D2 /* ItunesAppInfoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E387D824E66B0F001E23D2 /* ItunesAppInfoResult.swift */; };
 		40E387DB24E66B40001E23D2 /* ItunesAppInfoItunes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E387DA24E66B40001E23D2 /* ItunesAppInfoItunes.swift */; };
+		40E3B05425F628B300E21A94 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 40E3B05625F628B300E21A94 /* Localizable.strings */; };
 		40EF391C24BF5E82007BBAC0 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EF391B24BF5E82007BBAC0 /* ToastView.swift */; };
 		40F841BD2591E57E00BE7E00 /* CustomCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F841B72591E57E00BE7E00 /* CustomCameraController.swift */; };
 		40F841BE2591E57E00BE7E00 /* CustomCameraPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F841B82591E57E00BE7E00 /* CustomCameraPhotoView.swift */; };
@@ -290,6 +291,9 @@
 		40E387D624E66A6C001E23D2 /* AppstoreUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppstoreUpdate.swift; sourceTree = "<group>"; };
 		40E387D824E66B0F001E23D2 /* ItunesAppInfoResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesAppInfoResult.swift; sourceTree = "<group>"; };
 		40E387DA24E66B40001E23D2 /* ItunesAppInfoItunes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesAppInfoItunes.swift; sourceTree = "<group>"; };
+		40E3B05325F6285500E21A94 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		40E3B05525F628B300E21A94 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		40E3B05725F628B600E21A94 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		40EF391B24BF5E82007BBAC0 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		40F841B72591E57E00BE7E00 /* CustomCameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraController.swift; sourceTree = "<group>"; };
 		40F841B82591E57E00BE7E00 /* CustomCameraPhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraPhotoView.swift; sourceTree = "<group>"; };
@@ -673,6 +677,7 @@
 				40FDE48924AB964C006AAFD2 /* LaunchScreen.storyboard */,
 				40FDE48C24AB964C006AAFD2 /* Info.plist */,
 				40FDE47F24AB964B006AAFD2 /* docWind.xcdatamodeld */,
+				40E3B05625F628B300E21A94 /* Localizable.strings */,
 				40FDE48624AB964C006AAFD2 /* Preview Content */,
 			);
 			path = docWind;
@@ -797,6 +802,7 @@
 			knownRegions = (
 				en,
 				Base,
+				hi,
 			);
 			mainGroup = 40FDE46F24AB964B006AAFD2;
 			packageReferences = (
@@ -819,6 +825,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40E3B05425F628B300E21A94 /* Localizable.strings in Resources */,
 				40FDE48B24AB964C006AAFD2 /* LaunchScreen.storyboard in Resources */,
 				40FE66E424CB21A800B6A064 /* blackBlue.png in Resources */,
 				40FE66E724CB21A800B6A064 /* blackBlue@2x.png in Resources */,
@@ -981,10 +988,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		40E3B05625F628B300E21A94 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				40E3B05525F628B300E21A94 /* en */,
+				40E3B05725F628B600E21A94 /* hi */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		40FDE48924AB964C006AAFD2 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				40FDE48A24AB964C006AAFD2 /* Base */,
+				40E3B05325F6285500E21A94 /* hi */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -996,6 +1013,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1056,6 +1074,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

@@ -27,7 +27,7 @@ extension DirecModel {
     }
     
     public var wrappedName: String {
-        name ?? "Unknown name"
+        name ?? NSLocalizedString("Unknown name", comment: "Default directory name")
     }
     
     public var fileArray: [ItemModel] {

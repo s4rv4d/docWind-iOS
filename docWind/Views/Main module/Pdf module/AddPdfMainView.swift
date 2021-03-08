@@ -240,8 +240,7 @@ struct AddPdfMainView: View {
                 totalSize += bytes.count
             }
             let floatBytes = Float(totalSize) * 0.000001
-            print(floatBytes)
-            return String(format: "%.2f", floatBytes) + "MB"
+            return String(format: "%.2f", floatBytes) + " MB"
         } else {
             return "0 MB"
         }

@@ -60,15 +60,6 @@ struct GenListRowView: View {
                         Text(DWDateFormatter.shared.getStringFromDate(date: self.itemArray.wrappedItemCreated))
                         .font(.caption)
                         .foregroundColor(.secondary)
-//                        Spacer()
-//                        if self.itemArray.wrappedItemType == DWPDFFILE {
-//                            if URL(fileURLWithPath: self.itemArray.wrappedItemUrl).fileSize != nil {
-//                                Text(NSString(format: "%.2f", URL(fileURLWithPath: self.itemArray.wrappedItemUrl).fileSize!) as String + " MB")
-//                                    .font(.caption)
-//                                    .foregroundColor(.secondary)
-//                            }
-//                        }
-                        
                         Spacer()
                         if self.itemArray.wrappedItemType == DWPDFFILE {
                             if URL(fileURLWithPath: itemArray.wrappedItemUrl).fileSize != nil {

@@ -35,7 +35,7 @@ extension ItemModel: Identifiable {
     }
     
     public var wrappedItemName: String {
-        itemName ?? "Unknown name"
+        itemName ?? NSLocalizedString("Unknown name", comment: "Default item name")
     }
     
     public var wrappedLocked: Bool {
