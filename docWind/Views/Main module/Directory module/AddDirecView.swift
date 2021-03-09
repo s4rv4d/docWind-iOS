@@ -14,7 +14,7 @@ struct AddDirecView: View {
     // MARK: - @State properties
     @State private var direcName = ""
     @State private var selectedIconName = "blue"
-    @State private var alertMessage = ""
+    @State private var alertMessage: LocalizedStringKey = ""
     @State private var isLocked = false
     @State private var showAlert = false
     

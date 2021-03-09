@@ -21,8 +21,8 @@ struct QGridCellView: View {
     @State private var uiImages = [UIImage]()
     @State private var showAlert = false
     @State private var showSheet = false
-    @State private var alertMessage = ""
-    @State private var alertTitle = ""
+    @State private var alertMessage: LocalizedStringKey = ""
+    @State private var alertTitle: LocalizedStringKey = ""
     @State private var activeSheet: ActiveSheetForDetails? = nil
     @State private var alertContext: ActiveAlertSheet = .error
     @State private var isFile = false
@@ -208,7 +208,7 @@ struct QGridCellView: View {
                         // bring up alert
                         self.alertContext = .error
                         self.alertTitle = "Error"
-                        self.alertMessage = message
+                        self.alertMessage = LocalizedStringKey(message)
                         self.showAlert.toggle()
                     }
                 }

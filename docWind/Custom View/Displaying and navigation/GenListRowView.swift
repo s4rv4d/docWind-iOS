@@ -25,8 +25,8 @@ struct GenListRowView: View {
     @State private var alertContext: ActiveAlertSheet = .error
     @State private var isDisabled = false
     @State private var showAlert = false
-    @State private var alertMessage = ""
-    @State private var alertTitle = ""
+    @State private var alertMessage: LocalizedStringKey = ""
+    @State private var alertTitle: LocalizedStringKey = ""
     @State private var isFile = false
     @State private var selectedItem: ItemModel? = nil
     

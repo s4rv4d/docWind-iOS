@@ -19,8 +19,8 @@ struct DetailPdfView: View, Equatable {
     var item: ItemModel
     @State var url: String = ""
     var master: String = ""
-    @State private var alertTitle = "Error"
-    @State private var alertMessage = ""
+    @State private var alertTitle: LocalizedStringKey = "Error"
+    @State private var alertMessage: LocalizedStringKey = ""
     @State private var showAlert = false
     @State private var activeAlertContext: ActiveAlertSheet = .error
     @State var activeContext: PDFDetailActiveView? = nil

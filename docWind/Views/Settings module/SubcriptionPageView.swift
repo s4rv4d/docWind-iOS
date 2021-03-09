@@ -13,7 +13,7 @@ struct SubcriptionPageView: View {
     
     // MARK: - View Modifiers
     @State private var showAlert = false
-    @State private var alertMessage = ""
+    @State private var alertMessage: LocalizedStringKey = ""
     @State private var startConfetti = false
     @State private var counter = 0
     

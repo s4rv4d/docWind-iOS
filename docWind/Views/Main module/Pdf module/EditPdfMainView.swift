@@ -17,7 +17,7 @@ struct EditPdfMainView: View {
     @State private var selectedIconName = "blue"
     @State private var oldSelectedIconName = "blue"
     @State private var oldPageCount = 0
-    @State private var alertMessage = ""
+    @State private var alertMessage: LocalizedStringKey = ""
     @State private var showAlert = false
     @State private var showScanner = false
     @State private var url = ""

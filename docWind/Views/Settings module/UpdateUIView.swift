@@ -11,6 +11,7 @@ import SwiftUI
 struct UpdateUIView: View {
     
     @State private var color: String = ""
+    @State private var showAlert: Bool = false
     
     @AppStorage("mainAppColor") var tintColor: String = "Light Blue"
     @AppStorage("isOffgridStyle") var isOffgrid: Bool = false
@@ -88,7 +89,7 @@ struct UpdateUIView: View {
                     }
                     .padding(.vertical)
                     
-                    Section(header: Text("Languages")) {
+                    Section(header: Text("Languages"), footer: Text("More languages support to come soon")) {
                         HStack {
                             SFSymbol.personFill
                                 .foregroundColor(.blue)
@@ -106,7 +107,7 @@ struct UpdateUIView: View {
                         
                         HStack {
                             SFSymbol.personFill
-                                .foregroundColor(.blue)
+                                .foregroundColor(.orange)
                                 .padding(.trailing, 5)
                             Text("Hindi")
                             Spacer()
@@ -121,6 +122,9 @@ struct UpdateUIView: View {
                     }
                 }
                 .listStyle(InsetGroupedListStyle())
+            }
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Notice"), message: Text("In order to change the language, make sure to wait for a few seconds and close and reopen the app."), dismissButton: .default(Text("Dismiss")))
             }
             .navigationTitle(Text("Update UI"))
             .navigationBarItems(trailing:
@@ -147,7 +151,7 @@ struct UpdateUIView: View {
     func langSet(lg: String) {
         lang = lg
         UserDefaults.standard.set([lg], forKey: "AppleLanguages")
-        UserDefaults.standard.synchronize() // required on real device
+        self.showAlert.toggle()
     }
 }
 

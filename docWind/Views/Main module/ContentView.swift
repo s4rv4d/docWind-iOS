@@ -21,8 +21,8 @@ struct ContentView: View {
     @State private var toggleSearchIcon = false
     @State private var item: ItemModel? = nil
     @State var changed = false
-    @State private var alertMessage = ""
-    @State private var alertTitle = "Error"
+    @State private var alertMessage: LocalizedStringKey = ""
+    @State private var alertTitle: LocalizedStringKey = "Error"
     @State private var alertContext: ActiveAlertSheet = .error
     @State private var showAlert = false
     
@@ -42,7 +42,7 @@ struct ContentView: View {
             ZStack {
                 Color.systemGroupedBackground
                 VStack(alignment: .leading) {
-                    //check if contents isnt empty
+                    //check if contents isn't empty
                     if self.docWindItems.first != nil {
                         // display contents of file
                         if (self.docWindItems.first!.fileArray.count == 0) {
@@ -125,7 +125,6 @@ struct ContentView: View {
                 }, trailing: Button(action: {
                     if let _ = docWindItems.first {
                         if !DWFMAppSettings.shared.syncUpLocalFilesWithApp(direcName: nil, directory: docWindItems.first!, context: self.context) {
-                            print("bring up alert")
                             self.alertTitle = "Notice"
                             self.alertMessage = "All local files from Files App(under docWind directory) have been synced up."
                             self.showAlert.toggle()

@@ -17,7 +17,7 @@ struct DocumentPickerView: UIViewControllerRepresentable {
     @State var headPath: String
     @State var headName: String
     @Binding var alertState: Bool
-    @Binding var alertMessage: String
+    @Binding var alertMessage: LocalizedStringKey
     @Environment(\.managedObjectContext) var context
     
     // MARK: - UIViewControllerRepresentable functions
@@ -43,9 +43,9 @@ struct DocumentPickerView: UIViewControllerRepresentable {
         var headName: String
         var context: NSManagedObjectContext
         var alertState: Binding<Bool>
-        var alertMessage: Binding<String>
+        var alertMessage: Binding<LocalizedStringKey>
         
-        init(parent: DocumentPickerView, headPath: String, headName: String, context: NSManagedObjectContext, alertState: Binding<Bool>, alertMessage: Binding<String>) {
+        init(parent: DocumentPickerView, headPath: String, headName: String, context: NSManagedObjectContext, alertState: Binding<Bool>, alertMessage: Binding<LocalizedStringKey>) {
             self.parent = parent
             self.headPath = headPath
             self.headName = headName
@@ -71,8 +71,6 @@ struct DocumentPickerView: UIViewControllerRepresentable {
             // first replace " " with "_" after removing percent encoding i.e., %20 for space
             var selectedFileName = selectedFile.absoluteString.removingPercentEncoding!.replacingOccurrences(of: " ", with: "_")
             selectedFileName = String(selectedFileName.split(separator: "/").last!)
-            print(selectedFile)
-            print(selectedFileName)
             
             if !selectedFileName.contains(".pdf") {
                 selectedFileName += ".pdf"
