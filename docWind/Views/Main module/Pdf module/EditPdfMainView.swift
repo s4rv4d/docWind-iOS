@@ -8,6 +8,7 @@
 
 import SwiftUI
 import PDFKit
+import CodeScanner
 
 struct EditPdfMainView: View {
     
@@ -24,6 +25,8 @@ struct EditPdfMainView: View {
     @State private var showingActionSheet = false
     @State private var editType: EditType = .rename
     @State private var imagesEditted = false
+    @State var codeScannerDismiss: Bool = false
+    
     @ObservedObject var item: ItemModel
     
     // for images
@@ -190,18 +193,70 @@ struct EditPdfMainView: View {
             case .subView:
                 SubcriptionPageView()
             case .scanQR:
-                EmptyView()
+                CustomCodeScanner(handler: self.handleScan, dismiss: $codeScannerDismiss)
             }
         }
         .actionSheet(isPresented: $showingActionSheet) {
             ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
                 .default(Text("Scan a document"), action: scanTapped),
+                .default(Text("Scan QR code"), action: scanQRTapped),
                 .default(Text("Choose an image"), action: addImagesTapped),
                 .cancel()
             ])
         }
     }
     
+    // MARK: - Functions
+    private func handleScan(result: Result<String, CodeScannerView.ScanError>) {
+        switch result {
+        case .success(let urlString):
+            scannedData(string: urlString)
+        case .failure(let errorEnum) :
+            print(errorEnum.localizedDescription)
+            codeScannerDismiss.toggle()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.activeAlertSheet = .notice
+                self.alertMessage = "Scanned QR Code didn't contain a valid URL to download a PDF from"
+                self.showAlert.toggle()
+            }
+        }
+    }
+    
+    private func scannedData(string: String) {
+        guard string.contains(".pdf") else {
+            codeScannerDismiss.toggle()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.activeAlertSheet = .notice
+                self.alertMessage = "Scanned QR Code didn't contain a valid URL to download a PDF from"
+                self.showAlert.toggle()
+            }
+            return
+        }
+        guard let downloadURL = URL(string: string) else { fatalError("failed to initialize URL from string.") }
+        let cgpdfURL = downloadURL as CFURL
+        guard let pdfDocument = CGPDFDocument(cgpdfURL) else { fatalError("failed to initialize PDFDocument") }
+        
+        let pageCount = pdfDocument.numberOfPages
+        
+        for i in 0 ... pageCount {
+            autoreleasepool {
+                guard let page = pdfDocument.page(at: i) else { return }
+                let pageRect = page.getBoxRect(.mediaBox)
+                let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+                let image = renderer.image { ctx in
+                    UIColor.white.set()
+                    ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
+                    ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
+                    ctx.fill(pageRect)
+                    ctx.cgContext.drawPDFPage(page)
+                }
+                
+                pages.append(image.downSampleImage())
+            }
+        }
+        // to dismiss scanner
+        codeScannerDismiss.toggle()
+    }
     
     private func approximateFileSize() -> String {
         if self.pages.count != 0 {
@@ -283,6 +338,10 @@ struct EditPdfMainView: View {
     
     private func addPagesTapped() {
         self.showingActionSheet.toggle()
+    }
+    
+    private func scanQRTapped() {
+        self.activeSheet = .scanQR
     }
     
     private func scanTapped() {

@@ -26,6 +26,10 @@ struct CustomCodeScanner: View {
                 .onChange(of: dismiss) { (_) in
                     self.presentationMode.wrappedValue.dismiss()
                 }
+                .overlay(Rectangle()
+                            .stroke(Color.green, style: StrokeStyle(lineWidth: 5.0,lineCap: .round, lineJoin: .bevel, dash: [60, 215], dashPhase: 29))
+                            .frame(width: 275, height: 275)
+                )
             
             HStack {
                 Spacer()

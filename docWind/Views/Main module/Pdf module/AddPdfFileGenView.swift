@@ -175,7 +175,7 @@ struct AddPdfFileGenView: View {
         .actionSheet(isPresented: $showingActionSheet) {
             ActionSheet(title: Text("Options"), message: Text("Choose an option"), buttons: [
                 .default(Text("Scan a document"), action: scanTapped),
-                .default(Text("Scan QR/Barcode code"), action: scanQRTapped),
+                .default(Text("Scan QR code"), action: scanQRTapped),
                 .default(Text("Choose an image"), action: addImagesTapped),
                 .cancel()
             ])
