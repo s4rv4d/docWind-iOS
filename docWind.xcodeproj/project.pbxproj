@@ -93,12 +93,6 @@
 		40C5140524AE14C000126ABA /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C5140424AE14C000126ABA /* SearchBarView.swift */; };
 		40CAFAE124BB480600C1E28A /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CAFAE024BB480600C1E28A /* ShareSheetView.swift */; };
 		40CDC49F24AF691900462277 /* Helper+Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC49E24AF691900462277 /* Helper+Variables.swift */; };
-		40CDC4C724AF72CD00462277 /* ItemModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC4C124AF72CD00462277 /* ItemModel+CoreDataClass.swift */; };
-		40CDC4C824AF72CD00462277 /* ItemModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC4C224AF72CD00462277 /* ItemModel+CoreDataProperties.swift */; };
-		40CDC4C924AF72CD00462277 /* PdfFilemodel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC4C324AF72CD00462277 /* PdfFilemodel+CoreDataClass.swift */; };
-		40CDC4CA24AF72CD00462277 /* PdfFilemodel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC4C424AF72CD00462277 /* PdfFilemodel+CoreDataProperties.swift */; };
-		40CDC4CB24AF72CD00462277 /* DirecModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC4C524AF72CD00462277 /* DirecModel+CoreDataClass.swift */; };
-		40CDC4CC24AF72CD00462277 /* DirecModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC4C624AF72CD00462277 /* DirecModel+CoreDataProperties.swift */; };
 		40CDC4CE24AF80DF00462277 /* MainDocListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CDC4CD24AF80DF00462277 /* MainDocListViewModel.swift */; };
 		40CDC4D224AF91F800462277 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40CDC4D124AF91F800462277 /* CloudKit.framework */; };
 		40CF63E224CD565F0089D3D3 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CF63E124CD565F0089D3D3 /* Reachability.swift */; };
@@ -134,6 +128,12 @@
 		40F841C12591E57E00BE7E00 /* CaptureButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F841BB2591E57E00BE7E00 /* CaptureButtonView.swift */; };
 		40F841C22591E57E00BE7E00 /* CustomCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F841BC2591E57E00BE7E00 /* CustomCameraView.swift */; };
 		40F841C62591E7AA00BE7E00 /* CustomBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F841C52591E7AA00BE7E00 /* CustomBackView.swift */; };
+		40F881D825F75E0100A7CCD3 /* ItemModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F881D225F75E0100A7CCD3 /* ItemModel+CoreDataProperties.swift */; };
+		40F881D925F75E0100A7CCD3 /* ItemModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F881D325F75E0100A7CCD3 /* ItemModel+CoreDataClass.swift */; };
+		40F881DA25F75E0100A7CCD3 /* DirecModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F881D425F75E0100A7CCD3 /* DirecModel+CoreDataProperties.swift */; };
+		40F881DB25F75E0100A7CCD3 /* PdfFilemodel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F881D525F75E0100A7CCD3 /* PdfFilemodel+CoreDataClass.swift */; };
+		40F881DC25F75E0100A7CCD3 /* PdfFilemodel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F881D625F75E0100A7CCD3 /* PdfFilemodel+CoreDataProperties.swift */; };
+		40F881DD25F75E0100A7CCD3 /* DirecModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F881D725F75E0100A7CCD3 /* DirecModel+CoreDataClass.swift */; };
 		40FB481724B8AE900045CF13 /* OCRTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB481624B8AE900045CF13 /* OCRTextView.swift */; };
 		40FB481924B8B0600045CF13 /* NewStarterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB481824B8B0600045CF13 /* NewStarterView.swift */; };
 		40FDE47C24AB964B006AAFD2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FDE47B24AB964B006AAFD2 /* AppDelegate.swift */; };
@@ -258,12 +258,6 @@
 		40C5140424AE14C000126ABA /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		40CAFAE024BB480600C1E28A /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
 		40CDC49E24AF691900462277 /* Helper+Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Helper+Variables.swift"; sourceTree = "<group>"; };
-		40CDC4C124AF72CD00462277 /* ItemModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemModel+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		40CDC4C224AF72CD00462277 /* ItemModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemModel+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		40CDC4C324AF72CD00462277 /* PdfFilemodel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PdfFilemodel+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		40CDC4C424AF72CD00462277 /* PdfFilemodel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PdfFilemodel+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		40CDC4C524AF72CD00462277 /* DirecModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DirecModel+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		40CDC4C624AF72CD00462277 /* DirecModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DirecModel+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		40CDC4CD24AF80DF00462277 /* MainDocListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDocListViewModel.swift; sourceTree = "<group>"; };
 		40CDC4CF24AF91EF00462277 /* docWind.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = docWind.entitlements; sourceTree = "<group>"; };
 		40CDC4D124AF91F800462277 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -304,6 +298,12 @@
 		40F841BB2591E57E00BE7E00 /* CaptureButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureButtonView.swift; sourceTree = "<group>"; };
 		40F841BC2591E57E00BE7E00 /* CustomCameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraView.swift; sourceTree = "<group>"; };
 		40F841C52591E7AA00BE7E00 /* CustomBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackView.swift; sourceTree = "<group>"; };
+		40F881D225F75E0100A7CCD3 /* ItemModel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ItemModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		40F881D325F75E0100A7CCD3 /* ItemModel+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ItemModel+CoreDataClass.swift"; sourceTree = "<group>"; };
+		40F881D425F75E0100A7CCD3 /* DirecModel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DirecModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		40F881D525F75E0100A7CCD3 /* PdfFilemodel+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PdfFilemodel+CoreDataClass.swift"; sourceTree = "<group>"; };
+		40F881D625F75E0100A7CCD3 /* PdfFilemodel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PdfFilemodel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		40F881D725F75E0100A7CCD3 /* DirecModel+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DirecModel+CoreDataClass.swift"; sourceTree = "<group>"; };
 		40FB481624B8AE900045CF13 /* OCRTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTextView.swift; sourceTree = "<group>"; };
 		40FB481824B8B0600045CF13 /* NewStarterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStarterView.swift; sourceTree = "<group>"; };
 		40FDE47824AB964B006AAFD2 /* docWind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = docWind.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -503,12 +503,12 @@
 		40CDC4C024AF728C00462277 /* CoreData Models */ = {
 			isa = PBXGroup;
 			children = (
-				40CDC4C124AF72CD00462277 /* ItemModel+CoreDataClass.swift */,
-				40CDC4C224AF72CD00462277 /* ItemModel+CoreDataProperties.swift */,
-				40CDC4C324AF72CD00462277 /* PdfFilemodel+CoreDataClass.swift */,
-				40CDC4C424AF72CD00462277 /* PdfFilemodel+CoreDataProperties.swift */,
-				40CDC4C524AF72CD00462277 /* DirecModel+CoreDataClass.swift */,
-				40CDC4C624AF72CD00462277 /* DirecModel+CoreDataProperties.swift */,
+				40F881D725F75E0100A7CCD3 /* DirecModel+CoreDataClass.swift */,
+				40F881D425F75E0100A7CCD3 /* DirecModel+CoreDataProperties.swift */,
+				40F881D325F75E0100A7CCD3 /* ItemModel+CoreDataClass.swift */,
+				40F881D225F75E0100A7CCD3 /* ItemModel+CoreDataProperties.swift */,
+				40F881D525F75E0100A7CCD3 /* PdfFilemodel+CoreDataClass.swift */,
+				40F881D625F75E0100A7CCD3 /* PdfFilemodel+CoreDataProperties.swift */,
 			);
 			path = "CoreData Models";
 			sourceTree = "<group>";
@@ -862,11 +862,11 @@
 				40DF994824B2E452001CEC67 /* DWDateFormatter.swift in Sources */,
 				4095AC75258BCB9A0008BD71 /* FilterShaderParamManager.swift in Sources */,
 				402C0B6E24B0B0E800A5A6C9 /* DetailedDirecView.swift in Sources */,
-				40CDC4C724AF72CD00462277 /* ItemModel+CoreDataClass.swift in Sources */,
 				409B928124E43EDF00F30EFF /* LoadingView.swift in Sources */,
 				405EE7A624B339B4005F525F /* RecognizedText.swift in Sources */,
 				407567FA24B20CF00071B575 /* AddDirecGeneView.swift in Sources */,
 				407C6A2F24C6D90D00FA0AAA /* GenListRowView.swift in Sources */,
+				40F881DD25F75E0100A7CCD3 /* DirecModel+CoreDataClass.swift in Sources */,
 				40CAFAE124BB480600C1E28A /* ShareSheetView.swift in Sources */,
 				40DFFEB525A71ABB003DD30A /* CameraPreview.swift in Sources */,
 				4012033C24BDE0D700167917 /* NonSelectableView.swift in Sources */,
@@ -874,9 +874,9 @@
 				402C0B6C24B0ACD600A5A6C9 /* NormalListRowView.swift in Sources */,
 				40ABC04525CB3CB000F32067 /* CPImage.swift in Sources */,
 				40DD4F7724C087AE00D37EFA /* ImagePanGestureRecognizer.swift in Sources */,
-				40CDC4C824AF72CD00462277 /* ItemModel+CoreDataProperties.swift in Sources */,
 				40C5140324AE0D2900126ABA /* DWFMAppSettings.swift in Sources */,
 				40ABC04925CB3E9900F32067 /* ImageFilterObservable.swift in Sources */,
+				40F881DB25F75E0100A7CCD3 /* PdfFilemodel+CoreDataClass.swift in Sources */,
 				4069EF9F24D69AAF003083C6 /* ViewControllerResolver.swift in Sources */,
 				40DFFEB325A71ABB003DD30A /* CameraService.swift in Sources */,
 				40CFB05124D9B1E500955957 /* ErrorView.swift in Sources */,
@@ -903,17 +903,16 @@
 				40FE66A724CB126D00B6A064 /* HeaderView.swift in Sources */,
 				4069EFA124D69D4C003083C6 /* CustomSearchBar.swift in Sources */,
 				4095AC7F258BCB9A0008BD71 /* MediaElement.swift in Sources */,
+				40F881DC25F75E0100A7CCD3 /* PdfFilemodel+CoreDataProperties.swift in Sources */,
 				405EFDC024BC886A0070BE5F /* SettingsRow.swift in Sources */,
 				40DFFEB425A71ABB003DD30A /* CameraService+Enums.swift in Sources */,
 				405EFDBE24BC76EB0070BE5F /* IAPService.swift in Sources */,
 				40E387DB24E66B40001E23D2 /* ItunesAppInfoItunes.swift in Sources */,
+				40F881DA25F75E0100A7CCD3 /* DirecModel+CoreDataProperties.swift in Sources */,
 				40F841BF2591E57E00BE7E00 /* CustomImageStack.swift in Sources */,
 				40FDE49A24AC4C95006AAFD2 /* AppSettings.swift in Sources */,
-				40CDC4CA24AF72CD00462277 /* PdfFilemodel+CoreDataProperties.swift in Sources */,
 				40DF994A24B2F5A2001CEC67 /* AddPdfMainView.swift in Sources */,
-				40CDC4CB24AF72CD00462277 /* DirecModel+CoreDataClass.swift in Sources */,
 				40E387D524E65049001E23D2 /* SearchNavigation.swift in Sources */,
-				40CDC4C924AF72CD00462277 /* PdfFilemodel+CoreDataClass.swift in Sources */,
 				40920EB224B74E7800E2293C /* SlideOverCardView.swift in Sources */,
 				4095AC7B258BCB9A0008BD71 /* SepiaFilter.swift in Sources */,
 				40DFFEB225A71ABB003DD30A /* CameraView.swift in Sources */,
@@ -949,8 +948,8 @@
 				4095AC76258BCB9A0008BD71 /* ColorFilter.swift in Sources */,
 				40F841BD2591E57E00BE7E00 /* CustomCameraController.swift in Sources */,
 				405EFDCA24BCA12A0070BE5F /* SubcriptionPageView.swift in Sources */,
-				40CDC4CC24AF72CD00462277 /* DirecModel+CoreDataProperties.swift in Sources */,
 				406E9AF424B5E773000FB8FD /* SnapCarouselView.swift in Sources */,
+				40F881D925F75E0100A7CCD3 /* ItemModel+CoreDataClass.swift in Sources */,
 				40284BFD24D83745004EE44E /* EditPdfMainView.swift in Sources */,
 				40F841C62591E7AA00BE7E00 /* CustomBackView.swift in Sources */,
 				402C0B7024B0B0F200A5A6C9 /* DetailPdfView.swift in Sources */,
@@ -984,6 +983,7 @@
 				402094CC25E3BDE600F06925 /* UpdateUIView.swift in Sources */,
 				407567F624B1FC620071B575 /* GeneralDocListViewModel.swift in Sources */,
 				4095AC80258BCB9A0008BD71 /* MediaVideoProcessor.swift in Sources */,
+				40F881D825F75E0100A7CCD3 /* ItemModel+CoreDataProperties.swift in Sources */,
 				4095AC72258BCB9A0008BD71 /* GraphicContext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
