@@ -138,7 +138,7 @@ struct SubcriptionPageView: View {
                     
                     if !AppSettings.shared.bougthNonConsumable {
                         ShinyButton(text: "Buy docWind +", background: .green, action: {
-                            FeedbackManager.mediumFeedback()
+                            FeedbackManager.light()
                             
                             checkConnection { (status, statusCode) in
                                 if statusCode == 404 {
@@ -155,7 +155,7 @@ struct SubcriptionPageView: View {
                             .foregroundColor(.secondary)
                         
                         ShinyButton(text: "Restore purchase", background: .blue, action: {
-                            FeedbackManager.mediumFeedback()
+                            FeedbackManager.light()
                             
                             checkConnection { (status, statusCode) in
                                 if statusCode == 404 {

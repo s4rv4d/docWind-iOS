@@ -21,7 +21,7 @@ struct DependecyPageView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                VStack {
+                ScrollView {
                     // --> 1
                     VStack(alignment: .leading, spacing: 5) {
                         HStack {
@@ -109,9 +109,34 @@ struct DependecyPageView: View {
                     .settingsBackground()
                     // --> 3
                     
-                    Spacer()
+                    // --> 4
+                    VStack(alignment: .leading, spacing: 5) {
+                        HStack {
+                            Text("CodeScanner")
+                                .font(.largeTitle)
+                                .fontWeight(.semibold)
+                            Spacer()
+                            SFSymbol.exclamationMarkCircle
+                                .foregroundColor(Color(tintColor))
+                                .onTapGesture {
+                                    SettingsHelper.openUrl(url: "https://github.com/twostraws/CodeScanner.git")
+                                }
+
+                        }
+                        .padding([.bottom])
+                        Text("by Paul Hudson")
+                        Text("https://github.com/twostraws/CodeScanner.git")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        Text("MIT License")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.bottom)
+                        
+                    }
+                    .settingsBackground()
+                    // --> 4
                 }
-                .padding(.top)
                 ConfettiCannon(counter: $counter)
             }
             

@@ -34,7 +34,7 @@ struct CustomCodeScanner: View {
             HStack {
                 Spacer()
                 Button(action:{
-                    FeedbackManager.mediumFeedback()
+                    FeedbackManager.light()
                     self.presentationMode.wrappedValue.dismiss()
                 }){
                     SFSymbol.multiplyCircleFill

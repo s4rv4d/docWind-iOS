@@ -279,7 +279,7 @@ struct EditPdfMainView: View {
     }
     
     private func saveTapped() {
-        FeedbackManager.mediumFeedback()
+        FeedbackManager.light()
         
         if (self.pages.count == 0) {
             self.activeAlertSheet = .notice

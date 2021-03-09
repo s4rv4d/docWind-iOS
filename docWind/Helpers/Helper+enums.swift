@@ -83,6 +83,12 @@ enum FeedbackManager {
         generator.prepare()
         generator.impactOccurred()
     }
+    
+    static func light() {
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.prepare()
+        generator.impactOccurred()
+    }
 }
 
 // Helper enums for SlideOverCardView

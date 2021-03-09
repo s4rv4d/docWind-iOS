@@ -194,7 +194,7 @@ struct ContentView: View {
     }
     
     private func showOptions() {
-        FeedbackManager.mediumFeedback()
+        FeedbackManager.light()
         DispatchQueue.main.async {
             withAnimation {
                self.tapped.toggle()
@@ -224,7 +224,7 @@ struct ContentView: View {
     }
     
     private func settingsTapped() {
-        FeedbackManager.mediumFeedback()
+        FeedbackManager.light()
         self.activeSheet = .settingsTapped
         self.isShown.toggle()
     }

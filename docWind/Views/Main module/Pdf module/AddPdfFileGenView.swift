@@ -274,7 +274,7 @@ struct AddPdfFileGenView: View {
     }
     
     private func deleteFile() {
-        FeedbackManager.mediumFeedback()
+        FeedbackManager.light()
         self.activeAlertSheet = .delete
         self.showAlert.toggle()
     }
@@ -284,7 +284,7 @@ struct AddPdfFileGenView: View {
     }
     
     private func saveTapped() {
-        FeedbackManager.mediumFeedback()
+        FeedbackManager.light()
         if (self.pages.count == 0) {
             self.activeAlertSheet = .notice
             self.alertMessage = "Make sure you have scan atleast one document"

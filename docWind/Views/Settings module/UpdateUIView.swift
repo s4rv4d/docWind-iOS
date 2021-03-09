@@ -129,6 +129,7 @@ struct UpdateUIView: View {
             .navigationTitle(Text("Update UI"))
             .navigationBarItems(trailing:
                                     Button(action:{
+                                        FeedbackManager.light()
                                         self.presentationMode.wrappedValue.dismiss()
                                     }){
                                         SFSymbol.multiplyCircleFill
@@ -141,14 +142,17 @@ struct UpdateUIView: View {
     
     // MARK: - Functions
     func tappedListView() {
+        FeedbackManager.mediumFeedback()
         isOffgrid = false
     }
     
     func tappedGridView() {
+        FeedbackManager.mediumFeedback()
         isOffgrid = true
     }
     
     func langSet(lg: String) {
+        FeedbackManager.mediumFeedback()
         lang = lg
         UserDefaults.standard.set([lg], forKey: "AppleLanguages")
         self.showAlert.toggle()

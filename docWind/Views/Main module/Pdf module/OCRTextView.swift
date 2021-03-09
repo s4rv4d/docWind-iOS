@@ -29,7 +29,6 @@ struct OCRTextView: View {
             VStack {
                 HStack {
                     Button(action: {
-                        FeedbackManager.mediumFeedback()
                         self.presentationMode.wrappedValue.dismiss()
                            }) {
                         SFSymbol.multiplyCircleFill
@@ -42,7 +41,6 @@ struct OCRTextView: View {
                         .fontWeight(.medium)
                     Spacer()
                     Button(action: {
-                        FeedbackManager.mediumFeedback()
                                self.textStyle = (self.textStyle == .body) ? .title1 : .body
                            }) {
                         SFSymbol.textFormat

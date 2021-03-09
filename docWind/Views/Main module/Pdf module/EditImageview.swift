@@ -479,8 +479,7 @@ struct EditImageview: View {
     
     private func nextTapped() {
         
-        FeedbackManager.mediumFeedback()
-        
+        FeedbackManager.light()
         /// brightness, contrast and etc changes current image update
         var updatedImage = currentImage.withSaturationAdjustment(byVal: saturationValue)
         updatedImage = updatedImage.withContrastAdjustment(byVal: contrastValue)
@@ -517,7 +516,7 @@ struct EditImageview: View {
     }
     
     private func backTapped() {
-        FeedbackManager.mediumFeedback()
+        FeedbackManager.light()
         
         /// clear everything except mainImages
         mainImagesCopy = []

@@ -185,7 +185,7 @@ struct DetailedDirecView: View {
     
     // MARK: - Functions
     private func showOptions() {
-        FeedbackManager.mediumFeedback()
+        FeedbackManager.light()
         DispatchQueue.main.async {
             withAnimation {
                self.tapped.toggle()

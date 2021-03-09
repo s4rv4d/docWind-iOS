@@ -68,7 +68,7 @@ struct SettingsView: View {
             .listStyle(InsetGroupedListStyle())
             .navigationBarTitle(Text("Settings"))
             .navigationBarItems(leading: Button(action:{
-                FeedbackManager.mediumFeedback()
+                FeedbackManager.light()
                 self.presentationMode.wrappedValue.dismiss()
             }){
                 SFSymbol.multiplyCircleFill

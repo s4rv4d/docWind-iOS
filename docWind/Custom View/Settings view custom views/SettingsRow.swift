@@ -20,7 +20,6 @@ struct SettingsRow: View {
     var body: some View {
         Button(action: {
             self.action()
-            FeedbackManager.mediumFeedback()
         }) {
             HStack(spacing: 8) {
                 Image(systemName: imageName)
@@ -53,7 +52,7 @@ struct SettingsRowForOCR: View {
     var body: some View {
         Button(action: {
             self.action()
-            FeedbackManager.mediumFeedback()
+            FeedbackManager.light()
         }) {
             HStack(spacing: 8) {
                 Image(systemName: imageName)

@@ -69,7 +69,7 @@ struct DetailPdfView: View, Equatable {
                                 // save pdf
                                 self.saveTapped.toggle()
                                 self.saveButton.toggle()
-                                FeedbackManager.mediumFeedback()
+                                FeedbackManager.light()
 
                             }.settingsBackground()
 
@@ -98,7 +98,6 @@ struct DetailPdfView: View, Equatable {
                                     .padding(.bottom, 2)
                             }
                             .onTapGesture {
-                                FeedbackManager.mediumFeedback()
                                 if !AppSettings.shared.bougthNonConsumable {
                                     self.subViewed()
                                 } else {
@@ -123,7 +122,6 @@ struct DetailPdfView: View, Equatable {
                             .padding(.bottom, 2)
                     }
                         .onTapGesture {
-                            FeedbackManager.mediumFeedback()
                             if !AppSettings.shared.bougthNonConsumable {
                                 self.subViewed()
                             } else {
@@ -236,7 +234,7 @@ struct DetailPdfView: View, Equatable {
     
     func sharePdf() {
         DispatchQueue.main.async {
-            FeedbackManager.mediumFeedback()
+            FeedbackManager.light()()
             self.isLoading.toggle()
             self.activeContext = .shareSheet
 //            self.isShown.toggle()

@@ -34,7 +34,7 @@ struct AppIconView: View {
                     ForEach(appIcons.indices, id: \.self) { i in
                         Button(action: {
                             self.selected = self.appIcons[i]
-                            FeedbackManager.mediumFeedback()
+                            FeedbackManager.light()
                             self.changeIcon(to: self.appIcons[i])
                         }){
                             HStack {

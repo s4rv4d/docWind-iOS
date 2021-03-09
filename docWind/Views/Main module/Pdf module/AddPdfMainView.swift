@@ -247,7 +247,7 @@ struct AddPdfMainView: View {
     }
     
     private func saveTapped() {
-        FeedbackManager.mediumFeedback()
+        FeedbackManager.light()
         
         if (self.pages.count == 0) {
             self.activeAlertSheet = .notice
@@ -335,7 +335,7 @@ struct AddPdfMainView: View {
     }
     
     private func deleteFile() {
-        FeedbackManager.mediumFeedback()
+        FeedbackManager.light()
         self.activeAlertSheet = .delete
         self.showAlert.toggle()
     }
