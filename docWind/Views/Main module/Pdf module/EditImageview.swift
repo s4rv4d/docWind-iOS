@@ -33,6 +33,10 @@ struct EditImageview: View {
     @State private var currentPositionBottomRight: CGPoint = .zero
     @State private var newPositionBottomRight: CGPoint = .zero
     
+    // current size image width and height
+    @State var imageWidth:CGFloat = 0
+    @State var imageHeight:CGFloat = 0
+    
     // edit action response
     @State private var mainStage = true
     @State private var cropActive = false
@@ -70,6 +74,13 @@ struct EditImageview: View {
                         .contrast(Double(contrastValue))
                         .brightness(Double(brigtnessValue * 0.2))
                         .aspectRatio(contentMode: .fit)
+                        .overlay(GeometryReader{geo -> AnyView in
+                            DispatchQueue.main.async{
+                                self.imageWidth = geo.size.width
+                                self.imageHeight = geo.size.height
+                            }
+                            return AnyView(EmptyView())
+                        })
                         .overlay(
                             Group {
                                 if cropActive {
@@ -116,20 +127,20 @@ struct EditImageview: View {
                     if mainStage {
                         HStack {
                             
-//                            Button(action: cropSelected) {
-//                                VStack {
-//                                    SFSymbol.crop
-//                                        .padding()
-//                                        .background(Color.secondarySystemGroupedBackground
-//                                                        .cornerRadius(7)
-//                                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-//                                        )
-//                                    Text("Crop")
-//                                        .font(.caption)
-//                                }
-//                            }
-//                            
-//                            Spacer()
+                            Button(action: cropSelected) {
+                                VStack {
+                                    SFSymbol.crop
+                                        .padding()
+                                        .background(Color.secondarySystemGroupedBackground
+                                                        .cornerRadius(7)
+                                                        .frame(width: 60, height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        )
+                                    Text("Crop")
+                                        .font(.caption)
+                                }
+                            }
+                            
+                            Spacer()
                             
                             Button(action: adjustTapped) {
                                 VStack {
@@ -430,35 +441,41 @@ struct EditImageview: View {
         /// check if any change in coordinates
         if currentPositionTopLeft != .zero || currentPositionTopRight != .zero || currentPositionBottomLeft != .zero || currentPositionBottomRight != .zero {
             
+            print("currentTopLeft:     ", currentPositionTopLeft)
+            print("currentTopRight:    ", currentPositionTopRight)
+            print("currentBottomLeft:  ", currentPositionBottomLeft)
+            print("currentBottomRight: ", currentPositionBottomRight)
+            
             /// if changes detected, crop image
             let _width = currentPositionTopLeft.distance(point: currentPositionTopRight)
             let _height = currentPositionTopLeft.distance(point: currentPositionBottomLeft)
             
             let contextImage: UIImage = UIImage(cgImage: currentImage.cgImage!)
-
-            let contextSize: CGSize = contextImage.size
-            var cropX: CGFloat = 0.0
-            var cropY: CGFloat = 0.0
-            let cropRatio: CGFloat = CGFloat(_width/_height)
-            let originalRatio: CGFloat = contextSize.width/contextSize.height
-            var scaledCropHeight: CGFloat = 0.0
-            var scaledCropWidth: CGFloat = 0.0
-
-            // See what size is longer and set crop rect parameters
-            if originalRatio > cropRatio {
-                scaledCropHeight = contextSize.height
-                scaledCropWidth = (contextSize.height/_height) * _width
-                cropX = (contextSize.width - scaledCropWidth) / 2
-                cropY = 0
-
-            } else {
-                scaledCropWidth = contextSize.width
-                scaledCropHeight = (contextSize.width/_width) * _height
-                cropY = (contextSize.height / scaledCropHeight) / 2
-                cropX = 0
-            }
-
-            let rect: CGRect = CGRect(x: cropX, y: cropY, width: scaledCropWidth, height: scaledCropHeight)
+            
+            // test
+            let originalWidth = contextImage.size.width
+            let originalHeight = contextImage.size.height
+            
+            let showImageWidth = imageWidth
+            let showImageHeight = imageHeight
+            
+            let showCropX = currentPositionTopLeft.x
+            let showCropY = currentPositionTopLeft.y
+            
+            let showCropWidth = CGFloat(_width)
+            let showCropHeight = CGFloat(_height)
+            
+            var originalCropW: CGFloat = 0
+            var originalCropH: CGFloat = 0
+            var originalCropX: CGFloat = 0
+            var originalCropY: CGFloat = 0
+            
+            originalCropW = (showCropWidth / showImageWidth) * originalWidth
+            originalCropH = (showCropHeight / showImageHeight) * originalHeight
+            originalCropX = (showCropX / showImageWidth) * originalWidth
+            originalCropY = (showCropY / showImageHeight) * originalHeight
+            
+            let rect: CGRect = CGRect(x: originalCropX, y: originalCropY, width: originalCropW, height: originalCropH)
 
             // Create bitmap image from context using the rect
             let imageRef: CGImage = contextImage.cgImage!.cropping(to: rect)!
@@ -466,6 +483,7 @@ struct EditImageview: View {
             // Create a new image based on the imageRef and rotate back to the original orientation
             let croppedImage: UIImage = UIImage(cgImage: imageRef, scale: currentImage.scale, orientation: currentImage.imageOrientation)
             currentImage = croppedImage
+            
         }
     }
     

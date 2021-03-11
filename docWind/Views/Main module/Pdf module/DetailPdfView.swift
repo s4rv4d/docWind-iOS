@@ -234,21 +234,18 @@ struct DetailPdfView: View, Equatable {
     
     func sharePdf() {
         DispatchQueue.main.async {
-            FeedbackManager.light()()
+            FeedbackManager.light()
             self.isLoading.toggle()
             self.activeContext = .shareSheet
-//            self.isShown.toggle()
         }
     }
     
     func toolsTapped() {
         self.activeContext = .toolBox
-//        self.isShown.toggle()
     }
     
     func subViewed() {
         self.activeContext = .subView
-//        self.isShown.toggle()
     }
     
     static func == (lhs: DetailPdfView, rhs: DetailPdfView) -> Bool {
